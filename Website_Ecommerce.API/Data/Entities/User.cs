@@ -20,5 +20,7 @@ namespace Website_Ecommerce.API.Data.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool IsBlock { get; set; }
+
+        public IList<UserRole> UserRoles { get; set; }
     }
 }

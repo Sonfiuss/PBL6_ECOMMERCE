@@ -11,5 +11,8 @@ namespace Website_Ecommerce.API.Data.Entities
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
+
+        public IList<UserRole> UserRoles { get; set; }
+
     }
 }
