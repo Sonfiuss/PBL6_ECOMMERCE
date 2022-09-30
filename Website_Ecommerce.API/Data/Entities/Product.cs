@@ -9,11 +9,6 @@ namespace Website_Ecommerce.API.Data.Entities
 {
     public class Product
     {
-        public Product()
-        {
-            ProductImages = new List<ProductImage>();
-        }
-        
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
@@ -26,10 +21,11 @@ namespace Website_Ecommerce.API.Data.Entities
         public Category Category { get; set;}
 
 
-        [ForeignKey("ProductImage")]
-        public int ProductImageId { get; set; }
-        public List<ProductImage> ProductImages { get; set; }
+        public ICollection<ProductImage> ProductImages { get; set; }
 
         public int StateId { get; set; } //?
+
+        public IList<OrderDetail> OrderDetails { get; set; }
+
     }
 }

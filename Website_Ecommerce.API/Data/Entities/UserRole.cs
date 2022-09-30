@@ -10,14 +10,13 @@ namespace Website_Ecommerce.API.Data.Entities
     public class UserRole
     {
         [Key]
-        public int Id { get; set; }
-
-        [ForeignKey("User")]
+        [Column(Order = 1)]
         public int UserId { get; set; }
-        public List<User> Users { get; set; }
+        public User User { get; set; }
 
-        [ForeignKey("Role")]
+        [Key]
+        [Column(Order = 1)]
         public int RoleId { get; set; }
-        public List<Role> Roles { get; set; }
+        public Role Role { get; set; }
     }
 }

@@ -10,15 +10,14 @@ namespace Website_Ecommerce.API.Data.Entities
     public class OrderDetail
     {
         [Key]
-        public int Id { get; set; }
-
-        [ForeignKey("Order")]
+        [Column(Order = 1)]
         public int OrderId { get; set; }
-        public List<Order> Orders { get; set; }
-
-        [ForeignKey("Product")]
+        public Order Order { get; set; }
+        
+        [Key]
+        [Column(Order = 2)]
         public int ProductId { get; set; }
-        public List<Product> Products { get; set; }
+        public Product Product { get; set; }
 
         public int Quantity { get; set; }
         public double Price { get; set; }

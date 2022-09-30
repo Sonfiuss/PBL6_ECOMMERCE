@@ -21,5 +21,7 @@ namespace Website_Ecommerce.API.Data.Entities
 
         // [ForeignKey("Shipper")]
         // public int ShipperId { get; set; }
+
+        public IList<OrderDetail> OrderDetails { get; set; }
     }
 }
