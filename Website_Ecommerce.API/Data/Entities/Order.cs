@@ -14,7 +14,7 @@ namespace Website_Ecommerce.API.Data.Entities
 
         [ForeignKey("User")]
         public int UserId { get; set; }
-        public User user { get; set; }
+        public User User { get; set; }
 
         public DateTime CreateDate { get; set; }
         public string Note { get; set; }

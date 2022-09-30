@@ -14,18 +14,18 @@ namespace Website_Ecommerce.API.Data.Entities
 
         [ForeignKey("Order")]
         public int OrderId { get; set; }
-        public List<Order> orders { get; set; }
+        public List<Order> Orders { get; set; }
 
         [ForeignKey("Product")]
         public int ProductId { get; set; }
-        public List<Product> products { get; set; }
+        public List<Product> Products { get; set; }
 
         public int Quantity { get; set; }
         public double Price { get; set; }
 
         [ForeignKey("Coupon")]
         public int CounponId { get; set; }
-        public Coupon coupon { get; set; } 
+        public Coupon Coupon { get; set; } 
 
     }
 }

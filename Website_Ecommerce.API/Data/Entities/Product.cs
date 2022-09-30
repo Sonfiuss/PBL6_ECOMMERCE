@@ -9,6 +9,11 @@ namespace Website_Ecommerce.API.Data.Entities
 {
     public class Product
     {
+        public Product()
+        {
+            ProductImages = new List<ProductImage>();
+        }
+        
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
@@ -18,13 +23,13 @@ namespace Website_Ecommerce.API.Data.Entities
 
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
-        public List<Category> categories { get; set;}
+        public Category Category { get; set;}
 
 
         [ForeignKey("ProductImage")]
         public int ProductImageId { get; set; }
-        public List<ProductImage> productImages { get; set; }
+        public List<ProductImage> ProductImages { get; set; }
 
-        public int StateId { get; set; }
+        public int StateId { get; set; } //?
     }
 }

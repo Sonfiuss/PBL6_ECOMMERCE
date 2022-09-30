@@ -14,10 +14,10 @@ namespace Website_Ecommerce.API.Data.Entities
 
         [ForeignKey("User")]
         public int UserId { get; set; }
-        public List<User> users { get; set; }
+        public List<User> Users { get; set; }
 
         [ForeignKey("Role")]
         public int RoleId { get; set; }
-        public List<Role> roles { get; set; }
+        public List<Role> Roles { get; set; }
     }
 }
