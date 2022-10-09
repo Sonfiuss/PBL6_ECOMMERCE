@@ -35,7 +35,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseAuthentication(); // check ban la ai
+
+app.UseAuthorization(); //ban co quyen gi
 
 app.MapControllers();
 
