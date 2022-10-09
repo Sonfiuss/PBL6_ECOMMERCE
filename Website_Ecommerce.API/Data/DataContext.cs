@@ -1,0 +1,141 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Website_Ecommerce.API.Data.Entities;
+
+namespace Website_Ecommerce.API.Data
+{
+    public class DataContext : DbContext
+    {
+        public DataContext(DbContextOptions<DataContext> options) : base(options) { }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Shop> Shops { get; set; }
+        public DbSet<ProductDetail> ProductDetails { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<Shipper> Shippers { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<VoucherOrder> VoucherOrders { get; set; }
+        public DbSet<VoucherProduct> VoucherProducts { get; set; }
+
+ 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //Product
+            modelBuilder.Entity<Product>()
+                .HasOne<Category>(p => p.Category)   //1 product - 1 category
+                .WithMany(c => c.Products) //1 category - n product
+                .HasForeignKey(p => p.CategoryId); // foreignKey of Product is CategoryId
+            modelBuilder.Entity<Product>()
+                .HasOne<Shop>(p => p.Shop)
+                .WithMany(s => s.Products)
+                .HasForeignKey(p => p.ShopId);
+
+            //ProductDetail
+            modelBuilder.Entity<ProductDetail>()
+                .HasOne<Product>(pd => pd.Product)
+                .WithMany(p => p.ProductDetails)
+                .HasForeignKey(pd => pd.ProductId);
+
+            //ProdcutImage
+            modelBuilder.Entity<ProductImage>()
+                .HasOne<ProductDetail>(pi => pi.ProductDetail)  
+                .WithMany(pd => pd.ProductImages)
+                .HasForeignKey(pi => pi.ProductDetailId);
+
+            //OrderDetail
+            modelBuilder.Entity<OrderDetail>().HasKey(od => new { od.OrderId, od.ProductId});
+            modelBuilder.Entity<OrderDetail>()
+                .HasOne<Order>(od => od.Order)
+                .WithMany(o => o.OrderDetails)
+                .HasForeignKey(od => od.OrderId);
+            modelBuilder.Entity<OrderDetail>()
+                .HasOne<Product>(od => od.Product)
+                .WithMany(o => o.OrderDetails)
+                .HasForeignKey(od => od.ProductId);
+            modelBuilder.Entity<OrderDetail>()
+                .HasOne<VoucherProduct>(od => od.VoucherProduct)
+                .WithMany(vs => vs.OrderDetails)
+                .HasForeignKey(od => od.VoucherProductId);
+
+            //UserRole
+            modelBuilder.Entity<UserRole>().HasKey(ur => new { ur.UserId, ur.RoleId});
+            modelBuilder.Entity<UserRole>()
+                .HasOne<User>(ur => ur.User)
+                .WithMany(u => u.UserRoles)
+                .HasForeignKey(ur => ur.UserId);
+            modelBuilder.Entity<UserRole>()
+                .HasOne<Role>(ur => ur.Role)
+                .WithMany(u => u.UserRoles)
+                .HasForeignKey(ur => ur.RoleId);
+
+            //Payment
+            modelBuilder.Entity<Payment>()
+                .HasOne<PaymentMethod>(p => p.PaymentMethod)
+                .WithMany(pm => pm.Payments)
+                .HasForeignKey(p => p.PaymentMethodId);
+            modelBuilder.Entity<Payment>()
+                .HasOne<Order>(p => p.Order)
+                .WithOne(o => o.Payment)
+                .HasForeignKey<Payment>(p => p.OrderId);
+            
+            //Order
+            modelBuilder.Entity<Order>()
+                .HasOne<VoucherOrder>(o => o.VoucherOrder)
+                .WithMany(v => v.Orders)
+                .HasForeignKey(o => o.VoucherId);
+            modelBuilder.Entity<Order>()
+                .HasOne<User>(o => o.User)
+                .WithMany(u => u.Orders)
+                .HasForeignKey(o => o.UserId);
+
+            //VoucherProduct
+            modelBuilder.Entity<VoucherProduct>()
+                .HasOne<Product>(vp => vp.Product)
+                .WithMany(p => p.VoucherProducts)
+                .HasForeignKey(vp => vp.ProductId);
+
+            //Comment
+            modelBuilder.Entity<Comment>()
+                .HasOne<Product>(cm => cm.Product)
+                .WithMany(p => p.Comments)
+                .HasForeignKey(cm => cm.ProductId);
+            modelBuilder.Entity<Comment>()
+                .HasOne<User>(cm => cm.User)
+                .WithMany(u => u.Comments)
+                .HasForeignKey(cm => cm.UserId);
+
+            //shipper
+            modelBuilder.Entity<Shipper>()
+                .HasOne<User>(sp => sp.User)
+                .WithOne(u => u.Shipper)
+                .HasForeignKey<Shipper>(sp => sp.UserId);
+            modelBuilder.Entity<Shipper>()
+                .HasOne<Order>(sp => sp.Order)
+                .WithOne(o => o.Shipper)
+                .HasForeignKey<Shipper>(sp => sp.OrderId);
+
+            //Cart
+            modelBuilder.Entity<Cart>()
+                .HasOne<Product>(ct => ct.Product)
+                .WithMany(p => p.Carts)
+                .HasForeignKey(ct => ct.ProductId);
+            modelBuilder.Entity<Cart>()
+                .HasOne<User>(ct => ct.User)
+                .WithMany(u => u.Carts)
+                .HasForeignKey(ct => ct.UserId);       
+
+            base.OnModelCreating(modelBuilder);
+        }
+    }
+}

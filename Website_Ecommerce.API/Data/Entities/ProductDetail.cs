@@ -7,25 +7,21 @@ using System.Threading.Tasks;
 
 namespace Website_Ecommerce.API.Data.Entities
 {
-    public class OrderDetail
+    public class ProductDetail
     {
         [Key]
-        [Column(Order = 1)]
-        public int OrderId { get; set; }
-        public Order Order { get; set; }
-        
-        [Key]
-        [Column(Order = 2)]
+        public int Id { get; set; }
+
+        [ForeignKey("Product")]
         public int ProductId { get; set; }
         public Product Product { get; set; }
 
-        [ForeignKey("VoucherShop")]
-        public int VoucherProductId { get; set; }
-        public VoucherProduct VoucherProduct { get; set; } 
-
+        public string Size { get; set; }
+        public string Color { get; set; }
         public int Amount { get; set; }
         public double Price { get; set; }
-        public string Note { get; set; }
+
+        public ICollection<ProductImage> ProductImages { get; set; }
 
     }
 }

@@ -11,11 +11,10 @@ namespace Website_Ecommerce.API.Data.Entities
     {
         [Key]
         public int Id { get; set; }
-        public string Image { get; set; }
-        public bool MainImage { get; set; }
         
-        [ForeignKey("Product")]
-        public int ProductId { get; set; }
-        public Product Product { get; set; }
+        [ForeignKey("ProductDetail")]
+        public int ProductDetailId { get; set; }
+        public ProductDetail ProductDetail { get; set; }
+        public string UrlImage { get; set; }
     }
 }

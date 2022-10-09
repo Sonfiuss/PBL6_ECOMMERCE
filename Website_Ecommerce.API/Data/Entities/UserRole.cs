@@ -15,7 +15,7 @@ namespace Website_Ecommerce.API.Data.Entities
         public User User { get; set; }
 
         [Key]
-        [Column(Order = 1)]
+        [Column(Order = 2)]
         public int RoleId { get; set; }
         public Role Role { get; set; }
     }

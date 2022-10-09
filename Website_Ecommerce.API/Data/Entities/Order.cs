@@ -11,17 +11,22 @@ namespace Website_Ecommerce.API.Data.Entities
     {
         [Key]
         public int Id { get; set; }
+        public int State { get; set; }
 
+        public string Address { get; set; }
+        public DateTime CreateDate { get; set; }
+        public DateTime SendDate { get; set; }
+        
         [ForeignKey("User")]
         public int UserId { get; set; }
         public User User { get; set; }
 
-        public DateTime CreateDate { get; set; }
-        public string Note { get; set; }
+        [ForeignKey("Voucher")]
+        public int VoucherId { get; set; } 
+        public VoucherOrder VoucherOrder { get; set; }
 
-        // [ForeignKey("Shipper")]
-        // public int ShipperId { get; set; }
-
+        public Shipper Shipper { get; set; }
+        public Payment Payment { get; set; }
         public IList<OrderDetail> OrderDetails { get; set; }
     }
 }

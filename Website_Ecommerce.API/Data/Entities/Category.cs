@@ -13,6 +13,7 @@ namespace Website_Ecommerce.API.Data.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public ICollection<Product> Products { get; set; }
+
         
     }
 }

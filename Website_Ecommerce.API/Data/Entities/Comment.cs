@@ -7,18 +7,22 @@ using System.Threading.Tasks;
 
 namespace Website_Ecommerce.API.Data.Entities
 {
-    public class Shipper
+    public class Comment
     {
+        
         [Key]
         public int Id { get; set; }
+
+        [ForeignKey("Product")]
+        public int ProductId { get; set; }
+        public Product Product { get; set; }
 
         [ForeignKey("User")]
         public int UserId { get; set; }
         public User User { get; set; }
-        [ForeignKey("Order")]
-        public int OrderId { get; set; }
-        public Order Order { get; set; }
-
-        public bool Status { get; set; }
+        
+        public string Content { get; set; }
+        public int Status { get; set; }
+        
     }
 }

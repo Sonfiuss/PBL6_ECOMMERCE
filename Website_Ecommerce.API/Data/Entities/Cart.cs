@@ -7,18 +7,19 @@ using System.Threading.Tasks;
 
 namespace Website_Ecommerce.API.Data.Entities
 {
-    public class Payment
+    public class Cart
     {
         [Key]
         public int Id { get; set; }
 
-        [ForeignKey("Order")]
-        public int OrderId { get; set; }
-        public Order Order { get; set; }
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+        public User User { get; set; }
 
-
-        [ForeignKey("PaymentMethod")]
-        public int PaymentMethodId { get; set; }
-        public PaymentMethod PaymentMethod { get; set; }
+        [ForeignKey("Product")]
+        public int ProductId { get; set; }
+        public Product Product { get; set; }
+        
+        public int Amount { get; set; }
     }
 }
