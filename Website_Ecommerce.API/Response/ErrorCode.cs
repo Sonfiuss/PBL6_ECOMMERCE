@@ -12,7 +12,7 @@ namespace Website_Ecommerce.API.Response
         public const string ValidateError = "00000010";
         public const string NotFound = "00000011";
         public const string NotEmpty = "00000100";
-        public const string e00000101 = "00000101";
+        public const string ExistedDB = "00000101";
         public const string e00000111 = "00000111";
         public const string e00001000 = "00001000";
         public const string e00001001 = "00001001";
