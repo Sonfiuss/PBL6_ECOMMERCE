@@ -14,7 +14,7 @@ namespace Website_Ecommerce.API.Data.Entities
         public string Name { get; set; }
         public string Material { get; set; }
         public string Origin { get; set; }
-        public int Description { get; set; }
+        public string Description { get; set; }
 
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
