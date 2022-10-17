@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data.Entities;
+using Website_Ecommerce.API.Repositories;
 
 namespace Website_Ecommerce.API.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : DbContext, IUnitOfWork
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
         public DbSet<Product> Products { get; set; }
@@ -28,7 +29,11 @@ namespace Website_Ecommerce.API.Data
         public DbSet<VoucherOrder> VoucherOrders { get; set; }
         public DbSet<VoucherProduct> VoucherProducts { get; set; }
 
- 
+        public async Task<int> SaveAsync(CancellationToken cancellationToken = default)
+        {
+            return await SaveChangesAsync(cancellationToken);
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Product

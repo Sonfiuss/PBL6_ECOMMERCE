@@ -16,47 +16,58 @@ namespace Website_Ecommerce.API.Repositories
         {
             _dataContext = dataContext;
         }
-        public Product? GetProductById(int id)
-        {
-            return _dataContext.Products.FirstOrDefault(p => p.Id == id);
-        }
 
-        public List<Product> GetProducts()
-        {
-            return _dataContext
-            .Products
-            .Include(p => p.Category) //join table category
-            .ToList();
-        }
+        public IQueryable<Product> Products => _dataContext.Products;
 
-        public void CreateProduct(Product product)
+        public IUnitOfWork UnitOfWork => _dataContext;
+
+        public IQueryable<ProductDetail> ProductDetails => _dataContext.ProductDetails;
+
+        public IQueryable<ProductImage> ProductImages => throw new NotImplementedException();
+
+        public void Add(Product product)
         {
             _dataContext.Products.Add(product);
-            _dataContext.SaveChanges();
         }
 
-        public void UpdateProduct(Product product)
+        public void Add(ProductDetail productDetail)
         {
-            var existedProduct = GetProductById(product.Id);
-            if(existedProduct == null) return;
-            existedProduct.Name = product.Name;
-            existedProduct.CategoryId = product.CategoryId;
-            existedProduct.ShopId = product.ShopId;
-            existedProduct.Material = product.Material;
-            existedProduct.Origin = product.Origin;
-            existedProduct.Description = product.Description;
-            existedProduct.Status = product.Status;
-            _dataContext.Products.Update(existedProduct);
-            _dataContext.SaveChanges();
+            _dataContext.ProductDetails.Add(productDetail);
         }
-        
 
-        public void DeleteProduct(int Id)
+        public void Add(ProductImage productImage)
         {
-            var existedProduct = GetProductById(Id);
-            if(existedProduct == null) return;
-            _dataContext.Products.Remove(existedProduct);
-            _dataContext.SaveChanges();
+            _dataContext.ProductImages.Add(productImage);
+        }
+
+        public void Delete(Product product)
+        {
+            _dataContext.Entry(product).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+        }
+
+        public void Delete(ProductDetail productDetail)
+        {
+            _dataContext.Entry(productDetail).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+        }
+
+        public void Delete(ProductImage productImage)
+        {
+            _dataContext.Entry(productImage).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+        }
+
+        public void Update(Product product)
+        {
+            _dataContext.Entry(product).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        }
+
+        public void Update(ProductDetail productDetail)
+        {
+            _dataContext.Entry(productDetail).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        }
+
+        public void Update(ProductImage productImage)
+        {
+            _dataContext.Entry(productImage).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         }
     }
 }

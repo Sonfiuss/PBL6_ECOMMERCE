@@ -6,13 +6,20 @@ using Website_Ecommerce.API.Data.Entities;
 
 namespace Website_Ecommerce.API.Repositories
 {
-    public interface IProductRepository
+    public interface IProductRepository : IRepository<Product>
     {
-        List<Product> GetProducts();
-        Product? GetProductById(int id);
+        IQueryable<Product> Products { get; }
 
-        void CreateProduct(Product product);
-        void UpdateProduct(Product product);
-        void DeleteProduct(int Id);
+        void Add(Product product);
+        void Update(Product product);
+        void Delete(Product product);
+        IQueryable<ProductDetail> ProductDetails { get; }
+        void Add(ProductDetail productDetail);
+        void Update(ProductDetail productDetail);
+        void Delete(ProductDetail productDetail);
+        IQueryable<ProductImage> ProductImages { get; }
+        void Add(ProductImage productImage);
+        void Update(ProductImage productImage);
+        void Delete(ProductImage productImage);
     }
 }

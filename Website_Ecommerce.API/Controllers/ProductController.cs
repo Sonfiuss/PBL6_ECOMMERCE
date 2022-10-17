@@ -21,7 +21,7 @@ namespace Website_Ecommerce.API.Controllers
             _productRepository = productRepository;
         }
 
-        [HttpPost]
+        [HttpPost("add-product")]
         public IActionResult AddProduct([FromBody] ProductDto productDto)
         {
             Product product = new Product();
@@ -32,7 +32,7 @@ namespace Website_Ecommerce.API.Controllers
             product.Description = productDto.Description;
             product.CategoryId = product.CategoryId;
             product.Status = productDto.Status;
-            _productRepository.CreateProduct(product);
+            _productRepository.Add(product);
             return Ok( new Response<ResponseDefault>()
             {
                 State = true,

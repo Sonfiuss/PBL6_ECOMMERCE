@@ -13,7 +13,7 @@ namespace Website_Ecommerce.API.Response
         public const string NotFound = "00000011";
         public const string NotEmpty = "00000100";
         public const string ExistedDB = "00000101";
-        public const string e00000111 = "00000111";
+        public const string ExcuteDB = "00000111";
         public const string e00001000 = "00001000";
         public const string e00001001 = "00001001";
         public const string e00001011 = "00001011";

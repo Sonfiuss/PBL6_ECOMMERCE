@@ -1,5 +1,7 @@
 using Website_Ecommerce.API.Data;
 using Microsoft.EntityFrameworkCore;
+using Website_Ecommerce.API.Repositories;
+using Website_Ecommerce.API.services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,10 @@ services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
+
+services.AddTransient<ITokenService, TokenService>();
+services.AddTransient<IProductRepository, ProductRepository>();
+services.AddTransient<ICategroyRepository, CategroyRepository>();
 
 var app = builder.Build();
 
