@@ -10,6 +10,8 @@ namespace Website_Ecommerce.API.Data.Entities
     {
         [Key]
         public int Id { get; set; }
+        [Required]
+        [MaxLength(32)]
         public string Name { get; set; }
 
         public IList<UserRole> UserRoles { get; set; }

@@ -138,7 +138,13 @@ namespace Website_Ecommerce.API.Data
             modelBuilder.Entity<Cart>()
                 .HasOne<User>(ct => ct.User)
                 .WithMany(u => u.Carts)
-                .HasForeignKey(ct => ct.UserId);       
+                .HasForeignKey(ct => ct.UserId);    
+
+            //Shop
+            modelBuilder.Entity<Shop>()
+                .HasOne<User>(s => s.User)
+                .WithOne(u => u.Shop)
+                .HasForeignKey<Shop>(s => s.UserId);   
 
             base.OnModelCreating(modelBuilder);
         }

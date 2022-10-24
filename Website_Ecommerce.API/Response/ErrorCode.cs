@@ -14,8 +14,8 @@ namespace Website_Ecommerce.API.Response
         public const string NotEmpty = "00000100";
         public const string ExistedDB = "00000101";
         public const string ExcuteDB = "00000111";
-        public const string e00001000 = "00001000";
-        public const string e00001001 = "00001001";
+        public const string Forbidden = "00001000";
+        public const string ExistUserOrEmail = "00001001";
         public const string e00001011 = "00001011";
         public const string L00001111 = "00001111";
         public const string e00010000 = "00010000";

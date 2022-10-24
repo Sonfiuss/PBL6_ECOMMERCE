@@ -20,9 +20,10 @@ namespace Website_Ecommerce.API.Data.Entities
         [ForeignKey("User")]
         public int UserId { get; set; }
         public User User { get; set; }
-        
+        [Required]
+        [MaxLength(1024)]
         public string Content { get; set; }
-        public int Status { get; set; }
+        public int State { get; set; }
         
     }
 }

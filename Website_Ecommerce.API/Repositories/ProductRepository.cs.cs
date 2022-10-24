@@ -23,7 +23,7 @@ namespace Website_Ecommerce.API.Repositories
 
         public IQueryable<ProductDetail> ProductDetails => _dataContext.ProductDetails;
 
-        public IQueryable<ProductImage> ProductImages => throw new NotImplementedException();
+        public IQueryable<ProductImage> ProductImages => _dataContext.ProductImages;
 
         public void Add(Product product)
         {

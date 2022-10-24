@@ -19,7 +19,7 @@ namespace Website_Ecommerce.API.Data.Entities
         [ForeignKey("Product")]
         public int ProductId { get; set; }
         public Product Product { get; set; }
-        
+        [Required]
         public int Amount { get; set; }
     }
 }

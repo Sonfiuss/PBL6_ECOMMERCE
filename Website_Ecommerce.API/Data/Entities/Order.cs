@@ -13,8 +13,12 @@ namespace Website_Ecommerce.API.Data.Entities
         public int Id { get; set; }
         public int State { get; set; }
 
+        [Required]
+        [MaxLength(256)]
         public string Address { get; set; }
+        [Required]
         public DateTime CreateDate { get; set; }
+        [Required]
         public DateTime SendDate { get; set; }
         
         [ForeignKey("User")]
@@ -25,7 +29,8 @@ namespace Website_Ecommerce.API.Data.Entities
         public int VoucherId { get; set; } 
         public VoucherOrder VoucherOrder { get; set; }
 
-        public Shipper Shipper { get; set; }
+        public Shipper? Shipper { get; set; }
+        [Required]
         public Payment Payment { get; set; }
         public IList<OrderDetail> OrderDetails { get; set; }
     }

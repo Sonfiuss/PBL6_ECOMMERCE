@@ -15,6 +15,7 @@ namespace Website_Ecommerce.API.Data.Entities
         [ForeignKey("ProductDetail")]
         public int ProductDetailId { get; set; }
         public ProductDetail ProductDetail { get; set; }
+        [Required]
         public string UrlImage { get; set; }
     }
 }

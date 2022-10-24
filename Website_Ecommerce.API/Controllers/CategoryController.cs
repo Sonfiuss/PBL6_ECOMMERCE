@@ -98,10 +98,10 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
         
-        [HttpDelete("delete-category")]
-        public async Task<IActionResult> DeleteCategory([FromQuery] int Id, CancellationToken cancellationToken)
+        [HttpDelete("delete-category/{id}")]
+        public async Task<IActionResult> DeleteCategory(int id)
         {
-            Category category = _categroyRepository.Categories.FirstOrDefault(c => c.Id == Id);
+            Category category = _categroyRepository.Categories.FirstOrDefault(c => c.Id == id);
             if(category == null)
             {
                 return BadRequest( new Response<ResponseDefault>()
@@ -116,7 +116,7 @@ namespace Website_Ecommerce.API.Controllers
             }
 
             _categroyRepository.Delete(category);
-            var result = await _categroyRepository.UnitOfWork.SaveAsync(cancellationToken);
+            var result = await _categroyRepository.UnitOfWork.SaveAsync();
 
             if(result > 0)
             {
@@ -139,6 +139,13 @@ namespace Website_Ecommerce.API.Controllers
                     Data = "Delete category fail"
                 }
             });
+        }
+
+        [HttpGet("list-categrory")]
+
+        public async Task<IActionResult> GetListCategory()
+        {
+            return Ok(await _categroyRepository.Categories.ToListAsync());
         }
     }
 }

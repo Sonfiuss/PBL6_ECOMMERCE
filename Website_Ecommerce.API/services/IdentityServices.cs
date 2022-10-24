@@ -4,15 +4,18 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using System.Security.Cryptography;
 using Website_Ecommerce.API.Data.Entities;
 
 namespace Website_Ecommerce.API.services
 {
-    public class TokenService : ITokenService
+    public class IdentityServices : IIdentityServices
     {
         private readonly IConfiguration _configuration;
-        public TokenService(IConfiguration configuration)
+        public IdentityServices(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -21,8 +24,7 @@ namespace Website_Ecommerce.API.services
         {
             var claims = new List<Claim>()
             {
-                new Claim(JwtRegisteredClaimNames.NameId, username),
-                new Claim(JwtRegisteredClaimNames.Email, $"{username}@dating.app")
+                new Claim(JwtRegisteredClaimNames.NameId, username)
             };
  
             var symmetricKey = new SymmetricSecurityKey(

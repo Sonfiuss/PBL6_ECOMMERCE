@@ -22,10 +22,12 @@ namespace Website_Ecommerce.API.Data.Entities
         [ForeignKey("VoucherShop")]
         public int VoucherProductId { get; set; }
         public VoucherProduct VoucherProduct { get; set; } 
-
+        [Required]
         public int Amount { get; set; }
+        [Required]
         public double Price { get; set; }
-        public string Note { get; set; }
+        [MaxLength(256)]
+        public string? Note { get; set; }
 
     }
 }

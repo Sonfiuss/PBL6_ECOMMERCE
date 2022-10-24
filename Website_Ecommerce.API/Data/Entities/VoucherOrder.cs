@@ -10,8 +10,11 @@ namespace Website_Ecommerce.API.Data.Entities
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public double Value { get; set; }
+        [Required]
         public double MinPrice { get; set; }
+        [Required]
         public int Amount { get; set; }
         public ICollection<Order> Orders { get; set; }
     }

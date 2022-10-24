@@ -18,7 +18,7 @@ namespace Website_Ecommerce.API.Data.Entities
         [ForeignKey("Order")]
         public int OrderId { get; set; }
         public Order Order { get; set; }
-
+        [Required]
         public bool Status { get; set; }
     }
 }

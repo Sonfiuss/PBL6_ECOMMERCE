@@ -11,10 +11,14 @@ namespace Website_Ecommerce.API.Data.Entities
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Material { get; set; }
+        [Required]
         public string Origin { get; set; }
-        public string Description { get; set; }
+        [MaxLength(256)]
+        public string? Description { get; set; }
 
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
@@ -23,6 +27,7 @@ namespace Website_Ecommerce.API.Data.Entities
         [ForeignKey("Shop")]
         public int ShopId { get; set; }
         public Shop Shop { get; set;}
+        [Required]
         public int Status { get; set; }
 
         public ICollection<ProductDetail> ProductDetails { get; set; }
