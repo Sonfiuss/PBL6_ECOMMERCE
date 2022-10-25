@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Website_Ecommerce.API.Data.Entities
 {
-    public class Category
+    public class Role
     {
         [Key]
         public int Id { get; set; }

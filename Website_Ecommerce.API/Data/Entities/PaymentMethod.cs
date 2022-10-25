@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 
 namespace Website_Ecommerce.API.Data.Entities
 {
-    public class Category
+    public class PaymentMethod
     {
         [Key]
         public int Id { get; set; }
-        public string Name { get; set; }
+        public String Name { get; set; }
+        public String Config { get; set; }
+        public String CreateDate { get; set; }
+
     }
 }
