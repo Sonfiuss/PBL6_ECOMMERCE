@@ -10,6 +10,7 @@ namespace Website_Ecommerce.API.Data.Entities
     public class UserRole
     {
         [Key]
+<<<<<<< HEAD
         public int Id { get; set; }
 
         [ForeignKey("User")]
@@ -19,5 +20,15 @@ namespace Website_Ecommerce.API.Data.Entities
         [ForeignKey("Role")]
         public int RoleId { get; set; }
         public List<Role> roles { get; set; }
+=======
+        [Column(Order = 1)]
+        public int UserId { get; set; }
+        public User User { get; set; }
+
+        [Key]
+        [Column(Order = 2)]
+        public int RoleId { get; set; }
+        public Role Role { get; set; }
+>>>>>>> 31f0e805f63357d227287102869eabfb0c22e234
     }
 }

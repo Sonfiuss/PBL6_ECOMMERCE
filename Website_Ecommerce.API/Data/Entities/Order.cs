@@ -11,6 +11,7 @@ namespace Website_Ecommerce.API.Data.Entities
     {
         [Key]
         public int Id { get; set; }
+<<<<<<< HEAD
 
         [ForeignKey("User")]
         public int UserId { get; set; }
@@ -21,5 +22,29 @@ namespace Website_Ecommerce.API.Data.Entities
 
         // [ForeignKey("Shipper")]
         // public int ShipperId { get; set; }
+=======
+        public int State { get; set; }
+
+        [Required]
+        [MaxLength(256)]
+        public string Address { get; set; }
+        [Required]
+        public DateTime CreateDate { get; set; }
+        [Required]
+        public DateTime SendDate { get; set; }
+        
+        [ForeignKey("User")]
+        public int UserId { get; set; }
+        public User User { get; set; }
+
+        [ForeignKey("Voucher")]
+        public int VoucherId { get; set; } 
+        public VoucherOrder VoucherOrder { get; set; }
+
+        public Shipper? Shipper { get; set; }
+        [Required]
+        public Payment Payment { get; set; }
+        public IList<OrderDetail> OrderDetails { get; set; }
+>>>>>>> 31f0e805f63357d227287102869eabfb0c22e234
     }
 }
