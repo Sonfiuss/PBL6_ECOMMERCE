@@ -124,3 +124,6 @@ D:/Semester7/PBL6/Website_Ecommerce.API/bin/Debug/net6.0/Pomelo.EntityFrameworkC
 /Users/vovanban/Documents/Kỳ 7/PBL6/PBL6_ECOMMERCE/Website_Ecommerce.API/obj/Debug/net6.0/Website_Ecommerce.API.csproj.CopyComplete
 /Users/vovanban/Documents/Kỳ 7/PBL6/PBL6_ECOMMERCE/Website_Ecommerce.API/obj/Debug/net6.0/Website_Ecommerce.API.genruntimeconfig.cache
 /Users/vovanban/Documents/Kỳ 7/PBL6/PBL6_ECOMMERCE/Website_Ecommerce.API/obj/Debug/net6.0/ref/Website_Ecommerce.API.dll
+/Users/vovanban/Documents/Kỳ 7/PBL6/PBL6_ECOMMERCE/Website_Ecommerce.API/bin/Debug/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/vovanban/Documents/Kỳ 7/PBL6/PBL6_ECOMMERCE/Website_Ecommerce.API/bin/Debug/net6.0/Microsoft.IdentityModel.Abstractions.dll
+/Users/vovanban/Documents/Kỳ 7/PBL6/PBL6_ECOMMERCE/Website_Ecommerce.API/bin/Debug/net6.0/Newtonsoft.Json.dll

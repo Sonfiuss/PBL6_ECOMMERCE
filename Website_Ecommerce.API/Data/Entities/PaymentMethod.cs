@@ -10,9 +10,12 @@ namespace Website_Ecommerce.API.Data.Entities
     {
         [Key]
         public int Id { get; set; }
-        public String Name { get; set; }
-        public String Config { get; set; }
-        public String CreateDate { get; set; }
+        [Required]
+        public String NameMethod { get; set; }
+        [Required]
+        public String Config { get; set; } /// JSon
+
+        public ICollection<Payment> Payments { get; set; }
 
     }
 }
