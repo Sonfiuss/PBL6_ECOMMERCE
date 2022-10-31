@@ -14,13 +14,11 @@ namespace Website_Ecommerce.API.Data.Entities
 
         [ForeignKey("Order")]
         public int OrderId { get; set; }
-        public Order order { get; set; }
+        public Order Order { get; set; }
 
 
         [ForeignKey("PaymentMethod")]
         public int PaymentMethodId { get; set; }
-        public virtual PaymentMethod PayMethod { get; set; }
-
-        public String Details { get; set; }
+        public PaymentMethod PaymentMethod { get; set; }
     }
 }
