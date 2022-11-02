@@ -24,7 +24,9 @@ namespace Website_Ecommerce.API.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IIdentityServices _identityServices;
 
-        public AuthController(IUserRepository userRepository, IIdentityServices identityServices)
+        public AuthController(
+            IUserRepository userRepository, 
+            IIdentityServices identityServices)
         {
             _userRepository = userRepository;
             _identityServices = identityServices;
@@ -50,15 +52,13 @@ namespace Website_Ecommerce.API.Controllers
             {
                 check = true;
             }
-            using var hmac = new HMACSHA512();
-            var passwordBytes = Encoding.UTF8.GetBytes(request.Password);
+            
             var user = new User {
                 Username = request.Username,
-                Email = request.Username + "@gmail.com",
+                Email = request.Email,
                 Gender = request.Gender,
                 IsBlock = check,
-                PasswordSalt = hmac.Key,
-                Password = hmac.ComputeHash(passwordBytes)
+                Password = _identityServices.GetMD5(request.Password)
             };
 
             _userRepository.Add(user);
@@ -99,55 +99,50 @@ namespace Website_Ecommerce.API.Controllers
         
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginDto request, CancellationToken cancellationToken)
+        public async Task<Response<ResponseToken>> Login(LoginDto request, CancellationToken cancellationToken)
         {
-            User currentUser = await _userRepository.Users.FirstOrDefaultAsync(x => x.Username == request.Username);
+            User user = await _userRepository.Users.FirstOrDefaultAsync(x => x.Username == request.Username);
 
-            if (currentUser == null)
+            if (user == null)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return new Response<ResponseToken>()
                 {
                     State = false,
                     Message = ErrorCode.NotFound
-                });
+                };
             }
 
-            using var hmac = new HMACSHA512(currentUser.PasswordSalt);
-            var passwordBytes = hmac.ComputeHash(
-                Encoding.UTF8.GetBytes(request.Password)
-            );
-            //check tung byte cua password voi 
-            for(int i = 0; i < currentUser.Password.Length; i++)
-            {
-                if(currentUser.Password[i] != passwordBytes[i])
-                {
-                    return BadRequest( new Response<ResponseDefault>()
-                    {
-                        State = false,
-                        Message = ErrorCode.BadRequest
-                    });
-                }
-            }
             
-            //lay role cua user hien tai
-            List<string> roleIds = _userRepository.UserRoles
-                .Where(x => x.UserId == currentUser.Id).Select(x => x.Role.Name).ToList();
-
-            string token = _identityServices.CreateToken(
-                currentUser.Id,
-                currentUser.Username,
-                roleIds
-                );
-
-            return Ok( new Response<ResponseDefault>()
+            if (_identityServices.VerifyMD5Hash(user.Password, _identityServices.GetMD5(request.Password)))
             {
-                State = true,
-                Message = ErrorCode.Success,
-                Result = new ResponseDefault()
+                int timeOut = 60 * 60 *24;
+
+                List<int> roleIds = _userRepository.UserRoles
+                    .Where(x => x.UserId == user.Id).Select(x => x.RoleId).ToList();
+
+                string token = _identityServices.GenerateToken(
+                    user.Id,user.Username,
+                    roleIds,
+                    timeOut);
+
+                return new Response<ResponseToken>()
                 {
-                    Data = "Bearer " + token,
-                }
-            });
+                    State = true,
+                    Message = ErrorCode.Success,
+                    Result = new ResponseToken()
+                    {
+                        Token = token,
+                    }
+                };
+            }
+            else
+            {
+                return new Response<ResponseToken>()
+                {
+                    State = false,
+                    Message = ErrorCode.BadRequest,
+                };
+            }
         }
 
         

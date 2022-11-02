@@ -30,7 +30,7 @@ namespace Website_Ecommerce.API.Data.Entities
         public int Rate { get; set; }
         public int TotalRate{ get; set; }
         [Required]
-        public int Status { get; set; }
+        public bool Status { get; set; }
 
         public ICollection<Product> Products { get; set; }
         

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data.Entities;
@@ -13,6 +14,7 @@ namespace Website_Ecommerce.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
@@ -67,14 +69,14 @@ namespace Website_Ecommerce.API.Controllers
 
 
             return Ok( new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
                 {
-                    State = true,
-                    Message = ErrorCode.Success,
-                    Result = new ResponseDefault()
-                    {
-                        Data = "Add Product success"
-                    }
-                });
+                    Data = "Add Product success"
+                }
+            });
         }
 
         [HttpPost("update-product")]
@@ -212,13 +214,13 @@ namespace Website_Ecommerce.API.Controllers
         }
 
 
-        [HttpGet("get-list-product-by-shopId/{id}")]
-        public async Task<IActionResult> GetListProduct(int shopId)
-        {
-            // var products = _productRepository.Products.Include(pc => pc.ProductCategories).In 
-            string userName = _httpContext.HttpContext.User.Identity.Name.ToString();
-            return Ok(userName);
-        }
+        // [HttpGet("get-list-product-by-shopId/{id}")]
+        // public async Task<IActionResult> GetListProduct(int shopId)
+        // {
+            
+        //     string userName = _httpContext.HttpContext.User.Identity.Name.ToString();
+        //     return Ok(userName);
+        // }
 
         [HttpGet("get-username-from-token")]
         public IActionResult GetUSername()

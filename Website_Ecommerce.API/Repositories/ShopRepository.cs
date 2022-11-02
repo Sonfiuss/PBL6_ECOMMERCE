@@ -18,6 +18,8 @@ namespace Website_Ecommerce.API.Repositories
 
         public IQueryable<Shop> Shops => _dataContext.Shops;
 
+        public IUnitOfWork UnitOfWork => _dataContext;
+
         public void Add(Shop shop)
         {
             _dataContext.Shops.Add(shop);

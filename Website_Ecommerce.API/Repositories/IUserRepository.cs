@@ -18,5 +18,11 @@ namespace Website_Ecommerce.API.Repositories
         void Update(UserRole userRole);
         void Delete(UserRole userRole);
 
+        IQueryable<Role> Roles { get; }
+        void Add(Role role);
+        void Update(Role role);
+        void Delete(Role role);
+        
+
     }
 }

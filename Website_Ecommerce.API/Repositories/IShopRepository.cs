@@ -6,7 +6,7 @@ using Website_Ecommerce.API.Data.Entities;
 
 namespace Website_Ecommerce.API.Repositories
 {
-    public interface IShopRepository
+    public interface IShopRepository : IRepository<Shop>
     {
         IQueryable<Shop> Shops { get; }
         void Add(Shop shop);
