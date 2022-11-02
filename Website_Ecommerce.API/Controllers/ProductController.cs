@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,15 +15,12 @@ namespace Website_Ecommerce.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "MyAuthKey")]
     [Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
         private readonly IHttpContextAccessor _httpContext;
-
-        public ProductController()
-        {
-        }
 
         public ProductController(
             IProductRepository productRepository,
@@ -214,7 +212,7 @@ namespace Website_Ecommerce.API.Controllers
         }
 
 
-        // [HttpGet("get-list-product-by-shopId/{id}")]
+        // [HttpGet("get-list-product-by-shopId/{id}")]e
         // public async Task<IActionResult> GetListProduct(int shopId)
         // {
             
@@ -223,10 +221,19 @@ namespace Website_Ecommerce.API.Controllers
         // }
 
         [HttpGet("get-username-from-token")]
-        public IActionResult GetUSername()
+        public async Task<IActionResult> GetUSername()
         {
             string userName =  _httpContext.HttpContext.User.Identity.Name.ToString();
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            if (identity != null)
+            {
+                IEnumerable<Claim> claims = identity.Claims;
+
+            }
+
             return Ok(userName);
+            // return Ok(identity.Claims);
+
         }
     }
 }
