@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Website_Ecommerce.API.Data.Entities
 {
-    public class Cart
+    public class CartItem
     {
         [Key]
         public int Id { get; set; }
@@ -16,10 +16,11 @@ namespace Website_Ecommerce.API.Data.Entities
         public int UserId { get; set; }
         public User User { get; set; }
 
-        [ForeignKey("Product")]
-        public int ProductId { get; set; }
-        public Product Product { get; set; }
+        [ForeignKey("ProductDetail")]
+        public int ProductDetailId { get; set; }
+        public ProductDetail productDetail { get; set; }
         [Required]
         public int Amount { get; set; }
+        
     }
 }

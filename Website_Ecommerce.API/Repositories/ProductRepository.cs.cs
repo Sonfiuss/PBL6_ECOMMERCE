@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+
 using Website_Ecommerce.API.Data;
 using Website_Ecommerce.API.Data.Entities;
 
@@ -53,6 +53,11 @@ namespace Website_Ecommerce.API.Repositories
         public void Delete(ProductImage productImage)
         {
             _dataContext.Entry(productImage).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+        }
+
+        public Product GetProductbyId(int productId)
+        {
+            return _dataContext.Products.Where(p => p.Id == productId).FirstOrDefault();
         }
 
         public void Update(Product product)

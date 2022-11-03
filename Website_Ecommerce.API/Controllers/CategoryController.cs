@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Semester7.PBL6.Website_Ecommerce.API.Data.Entities;
 using Website_Ecommerce.API.Data.Entities;
 using Website_Ecommerce.API.ModelDtos;
 using Website_Ecommerce.API.Repositories;

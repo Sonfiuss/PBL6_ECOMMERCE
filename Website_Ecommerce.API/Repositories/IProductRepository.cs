@@ -21,5 +21,6 @@ namespace Website_Ecommerce.API.Repositories
         void Add(ProductImage productImage);
         void Update(ProductImage productImage);
         void Delete(ProductImage productImage);
+        Product GetProductbyId(int productId);
     }
 }

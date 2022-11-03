@@ -19,31 +19,7 @@ namespace Website_Ecommerce.API.Data.Migrations
                 .HasAnnotation("ProductVersion", "6.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.Cart", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Carts");
-                });
-
-            modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.Category", b =>
+            modelBuilder.Entity("Semester7.PBL6.Website_Ecommerce.API.Data.Entities.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -57,6 +33,30 @@ namespace Website_Ecommerce.API.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.CartItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductDetailId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductDetailId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.Comment", b =>
@@ -248,6 +248,9 @@ namespace Website_Ecommerce.API.Data.Migrations
                     b.Property<string>("Color")
                         .HasColumnType("longtext");
 
+                    b.Property<int>("InitialPrice")
+                        .HasColumnType("int");
+
                     b.Property<double>("Price")
                         .HasColumnType("double");
 
@@ -349,8 +352,8 @@ namespace Website_Ecommerce.API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("Rate")
-                        .HasColumnType("int");
+                    b.Property<double>("Rate")
+                        .HasColumnType("double");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -361,8 +364,9 @@ namespace Website_Ecommerce.API.Data.Migrations
                     b.Property<int>("TotalRate")
                         .HasColumnType("int");
 
-                    b.Property<int>("UrlAvatar")
-                        .HasColumnType("int");
+                    b.Property<string>("UrlAvatar")
+                        .HasMaxLength(512)
+                        .HasColumnType("varchar(512)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -395,7 +399,7 @@ namespace Website_Ecommerce.API.Data.Migrations
                     b.Property<bool>("Gender")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<bool?>("IsBlock")
+                    b.Property<bool>("IsBlock")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("LastName")
@@ -488,11 +492,11 @@ namespace Website_Ecommerce.API.Data.Migrations
                     b.ToTable("VoucherProducts");
                 });
 
-            modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.Cart", b =>
+            modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.CartItem", b =>
                 {
-                    b.HasOne("Website_Ecommerce.API.Data.Entities.Product", "Product")
+                    b.HasOne("Website_Ecommerce.API.Data.Entities.ProductDetail", "productDetail")
                         .WithMany("Carts")
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("ProductDetailId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -502,9 +506,9 @@ namespace Website_Ecommerce.API.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Product");
-
                     b.Navigation("User");
+
+                    b.Navigation("productDetail");
                 });
 
             modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.Comment", b =>
@@ -593,7 +597,7 @@ namespace Website_Ecommerce.API.Data.Migrations
 
             modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.Product", b =>
                 {
-                    b.HasOne("Website_Ecommerce.API.Data.Entities.Category", "Category")
+                    b.HasOne("Semester7.PBL6.Website_Ecommerce.API.Data.Entities.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -692,7 +696,7 @@ namespace Website_Ecommerce.API.Data.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.Category", b =>
+            modelBuilder.Entity("Semester7.PBL6.Website_Ecommerce.API.Data.Entities.Category", b =>
                 {
                     b.Navigation("Products");
                 });
@@ -714,8 +718,6 @@ namespace Website_Ecommerce.API.Data.Migrations
 
             modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.Product", b =>
                 {
-                    b.Navigation("Carts");
-
                     b.Navigation("Comments");
 
                     b.Navigation("OrderDetails");
@@ -727,6 +729,8 @@ namespace Website_Ecommerce.API.Data.Migrations
 
             modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.ProductDetail", b =>
                 {
+                    b.Navigation("Carts");
+
                     b.Navigation("ProductImages");
                 });
 

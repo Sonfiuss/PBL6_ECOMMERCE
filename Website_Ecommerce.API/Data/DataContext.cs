@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Semester7.PBL6.Website_Ecommerce.API.Data.Entities;
 using Website_Ecommerce.API.Data.Entities;
 using Website_Ecommerce.API.Repositories;
 
@@ -23,7 +24,7 @@ namespace Website_Ecommerce.API.Data
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<Payment> Payments { get; set; }
-        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> Carts { get; set; }
         public DbSet<Shipper> Shippers { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<VoucherOrder> VoucherOrders { get; set; }
@@ -131,11 +132,11 @@ namespace Website_Ecommerce.API.Data
                 .HasForeignKey<Shipper>(sp => sp.OrderId);
 
             //Cart
-            modelBuilder.Entity<Cart>()
-                .HasOne<Product>(ct => ct.Product)
+            modelBuilder.Entity<CartItem>()
+                .HasOne<ProductDetail>(ct => ct.productDetail)
                 .WithMany(p => p.Carts)
-                .HasForeignKey(ct => ct.ProductId);
-            modelBuilder.Entity<Cart>()
+                .HasForeignKey(ct => ct.ProductDetailId);
+            modelBuilder.Entity<CartItem>()
                 .HasOne<User>(ct => ct.User)
                 .WithMany(u => u.Carts)
                 .HasForeignKey(ct => ct.UserId);    

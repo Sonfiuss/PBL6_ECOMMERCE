@@ -5,6 +5,8 @@ using Website_Ecommerce.API.services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Semester7.PBL6.Website_Ecommerce.API.Repositories;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,7 +41,11 @@ services.AddTransient<IIdentityServices, IdentityServices>();
 services.AddTransient<IProductRepository, ProductRepository>();
 services.AddTransient<ICategroyRepository, CategroyRepository>();
 services.AddTransient<IUserRepository, UserRepository>();
+services.AddTransient<ICartRepository, ShoppingCart>();
+services.AddTransient<IProductDetailRepository, ProductDetailRepository>();
+services.AddTransient<IImageProduct, ProductImageRepository>();
 
+services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -55,7 +61,7 @@ services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
  
-services.AddScoped<IIdentityServices, IdentityServices>();
+
 
 
 var app = builder.Build();
