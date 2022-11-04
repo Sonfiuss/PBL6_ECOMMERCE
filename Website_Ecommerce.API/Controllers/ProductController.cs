@@ -231,8 +231,15 @@ namespace Website_Ecommerce.API.Controllers
 
             }
 
-            return Ok(userName);
-            // return Ok(identity.Claims);
+            return Ok( new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = userName
+                }
+            });
 
         }
     }
