@@ -40,6 +40,7 @@ namespace Namespace
             shop.Email = user.Email; //get shopid from token
             shop.Phone = request.Phone;
             shop.Status = false;
+            // shop.UserId = 
             _shopRepository.Add(shop);
             var result = await _shopRepository.UnitOfWork.SaveAsync(cancellationToken);
             if(result == 0)
@@ -68,7 +69,6 @@ namespace Namespace
             });
         }
 
-
         [HttpPost("update-shop")]
         public async Task<IActionResult> UpdateShop(ShopDto request, CancellationToken cancellationToken)
         {
@@ -91,7 +91,7 @@ namespace Namespace
                     Message = ErrorCode.ExcuteDB,
                     Result = new ResponseDefault()
                     {
-                        Data = "Add shop fail"
+                        Data = "Update shop fail"
                     }
                 });
             }
@@ -104,10 +104,61 @@ namespace Namespace
                 Message = ErrorCode.Success,
                 Result = new ResponseDefault()
                 {
-                    Data = "Add shop success"
+                    Data = "Update shop success"
                 }
             });
         }
-        
+
+        [HttpDelete("delete-shop-by/{id}")]
+        public async Task<IActionResult> DeleteShop([FromQuery] int id)
+        {
+            if(id.ToString() is null)
+            {
+                return BadRequest(null);
+            }
+            var shop = _shopRepository.Shops.FirstOrDefault(x => x.Id == id);
+            if(shop == null)
+            {
+                return BadRequest( new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.NotFound,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "NotFound Shop"
+                    }
+                });
+            }
+
+            _shopRepository.Delete(shop);
+            
+            var result = await _shopRepository.UnitOfWork.SaveAsync();
+
+            if(result > 0)
+            {
+                return Ok( new Response<ResponseDefault>()
+                {
+                    State = true,
+                    Message = ErrorCode.Success,
+                    Result = new ResponseDefault()
+                    {
+                        Data = shop.Id.ToString()
+                    }
+                });
+            }
+            return BadRequest( new Response<ResponseDefault>()
+            {
+                State = false,
+                Message = ErrorCode.ExcuteDB,
+                Result = new ResponseDefault()
+                {
+                    Data = "Delete category fail"
+                }
+            });
+        }
+
+        // [HttpGet("get-shop-by/{id}")]
+        // public async Task<IActionResult> GetShopById()
+
     }
 }

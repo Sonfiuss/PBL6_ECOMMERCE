@@ -24,7 +24,7 @@ namespace Website_Ecommerce.API.Data.Entities
         public int ShopId { get; set; }
         public Shop Shop { get; set;}
         [Required]
-        public int Status { get; set; }
+        public bool Status { get; set; }
 
         public ICollection<ProductDetail> ProductDetails { get; set; }
         public IList<OrderDetail> OrderDetails { get; set; }

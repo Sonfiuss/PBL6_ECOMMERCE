@@ -147,6 +147,8 @@ D:/Semester7/PBL6/Website_Ecommerce.API/bin/Debug/net6.0/Pomelo.EntityFrameworkC
 /Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/obj/Debug/net6.0/Website_Ecommerce.API.pdb
 /Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/bin/Debug/net6.0/Website_Ecommerce.API.deps.json
 /Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/bin/Debug/net6.0/Website_Ecommerce.API.runtimeconfig.json
+/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/bin/Debug/net6.0/AutoMapper.dll
+/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/bin/Debug/net6.0/AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 /Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/bin/Debug/net6.0/Dapper.dll
 /Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/bin/Debug/net6.0/Google.Protobuf.dll
 /Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/bin/Debug/net6.0/Humanizer.dll

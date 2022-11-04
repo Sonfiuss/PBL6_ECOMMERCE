@@ -41,7 +41,7 @@ namespace PBL4.WebAPI
             services.AddHttpContextAccessor();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PBL4.WebAPI", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "PBL6.WebAPI", Version = "v1" });
                 //add frame to get token bearer
                 c.AddSecurityDefinition("Bearer",
                    new OpenApiSecurityScheme
@@ -148,7 +148,7 @@ namespace PBL4.WebAPI
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PBL4.WebAPI v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PBL6.WebAPI v1"));
                 /*app.UseSwaggerUI(c=> {
                     c.DisplayRequestDuration();
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "PBL4.WebAPI v1");
