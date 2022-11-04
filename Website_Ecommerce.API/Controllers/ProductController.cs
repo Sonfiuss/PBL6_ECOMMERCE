@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,17 +21,21 @@ namespace Website_Ecommerce.API.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
+        private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContext;
 
         public ProductController(
             IProductRepository productRepository,
+            IMapper mapper,
             IHttpContextAccessor httpContext)
         {
             _productRepository = productRepository;
+            _mapper = mapper;
             _httpContext = httpContext;
 
         }
-
+        #region Product
+        
         [HttpPost("add-product")]
         public async Task<IActionResult> AddProduct([FromBody] ProductDto request, CancellationToken cancellationToken)
         {
@@ -77,7 +82,7 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-        [HttpPost("update-product")]
+        [HttpPut("update-product")]
         public async Task<IActionResult> UpdateProduct([FromBody] ProductDto request, CancellationToken cancellationToken)
         {
             string userName = _httpContext.HttpContext.User.Identity.Name.ToString();
@@ -212,35 +217,258 @@ namespace Website_Ecommerce.API.Controllers
         }
 
 
-        // [HttpGet("get-list-product-by-shopId/{id}")]e
-        // public async Task<IActionResult> GetListProduct(int shopId)
+
+        // [HttpGet("get-username-from-token")]
+        // public async Task<IActionResult> GetUSername()
         // {
-            
-        //     string userName = _httpContext.HttpContext.User.Identity.Name.ToString();
-        //     return Ok(userName);
+        //     string userName =  _httpContext.HttpContext.User.Identity.Name.ToString();
+        //     var identity = HttpContext.User.Identity as ClaimsIdentity;
+        //     if (identity != null)
+        //     {
+        //         IEnumerable<Claim> claims = identity.Claims;
+
+        //     }
+
+        //     return Ok( new Response<ResponseDefault>()
+        //     {
+        //         State = true,
+        //         Message = ErrorCode.Success,
+        //         Result = new ResponseDefault()
+        //         {
+        //             Data = userName
+        //         }
+        //     });
+
         // }
 
-        [HttpGet("get-username-from-token")]
-        public async Task<IActionResult> GetUSername()
+        #endregion
+
+        #region ProductImage
+        [HttpPost("add-product-image")]
+        public async Task<IActionResult> AddProductImage([FromBody] ProductImageDto request, CancellationToken cancellationToken)
         {
-            string userName =  _httpContext.HttpContext.User.Identity.Name.ToString();
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            if (identity != null)
+            ProductImage productImage = new ProductImage();
+            productImage.UrlImage = request.UrlImage;
+            productImage.ProductDetailId = request.ProductDetailId;
+            _productRepository.Add(productImage);
+            var result = await _productRepository.UnitOfWork.SaveAsync(cancellationToken);
+            if(result == 0)
             {
-                IEnumerable<Claim> claims = identity.Claims;
-
+                return BadRequest( new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.ExcuteDB,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "Add ProductImage fail"
+                    }
+                });
             }
-
             return Ok( new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
                 Result = new ResponseDefault()
                 {
-                    Data = userName
+                    Data = "Add ProductImage success"
                 }
             });
-
         }
+
+        [HttpDelete("delete-product-image-by/{id}")]
+        public async Task<IActionResult> DeleteProductImage([FromQuery] int id)
+        {
+            if(id.ToString() is null)
+            {
+                return BadRequest(null);
+            }
+            //get shopId, check shop tao => moi xoa
+            ProductImage product = await _productRepository.ProductImages.FirstOrDefaultAsync(p => p.Id == id);
+            if(product == null)
+            {
+                return BadRequest( new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.NotFound,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "NotFound ProductImage"
+                    }
+                });
+            }
+
+            _productRepository.Delete(product);
+            var result = await _productRepository.UnitOfWork.SaveAsync();
+
+            if(result > 0)
+            {
+                return Ok( new Response<ResponseDefault>()
+                {
+                    State = true,
+                    Message = ErrorCode.Success,
+                    Result = new ResponseDefault()
+                    {
+                        Data = product.Id.ToString()
+                    }
+                });
+            }
+            return BadRequest( new Response<ResponseDefault>()
+            {
+                State = false,
+                Message = ErrorCode.ExcuteDB,
+                Result = new ResponseDefault()
+                {
+                    Data = "Delete category fail"
+                }
+            });
+        }
+
+        #endregion
+
+        
+        #region ProductDetail
+
+        [HttpPost("add-product-detail")]
+        public async Task<IActionResult> AddProductDetail([FromBody] ProductDetailDto request, CancellationToken cancellationToken)
+        {
+            var productImage = _mapper.Map<ProductImage>(request);
+
+            _productRepository.Add(productImage);
+            var result = await _productRepository.UnitOfWork.SaveAsync(cancellationToken);
+            if(result == 0)
+            {
+                return BadRequest( new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.ExcuteDB,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "Add ProductImage fail"
+                    }
+                });
+            }
+            return Ok( new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = "Add ProductImage success"
+                }
+            });
+        }
+
+
+        [HttpPut("update-product-detail")]
+        public async Task<IActionResult> UpdateProductDetail([FromBody] ProductDetailDto request, CancellationToken cancellationToken)
+        {
+            ProductDetail product = _productRepository.ProductDetails.FirstOrDefault(p => p.Id == request.Id);
+            if(product == null)
+            {
+                return BadRequest( new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.NotFound,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "Not Found ProductDetail"
+                    }
+                });
+            }
+            product = _mapper.Map<ProductDetail>(request);
+
+            _productRepository.Update(product);
+            var result = await _productRepository.UnitOfWork.SaveAsync(cancellationToken);
+
+            if(result > 0)
+            {
+                return Ok( new Response<ResponseDefault>()
+                {
+                    State = true,
+                    Message = ErrorCode.Success,
+                    Result = new ResponseDefault()
+                    {
+                        Data = product.Id.ToString()
+                    }
+                });
+            }
+            return BadRequest( new Response<ResponseDefault>()
+            {
+                State = false,
+                Message = ErrorCode.ExcuteDB,
+                Result = new ResponseDefault()
+                {
+                    Data = "Update ProductDetail fail"
+                }
+            });
+        }
+
+
+
+        [HttpDelete("delete-product-detail-by/{id}")]
+        public async Task<IActionResult> DeleteProductDetail([FromQuery] int id)
+        {
+            if(id.ToString() is null)
+            {
+                return BadRequest(null);
+            }
+
+            ProductDetail product = await _productRepository.ProductDetails.FirstOrDefaultAsync(p => p.Id == id);
+            if(product == null)
+            {
+                return BadRequest( new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.NotFound,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "NotFound ProductImage"
+                    }
+                });
+            }
+
+            _productRepository.Delete(product);
+            var result = await _productRepository.UnitOfWork.SaveAsync();
+
+            if(result > 0)
+            {
+                return Ok( new Response<ResponseDefault>()
+                {
+                    State = true,
+                    Message = ErrorCode.Success,
+                    Result = new ResponseDefault()
+                    {
+                        Data = product.Id.ToString()
+                    }
+                });
+            }
+            return BadRequest( new Response<ResponseDefault>()
+            {
+                State = false,
+                Message = ErrorCode.ExcuteDB,
+                Result = new ResponseDefault()
+                {
+                    Data = "Delete category fail"
+                }
+            });
+        }
+
+        [HttpGet("get-product-detail-by/{productId}")]
+        public async Task<IActionResult> GetProductDetailByProductId([FromQuery] int productId)
+        {
+            List<ProductDetail> productDetails = await _productRepository.ProductDetails.Where(x => x.ProductId == productId).ToListAsync();
+
+            return Ok( new Response<ResponseDefault>()
+                {
+                    State = true,
+                    Message = ErrorCode.Success,
+                    Result = new ResponseDefault()
+                    {
+                        Data = productDetails
+                    }
+                });
+        }
+
+        #endregion
     }
 }

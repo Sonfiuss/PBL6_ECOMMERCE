@@ -97,6 +97,9 @@ namespace PBL4.WebAPI
             services.AddTransient<IIdentityServices, IdentityServices>();
             services.AddTransient<IAppQueries>(x=> new AppQueries(Configuration["ConnectionString"]));
 
+            //using Auto Mapper
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             // //set up mediator
             // services.AddMediatR(Assembly.GetExecutingAssembly());
             // // Assembly để .net vào bin và get file dll của những command DI với nhau không cần khai báo tất cả

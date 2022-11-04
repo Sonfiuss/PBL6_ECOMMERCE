@@ -22,6 +22,8 @@ namespace Website_Ecommerce.API.Data.Entities
         public int Amount { get; set; }
         [Required]
         public double Price { get; set; }
+        public string InitialPrice { get; set; }
+        public ICollection<Cart> Carts { get; set; }
 
         public ICollection<ProductImage> ProductImages { get; set; }
 

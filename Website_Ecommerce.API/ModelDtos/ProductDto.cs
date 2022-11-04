@@ -17,4 +17,22 @@ namespace Website_Ecommerce.API.ModelDtos
 
         public HashSet<int> Categories { get; set; }
     }
+
+    public class ProductImageDto
+    {
+        public int ProductDetailId { get; set; }
+        public string UrlImage { get; set; }
+    }
+
+    public class ProductDetailDto
+    {
+        public int? Id { get; set; }
+        public int ProductId { get; set; }
+
+        public string Size { get; set; }
+        public string Color { get; set; }
+        public int Amount { get; set; }
+        public double Price { get; set; }
+        public string InitialPrice { get; set; }
+    }
 }

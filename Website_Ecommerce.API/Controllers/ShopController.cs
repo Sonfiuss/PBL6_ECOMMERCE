@@ -78,10 +78,10 @@ namespace Namespace
             Shop shop = new Shop();
             shop.Name = request.Name;
             shop.Address = request.Address;
-            shop.Email = user.Email; //get shopid from token
+            shop.Email = user.Email;
             shop.Phone = request.Phone;
             shop.Status = false;
-            _shopRepository.Add(shop);
+            _shopRepository.Update(shop);
             var result = await _shopRepository.UnitOfWork.SaveAsync(cancellationToken);
             if(result == 0)
             {
@@ -108,10 +108,6 @@ namespace Namespace
                 }
             });
         }
-
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        
     }
 }

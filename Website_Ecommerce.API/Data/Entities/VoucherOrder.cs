@@ -16,6 +16,8 @@ namespace Website_Ecommerce.API.Data.Entities
         public double MinPrice { get; set; }
         [Required]
         public int Amount { get; set; }
+        public DateTime CreateAt { get; set; }
+        public DateTime Expired { get; set; }
         public ICollection<Order> Orders { get; set; }
     }
 }
