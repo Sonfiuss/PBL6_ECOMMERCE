@@ -92,14 +92,11 @@ namespace PBL4.WebAPI
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<ICategroyRepository, CategroyRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
-<<<<<<< HEAD
             services.AddTransient<ICartRepository, CartRepository>();
             services.AddTransient<IVoucherOrderRepository, VoucherOrderRepository>();
-=======
             services.AddTransient<IShopRepository, ShopRepository>();
 
 
->>>>>>> ae579116c334e560898c4a227db65dc67218255f
             services.AddTransient<IIdentityServices, IdentityServices>();
             services.AddTransient<IAppQueries>(x=> new AppQueries(Configuration["ConnectionString"]));
 

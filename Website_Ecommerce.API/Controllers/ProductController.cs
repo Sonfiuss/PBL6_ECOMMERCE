@@ -16,12 +16,8 @@ namespace Website_Ecommerce.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-<<<<<<< HEAD
-    // [Authorize(AuthenticationSchemes = "MyAuthKey")]
-    // [Authorize]
-=======
     [Authorize(AuthenticationSchemes = "MyAuthKey")]
->>>>>>> ae579116c334e560898c4a227db65dc67218255f
+    // [Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository _productRepository;

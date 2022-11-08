@@ -29,11 +29,7 @@ namespace Website_Ecommerce.API.Data.Entities
         [MaxLength(11)]
         public string Phone { get; set; }
         public int TotalCategory { get; set; }
-<<<<<<< HEAD
-        public float Rate { get; set; }
-=======
         public float AverageRate { get; set; }
->>>>>>> ae579116c334e560898c4a227db65dc67218255f
         public int TotalRate{ get; set; }
         [Required]
         public bool Status { get; set; }
