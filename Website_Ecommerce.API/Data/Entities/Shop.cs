@@ -34,6 +34,7 @@ namespace Website_Ecommerce.API.Data.Entities
         public bool Status { get; set; }
 
         public ICollection<Product> Products { get; set; }
+        public ICollection<VoucherProduct> VoucherProducts { get; set; }
         
     }
 }

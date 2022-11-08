@@ -114,9 +114,9 @@ namespace Website_Ecommerce.API.Data
 
             //VoucherProduct
             modelBuilder.Entity<VoucherProduct>()
-                .HasOne<Product>(vp => vp.Product)
+                .HasOne<Shop>(vp => vp.Shop)
                 .WithMany(p => p.VoucherProducts)
-                .HasForeignKey(vp => vp.ProductId);
+                .HasForeignKey(vp => vp.ShopId);
 
             //Comment
             modelBuilder.Entity<Comment>()
