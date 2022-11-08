@@ -2,17 +2,19 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Website_Ecommerce.API.Data;
 
 #nullable disable
 
-namespace Website_Ecommerce.API.Data.Migrations
+namespace Website_Ecommerce.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221108024649_UpdateVoucherProduct")]
+    partial class UpdateVoucherProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -265,13 +267,8 @@ namespace Website_Ecommerce.API.Data.Migrations
                     b.Property<string>("Color")
                         .HasColumnType("longtext");
 
-<<<<<<< HEAD:Website_Ecommerce.API/Data/Migrations/DataContextModelSnapshot.cs
-                    b.Property<double>("InitialPrice")
-                        .HasColumnType("double");
-=======
                     b.Property<string>("InitialPrice")
                         .HasColumnType("longtext");
->>>>>>> ae579116c334e560898c4a227db65dc67218255f:Website_Ecommerce.API/Migrations/DataContextModelSnapshot.cs
 
                     b.Property<double>("Price")
                         .HasColumnType("double");
@@ -375,15 +372,8 @@ namespace Website_Ecommerce.API.Data.Migrations
 
                     b.Property<string>("Phone")
                         .IsRequired()
-<<<<<<< HEAD:Website_Ecommerce.API/Data/Migrations/DataContextModelSnapshot.cs
-                        .HasColumnType("longtext");
-
-                    b.Property<float>("Rate")
-                        .HasColumnType("float");
-=======
                         .HasMaxLength(11)
                         .HasColumnType("varchar(11)");
->>>>>>> ae579116c334e560898c4a227db65dc67218255f:Website_Ecommerce.API/Migrations/DataContextModelSnapshot.cs
 
                     b.Property<bool>("Status")
                         .HasColumnType("tinyint(1)");
@@ -394,9 +384,8 @@ namespace Website_Ecommerce.API.Data.Migrations
                     b.Property<int>("TotalRate")
                         .HasColumnType("int");
 
-                    b.Property<string>("UrlAvatar")
-                        .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
+                    b.Property<int>("UrlAvatar")
+                        .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");

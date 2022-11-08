@@ -26,13 +26,19 @@ namespace Website_Ecommerce.API.Data.Entities
         [MaxLength(256)]
         public string UrlAvatar { get; set; }
         [Required]
+        [MaxLength(11)]
         public string Phone { get; set; }
         public int TotalCategory { get; set; }
+<<<<<<< HEAD
         public float Rate { get; set; }
+=======
+        public float AverageRate { get; set; }
+>>>>>>> ae579116c334e560898c4a227db65dc67218255f
         public int TotalRate{ get; set; }
         [Required]
         public bool Status { get; set; }
         public ICollection<Product> Products { get; set; }
+        public ICollection<VoucherProduct> VoucherProducts { get; set; }
         
     }
 }

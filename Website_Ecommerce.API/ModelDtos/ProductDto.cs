@@ -13,7 +13,7 @@ namespace Website_Ecommerce.API.ModelDtos
         public string Origin { get; set; }
         public string Description { get; set; }
         public int ShopId { get; set; }
-        public int Status { get; set; }
+        public bool Status { get; set; }
 
         public HashSet<int> Categories { get; set; }
     }

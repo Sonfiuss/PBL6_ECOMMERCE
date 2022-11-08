@@ -25,8 +25,8 @@ namespace Website_Ecommerce.API.services
             var now = DateTime.UtcNow;
             var claims = new List<Claim>()
             {
-                new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
-                new Claim(ClaimTypes.Name, username),
+                new Claim(ClaimTypes.NameIdentifier, username),
+                new Claim(ClaimTypes.Name, userId.ToString()),
                 new Claim(ClaimTypes.Role, JsonConvert.SerializeObject(roles),
                 JsonClaimValueTypes.JsonArray)
             };

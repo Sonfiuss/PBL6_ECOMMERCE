@@ -2,17 +2,19 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Website_Ecommerce.API.Data;
 
 #nullable disable
 
-namespace Website_Ecommerce.API.Data.Migrations
+namespace Website_Ecommerce.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221104105355_Update")]
+    partial class Update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -226,8 +228,8 @@ namespace Website_Ecommerce.API.Data.Migrations
                     b.Property<int>("ShopId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("tinyint(1)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -265,13 +267,8 @@ namespace Website_Ecommerce.API.Data.Migrations
                     b.Property<string>("Color")
                         .HasColumnType("longtext");
 
-<<<<<<< HEAD:Website_Ecommerce.API/Data/Migrations/DataContextModelSnapshot.cs
-                    b.Property<double>("InitialPrice")
-                        .HasColumnType("double");
-=======
                     b.Property<string>("InitialPrice")
                         .HasColumnType("longtext");
->>>>>>> ae579116c334e560898c4a227db65dc67218255f:Website_Ecommerce.API/Migrations/DataContextModelSnapshot.cs
 
                     b.Property<double>("Price")
                         .HasColumnType("double");
@@ -361,9 +358,6 @@ namespace Website_Ecommerce.API.Data.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
 
-                    b.Property<float>("AverageRate")
-                        .HasColumnType("float");
-
                     b.Property<string>("Email")
                         .HasMaxLength(128)
                         .HasColumnType("varchar(128)");
@@ -375,15 +369,10 @@ namespace Website_Ecommerce.API.Data.Migrations
 
                     b.Property<string>("Phone")
                         .IsRequired()
-<<<<<<< HEAD:Website_Ecommerce.API/Data/Migrations/DataContextModelSnapshot.cs
                         .HasColumnType("longtext");
 
-                    b.Property<float>("Rate")
-                        .HasColumnType("float");
-=======
-                        .HasMaxLength(11)
-                        .HasColumnType("varchar(11)");
->>>>>>> ae579116c334e560898c4a227db65dc67218255f:Website_Ecommerce.API/Migrations/DataContextModelSnapshot.cs
+                    b.Property<int>("Rate")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Status")
                         .HasColumnType("tinyint(1)");
@@ -394,9 +383,8 @@ namespace Website_Ecommerce.API.Data.Migrations
                     b.Property<int>("TotalRate")
                         .HasColumnType("int");
 
-                    b.Property<string>("UrlAvatar")
-                        .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
+                    b.Property<int>("UrlAvatar")
+                        .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -520,7 +508,7 @@ namespace Website_Ecommerce.API.Data.Migrations
                     b.Property<double>("MinPrice")
                         .HasColumnType("double");
 
-                    b.Property<int>("ShopId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<double>("Value")
@@ -528,7 +516,7 @@ namespace Website_Ecommerce.API.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ShopId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("VoucherProducts");
                 });
@@ -743,13 +731,13 @@ namespace Website_Ecommerce.API.Data.Migrations
 
             modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.VoucherProduct", b =>
                 {
-                    b.HasOne("Website_Ecommerce.API.Data.Entities.Shop", "Shop")
+                    b.HasOne("Website_Ecommerce.API.Data.Entities.Product", "Product")
                         .WithMany("VoucherProducts")
-                        .HasForeignKey("ShopId")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Shop");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.Category", b =>
@@ -783,6 +771,8 @@ namespace Website_Ecommerce.API.Data.Migrations
                     b.Navigation("ProductCategories");
 
                     b.Navigation("ProductDetails");
+
+                    b.Navigation("VoucherProducts");
                 });
 
             modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.ProductDetail", b =>
@@ -800,8 +790,6 @@ namespace Website_Ecommerce.API.Data.Migrations
             modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.Shop", b =>
                 {
                     b.Navigation("Products");
-
-                    b.Navigation("VoucherProducts");
                 });
 
             modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.User", b =>

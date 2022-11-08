@@ -12,9 +12,9 @@ namespace Website_Ecommerce.API.Data.Entities
         [Key]
         public int Id { get; set; }
         public string Code { get; set; }
-        [ForeignKey("Product")]
-        public int ProductId { get; set; }
-        public Product Product { get; set; }
+        [ForeignKey("Shop")]
+        public int ShopId { get; set; }
+        public Shop Shop { get; set; }
         public double Value { get; set; }
         public double MinPrice { get; set; }
         public int Amount { get; set; }
