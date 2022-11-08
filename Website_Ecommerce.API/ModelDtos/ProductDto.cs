@@ -33,6 +33,6 @@ namespace Website_Ecommerce.API.ModelDtos
         public string Color { get; set; }
         public int Amount { get; set; }
         public double Price { get; set; }
-        public string InitialPrice { get; set; }
+        public double InitialPrice { get; set; }
     }
 }

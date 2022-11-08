@@ -16,8 +16,8 @@ namespace Website_Ecommerce.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = "MyAuthKey")]
-    [Authorize]
+    // [Authorize(AuthenticationSchemes = "MyAuthKey")]
+    // [Authorize]
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
@@ -454,7 +454,7 @@ namespace Website_Ecommerce.API.Controllers
         }
 
         [HttpGet("get-product-detail-by/{productId}")]
-        public async Task<IActionResult> GetProductDetailByProductId([FromQuery] int productId)
+        public async Task<IActionResult> GetProductDetailByProductId(int productId)
         {
             List<ProductDetail> productDetails = await _productRepository.ProductDetails.Where(x => x.ProductId == productId).ToListAsync();
 

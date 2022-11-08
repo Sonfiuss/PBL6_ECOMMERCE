@@ -18,7 +18,7 @@ namespace Website_Ecommerce.API.Data.Entities
         [Required]
         public string Origin { get; set; }
         [MaxLength(256)]
-        public string? Description { get; set; }
+        public string Description { get; set; }
 
         [ForeignKey("Shop")]
         public int ShopId { get; set; }

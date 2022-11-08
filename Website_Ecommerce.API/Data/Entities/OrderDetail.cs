@@ -27,7 +27,7 @@ namespace Website_Ecommerce.API.Data.Entities
         [Required]
         public double Price { get; set; }
         [MaxLength(256)]
-        public string? Note { get; set; }
+        public string Note { get; set; }
 
     }
 }

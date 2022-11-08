@@ -2,17 +2,19 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Website_Ecommerce.API.Data;
 
 #nullable disable
 
-namespace Website_Ecommerce.API.Migrations
+namespace Website_Ecommerce.API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221104094543_InitialDb")]
+    partial class InitialDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,13 +30,18 @@ namespace Website_Ecommerce.API.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int>("ProductDetailId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductDetailId");
 
                     b.HasIndex("ProductId");
 
@@ -260,6 +267,9 @@ namespace Website_Ecommerce.API.Migrations
                     b.Property<string>("Color")
                         .HasColumnType("longtext");
 
+                    b.Property<double>("InitialPrice")
+                        .HasColumnType("double");
+
                     b.Property<double>("Price")
                         .HasColumnType("double");
 
@@ -460,6 +470,12 @@ namespace Website_Ecommerce.API.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("Expired")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<double>("MinPrice")
                         .HasColumnType("double");
 
@@ -483,6 +499,12 @@ namespace Website_Ecommerce.API.Migrations
                     b.Property<string>("Code")
                         .HasColumnType("longtext");
 
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("Expired")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<double>("MinPrice")
                         .HasColumnType("double");
 
@@ -501,11 +523,15 @@ namespace Website_Ecommerce.API.Migrations
 
             modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.Cart", b =>
                 {
-                    b.HasOne("Website_Ecommerce.API.Data.Entities.Product", "Product")
+                    b.HasOne("Website_Ecommerce.API.Data.Entities.ProductDetail", "ProductDetail")
                         .WithMany("Carts")
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("ProductDetailId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Website_Ecommerce.API.Data.Entities.Product", null)
+                        .WithMany("Carts")
+                        .HasForeignKey("ProductId");
 
                     b.HasOne("Website_Ecommerce.API.Data.Entities.User", "User")
                         .WithMany("Carts")
@@ -513,7 +539,7 @@ namespace Website_Ecommerce.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Product");
+                    b.Navigation("ProductDetail");
 
                     b.Navigation("User");
                 });
@@ -751,6 +777,8 @@ namespace Website_Ecommerce.API.Migrations
 
             modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.ProductDetail", b =>
                 {
+                    b.Navigation("Carts");
+
                     b.Navigation("ProductImages");
                 });
 

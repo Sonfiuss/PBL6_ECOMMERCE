@@ -16,7 +16,7 @@ namespace PBL4.WebAPI
         {
             Configuration = configuration;
         }
-        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        // readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 
         public IConfiguration Configuration { get; }
@@ -92,8 +92,8 @@ namespace PBL4.WebAPI
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<ICategroyRepository, CategroyRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
-
-
+            services.AddTransient<ICartRepository, CartRepository>();
+            services.AddTransient<IVoucherOrderRepository, VoucherOrderRepository>();
             services.AddTransient<IIdentityServices, IdentityServices>();
             services.AddTransient<IAppQueries>(x=> new AppQueries(Configuration["ConnectionString"]));
 

@@ -8,7 +8,6 @@ namespace Website_Ecommerce.API.Data.Entities
 {
     public class Category
     {
-        
         [Key]
         public int Id { get; set; }
         [Required]
@@ -16,6 +15,5 @@ namespace Website_Ecommerce.API.Data.Entities
         public string Name { get; set; }
         public IList<ProductCategory> ProductCategories { get; set; }
 
-        
     }
 }

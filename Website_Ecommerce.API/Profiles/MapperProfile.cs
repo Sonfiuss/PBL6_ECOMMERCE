@@ -12,9 +12,11 @@ namespace Website_Ecommerce.API.Profiles
     {
         public MapperProfile()
         {
+            // source -> target
             CreateMap<ProductDetailDto, ProductDetail>();
             CreateMap<ProductDetail, ProductDetailDto>();
-
+            CreateMap<CartDto, Cart>();
+            CreateMap<VoucherOrderDto, VoucherOrder>();
             
 
 
