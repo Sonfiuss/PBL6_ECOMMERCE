@@ -92,6 +92,7 @@ namespace PBL4.WebAPI
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<ICategroyRepository, CategroyRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IShopRepository, ShopRepository>();
 
 
             services.AddTransient<IIdentityServices, IdentityServices>();

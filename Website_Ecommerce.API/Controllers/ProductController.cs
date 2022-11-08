@@ -20,15 +20,21 @@ namespace Website_Ecommerce.API.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
+        private readonly IShopRepository _shopRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContext;
 
         public ProductController(
             IProductRepository productRepository,
+            IShopRepository shopRepository,
+            IUserRepository userRepository,
             IMapper mapper,
             IHttpContextAccessor httpContext)
         {
             _productRepository = productRepository;
+            _shopRepository = shopRepository;
+            _userRepository = userRepository;
             _mapper = mapper;
             _httpContext = httpContext;
 
@@ -38,6 +44,8 @@ namespace Website_Ecommerce.API.Controllers
         [HttpPost("add-product")]
         public async Task<IActionResult> AddProduct([FromBody] ProductDto request, CancellationToken cancellationToken)
         {
+            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
+            // int shopId = await _shopRepository.Shops.Where(x => x.UserId == userId).Select(x => x.Id);
             Product product = new Product();
             product.Name = request.Name;
             product.Material = request.Material;
@@ -278,28 +286,6 @@ namespace Website_Ecommerce.API.Controllers
                 });
         }
 
-
-        // [HttpGet("get-username-from-token")]
-        // public async Task<IActionResult> GetUSerId()
-        // {
-        //     int userId =  int.Parse(_httpContext.HttpContext.User.Identity.Name);
-        //     var identity = HttpContext.User.Identity as ClaimsIdentity;
-        //     if (identity != null)
-        //     {
-        //         IEnumerable<Claim> claims = identity.Claims;
-
-        //     }
-
-        //     return Ok( new Response<ResponseDefault>()
-        //     {
-        //         State = true,
-        //         Message = ErrorCode.Success,
-        //         Result = new ResponseDefault()
-        //         {
-        //             Data = "UserId: " + userId
-        //         }
-        //     });
-        // }
 
 #endregion
 

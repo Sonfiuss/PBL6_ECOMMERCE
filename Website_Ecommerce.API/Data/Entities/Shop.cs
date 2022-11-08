@@ -25,9 +25,10 @@ namespace Website_Ecommerce.API.Data.Entities
         public string Email { get; set; }
         public int UrlAvatar { get; set; }
         [Required]
+        [MaxLength(11)]
         public string Phone { get; set; }
         public int TotalCategory { get; set; }
-        public int Rate { get; set; }
+        public float AverageRate { get; set; }
         public int TotalRate{ get; set; }
         [Required]
         public bool Status { get; set; }
