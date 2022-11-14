@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 namespace Website_Ecommerce.API.services
 {
     public interface IOrderService
-    {
-        // param id Item in Cart
-        void AddItemFromCart(int id);
-        // param: id Product Detail 
-        void AddItemDirect(int id, int amount);
+    {   /// <summary>
+        /// <param name = "voucherID">
+        /// <summary>
+        
+        void AddVoucherOfShop(int id);
+        
+        void AddVoucherOrder(int id);
     }
 }

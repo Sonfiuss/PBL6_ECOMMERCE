@@ -2,19 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Website_Ecommerce.API.Data;
 
 #nullable disable
 
-namespace Website_Ecommerce.API.Migrations
+namespace Website_Ecommerce.API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221107072444_UpdateShop")]
-    partial class UpdateShop
+    partial class DataContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,6 +113,9 @@ namespace Website_Ecommerce.API.Migrations
                     b.Property<int>("State")
                         .HasColumnType("int");
 
+                    b.Property<double>("TotalPrice")
+                        .HasColumnType("double");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -136,7 +137,7 @@ namespace Website_Ecommerce.API.Migrations
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
-                    b.Property<int>("ProductId")
+                    b.Property<int>("ProductDetailId")
                         .HasColumnType("int")
                         .HasColumnOrder(2);
 
@@ -150,12 +151,18 @@ namespace Website_Ecommerce.API.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("double");
 
+                    b.Property<int>("ShopId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("State")
+                        .HasColumnType("int");
+
                     b.Property<int>("VoucherProductId")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderId", "ProductId");
+                    b.HasKey("OrderId", "ProductDetailId");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductDetailId");
 
                     b.HasIndex("VoucherProductId");
 
@@ -267,8 +274,8 @@ namespace Website_Ecommerce.API.Migrations
                     b.Property<string>("Color")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("InitialPrice")
-                        .HasColumnType("longtext");
+                    b.Property<double>("InitialPrice")
+                        .HasColumnType("double");
 
                     b.Property<double>("Price")
                         .HasColumnType("double");
@@ -372,7 +379,8 @@ namespace Website_Ecommerce.API.Migrations
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(11)
+                        .HasColumnType("varchar(11)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("tinyint(1)");
@@ -383,8 +391,9 @@ namespace Website_Ecommerce.API.Migrations
                     b.Property<int>("TotalRate")
                         .HasColumnType("int");
 
-                    b.Property<int>("UrlAvatar")
-                        .HasColumnType("int");
+                    b.Property<string>("UrlAvatar")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -496,9 +505,6 @@ namespace Website_Ecommerce.API.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Code")
-                        .HasColumnType("longtext");
-
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime(6)");
 
@@ -508,7 +514,7 @@ namespace Website_Ecommerce.API.Migrations
                     b.Property<double>("MinPrice")
                         .HasColumnType("double");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int>("ShopId")
                         .HasColumnType("int");
 
                     b.Property<double>("Value")
@@ -516,7 +522,7 @@ namespace Website_Ecommerce.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ShopId");
 
                     b.ToTable("VoucherProducts");
                 });
@@ -590,9 +596,9 @@ namespace Website_Ecommerce.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Website_Ecommerce.API.Data.Entities.Product", "Product")
+                    b.HasOne("Website_Ecommerce.API.Data.Entities.ProductDetail", "ProductDetail")
                         .WithMany("OrderDetails")
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("ProductDetailId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -604,7 +610,7 @@ namespace Website_Ecommerce.API.Migrations
 
                     b.Navigation("Order");
 
-                    b.Navigation("Product");
+                    b.Navigation("ProductDetail");
 
                     b.Navigation("VoucherProduct");
                 });
@@ -731,13 +737,13 @@ namespace Website_Ecommerce.API.Migrations
 
             modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.VoucherProduct", b =>
                 {
-                    b.HasOne("Website_Ecommerce.API.Data.Entities.Product", "Product")
+                    b.HasOne("Website_Ecommerce.API.Data.Entities.Shop", "Shop")
                         .WithMany("VoucherProducts")
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("ShopId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Product");
+                    b.Navigation("Shop");
                 });
 
             modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.Category", b =>
@@ -766,18 +772,16 @@ namespace Website_Ecommerce.API.Migrations
 
                     b.Navigation("Comments");
 
-                    b.Navigation("OrderDetails");
-
                     b.Navigation("ProductCategories");
 
                     b.Navigation("ProductDetails");
-
-                    b.Navigation("VoucherProducts");
                 });
 
             modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.ProductDetail", b =>
                 {
                     b.Navigation("Carts");
+
+                    b.Navigation("OrderDetails");
 
                     b.Navigation("ProductImages");
                 });
@@ -790,6 +794,8 @@ namespace Website_Ecommerce.API.Migrations
             modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.Shop", b =>
                 {
                     b.Navigation("Products");
+
+                    b.Navigation("VoucherProducts");
                 });
 
             modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.User", b =>

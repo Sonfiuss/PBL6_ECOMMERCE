@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -379,9 +374,9 @@ namespace Website_Ecommerce.API.Controllers
         [HttpPost("add-product-detail")]
         public async Task<IActionResult> AddProductDetail([FromBody] ProductDetailDto request, CancellationToken cancellationToken)
         {
-            var productImage = _mapper.Map<ProductImage>(request);
+            var productDetail = _mapper.Map<ProductDetail>(request);
 
-            _productRepository.Add(productImage);
+            _productRepository.Add(productDetail);
             var result = await _productRepository.UnitOfWork.SaveAsync(cancellationToken);
             if(result == 0)
             {
@@ -405,7 +400,6 @@ namespace Website_Ecommerce.API.Controllers
                 }
             });
         }
-
 
         [HttpPut("update-product-detail")]
         public async Task<IActionResult> UpdateProductDetail([FromBody] ProductDetailDto request, CancellationToken cancellationToken)
@@ -517,9 +511,6 @@ namespace Website_Ecommerce.API.Controllers
                 });
         }
 
-#endregion
-
-
-
     }
+    #endregion
 }

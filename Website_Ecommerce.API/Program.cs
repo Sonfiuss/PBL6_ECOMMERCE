@@ -1,5 +1,3 @@
-
-
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -24,6 +22,8 @@ namespace PBL4.WebAPI
         {
             IPAddress ipAddress = IPAddress.Parse("127.0.0.1"); // conver a ip address to IpAddress Instance
             serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            
+            
             serverSocket.Bind(new IPEndPoint(ipAddress, myPort));
             serverSocket.Listen(10); //quantity of client can listen
             Console.WriteLine("Enpoint dung de giao tiep cua server: ", serverSocket.LocalEndPoint.ToString());

@@ -11,7 +11,6 @@ namespace Website_Ecommerce.API.Data.Entities
     {
         [Key]
         public int Id { get; set; }
-        public string Code { get; set; }
         [ForeignKey("Shop")]
         public int ShopId { get; set; }
         public Shop Shop { get; set; }

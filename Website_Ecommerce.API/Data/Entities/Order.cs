@@ -20,6 +20,8 @@ namespace Website_Ecommerce.API.Data.Entities
         public DateTime CreateDate { get; set; }
         [Required]
         public DateTime SendDate { get; set; }
+        [Required]
+        public double TotalPrice { get; set; } 
         
         [ForeignKey("User")]
         public int UserId { get; set; }

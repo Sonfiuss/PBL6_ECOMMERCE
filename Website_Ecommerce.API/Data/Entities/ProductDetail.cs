@@ -26,6 +26,7 @@ namespace Website_Ecommerce.API.Data.Entities
         public ICollection<Cart> Carts { get; set; }
 
         public ICollection<ProductImage> ProductImages { get; set; }
+        public IList<OrderDetail> OrderDetails { get; set; }
 
     }
 }

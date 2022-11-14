@@ -67,15 +67,15 @@ namespace Website_Ecommerce.API.Data
                 .HasForeignKey(pi => pi.ProductDetailId);
 
             //OrderDetail
-            modelBuilder.Entity<OrderDetail>().HasKey(od => new { od.OrderId, od.ProductId});
+            modelBuilder.Entity<OrderDetail>().HasKey(od => new { od.OrderId, od.ProductDetailId});
             modelBuilder.Entity<OrderDetail>()
                 .HasOne<Order>(od => od.Order)
                 .WithMany(o => o.OrderDetails)
                 .HasForeignKey(od => od.OrderId);
             modelBuilder.Entity<OrderDetail>()
-                .HasOne<Product>(od => od.Product)
+                .HasOne<ProductDetail>(od => od.ProductDetail)
                 .WithMany(o => o.OrderDetails)
-                .HasForeignKey(od => od.ProductId);
+                .HasForeignKey(od => od.ProductDetailId);
             modelBuilder.Entity<OrderDetail>()
                 .HasOne<VoucherProduct>(od => od.VoucherProduct)
                 .WithMany(vs => vs.OrderDetails)

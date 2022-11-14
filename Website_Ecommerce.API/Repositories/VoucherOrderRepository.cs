@@ -33,5 +33,15 @@ namespace Website_Ecommerce.API.Repositories
         {
             _dataContext.Entry(voucherOrder).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         }
+
+        public bool CheckVoucher(Order order)
+        {
+            var voucherOrder = _dataContext.VoucherOrders.FirstOrDefault(x => x.MinPrice < 10000 && x.Amount > 0);
+            if (voucherOrder == null)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

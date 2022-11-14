@@ -12,5 +12,10 @@ namespace Website_Ecommerce.API.Repositories
         void Add(Shop shop);
         void Update(Shop shop);
         void Delete(Shop shop);
+        IQueryable<VoucherProduct> voucherProducts{get;}
+        void Add(VoucherProduct voucherProduct);
+        void Update(VoucherProduct voucherProduct);
+        void Delete(VoucherProduct voucherProduct);
+        IList<VoucherProduct> GetGetVoucherMatch(ProductDetail productdetail);
     }
 }

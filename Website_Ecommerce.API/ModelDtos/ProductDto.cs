@@ -14,7 +14,6 @@ namespace Website_Ecommerce.API.ModelDtos
         public string Description { get; set; }
         public int ShopId { get; set; }
         public bool Status { get; set; }
-
         public HashSet<int> Categories { get; set; }
     }
 
@@ -28,7 +27,6 @@ namespace Website_Ecommerce.API.ModelDtos
     {
         public int? Id { get; set; }
         public int ProductId { get; set; }
-
         public string Size { get; set; }
         public string Color { get; set; }
         public int Amount { get; set; }

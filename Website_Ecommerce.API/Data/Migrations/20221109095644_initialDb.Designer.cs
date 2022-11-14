@@ -8,11 +8,11 @@ using Website_Ecommerce.API.Data;
 
 #nullable disable
 
-namespace Website_Ecommerce.API.Migrations
+namespace Website_Ecommerce.API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221108024649_UpdateVoucherProduct")]
-    partial class UpdateVoucherProduct
+    [Migration("20221109095644_initialDb")]
+    partial class initialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -136,7 +136,7 @@ namespace Website_Ecommerce.API.Migrations
                         .HasColumnType("int")
                         .HasColumnOrder(1);
 
-                    b.Property<int>("ProductId")
+                    b.Property<int>("ProductDetailId")
                         .HasColumnType("int")
                         .HasColumnOrder(2);
 
@@ -153,9 +153,9 @@ namespace Website_Ecommerce.API.Migrations
                     b.Property<int>("VoucherProductId")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderId", "ProductId");
+                    b.HasKey("OrderId", "ProductDetailId");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductDetailId");
 
                     b.HasIndex("VoucherProductId");
 
@@ -267,8 +267,8 @@ namespace Website_Ecommerce.API.Migrations
                     b.Property<string>("Color")
                         .HasColumnType("longtext");
 
-                    b.Property<string>("InitialPrice")
-                        .HasColumnType("longtext");
+                    b.Property<double>("InitialPrice")
+                        .HasColumnType("double");
 
                     b.Property<double>("Price")
                         .HasColumnType("double");
@@ -384,8 +384,9 @@ namespace Website_Ecommerce.API.Migrations
                     b.Property<int>("TotalRate")
                         .HasColumnType("int");
 
-                    b.Property<int>("UrlAvatar")
-                        .HasColumnType("int");
+                    b.Property<string>("UrlAvatar")
+                        .HasMaxLength(256)
+                        .HasColumnType("varchar(256)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -497,9 +498,6 @@ namespace Website_Ecommerce.API.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Code")
-                        .HasColumnType("longtext");
-
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime(6)");
 
@@ -591,9 +589,9 @@ namespace Website_Ecommerce.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Website_Ecommerce.API.Data.Entities.Product", "Product")
+                    b.HasOne("Website_Ecommerce.API.Data.Entities.ProductDetail", "ProductDetail")
                         .WithMany("OrderDetails")
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("ProductDetailId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -605,7 +603,7 @@ namespace Website_Ecommerce.API.Migrations
 
                     b.Navigation("Order");
 
-                    b.Navigation("Product");
+                    b.Navigation("ProductDetail");
 
                     b.Navigation("VoucherProduct");
                 });
@@ -767,8 +765,6 @@ namespace Website_Ecommerce.API.Migrations
 
                     b.Navigation("Comments");
 
-                    b.Navigation("OrderDetails");
-
                     b.Navigation("ProductCategories");
 
                     b.Navigation("ProductDetails");
@@ -777,6 +773,8 @@ namespace Website_Ecommerce.API.Migrations
             modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.ProductDetail", b =>
                 {
                     b.Navigation("Carts");
+
+                    b.Navigation("OrderDetails");
 
                     b.Navigation("ProductImages");
                 });
