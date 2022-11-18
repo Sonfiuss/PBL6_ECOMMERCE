@@ -38,28 +38,40 @@ namespace Website_Ecommerce.API.Controllers
         [HttpPost("Add-Order")]
         public async Task<IActionResult> AddOrder([FromBody] OrderDto request, CancellationToken cancellationToken){
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
+            if(request.VoucherId == 0){
+                request.VoucherId = 1;
+            }
             VoucherOrder voucherOrder = _voucherOrderRepository.VoucherOrders.FirstOrDefault(x => x.Id == request.VoucherId);
+            
+
             var totalPrice = 0.0;
             foreach(var i in request.ItemOrderDtos){
-                VoucherProduct voucherProduct = _shopRepository.voucherProducts.FirstOrDefault(x => x.Id == i.VoucherProductId);
-                totalPrice += i.Price * i.Amount - voucherProduct.Value;
+                if(i.VoucherProductId != 0){
+                    VoucherProduct voucherProduct = _shopRepository.voucherProducts.FirstOrDefault(x => x.Id == i.VoucherProductId);
+                    totalPrice += i.Price * i.Amount - voucherProduct.Value;
+                }
+                else{
+                    totalPrice += i.Price * i.Amount;
+                }
             }
-            
             var order = new Order{
                 Id = request.Id,
                 UserId = userId,
                 Address = request.Address,
                 CreateDate = DateTime.Now,
                 VoucherId = request.VoucherId,
-                SendDate = request.SendDate,
                 State = (int)StateOrderEnum.SENT
 
             };
             if(voucherOrder.MinPrice > totalPrice){
                 order.VoucherId = 1;
             }
-            
+            if(voucherOrder.Id == 1){
+
+            }
+            else{
             voucherOrder.Amount = voucherOrder.Amount - 1;
+            }
             _orderRepository.Add(order);
             _voucherOrderRepository.Update(voucherOrder);
             var result = await  _orderRepository.UnitOfWork.SaveAsync(cancellationToken);
@@ -78,9 +90,13 @@ namespace Website_Ecommerce.API.Controllers
 
             foreach(var i in request.ItemOrderDtos){
                 ProductDetail productDetail = _productRepository.ProductDetails.FirstOrDefault(x => x.Id == i.ProductDetailId);
-                Product product = _productRepository.Products.FirstOrDefault(x => x.Id ==productDetail.ProductId);
+                Product product = _productRepository.Products.FirstOrDefault(x => x.Id == productDetail.ProductId);
                 Shop shop = _shopRepository.Shops.FirstOrDefault(x => x.Id == product.ShopId);
-                VoucherProduct voucherShop = _shopRepository.voucherProducts.FirstOrDefault(x => x.Id == i.VoucherProductId);
+                if(i.VoucherProductId == 0){
+                    i.VoucherProductId = 1;
+                }
+                VoucherProduct voucherProduct = _shopRepository.voucherProducts.FirstOrDefault(x => x.Id == i.VoucherProductId);
+
                 var orderDetail = new OrderDetail{
                     OrderId = lastOrder.Id,
                     ProductDetailId = i.ProductDetailId,
@@ -92,8 +108,10 @@ namespace Website_Ecommerce.API.Controllers
                 };
                 _orderRepository.Add(orderDetail);
                 productDetail.Amount = productDetail.Amount - orderDetail.Amount;
-                voucherShop.Amount = voucherShop.Amount - 1;
-                _shopRepository.Update(voucherShop);
+                if(orderDetail.VoucherProductId != 1){
+                    voucherProduct.Amount = voucherProduct.Amount - 1;
+                }
+                _shopRepository.Update(voucherProduct);
                 _productRepository.Update(productDetail);
                 var resultI = await  _orderRepository.UnitOfWork.SaveAsync(cancellationToken);
                 if(resultI <= 0 ){
@@ -119,12 +137,57 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
         }
-        // [HttpDelete("Cancel-order-detail")]
-        // public async Task<IActionResult> CancelOrder(int orderId, int productDetailId, CancellationToken cancellationToken){
-        //     var orderDetail = await  _orderRepository.OrderDetails.FirstOrDefaultAsync(x => x.OrderId == orderId && x.ProductDetailId == productDetailId);
-        //     _orderRepository.Delete(orderDetail);
+        [HttpPatch("Cancel-order-detail")]
+        public async Task<IActionResult> CancelOrder(int orderId, int productDetailId, CancellationToken cancellationToken){
+            var orderDetail = await  _orderRepository.OrderDetails.FirstOrDefaultAsync(x => x.OrderId == orderId && x.ProductDetailId == productDetailId);
+            if(orderDetail == null){
+                 return BadRequest( new Response<ResponseDefault>()
+                {
+                    State = true,
+                    Message = ErrorCode.Success,
+                    Result = new ResponseDefault()
+                    {
+                        Data = ""
+                    }
+                });
+            }
+            if(orderDetail.State > (int)StateOrderEnum.RECEIVED){
+                return BadRequest( new Response<ResponseDefault>()
+                {
+                    State = true,
+                    Message = ErrorCode.Success,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "Khong the huy don hang"
+                    }
+                });
+            }
+            orderDetail.State = (int)StateOrderEnum.CANCALLED;
+            _orderRepository.Update(orderDetail);
+            var result = await  _orderRepository.UnitOfWork.SaveAsync(cancellationToken);
+            if(result == 0){
+                return BadRequest( new Response<ResponseDefault>()
+                {
+                    State = true,
+                    Message = ErrorCode.Success,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "Khong the huy don hang"
+                    }
+                });
+            }
+            return Ok( new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = "Da Huy don hang"
+                }
+            });
+
             
-        // }
+        }
         
     }
     
