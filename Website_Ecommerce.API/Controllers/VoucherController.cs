@@ -174,29 +174,6 @@ namespace Website_Ecommerce.API.Controllers
                     }
             });
         }
-        [HttpGet("GetAllVoucherMatchWithOrder")]
-        public async Task<IActionResult> GetAllVoucherOrderMatch(){
-            var vouchersUnexpired =  await _voucherOrderRepository.VoucherOrders.Where(x => x.MinPrice> 10000).ToListAsync();
-            if(vouchersUnexpired.Count() ==  0){
-                return BadRequest( new Response<ResponseDefault>()
-                {
-                    State = false,
-                    Message = ErrorCode.NotFound,
-                    Result = new ResponseDefault()
-                    {
-                        Data = "Not found Voucher"
-                    }
-                });
-            }
-            return Ok( new Response<ResponseDefault>()
-                {
-                    State = true,
-                    Message = ErrorCode.Success,
-                    Result = new ResponseDefault()
-                    {
-                        Data = vouchersUnexpired
-                    }
-            });
-        }
+        
     }
 }

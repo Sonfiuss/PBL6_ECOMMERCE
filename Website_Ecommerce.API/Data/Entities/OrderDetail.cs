@@ -12,13 +12,13 @@ namespace Website_Ecommerce.API.Data.Entities
         [Key]
         [Column(Order = 1)]
         public int OrderId { get; set; }
+        [Required]
+        public int ShopId {get; set;}
         public Order Order { get; set; }
-        
         [Key]
         [Column(Order = 2)]
-        public int ProductId { get; set; }
-        public Product Product { get; set; }
-
+        public int ProductDetailId { get; set; }
+        public ProductDetail ProductDetail { get; set; }
         [ForeignKey("VoucherShop")]
         public int VoucherProductId { get; set; }
         public VoucherProduct VoucherProduct { get; set; } 
@@ -28,6 +28,9 @@ namespace Website_Ecommerce.API.Data.Entities
         public double Price { get; set; }
         [MaxLength(256)]
         public string Note { get; set; }
+        [Required]
+        public int State { get; set; }
+        
 
     }
 }

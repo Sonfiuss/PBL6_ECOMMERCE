@@ -11,13 +11,14 @@ using Website_Ecommerce.API.Data.Entities;
 using Website_Ecommerce.API.ModelDtos;
 using Website_Ecommerce.API.Repositories;
 using Website_Ecommerce.API.Response;
+using Website_Ecommerce.API.services;
 
 namespace Website_Ecommerce.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = "MyAuthKey")]
-    // [Authorize]
+    [CustomAuthorize(Allows = "Shop")]
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
