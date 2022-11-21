@@ -383,9 +383,10 @@ namespace Website_Ecommerce.API.Controllers
         #endregion
         #region "API Order of Shop"
         [HttpGet("get-list-order-detail-unconfirm-by-shop")]
-        public async Task<IActionResult> GetListUnConfirmOrder(int shopId){
-            // int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
-            // var shop = _shopRepository.Shops.FirstOrDefault(x => x.UserId == userId);
+        public async Task<IActionResult> GetListUnConfirmOrder(){
+            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
+            var shop = _shopRepository.Shops.FirstOrDefault(x => x.UserId == userId);
+            var shopId = shop.Id;
             var listOrderDetailOfShop = await _orderRepository.OrderDetails
                                         .Where(r => r.ShopId == shopId && r.State == (int)StateOrderDetailEnum.UNCONFIRMED)
                                         .ToListAsync();
@@ -427,6 +428,7 @@ namespace Website_Ecommerce.API.Controllers
                 }); 
             }
             orderDetail.State = (int)StateOrderDetailEnum.CONFIRMED;
+            orderDetail.ShopConfirmDate = DateTime.Now;
             _orderRepository.Update(orderDetail);
             var result = await _orderRepository.UnitOfWork.SaveAsync(cancellationToken);
             if(result == 0){

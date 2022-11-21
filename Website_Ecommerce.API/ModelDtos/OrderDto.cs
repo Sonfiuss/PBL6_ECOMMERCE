@@ -13,9 +13,9 @@ namespace Website_Ecommerce.API.ModelDtos
         public int State { get; set; }
         public string Address { get; set; }
         public DateTime CreateDate { get; set; }
-        public DateTime SendDate { get; set; }
+        public DateTime ShopSendDate { get; set; }
         public int UserId { get; set; }
-        public int VoucherId { get; set; } 
+        public int? VoucherId { get; set; } 
         public int paymentMethodId {get; set;}
         public IList<ItemOrderDto> ItemOrderDtos { get; set; }
         
@@ -30,7 +30,7 @@ namespace Website_Ecommerce.API.ModelDtos
                 State = order.State,
                 Address = order.Address,
                 CreateDate = order.CreateDate,
-                SendDate = order.SendDate
+                ShopSendDate = order.ShopSendDate
             };
             foreach (var i in order.OrderDetails)
             {
@@ -51,10 +51,11 @@ namespace Website_Ecommerce.API.ModelDtos
     {
         public int OrderId { get; set; }
         public int ProductDetailId { get; set; }
-        public int VoucherProductId { get; set; }
+        public int? VoucherProductId { get; set; }
         public int Amount { get; set; }
         public double Price { get; set; }
         public string Note { get; set; }
+        public DateTime ShopSendDate { get; set; }
     }
     
 

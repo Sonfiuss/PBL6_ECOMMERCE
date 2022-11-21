@@ -25,10 +25,10 @@ namespace Website_Ecommerce.API.Data
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Cart> Carts { get; set; }
-        public DbSet<Shipper> Shippers { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<VoucherOrder> VoucherOrders { get; set; }
         public DbSet<VoucherProduct> VoucherProducts { get; set; }
+
 
         public async Task<int> SaveAsync(CancellationToken cancellationToken = default)
         {
@@ -80,7 +80,7 @@ namespace Website_Ecommerce.API.Data
                 .HasOne<VoucherProduct>(od => od.VoucherProduct)
                 .WithMany(vs => vs.OrderDetails)
                 .HasForeignKey(od => od.VoucherProductId);
-
+            
             //UserRole
             modelBuilder.Entity<UserRole>().HasKey(ur => new { ur.UserId, ur.RoleId});
             modelBuilder.Entity<UserRole>()
@@ -127,16 +127,6 @@ namespace Website_Ecommerce.API.Data
                 .HasOne<User>(cm => cm.User)
                 .WithMany(u => u.Comments)
                 .HasForeignKey(cm => cm.UserId);
-
-            //shipper
-            modelBuilder.Entity<Shipper>()
-                .HasOne<User>(sp => sp.User)
-                .WithOne(u => u.Shipper)
-                .HasForeignKey<Shipper>(sp => sp.UserId);
-            modelBuilder.Entity<Shipper>()
-                .HasOne<Order>(sp => sp.Order)
-                .WithOne(o => o.Shipper)
-                .HasForeignKey<Shipper>(sp => sp.OrderId);
 
             //Cart
             modelBuilder.Entity<Cart>()

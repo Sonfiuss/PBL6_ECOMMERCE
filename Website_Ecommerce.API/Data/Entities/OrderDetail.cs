@@ -20,7 +20,7 @@ namespace Website_Ecommerce.API.Data.Entities
         public int ProductDetailId { get; set; }
         public ProductDetail ProductDetail { get; set; }
         [ForeignKey("VoucherShop")]
-        public int VoucherProductId { get; set; }
+        public int? VoucherProductId { get; set; }
         public VoucherProduct VoucherProduct { get; set; } 
         [Required]
         public int Amount { get; set; }
@@ -29,6 +29,7 @@ namespace Website_Ecommerce.API.Data.Entities
         [MaxLength(256)]
         public string Note { get; set; }
         [Required]
+        public DateTime ShopConfirmDate { get; set; }
         public int State { get; set; }
         
 
