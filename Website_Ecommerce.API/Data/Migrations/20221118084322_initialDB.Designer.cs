@@ -11,8 +11,8 @@ using Website_Ecommerce.API.Data;
 namespace Website_Ecommerce.API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221117110930_InitialDB")]
-    partial class InitialDB
+    [Migration("20221118084322_initialDB")]
+    partial class initialDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -109,16 +109,16 @@ namespace Website_Ecommerce.API.Data.Migrations
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<DateTime?>("CustomRecipientsDate")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("RecipientName")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("RecipitentPhone")
+                    b.Property<string>("RecipientPhone")
                         .IsRequired()
                         .HasColumnType("longtext");
-
-                    b.Property<DateTime>("ShopSendDate")
-                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("State")
                         .HasColumnType("int");
@@ -131,9 +131,6 @@ namespace Website_Ecommerce.API.Data.Migrations
 
                     b.Property<int?>("VoucherId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("WareHouseReceivedDate")
-                        .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 
@@ -164,11 +161,14 @@ namespace Website_Ecommerce.API.Data.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("double");
 
-                    b.Property<DateTime>("ShopConfirmDate")
+                    b.Property<DateTime?>("ShopConfirmDate")
                         .HasColumnType("datetime(6)");
 
                     b.Property<int>("ShopId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("ShopSendDate")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("State")
                         .HasColumnType("int");

@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data.Entities;
@@ -14,16 +11,23 @@ namespace Website_Ecommerce.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "MyAuthKey")]
     public class CartController:ControllerBase
     {   
         private readonly IMapper _mapper;
         private readonly ICartRepository _cartRepository;
-        public CartController(ICartRepository cartRepository, IMapper mapper){
+        private readonly IHttpContextAccessor _httpContext;
+        public CartController(ICartRepository cartRepository, 
+                            IMapper mapper,
+                            IHttpContextAccessor httpContext){
+            _httpContext = httpContext;
             _mapper = mapper;
             _cartRepository = cartRepository;
         }
         [HttpPost("Add-item-to-cart")]
         public async Task<IActionResult> AddItemToCart([FromBody]CartDto request, CancellationToken cancellationToken){
+            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
+            request.UserId = userId;
             var item = _mapper.Map<Cart>(request);
             _cartRepository.Add(item);
             var result = await _cartRepository.UnitOfWork.SaveAsync(cancellationToken);
@@ -53,7 +57,8 @@ namespace Website_Ecommerce.API.Controllers
         [HttpPost("update-item-in-cart")]
         public async Task<IActionResult> UpdateItemCart([FromBody] CartDto request, CancellationToken cancellationToken)
         {
-            
+            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
+            request.UserId = userId;
             var item = _mapper.Map<Cart>(request);
             _cartRepository.Update(item);
             var result = await _cartRepository.UnitOfWork.SaveAsync(cancellationToken);

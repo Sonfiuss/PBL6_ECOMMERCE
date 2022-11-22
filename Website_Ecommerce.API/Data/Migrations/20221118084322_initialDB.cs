@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Website_Ecommerce.API.Data.Migrations
 {
-    public partial class InitialDB : Migration
+    public partial class initialDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -178,11 +178,10 @@ namespace Website_Ecommerce.API.Data.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     RecipientName = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    RecipitentPhone = table.Column<string>(type: "longtext", nullable: false)
+                    RecipientPhone = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreateDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    ShopSendDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    WareHouseReceivedDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CustomRecipientsDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     TotalPrice = table.Column<double>(type: "double", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     VoucherId = table.Column<int>(type: "int", nullable: true)
@@ -413,7 +412,8 @@ namespace Website_Ecommerce.API.Data.Migrations
                     Price = table.Column<double>(type: "double", nullable: false),
                     Note = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ShopConfirmDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    ShopSendDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ShopConfirmDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     State = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

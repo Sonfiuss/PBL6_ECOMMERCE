@@ -8,23 +8,15 @@ namespace Website_Ecommerce.API.services
 {
     public class OrderService : IOrderService
     {
-
-        public void AddItemDirect(int id, int amount)
+        public bool CheckVoucherOrderMatch(Order order, VoucherOrder voucher)
         {
-            List<OrderDetail> orderDetails = new List<OrderDetail>();
+            if(voucher.Expired < DateTime.Now && voucher.MinPrice < order.TotalPrice){
+                return false;
+            }
+            return true;
         }
 
-        public void AddItemFromCart(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddVoucherOfShop(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddVoucherOrder(int id)
+        public bool CheckVoucherProduct(ProductDetail productDetail, VoucherProduct voucher)
         {
             throw new NotImplementedException();
         }

@@ -19,11 +19,10 @@ namespace Website_Ecommerce.API.Data.Entities
         [Required]
         public string RecipientName { get; set;}
         [Required]
-        public string RecipitentPhone { get; set; }
+        public string RecipientPhone { get; set; }
         [Required]
         public DateTime CreateDate { get; set; }
-        public DateTime ShopSendDate { get; set; }
-        public DateTime WareHouseReceivedDate { get; set; }
+        public DateTime? CustomRecipientsDate { get; set; }
         [Required]
         public double TotalPrice { get; set; } 
         [ForeignKey("User")]

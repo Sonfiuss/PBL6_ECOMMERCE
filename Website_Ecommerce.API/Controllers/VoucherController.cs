@@ -174,6 +174,30 @@ namespace Website_Ecommerce.API.Controllers
                     }
             });
         }
-        
+        [HttpGet("get-voucher-order-by-Time")]
+        public async Task<IActionResult> getVoucherOrderByTime(DateTime timeIn, DateTime timeOut){
+            var listVoucher = await _voucherOrderRepository.GetAllVoucherbyDate(timeIn, timeOut);
+            return Ok( new Response<ResponseDefault>(){
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = listVoucher
+                }
+            });
+        }       
+        [HttpGet("get-voucher-availability")]
+        public async Task<IActionResult> getVoucherAvailability(){
+            var vouchers = await _voucherOrderRepository.GetAllVoucherMatch();
+            return Ok( new Response<ResponseDefault>(){
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = vouchers
+                }
+            });
+
+        }
     }
 }
