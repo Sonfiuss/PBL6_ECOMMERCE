@@ -96,6 +96,7 @@ namespace PBL4.WebAPI
             services.AddTransient<IVoucherOrderRepository, VoucherOrderRepository>();
             services.AddTransient<IShopRepository, ShopRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IStatisticService, StatisticService>();
 
             services.AddTransient<IIdentityServices, IdentityServices>();
             services.AddTransient<IAppQueries>(x=> new AppQueries(Configuration["ConnectionString"]));
@@ -157,6 +158,8 @@ namespace PBL4.WebAPI
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "PBL4.WebAPI v1");
                 });*/
             }
+
+            app.UseStaticFiles();
 
             app.UseRouting();
 

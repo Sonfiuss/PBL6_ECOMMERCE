@@ -12,7 +12,7 @@ insert into categories values (3, "Quầy Tây");
 -- DB shop
 insert into shops values (1, "ABC", 3, "Hà Nội", "ABC@gmail.com", "http:///", "1234", 5, 4.6, 250, 1);
 insert into shops values (2, "DEF", 4, "Hà Nội", "DEF@gmail.com", "http:///", "1234", 5, 4.6, 250, 1);
-insert into shops values (3, "GHI", 4, "ĐÀ NẴNG", "GHI@gmail.com", "http:///", "1234", 5, 4.6, 250, 1);
+insert into shops values (3, "GHI", 7, "ĐÀ NẴNG", "GHI@gmail.com", "http:///", "1234", 5, 4.6, 250, 1);
 
 -- DB Product
 

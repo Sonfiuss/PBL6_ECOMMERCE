@@ -17,5 +17,6 @@ namespace Website_Ecommerce.API.Repositories
         void Update(VoucherProduct voucherProduct);
         void Delete(VoucherProduct voucherProduct);
         IList<VoucherProduct> GetGetVoucherMatch(ProductDetail productdetail);
+        
     }
 }

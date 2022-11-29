@@ -40,21 +40,7 @@ namespace Website_Ecommerce.API.Controllers
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
             VoucherOrder voucherOrder = _voucherOrderRepository.VoucherOrders.FirstOrDefault(x => x.Id == request.VoucherId);
         
-            var totalPrice = 0.0;
-            foreach(var i in request.ItemOrderDtos){
-                ProductDetail productDetail = _productRepository.ProductDetails.FirstOrDefault(x => x.Id == i.ProductDetailId);
-                VoucherProduct voucherProduct = _shopRepository.voucherProducts.FirstOrDefault(x => x.Id == i.VoucherProductId);
-                if(voucherProduct != null){
-                    totalPrice += productDetail.Price * i.Amount - voucherProduct.Value;
-                }
-                else{
-                    totalPrice += productDetail.Price * i.Amount;
-                }
-                
-            }
-            if(voucherOrder != null){
-                totalPrice = totalPrice - voucherOrder.Value;
-            }
+            
             var order = new Order{
                 Id = request.Id,
                 UserId = userId,
@@ -64,7 +50,8 @@ namespace Website_Ecommerce.API.Controllers
                 CreateDate = DateTime.Now,
                 VoucherId = request.VoucherId,
                 State = (int)StateOrderEnum.SENT,
-                TotalPrice = totalPrice
+                TotalPrice = request.totalPrice
+                // TotalPrice = totalPrice
             };
             // if(voucherOrder.MinPrice > totalPrice){
             //     //Message Can't apply voucher to Order 
@@ -73,8 +60,8 @@ namespace Website_Ecommerce.API.Controllers
             // else{
             if(voucherOrder != null){
                 voucherOrder.Amount = voucherOrder.Amount - 1;
-                _orderRepository.Add(order);
                 _voucherOrderRepository.Update(voucherOrder);
+                _orderRepository.Add(order);
             }else{
                 order.VoucherId = null;
                 _orderRepository.Add(order);
@@ -112,7 +99,7 @@ namespace Website_Ecommerce.API.Controllers
                     Amount = i.Amount,
                     ShopId = shop.Id,
                     State = (int)StateOrderDetailEnum.UNCONFIRMED,
-                    Price = productDetail.Price * i.Amount - voucherProduct.Value,
+                    Price = i.Price,
                     VoucherProductId =  i.VoucherProductId
                 };
                 _orderRepository.Add(orderDetail);
@@ -185,6 +172,7 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
+
             return Ok( new Response<ResponseDefault>()
             {
                 State = true,
@@ -197,7 +185,13 @@ namespace Website_Ecommerce.API.Controllers
 
             
         }
-        
+        [HttpGet("View-order")]
+        public async Task<IActionResult> ViewOrder(int orderId){
+            Order order = await _orderRepository.Orders.FirstOrDefaultAsync(p => p.Id == orderId);
+            
+            throw new ArgumentException();
+        }
+            
     }
-    
+
 }

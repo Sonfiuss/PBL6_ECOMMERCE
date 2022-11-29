@@ -21,5 +21,7 @@ namespace Website_Ecommerce.API.Data.Entities
         public ProductDetail ProductDetail { get; set; }
         [Required]
         public int Amount { get; set; }
+        [Required]
+        public bool State {get; set; }
     }
 }

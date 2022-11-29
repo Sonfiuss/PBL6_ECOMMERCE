@@ -11,6 +11,7 @@ namespace Website_Ecommerce.API.ModelDtos
         public int UserId { get; set; }
         public int ProductDetailId { get; set; }
         public int Amount { get; set; }
+        
     }
     public class ViewItemCartDto{
         public int Id { get; set; }
@@ -19,5 +20,6 @@ namespace Website_Ecommerce.API.ModelDtos
         public double InitialPrice { get; set; }
         public double Price { get; set; }
         public int Amount { get; set; }
+        public int State{ get; set;}
     }
 }

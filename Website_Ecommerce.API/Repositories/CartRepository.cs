@@ -37,7 +37,7 @@ namespace Website_Ecommerce.API.Repositories
 
         public async Task<IEnumerable<ViewItemCartDto>> GetAllItemByIdUser(int id)
         {
-            var itemCart = _dataContext.Carts.Where(x => x.UserId == id);
+            var itemCart = _dataContext.Carts.Where(x => x.UserId == id && x.State == true);
             var pdetail = _dataContext.ProductDetails;
             var product = _dataContext.Products;
             var itemPdetail = itemCart.Join(pdetail, i => i.ProductDetailId, pd => pd.Id

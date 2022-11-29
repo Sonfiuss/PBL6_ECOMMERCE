@@ -412,8 +412,22 @@ namespace Website_Ecommerce.API.Controllers
                 });
             
         }
+        // [HttpGet("get-list-order-detail-of-shop")]
+        // public async Task<IActionResult> getListOrderDetailOfShop(){
+            
+        //     return Ok( new Response<ResponseDefault>()
+        //         {
+        //             State = true,
+        //             Message = ErrorCode.BadRequest,
+        //             Result = new ResponseDefault()
+        //             {
+        //                 Data = orderDetails
+        //             }
+        //         });
+            
+        // }
         [HttpPatch("Confirm-Order")]
-        public async Task<IActionResult> ConfirmOrder (int orderID, int productDetailId, CancellationToken cancellationToken){
+        public async Task<IActionResult> ConfirmOrder (int orderID, int productDetailId, int state, CancellationToken cancellationToken){
             var orderDetail = await _orderRepository.OrderDetails
                                 .FirstOrDefaultAsync(r => r.OrderId == orderID && r.ProductDetailId == productDetailId);
             if(orderDetail == null){
@@ -427,8 +441,14 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 }); 
             }
-            orderDetail.State = (int)StateOrderDetailEnum.CONFIRMED;
-            orderDetail.ShopConfirmDate = DateTime.Now;
+            
+            orderDetail.State = state /*(int)StateOrderDetailEnum.CONFIRMED*/;
+            if(state == 2){
+                orderDetail.ShopConfirmDate = DateTime.Now;
+            }
+            else{
+                orderDetail.ShopSendDate = DateTime.Now;
+            }
             _orderRepository.Update(orderDetail);
             var result = await _orderRepository.UnitOfWork.SaveAsync(cancellationToken);
             if(result == 0){
