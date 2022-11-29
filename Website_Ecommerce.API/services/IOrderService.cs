@@ -2,16 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Website_Ecommerce.API.Data.Entities;
 
 namespace Website_Ecommerce.API.services
 {
     public interface IOrderService
     {   /// <summary>
-        /// <param name = "voucherID">
-        /// <summary>
-        
-        void AddVoucherOfShop(int id);
-        
-        void AddVoucherOrder(int id);
+        bool CheckVoucherOrderMatch(Order order, VoucherOrder voucher);
+        bool CheckVoucherProduct(ProductDetail productDetail, VoucherProduct voucher);
     }
 }

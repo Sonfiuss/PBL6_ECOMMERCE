@@ -34,14 +34,10 @@ namespace Website_Ecommerce.API.Repositories
             _dataContext.Entry(voucherOrder).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         }
 
-        public bool CheckVoucher(Order order)
+        public async Task<IList<VoucherOrder>> GetAllVoucherMatch()
         {
-            var voucherOrder = _dataContext.VoucherOrders.FirstOrDefault(x => x.MinPrice < 10000 && x.Amount > 0);
-            if (voucherOrder == null)
-            {
-                return false;
-            }
-            return true;
-        }
+            var voucherOrder = await _dataContext.VoucherOrders.Where( x => x.Expired >= DateTime.Now).ToListAsync();
+            return voucherOrder;
+        }   
     }
 }

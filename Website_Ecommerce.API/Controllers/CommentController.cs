@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data.Entities;
 using Website_Ecommerce.API.ModelDtos;
 using Website_Ecommerce.API.Repositories;
@@ -14,26 +14,38 @@ namespace Website_Ecommerce.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    [Authorize(AuthenticationSchemes = "MyAuthKey")]
+    public class CommentController : ControllerBase
     {
-        private readonly ICategroyRepository _categroyRepository;
+        private readonly ICommentRepository _commentRepository;
+        private readonly IHttpContextAccessor _httpContext;
+        private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
 
-        public CategoryController(
-            ICategroyRepository categroyRepository,
+        public CommentController(
+            ICommentRepository commentRepository,
+            IHttpContextAccessor httpContext,
+            IProductRepository productRepository,
             IMapper mapper)
         {
-            _categroyRepository = categroyRepository;
+            _commentRepository = commentRepository;
+            _httpContext = httpContext;
+            _productRepository = productRepository;
             _mapper = mapper;
         }
 
-        [HttpPost("add-category")]
-        public async Task<IActionResult> AddCategory([FromBody] CategoryDto request, CancellationToken cancellationToken)
+        [HttpPost("add-comment")]
+        public async Task<IActionResult> AddComment([FromBody] CommentDto request, CancellationToken cancellationToken)
         {
-            Category category = new Category();
-            category.Name = request.Name;
-            _categroyRepository.Add(category);
-            var result = await _categroyRepository.UnitOfWork.SaveAsync(cancellationToken);
+            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
+
+            Comment comment = new Comment();
+            comment.Content = request.Content;
+            comment.UserId = userId;
+            comment.ProductId = request.ProductId;
+            comment.State = 1; //ton tai
+            _commentRepository.Add(comment);
+            var result = await _commentRepository.UnitOfWork.SaveAsync(cancellationToken);
 
             if(result > 0)
             {
@@ -43,7 +55,7 @@ namespace Website_Ecommerce.API.Controllers
                     Message = ErrorCode.Success,
                     Result = new ResponseDefault()
                     {
-                        Data = category.Id.ToString()
+                        Data = comment.Id.ToString()
                     }
                 });
             }
@@ -57,13 +69,16 @@ namespace Website_Ecommerce.API.Controllers
                 }
             });
         }
+        
 
 
-        [HttpPut("update-category")]
-        public async Task<IActionResult> UpdateCategory([FromBody] CategoryDto request, CancellationToken cancellationToken)
+        [HttpPut("update-comment")]
+        public async Task<IActionResult> UpdateComment([FromBody] CommentDto request, CancellationToken cancellationToken)
         {
-            Category category = _categroyRepository.Categories.FirstOrDefault(c => c.Id == request.Id);
-            if(category == null)
+            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
+
+            Comment comment = _commentRepository.Comments.FirstOrDefault(c => c.Id == request.Id && c.UserId == userId);
+            if(comment == null)
             {
                 return BadRequest( new Response<ResponseDefault>()
                 {
@@ -71,14 +86,14 @@ namespace Website_Ecommerce.API.Controllers
                     Message = ErrorCode.NotFound,
                     Result = new ResponseDefault()
                     {
-                        Data = "Update category fail"
+                        Data = "Update Comment fail"
                     }
                 });
             }
 
-            category.Name = request.Name;
-            _categroyRepository.Update(category);
-            var result = await _categroyRepository.UnitOfWork.SaveAsync(cancellationToken);
+            comment.Content = request.Content;
+            _commentRepository.Update(comment);
+            var result = await _commentRepository.UnitOfWork.SaveAsync(cancellationToken);
 
             if(result > 0)
             {
@@ -88,7 +103,7 @@ namespace Website_Ecommerce.API.Controllers
                     Message = ErrorCode.Success,
                     Result = new ResponseDefault()
                     {
-                        Data = category.Id.ToString()
+                        Data = comment.Id.ToString()
                     }
                 });
             }
@@ -98,16 +113,18 @@ namespace Website_Ecommerce.API.Controllers
                 Message = ErrorCode.ExcuteDB,
                 Result = new ResponseDefault()
                 {
-                    Data = "Update category fail"
+                    Data = "Update Comment fail"
                 }
             });
         }
         
-        [HttpDelete("delete-category/{id}")]
-        public async Task<IActionResult> DeleteCategory(int id)
+        [HttpPut("delete-Comment/{id}")]
+        public async Task<IActionResult> DeleteComment(int id)
         {
-            Category category = _categroyRepository.Categories.FirstOrDefault(c => c.Id == id);
-            if(category == null)
+            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
+
+            Comment comment = _commentRepository.Comments.FirstOrDefault(c => c.Id == id && c.UserId == userId);
+            if(comment == null)
             {
                 return BadRequest( new Response<ResponseDefault>()
                 {
@@ -115,13 +132,14 @@ namespace Website_Ecommerce.API.Controllers
                     Message = ErrorCode.NotFound,
                     Result = new ResponseDefault()
                     {
-                        Data = "Delete category fail"
+                        Data = "Delete Comment fail"
                     }
                 });
             }
 
-            _categroyRepository.Delete(category);
-            var result = await _categroyRepository.UnitOfWork.SaveAsync();
+            comment.State = 0;
+            _commentRepository.Update(comment);
+            var result = await _commentRepository.UnitOfWork.SaveAsync();
 
             if(result > 0)
             {
@@ -131,7 +149,7 @@ namespace Website_Ecommerce.API.Controllers
                     Message = ErrorCode.Success,
                     Result = new ResponseDefault()
                     {
-                        Data = category.Id.ToString()
+                        Data = comment.Id.ToString()
                     }
                 });
             }
@@ -141,16 +159,16 @@ namespace Website_Ecommerce.API.Controllers
                 Message = ErrorCode.ExcuteDB,
                 Result = new ResponseDefault()
                 {
-                    Data = "Delete category fail"
+                    Data = "Delete Comment fail"
                 }
             });
         }
 
-        [HttpGet("list-category")]
+        [HttpGet("list-Comment-by/{productId}")]
 
-        public async Task<IActionResult> GetListCategory()
+        public async Task<IActionResult> GetListComment(int productId)
         {
-            var categories = await _categroyRepository.Categories.Select(x => new Category {Id = x.Id, Name = x.Name}).ToListAsync();
+            var categories = _commentRepository.Comments.Where(x => x.State == 1).Select(x => x.Content).ToList();
 
             return Ok( new Response<ResponseDefault>()
             {
@@ -163,13 +181,6 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-        [HttpGet("get-category-by/{id}")]
-        public async Task<IActionResult> GetCategoryById(int id)
-        {
-            return Ok(await _categroyRepository.Categories
-                .Select(x => new { x.Id, x.Name})
-                .FirstOrDefaultAsync(x => x.Id == id)
-            );
-        }
+        
     }
 }

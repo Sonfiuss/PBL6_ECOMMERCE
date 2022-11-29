@@ -96,6 +96,7 @@ namespace PBL4.WebAPI
             services.AddTransient<IVoucherOrderRepository, VoucherOrderRepository>();
             services.AddTransient<IShopRepository, ShopRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<ICommentRepository, CommentRepository>();
 
             services.AddTransient<IIdentityServices, IdentityServices>();
             services.AddTransient<IAppQueries>(x=> new AppQueries(Configuration["ConnectionString"]));

@@ -12,7 +12,7 @@ namespace Website_Ecommerce.API.Repositories
         void Update(VoucherOrder voucherOrder);
         IQueryable<VoucherOrder> VoucherOrders{ get;} 
         Task<IEnumerable<VoucherOrder>> GetAllVoucherbyDate(DateTime start, DateTime end);
-        bool CheckVoucher(Order order);
-
+        // Task<IList<VoucherOrder>> GetAllVoucherbyCheckVoucher(Order order);
+        Task<IList<VoucherOrder>> GetAllVoucherMatch();
     }
 }

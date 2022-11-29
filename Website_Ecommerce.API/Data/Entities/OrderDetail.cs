@@ -28,8 +28,8 @@ namespace Website_Ecommerce.API.Data.Entities
         public double Price { get; set; }
         [MaxLength(256)]
         public string Note { get; set; }
-        [Required]
-        public DateTime ShopConfirmDate { get; set; }
+        public DateTime? ShopSendDate { get; set; }
+        public DateTime? ShopConfirmDate { get; set; }
         public int State { get; set; }
         
 

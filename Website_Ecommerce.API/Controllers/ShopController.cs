@@ -216,36 +216,7 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-        [HttpGet("get-list-shop")]
-        public async Task<IActionResult> GetListShop()
-        {
-            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
-            //check userId
-            List<Shop> shops = await _shopRepository.Shops.Where(x => x.Status == true).ToListAsync();
-            if(shops == null)
-            {
-                return BadRequest( new Response<ResponseDefault>()
-                {
-                    State = false,
-                    Message = ErrorCode.NotFound,
-                    Result = new ResponseDefault()
-                    {
-                        Data = "Not Found Shop"
-                    }
-                });
-            }
-            
-
-            return Ok( new Response<ResponseDefault>()
-            {
-                State = true,
-                Message = ErrorCode.Success,
-                Result = new ResponseDefault()
-                {
-                    Data = shops
-                }
-            });
-        }
+        
         #endregion
         #region "API Voucher Shop"
         [HttpPost("add-voucher-of-Shop")]

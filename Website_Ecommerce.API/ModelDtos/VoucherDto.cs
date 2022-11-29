@@ -13,6 +13,7 @@ namespace Website_Ecommerce.API.ModelDtos
         public int Amount { get; set; }
         public DateTime CreateAt { get; set; }
         public DateTime Expired { get; set; }
+        public bool State { get; set;}
     }
     public class VoucherShopDto{
         public int Id { get; set; }
@@ -22,6 +23,7 @@ namespace Website_Ecommerce.API.ModelDtos
         public int Amount { get; set; }
         public DateTime CreateAt { get; set; }
         public DateTime Expired { get; set; }
+        public bool State { get; set;}
 
     }
 }
