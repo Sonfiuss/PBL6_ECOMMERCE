@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Website_Ecommerce.API.Data.Migrations
+namespace Website_Ecommerce.API.Migrations
 {
-    public partial class initialDB : Migration
+    public partial class ADDDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

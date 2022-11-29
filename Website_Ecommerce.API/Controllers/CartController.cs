@@ -17,15 +17,18 @@ namespace Website_Ecommerce.API.Controllers
         private readonly IMapper _mapper;
         private readonly ICartRepository _cartRepository;
         private readonly IHttpContextAccessor _httpContext;
-        public CartController(ICartRepository cartRepository, 
-                            IMapper mapper,
-                            IHttpContextAccessor httpContext){
+        public CartController(
+            ICartRepository cartRepository, 
+            IMapper mapper,
+            IHttpContextAccessor httpContext)
+        {
             _httpContext = httpContext;
             _mapper = mapper;
             _cartRepository = cartRepository;
         }
         [HttpPost("Add-item-to-cart")]
-        public async Task<IActionResult> AddItemToCart([FromBody]CartDto request, CancellationToken cancellationToken){
+        public async Task<IActionResult> AddItemToCart([FromBody]CartDto request, CancellationToken cancellationToken)
+        {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
             request.UserId = userId;
             var item = _mapper.Map<Cart>(request);
@@ -88,8 +91,11 @@ namespace Website_Ecommerce.API.Controllers
                 }
             });
         }
+
+
         [HttpDelete("Delete-Item-in-cart")]
-        public async Task<IActionResult> DeleteItemInCart([FromQuery] int id){
+        public async Task<IActionResult> DeleteItemInCart([FromQuery] int id)
+        {
             if(id.ToString() is null)
             {
                 return BadRequest(null);
@@ -133,7 +139,8 @@ namespace Website_Ecommerce.API.Controllers
        }
 
        [HttpGet("Get-all-items-of-User")]
-       public async Task<IActionResult> GetAllItemByIdUser(int id){
+       public async Task<IActionResult> GetAllItemByIdUser(int id)
+       {
             var listItems = await _cartRepository.GetAllItemByIdUser(id);
             return Ok( new Response<ResponseDefault>()
             {

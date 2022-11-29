@@ -14,8 +14,8 @@ namespace Website_Ecommerce.API.Profiles
         {
             // source -> target
             CreateMap<ProductDetailDto, ProductDetail>();
-
             CreateMap<ProductDetail, ProductDetailDto>();
+
             CreateMap<ProductImageDto, ProductImage>();
             CreateMap<CartDto, Cart>();
             CreateMap<VoucherOrderDto, VoucherOrder>();
