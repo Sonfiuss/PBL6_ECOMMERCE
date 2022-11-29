@@ -546,10 +546,5 @@ namespace Website_Ecommerce.API.Controllers
 
 #endregion
 
-        
-
-
-
-
     }
 }
