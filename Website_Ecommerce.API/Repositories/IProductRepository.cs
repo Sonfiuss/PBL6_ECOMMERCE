@@ -21,5 +21,10 @@ namespace Website_Ecommerce.API.Repositories
         void Add(ProductImage productImage);
         void Update(ProductImage productImage);
         void Delete(ProductImage productImage);
+
+        IQueryable<ProductCategory> ProductCategories { get; }
+        void Add(ProductCategory productCategory);
+        void Update(ProductCategory productCategory);
+        void Delete(ProductCategory productCategory);
     }
 }

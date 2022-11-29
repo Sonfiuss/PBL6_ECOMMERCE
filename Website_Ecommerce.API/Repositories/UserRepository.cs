@@ -22,6 +22,8 @@ namespace Website_Ecommerce.API.Repositories
 
         public IUnitOfWork UnitOfWork => _dataContext;
 
+        public IQueryable<Role> Roles => _dataContext.Roles;
+
         public void Add(User user)
         {
             _dataContext.Users.Add(user);
@@ -30,6 +32,11 @@ namespace Website_Ecommerce.API.Repositories
         public void Add(UserRole userRole)
         {
             _dataContext.UserRoles.Add(userRole);
+        }
+
+        public void Add(Role role)
+        {            
+            _dataContext.Roles.Add(role);
         }
 
         public void Delete(User user)
@@ -42,6 +49,11 @@ namespace Website_Ecommerce.API.Repositories
             _dataContext.Entry(userRole).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
         }
 
+        public void Delete(Role role)
+        {
+            _dataContext.Entry(role).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+        }
+
         public void Update(User user)
         {
             _dataContext.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
@@ -50,6 +62,11 @@ namespace Website_Ecommerce.API.Repositories
         public void Update(UserRole userRole)
         {
             _dataContext.Entry(userRole).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        }
+
+        public void Update(Role role)
+        {
+            _dataContext.Entry(role).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         }
     }
 }

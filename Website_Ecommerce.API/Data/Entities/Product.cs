@@ -18,22 +18,18 @@ namespace Website_Ecommerce.API.Data.Entities
         [Required]
         public string Origin { get; set; }
         [MaxLength(256)]
-        public string? Description { get; set; }
-
-        [ForeignKey("Category")]
-        public int CategoryId { get; set; }
-        public Category Category { get; set;}
+        public string Description { get; set; }
 
         [ForeignKey("Shop")]
         public int ShopId { get; set; }
         public Shop Shop { get; set;}
         [Required]
-        public int Status { get; set; }
+        public bool Status { get; set; }
 
         public ICollection<ProductDetail> ProductDetails { get; set; }
-        public IList<OrderDetail> OrderDetails { get; set; }
-        public ICollection<VoucherProduct> VoucherProducts { get; set; }
+
         public ICollection<Comment> Comments { get; set; }
+        public IList<ProductCategory> ProductCategories { get; set;}
         public ICollection<Cart> Carts { get; set; }
         
 

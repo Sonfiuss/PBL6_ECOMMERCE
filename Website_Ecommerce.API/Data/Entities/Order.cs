@@ -17,19 +17,20 @@ namespace Website_Ecommerce.API.Data.Entities
         [MaxLength(256)]
         public string Address { get; set; }
         [Required]
-        public DateTime CreateDate { get; set; }
+        public string RecipientName { get; set;}
         [Required]
-        public DateTime SendDate { get; set; }
-        
+        public string RecipientPhone { get; set; }
+        [Required]
+        public DateTime CreateDate { get; set; }
+        public DateTime? CustomRecipientsDate { get; set; }
+        [Required]
+        public double TotalPrice { get; set; } 
         [ForeignKey("User")]
         public int UserId { get; set; }
         public User User { get; set; }
-
         [ForeignKey("Voucher")]
-        public int VoucherId { get; set; } 
+        public int? VoucherId { get; set; } 
         public VoucherOrder VoucherOrder { get; set; }
-
-        public Shipper? Shipper { get; set; }
         [Required]
         public Payment Payment { get; set; }
         public IList<OrderDetail> OrderDetails { get; set; }

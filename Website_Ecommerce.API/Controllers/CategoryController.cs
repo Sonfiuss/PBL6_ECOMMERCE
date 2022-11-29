@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data.Entities;
@@ -16,10 +17,14 @@ namespace Website_Ecommerce.API.Controllers
     public class CategoryController : ControllerBase
     {
         private readonly ICategroyRepository _categroyRepository;
+        private readonly IMapper _mapper;
 
-        public CategoryController(ICategroyRepository categroyRepository)
+        public CategoryController(
+            ICategroyRepository categroyRepository,
+            IMapper mapper)
         {
             _categroyRepository = categroyRepository;
+            _mapper = mapper;
         }
 
         [HttpPost("add-category")]
@@ -141,11 +146,30 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-        [HttpGet("list-categrory")]
+        [HttpGet("list-category")]
 
         public async Task<IActionResult> GetListCategory()
         {
-            return Ok(await _categroyRepository.Categories.ToListAsync());
+            var categories = await _categroyRepository.Categories.Select(x => new Category {Id = x.Id, Name = x.Name}).ToListAsync();
+
+            return Ok( new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = categories
+                }
+            });
+        }
+
+        [HttpGet("get-category-by/{id}")]
+        public async Task<IActionResult> GetCategoryById(int id)
+        {
+            return Ok(await _categroyRepository.Categories
+                .Select(x => new { x.Id, x.Name})
+                .FirstOrDefaultAsync(x => x.Id == id)
+            );
         }
     }
 }
