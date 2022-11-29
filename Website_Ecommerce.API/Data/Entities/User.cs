@@ -13,21 +13,21 @@ namespace Website_Ecommerce.API.Data.Entities
         [Required]
         [MaxLength(32)]
         public string Username { get; set; }
-        public byte[] Password { get; set; }
-        public byte[] PasswordSalt { get; set; }
+        [Required]
+        [MaxLength(32)]
+        public string Password { get; set; }
+        // public byte[] PasswordSalt { get; set; }
         [Required]
         [MaxLength(256)]
         public string Email { get; set; }
-        public string? Phone { get; set; }
-        public string? UrlAvatar { get; set; }
+        public string Phone { get; set; }
+        public string UrlAvatar { get; set; }
         public DateTime? DateOfBirth { get; set; }
         [Required]
         public bool Gender { get; set; }
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public bool? IsBlock { get; set; }
-
-        public Shipper Shipper { get; set; }
         public IList<UserRole> UserRoles { get; set; }
         public ICollection<Comment> Comments { get; set; }
         public ICollection<Cart> Carts { get; set; }
