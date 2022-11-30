@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "38xaPb1+LJyGzTn1oARQ5EYyJhAHG6AkLLCQD2CHcUw=",
+  "Hash": "YZOP15rPuOGwpNaLh4xyxNEpLu/ehaqn14QriNyeAy8=",
   "Source": "Website_Ecommerce.API",
   "BasePath": "_content/Website_Ecommerce.API",
   "Mode": "Default",
@@ -8,19 +8,19 @@
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [
     {
-      "Name": "Website_Ecommerce.API\\wwwroot",
+      "Name": "Website_Ecommerce.API/wwwroot",
       "Source": "Website_Ecommerce.API",
-      "ContentRoot": "D:\\Semester7\\PBL6_Part3\\Website_Ecommerce.API\\wwwroot\\",
+      "ContentRoot": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/",
       "BasePath": "_content/Website_Ecommerce.API",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "D:\\Semester7\\PBL6_Part3\\Website_Ecommerce.API\\wwwroot\\avatar.jpg",
+      "Identity": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/avatar.jpg",
       "SourceId": "Website_Ecommerce.API",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Semester7\\PBL6_Part3\\Website_Ecommerce.API\\wwwroot\\",
+      "ContentRoot": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/",
       "BasePath": "_content/Website_Ecommerce.API",
       "RelativePath": "avatar.jpg",
       "AssetKind": "All",
@@ -31,13 +31,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\avatar.jpg"
+      "OriginalItemSpec": "wwwroot/avatar.jpg"
     },
     {
-      "Identity": "D:\\Semester7\\PBL6_Part3\\Website_Ecommerce.API\\wwwroot\\logo.png",
+      "Identity": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/logo.png",
       "SourceId": "Website_Ecommerce.API",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Semester7\\PBL6_Part3\\Website_Ecommerce.API\\wwwroot\\",
+      "ContentRoot": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/",
       "BasePath": "_content/Website_Ecommerce.API",
       "RelativePath": "logo.png",
       "AssetKind": "All",
@@ -48,7 +48,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\logo.png"
+      "OriginalItemSpec": "wwwroot/logo.png"
     }
   ]
 }

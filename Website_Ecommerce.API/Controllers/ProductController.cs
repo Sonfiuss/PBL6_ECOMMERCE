@@ -281,6 +281,7 @@ namespace Website_Ecommerce.API.Controllers
             List<ProductDto> products = await _productRepository.Products
                                                 .Select(x => new ProductDto 
                                                 {
+                                                    Id = x.Id,
                                                     Name = x.Name,
                                                     Material = x.Material,
                                                     Origin = x.Origin,
