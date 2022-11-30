@@ -13,6 +13,8 @@ import { BrandComponent } from './pages/brand/brand.component';
 import { FooterComponent } from './pages/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CartComponent } from './pages/cart/cart.component';
+import { LoginComponent } from './pages/login/login.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -26,12 +28,14 @@ import { CartComponent } from './pages/cart/cart.component';
     HeaderComponent,
     BrandComponent,
     FooterComponent,
-    CartComponent
+    CartComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
