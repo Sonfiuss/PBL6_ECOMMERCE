@@ -274,45 +274,7 @@ namespace Website_Ecommerce.API.Controllers
                 });
         }
 
-        [HttpGet("get-list-product")]
-        public async Task<IActionResult> GetListProduct()
-        {
-            
-            List<ProductDto> products = await _productRepository.Products
-                                                .Select(x => new ProductDto 
-                                                {
-                                                    Id = x.Id,
-                                                    Name = x.Name,
-                                                    Material = x.Material,
-                                                    Origin = x.Origin,
-                                                    Description = x.Description,
-                                                    Status = x.Status,
-                                                    Categories = x.ProductCategories.Where(y => y.ProductId == x.Id).Select(c => c.CategoryId).ToHashSet()
-                                                }).ToListAsync();
-            
-            if(products == null)
-            {
-                return BadRequest( new Response<ResponseDefault>()
-                {
-                    State = false,
-                    Message = ErrorCode.NotFound,
-                    Result = new ResponseDefault()
-                    {
-                        Data = "NotFound Product"
-                    }
-                });
-            }
-
-            return Ok( new Response<ResponseDefault>()
-                {
-                    State = true,
-                    Message = ErrorCode.Success,
-                    Result = new ResponseDefault()
-                    {
-                        Data = products
-                    }
-                });
-        }
+        
 
 
 #endregion

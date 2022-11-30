@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "a4Z/Ly2SAMv3u3D3JSurucoWWoI5z8rPeeexJUOYcPdsmtG9Xienpq8AdLZjDMFtTPvPX2kaHm3SmxyPDiF2eA==",
+  "dgSpecHash": "G/PZEmHTqECybu7bVyQXvFPiVXRTAaKyZZVHJHOkp3nieEHI5Xmed3v/yvIZ0C8rX1W3vku956vw8iodXvdBww==",
   "success": true,
-  "projectFilePath": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/Website_Ecommerce.API.csproj",
+  "projectFilePath": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/Website_Ecommerce.API.csproj",
   "expectedPackageFiles": [
     "/Users/vovanban/.nuget/packages/automapper/12.0.0/automapper.12.0.0.nupkg.sha512",
     "/Users/vovanban/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.0/automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
