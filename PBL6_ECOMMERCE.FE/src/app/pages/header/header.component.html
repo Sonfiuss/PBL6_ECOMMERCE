@@ -1,7 +1,7 @@
 <div class="pre-header" >
   <div class="account-status">
-    <ul class="account-isactived" *ngIf="(active == true) || (accountService.currentUser$ | async);else other_content" active="false">
-      <li><a routerLink="login">Tài khoản :{{ (accountService.currentUser$ | async)?.username }}{{username}}</a></li>
+    <ul class="account-isactived" *ngIf="(active == true) || (accountService.currentUser$ | async);else other_content">
+      <li><a routerLink="">Tài khoản :{{username}}</a></li>
       <li><a routerLink="" (click)="logout()">Đăng xuất</a></li>
     </ul>
     <ng-template #other_content>
