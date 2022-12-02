@@ -15,6 +15,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { CartComponent } from './pages/cart/cart.component';
 import { LoginComponent } from './pages/login/login.component';
 import { FormsModule } from '@angular/forms';
+import { MyshopComponent } from './pages/myshop/myshop.component';
+import { AddProductComponent } from './pages/myshop/add-product/add-product.component';
+
 
 
 @NgModule({
@@ -29,7 +32,9 @@ import { FormsModule } from '@angular/forms';
     BrandComponent,
     FooterComponent,
     CartComponent,
-    LoginComponent
+    LoginComponent,
+    MyshopComponent,
+    AddProductComponent,
   ],
   imports: [
     BrowserModule,

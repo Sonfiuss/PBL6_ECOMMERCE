@@ -1,0 +1,72 @@
+<html>
+    <head>
+        <style>
+        div.container {
+            width: 100%;
+            border: 1px solid gray;
+        }
+         
+        header, footer {
+            padding: 1em;
+            color: white;
+            background-color: black;
+            clear: left;
+            text-align: center;
+        }
+         
+        nav {
+            float: left;
+            max-width: 160px;
+            margin: 0;
+            padding: 1em;
+        }
+         
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+            
+        nav ul a {
+            text-decoration: none;
+        }
+         
+        article {
+            margin-left: 170px;
+            border-left: 1px solid gray;
+            padding: 1em;
+            overflow: hidden;
+        }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <li><a href="#">Quản lý sản phẩm</a></li>
+                <li><a href="#">Quản lý đơn hàng</a></li>
+                <li><a href="#">Dữ liệu</a></li>
+            </ul>
+        </nav>
+        <section>
+            <div>
+                <label class="mandatory" style = "width: 10%; height: 100%">*Tên sản phẩm:</label>
+                <input type="textbox" placeholder = "Nhập vào">
+            </div>
+            <br>
+            <div>
+                <label class="mandatory" style = "width: 10%">*Loại hàng:</label>
+                <select class="mandatory" style="width: 14%; height:100">
+                    <option value="">Vest</option>
+                    <option value="">Cavat</option>
+                </select>
+            </div>
+            <br>
+            <div class="optional">
+                <span class = mandatory-icon> </span>
+                <div><label style= "width: 10%"> Mô tả</label></div>
+                <br>
+                <textarea name = "description"  cols = "50" rows="5" placeholder = "Mô tả sản phẩm"></textarea>
+            </div>
+            
+        </section>
+    </body>
+</html>

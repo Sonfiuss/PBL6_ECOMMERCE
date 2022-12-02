@@ -1,19 +1,21 @@
 <div class="pre-header" >
   <div class="account-status">
     <ul class="account-isactived" *ngIf="(active == true) || (accountService.currentUser$ | async);else other_content" active="false">
+      <li><a routerLink= "myshop">Cửa hàng của tôi</a></li>
       <li><a routerLink="login">Tài khoản :{{ (accountService.currentUser$ | async)?.username }}{{username}}</a></li>
       <li><a routerLink="" (click)="logout()">Đăng xuất</a></li>
     </ul>
     <ng-template #other_content>
       <ul class="account-nonactived" >
-        <li><a routerLink="login" >Đăng nhập</a></li>
+        <li><a routerLink="login">Cửa hàng của tôi</a>
+        <li><a routerLink="login">Đăng nhập</a></li>
         <li><a routerLink="signup">Đăng ký</a></li>
       </ul>
     </ng-template>
   </div>
 </div>
 <nav class="navbar navbar-expand-lg navbar-custom  ">
-  <a class="navbar-brand" routerLink=""><img src="assets/img/logo.png" alt="LOGO"></a>
+  <a class="navbar-brand" routerLink=""><img src="assets/img/logo.png" alt="LOGO" width = "300" height="200"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
