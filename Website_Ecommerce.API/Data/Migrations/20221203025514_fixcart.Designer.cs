@@ -8,11 +8,11 @@ using Website_Ecommerce.API.Data;
 
 #nullable disable
 
-namespace Website_Ecommerce.API.Migrations
+namespace Website_Ecommerce.API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221126025432_ADDDB")]
-    partial class ADDDB
+    [Migration("20221203025514_fixcart")]
+    partial class fixcart
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,6 +35,9 @@ namespace Website_Ecommerce.API.Migrations
 
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("State")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -233,8 +236,8 @@ namespace Website_Ecommerce.API.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(256)
-                        .HasColumnType("varchar(256)");
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Material")
                         .IsRequired()

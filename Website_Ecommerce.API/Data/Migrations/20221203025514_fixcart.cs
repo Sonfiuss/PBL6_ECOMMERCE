@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Website_Ecommerce.API.Migrations
+namespace Website_Ecommerce.API.Data.Migrations
 {
-    public partial class ADDDB : Migration
+    public partial class fixcart : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -215,7 +215,7 @@ namespace Website_Ecommerce.API.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Origin = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    Description = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true)
+                    Description = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ShopId = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<bool>(type: "tinyint(1)", nullable: false)
@@ -375,6 +375,7 @@ namespace Website_Ecommerce.API.Migrations
                     UserId = table.Column<int>(type: "int", nullable: false),
                     ProductDetailId = table.Column<int>(type: "int", nullable: false),
                     Amount = table.Column<int>(type: "int", nullable: false),
+                    State = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>

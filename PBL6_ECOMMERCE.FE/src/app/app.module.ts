@@ -17,6 +17,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { MyshopComponent } from './pages/myshop/myshop.component';
 import { AddProductComponent } from './pages/myshop/add-product/add-product.component';
+import { CkeditorComponent } from './pages/myshop/ckeditor/ckeditor.component';
+
 
 
 
@@ -35,6 +37,7 @@ import { AddProductComponent } from './pages/myshop/add-product/add-product.comp
     LoginComponent,
     MyshopComponent,
     AddProductComponent,
+    CkeditorComponent,
   ],
   imports: [
     BrowserModule,
