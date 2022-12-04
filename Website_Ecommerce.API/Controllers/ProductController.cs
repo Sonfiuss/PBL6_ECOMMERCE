@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +7,6 @@ using Website_Ecommerce.API.Data.Entities;
 using Website_Ecommerce.API.ModelDtos;
 using Website_Ecommerce.API.Repositories;
 using Website_Ecommerce.API.Response;
-using Website_Ecommerce.API.services;
 
 namespace Website_Ecommerce.API.Controllers
 {
@@ -242,7 +237,7 @@ namespace Website_Ecommerce.API.Controllers
         }
 
         [HttpGet("get-product-by/{id}")]
-        public async Task<IActionResult> GetProductById([FromQuery] int id)
+        public async Task<IActionResult> GetProductById(int id)
         {
             if(id.ToString() is null)
             {
