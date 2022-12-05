@@ -131,7 +131,7 @@ namespace Website_Ecommerce.API.Controllers
                     Message = ErrorCode.Success,
                     Result = new ResponseToken()
                     {
-                        Token = "Bearer " + token,
+                        Token = token,
                     }
                 };
             }

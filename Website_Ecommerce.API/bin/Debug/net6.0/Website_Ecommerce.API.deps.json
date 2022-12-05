@@ -12,6 +12,7 @@
           "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.9",
           "Microsoft.EntityFrameworkCore": "6.0.9",
           "Microsoft.EntityFrameworkCore.Design": "6.0.9",
+          "Microsoft.EntityFrameworkCore.Relational": "6.0.9",
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.9",
           "MySql.Data": "8.0.31",
           "Newtonsoft.Json": "13.0.1",

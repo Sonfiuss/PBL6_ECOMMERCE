@@ -13,6 +13,13 @@ import { BrandComponent } from './pages/brand/brand.component';
 import { FooterComponent } from './pages/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CartComponent } from './pages/cart/cart.component';
+import { LoginComponent } from './pages/login/login.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MyshopComponent } from './pages/myshop/myshop.component';
+import { AddProductComponent } from './pages/myshop/add-product/add-product.component';
+import { CkeditorComponent } from './pages/myshop/ckeditor/ckeditor.component';
+
+
 
 
 @NgModule({
@@ -26,12 +33,18 @@ import { CartComponent } from './pages/cart/cart.component';
     HeaderComponent,
     BrandComponent,
     FooterComponent,
-    CartComponent
+    CartComponent,
+    LoginComponent,
+    MyshopComponent,
+    AddProductComponent,
+    CkeditorComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

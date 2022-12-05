@@ -1,12 +1,27 @@
 /* pre-header */
 .account-isactived{
   padding-right: 30px;
-  background-color: gray;
-  height: 40px ;
-  text-align: center;
-  padding: 10px;
-}
+  height: 30px;
+  text-align: right;
 
+}
+ul.account-isactived {
+  margin-bottom: 0%;
+}
+.account-isactived>li{
+  display: inline-block;
+  height: 30px;
+}
+.account-isactived>li>a{
+  padding-left: 10px;
+  height: 10px;
+  padding: 3px 10px 3px;
+  text-decoration: none;
+  color: rgb(30, 69, 105);
+}
+.account-isactived>li>a:hover{
+  color: #2779BF;
+}
 /* non-actived */
 .account-nonactived{
   padding-right: 30px;
@@ -27,7 +42,7 @@ ul.account-nonactived > li > a:hover {
   color: #2779BF;
 }
 ul.account-nonactived > li > a {
-  color: gray;
+  color: rgb(30, 69, 105);
   text-decoration: none;
 }
 
@@ -40,6 +55,12 @@ ul.account-nonactived > li > a {
 .bg-light{
 
   background-color: rgb(30, 69, 105);
+}
+.navbar-brand{
+  width: 120px;
+}
+.navbar-brand>img{
+  width: 120px;
 }
 .navbar-custom{
   height: 100px;
@@ -65,9 +86,7 @@ ul.account-nonactived > li > a {
   display: flex;
   position: relative;
 }
-#navbarNav  {
 
-}
 .navbar-nav {
   font-family: 'Times New Roman', serif;
   font-size: 120%;
