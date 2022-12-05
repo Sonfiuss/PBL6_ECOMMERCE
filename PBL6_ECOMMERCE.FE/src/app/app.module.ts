@@ -18,6 +18,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MyshopComponent } from './pages/myshop/myshop.component';
 import { AddProductComponent } from './pages/myshop/add-product/add-product.component';
 import { CkeditorComponent } from './pages/myshop/ckeditor/ckeditor.component';
+import { CategoryComponent } from './pages/home/category/category.component';
+import { AddCategoryComponent } from './pages/categories/add-category/add-category.component';
+import { EditCategoryComponent } from './pages/categories/edit-category/edit-category.component';
 
 
 
@@ -38,6 +41,9 @@ import { CkeditorComponent } from './pages/myshop/ckeditor/ckeditor.component';
     MyshopComponent,
     AddProductComponent,
     CkeditorComponent,
+    CategoryComponent,
+    AddCategoryComponent,
+    EditCategoryComponent
   ],
   imports: [
     BrowserModule,

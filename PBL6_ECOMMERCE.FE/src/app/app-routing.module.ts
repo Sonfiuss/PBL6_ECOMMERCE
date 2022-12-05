@@ -8,7 +8,9 @@ import { AddProductComponent } from './pages/myshop/add-product/add-product.comp
 import { MyshopComponent } from './pages/myshop/myshop.component';
 import { CkeditorComponent} from './pages/myshop/ckeditor/ckeditor.component';
 import { DefaultComponent } from './layouts/default/default.component';
-// import { authGuard } from './auth/auth.guard';
+import { AddCategoryComponent } from './pages/categories/add-category/add-category.component';
+import { EditCategoryComponent } from './pages/categories/edit-category/edit-category.component';
+import { AuthGuard } from './_guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -38,6 +40,15 @@ const routes: Routes = [
       {
         path: 'ckeditor',
         component: CkeditorComponent
+      },
+      {
+        path: 'add-category',
+        component: AddCategoryComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'edit-category/:id',
+        component: EditCategoryComponent
       }
     ]
   }
