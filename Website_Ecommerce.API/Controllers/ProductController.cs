@@ -7,13 +7,15 @@ using Website_Ecommerce.API.Data.Entities;
 using Website_Ecommerce.API.ModelDtos;
 using Website_Ecommerce.API.Repositories;
 using Website_Ecommerce.API.Response;
+using Website_Ecommerce.API.services;
 
 namespace Website_Ecommerce.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = "MyAuthKey")]
-    // [CustomAuthorize(Allows = "Shop")]
+    //1:admin  2:shop  3:shipper  4:customer
+    [CustomAuthorize(Allows = "2")]
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
@@ -97,7 +99,7 @@ namespace Website_Ecommerce.API.Controllers
                 }
             });
         }
-
+        
         [HttpPut("update-product")]
         public async Task<IActionResult> UpdateProduct([FromBody] ProductDto request, CancellationToken cancellationToken)
         {

@@ -29,7 +29,6 @@ namespace Website_Ecommerce.API.Data.Entities
 
         public ICollection<Comment> Comments { get; set; }
         public IList<ProductCategory> ProductCategories { get; set;}
-        public ICollection<Cart> Carts { get; set; }
         
 
     }
