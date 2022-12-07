@@ -16,7 +16,7 @@ namespace Website_Ecommerce.API.Data.Entities
         public int UserId { get; set; }
         public User User { get; set; }
 
-        [ForeignKey("Product")]
+        [ForeignKey("Product_detail")]
         public int ProductDetailId { get; set; }
         public ProductDetail ProductDetail { get; set; }
         [Required]

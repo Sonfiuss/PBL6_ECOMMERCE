@@ -139,18 +139,10 @@ namespace Website_Ecommerce.API.Controllers
        }
 
        [HttpGet("Get-all-items-of-User")]
-       public async Task<IActionResult> GetAllItemByIdUser(int id)
+       public async Task<IEnumerable<ViewItemCartDto>> GetAllItemByIdUser(int id)
        {
             var listItems = await _cartRepository.GetAllItemByIdUser(id);
-            return Ok( new Response<ResponseDefault>()
-            {
-                State = true,
-                Message = ErrorCode.Success,
-                Result = new ResponseDefault()
-                {
-                    Data = listItems
-                }
-            });
+            return listItems;
        }
     }
 }

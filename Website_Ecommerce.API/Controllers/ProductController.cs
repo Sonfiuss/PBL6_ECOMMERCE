@@ -17,7 +17,7 @@ namespace Website_Ecommerce.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = "MyAuthKey")]
+    // [Authorize(AuthenticationSchemes = "MyAuthKey")]
     // [CustomAuthorize(Allows = "Shop")]
     public class ProductController : ControllerBase
     {
