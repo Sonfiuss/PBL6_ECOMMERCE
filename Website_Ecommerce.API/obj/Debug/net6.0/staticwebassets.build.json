@@ -1,10 +1,6 @@
 {
   "Version": 1,
-<<<<<<< HEAD
   "Hash": "JZSg3EmiSPCEMHkcBBY1tNXI8+r34AaD4CR2Ts2+bJc=",
-=======
-  "Hash": "6NeLhdb58olCaNx2pJeNxQn35nT6E2DQEC/Ljh8imZA=",
->>>>>>> 64a52fee5c036bc202a594cf62c7f1e2e337a36c
   "Source": "Website_Ecommerce.API",
   "BasePath": "_content/Website_Ecommerce.API",
   "Mode": "Default",
@@ -12,16 +8,15 @@
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [
     {
-      "Name": "Website_Ecommerce.API/wwwroot",
+      "Name": "Website_Ecommerce.API\\wwwroot",
       "Source": "Website_Ecommerce.API",
-      "ContentRoot": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/",
+      "ContentRoot": "D:\\Semester7\\PBL6_Part3\\Website_Ecommerce.API\\wwwroot\\",
       "BasePath": "_content/Website_Ecommerce.API",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-<<<<<<< HEAD
       "Identity": "D:\\Semester7\\PBL6_Part3\\Website_Ecommerce.API\\wwwroot\\1f1052cf5ba72a54f4c26eed377cb053.jpg",
       "SourceId": "Website_Ecommerce.API",
       "SourceType": "Discovered",
@@ -40,12 +35,9 @@
     },
     {
       "Identity": "D:\\Semester7\\PBL6_Part3\\Website_Ecommerce.API\\wwwroot\\avatar.jpg",
-=======
-      "Identity": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/avatar.jpg",
->>>>>>> 64a52fee5c036bc202a594cf62c7f1e2e337a36c
       "SourceId": "Website_Ecommerce.API",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/",
+      "ContentRoot": "D:\\Semester7\\PBL6_Part3\\Website_Ecommerce.API\\wwwroot\\",
       "BasePath": "_content/Website_Ecommerce.API",
       "RelativePath": "avatar.jpg",
       "AssetKind": "All",
@@ -56,13 +48,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/avatar.jpg"
+      "OriginalItemSpec": "wwwroot\\avatar.jpg"
     },
     {
-      "Identity": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/logo.png",
+      "Identity": "D:\\Semester7\\PBL6_Part3\\Website_Ecommerce.API\\wwwroot\\logo.png",
       "SourceId": "Website_Ecommerce.API",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/",
+      "ContentRoot": "D:\\Semester7\\PBL6_Part3\\Website_Ecommerce.API\\wwwroot\\",
       "BasePath": "_content/Website_Ecommerce.API",
       "RelativePath": "logo.png",
       "AssetKind": "All",
@@ -73,7 +65,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/logo.png"
+      "OriginalItemSpec": "wwwroot\\logo.png"
     }
   ]
 }

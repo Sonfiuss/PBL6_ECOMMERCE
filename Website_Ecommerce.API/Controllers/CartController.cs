@@ -63,7 +63,9 @@ namespace Website_Ecommerce.API.Controllers
         {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
             request.UserId = userId;
+        
             var item = _mapper.Map<Cart>(request);
+            item.State = true;
             _cartRepository.Update(item);
             var result = await _cartRepository.UnitOfWork.SaveAsync(cancellationToken);
             if(result == 0)
