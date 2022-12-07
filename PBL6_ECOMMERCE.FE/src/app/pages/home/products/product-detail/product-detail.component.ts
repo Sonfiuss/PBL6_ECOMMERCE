@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/_services/product.service';
-import {MatTabsModule} from '@angular/material/tabs';
 
 
 @Component({
