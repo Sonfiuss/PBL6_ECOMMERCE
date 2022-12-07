@@ -164,7 +164,7 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-        [HttpGet("list-Comment-by/{productId}")]
+        [HttpGet("list-comment-by/{productId}")]
 
         public async Task<IActionResult> GetListComment(int productId)
         {

@@ -24,7 +24,7 @@ namespace Website_Ecommerce.API.Controllers
             _voucherOrderRepository = voucherOrder;
         }
 
-        [HttpPost("Add-voucher-by-Admin")]
+        [HttpPost("add-voucher-by-admin")]
         public async Task<IActionResult> Add ([FromBody] VoucherOrderDto request, CancellationToken cancellationToken)
         {   
             var item = _mapper.Map<VoucherOrder>(request);
@@ -53,7 +53,7 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-        [HttpPost("Update-voucher-by-Admin")]
+        [HttpPost("update-voucher-by-admin")]
         public async Task<IActionResult>Update([FromBody] VoucherOrderDto request, CancellationToken cancellationToken)
         {   
             var item = _mapper.Map<VoucherOrder>(request);
@@ -82,7 +82,7 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-        [HttpDelete("Delete-Voucher-by-Admin/{id}")]
+        [HttpDelete("delete-Voucher-by-admin/{id}")]
         public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
         {
             VoucherOrder voucherOrder = await _voucherOrderRepository.VoucherOrders.FirstOrDefaultAsync(p => p.Id == id);
@@ -150,7 +150,7 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-        [HttpGet("GetAllVoucherOrderbyAdmin")]
+        [HttpGet("get-all-voucher-order-by-admin")]
         public async Task<IActionResult> GetAllVoucherOrder(){
             var vouchersUnexpired =  await _voucherOrderRepository.VoucherOrders.Where(x => x.Expired>DateTime.Now).ToListAsync();
             if(vouchersUnexpired.Count() ==  0){
@@ -174,7 +174,7 @@ namespace Website_Ecommerce.API.Controllers
                     }
             });
         }
-        [HttpGet("get-voucher-order-by-Time")]
+        [HttpGet("get-voucher-order-by-time")]
         public async Task<IActionResult> getVoucherOrderByTime(DateTime timeIn, DateTime timeOut){
             var listVoucher = await _voucherOrderRepository.GetAllVoucherbyDate(timeIn, timeOut);
             return Ok( new Response<ResponseDefault>(){

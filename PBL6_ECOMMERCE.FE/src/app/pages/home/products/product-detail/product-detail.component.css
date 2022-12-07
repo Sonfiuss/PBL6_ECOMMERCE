@@ -1,0 +1,157 @@
+.container {
+    position: relative;
+}
+
+.product-details-pic-item--large {
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%;
+}
+
+.product-details-pic-item--small {
+    border-radius: 1%;
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%;
+}
+
+.product-details-pic-item--small {
+    border-radius: 1%;
+    max-width: 100%;
+    max-height: 100%;
+    width: 100%;
+}
+
+.product-details-pic-item--small :hover {
+    border-style: solid;
+    border-color: orange;
+    border-width: 10px;
+}
+
+#img-hover>img:hover {
+    border-style: solid;
+    border-color: gray;
+    border-width: 2px;
+}
+
+.product-details-pic {
+    min-width: 50%;
+}
+
+.mat-ink-bar {
+    visibility: visible;
+    left: 0px;
+    width: 80px !important;
+}
+
+.pd-name {
+    border-bottom: 1px solid rgb(232, 231, 231);
+}
+
+.product__details__rating {
+    border-bottom: 1px solid rgb(232, 231, 231);
+    margin-bottom: 4;
+}
+
+.pd-reviews {
+    padding-left: 2%;
+    display: inline-block;
+}
+
+.product__details__price {
+    font-family: sans-serif;
+    font-size: 200%;
+    color: rgb(30, 69, 105);
+    border-bottom: 1px solid rgb(232, 231, 231);
+}
+
+.pd-overview {
+    height: 130px;
+    overflow: hidden;
+    border-bottom: 1px solid rgb(232, 231, 231);
+}
+
+.pro-qty {
+    height: 60px;
+    position: relative;
+}
+
+.product__details__quantity {
+    border-bottom: 1px solid rgb(232, 231, 231);
+}
+
+.quantity {
+    display: inline-block;
+}
+
+.pro-qty>button {
+    height: 50px;
+    width: 50px;
+    background: rgb(30, 69, 105);
+    border: none;
+    color: white;
+}
+
+.qty-number {
+    text-align: center;
+    height: 50px;
+    width: 50px;
+    line-height: 50px;
+    border: none;
+    background-color: rgb(30, 69, 105);
+    color: white;
+}
+
+.btn-secondary {
+    margin-left: 50px;
+    height: 50px;
+    padding-top: 13px;
+    display: inline-block;
+    background-color: rgb(30, 69, 105);
+    border: none;
+    border-radius: 0%;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: rgba(187, 173, 173, 0.733);
+    color: rgba(0, 0, 0, 0.707);
+}
+
+.customer-review {
+    padding-left: 10px;
+}
+
+.btn-primary {
+    margin-top: 10px;
+    background-color: rgb(240, 232, 232);
+    border: none;
+    border-radius: 0%;
+    color: rgba(0, 0, 0, 0.45);
+}
+
+.btn-primary:hover {
+    background-color: rgba(187, 173, 173, 0.733);
+    color: rgba(0, 0, 0, 0.707);
+}
+
+.related__product__title>h2 {
+    text-align: center;
+}
+
+hr.border-bottom {
+    border: 10px solid gray;
+    border-radius: 5px;
+}
+
+.col {
+    height: 100px;
+}
+
+.pd-wrapper {
+    height: 100%;
+}
+
+.pd-wrapper:hover {
+    box-shadow: 10px 10px 5px lightblue;
+}

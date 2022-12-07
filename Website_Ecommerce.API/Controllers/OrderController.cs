@@ -35,7 +35,7 @@ namespace Website_Ecommerce.API.Controllers
             _httpContext = httpContext;
             _productRepository = productRepository;
         }
-        [HttpPost("Add-Order")]
+        [HttpPost("add-order")]
         public async Task<IActionResult> AddOrder([FromBody] OrderDto request, CancellationToken cancellationToken){
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
             VoucherOrder voucherOrder = _voucherOrderRepository.VoucherOrders.FirstOrDefault(x => x.Id == request.VoucherId);
@@ -133,7 +133,7 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
         }
-        [HttpPatch("Cancel-order-detail")]
+        [HttpPatch("cancel-order-detail")]
         public async Task<IActionResult> CancelOrder(int orderId, int productDetailId, CancellationToken cancellationToken){
             var orderDetail = await  _orderRepository.OrderDetails.FirstOrDefaultAsync(x => x.OrderId == orderId && x.ProductDetailId == productDetailId);
             if(orderDetail == null){
@@ -185,7 +185,7 @@ namespace Website_Ecommerce.API.Controllers
 
             
         }
-        [HttpGet("View-order")]
+        [HttpGet("view-order")]
         public async Task<IActionResult> ViewOrder(int orderId){
             Order order = await _orderRepository.Orders.FirstOrDefaultAsync(p => p.Id == orderId);
             

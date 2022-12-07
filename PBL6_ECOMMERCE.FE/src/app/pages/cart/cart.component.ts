@@ -110,7 +110,7 @@ export class CartComponent implements OnInit {
     pd.amount += 1;
     if(this.isChecked[i] ){
       this.oder = this.oder.filter(item => item !== pd)
-      this.sumPrice -= pd.price
+      this.sumPrice += pd.price
       this.oder.push(pd)
     }
   }
