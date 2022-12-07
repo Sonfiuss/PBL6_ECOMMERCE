@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data.Entities;
@@ -9,6 +10,7 @@ namespace Website_Ecommerce.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "MyAuthKey")]
     public class AdminController : ControllerBase
     {
         private readonly IShopRepository _shopRepository;

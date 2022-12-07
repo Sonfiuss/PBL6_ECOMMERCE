@@ -11,8 +11,8 @@ using Website_Ecommerce.API.Data;
 namespace Website_Ecommerce.API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221203025514_fixcart")]
-    partial class fixcart
+    [Migration("20221206170133_UpdateCart")]
+    partial class UpdateCart
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,9 +33,6 @@ namespace Website_Ecommerce.API.Data.Migrations
                     b.Property<int>("ProductDetailId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("State")
                         .HasColumnType("tinyint(1)");
 
@@ -45,8 +42,6 @@ namespace Website_Ecommerce.API.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ProductDetailId");
-
-                    b.HasIndex("ProductId");
 
                     b.HasIndex("UserId");
 
@@ -528,10 +523,6 @@ namespace Website_Ecommerce.API.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Website_Ecommerce.API.Data.Entities.Product", null)
-                        .WithMany("Carts")
-                        .HasForeignKey("ProductId");
-
                     b.HasOne("Website_Ecommerce.API.Data.Entities.User", "User")
                         .WithMany("Carts")
                         .HasForeignKey("UserId")
@@ -736,8 +727,6 @@ namespace Website_Ecommerce.API.Data.Migrations
 
             modelBuilder.Entity("Website_Ecommerce.API.Data.Entities.Product", b =>
                 {
-                    b.Navigation("Carts");
-
                     b.Navigation("Comments");
 
                     b.Navigation("ProductCategories");

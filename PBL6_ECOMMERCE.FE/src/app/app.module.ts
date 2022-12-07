@@ -13,10 +13,13 @@ import { FooterComponent } from './pages/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CartComponent } from './pages/cart/cart.component';
 import { LoginComponent } from './pages/login/login.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MyshopComponent } from './pages/myshop/myshop.component';
 import { AddProductComponent } from './pages/myshop/add-product/add-product.component';
 import { CkeditorComponent } from './pages/myshop/ckeditor/ckeditor.component';
+import { CategoryComponent } from './pages/home/category/category.component';
+import { AddCategoryComponent } from './pages/categories/add-category/add-category.component';
+import { EditCategoryComponent } from './pages/categories/edit-category/edit-category.component';
 
 
 
@@ -37,13 +40,20 @@ import { CkeditorComponent } from './pages/myshop/ckeditor/ckeditor.component';
     MyshopComponent,
     AddProductComponent,
     CkeditorComponent,
+<<<<<<< HEAD
     HttpClientModule
+=======
+    CategoryComponent,
+    AddCategoryComponent,
+    EditCategoryComponent
+>>>>>>> 64a52fee5c036bc202a594cf62c7f1e2e337a36c
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -26,7 +26,7 @@ namespace Website_Ecommerce.API.Controllers
             _mapper = mapper;
             _cartRepository = cartRepository;
         }
-        [HttpPost("Add-item-to-cart")]
+        [HttpPost("add-item-to-cart")]
         public async Task<IActionResult> AddItemToCart([FromBody]CartDto request, CancellationToken cancellationToken)
         {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
@@ -93,8 +93,8 @@ namespace Website_Ecommerce.API.Controllers
         }
 
 
-        [HttpDelete("Delete-Item-in-cart")]
-        public async Task<IActionResult> DeleteItemInCart([FromQuery] int id)
+        [HttpDelete("delete-item-in-cart/{id}")]
+        public async Task<IActionResult> DeleteItemInCart(int id)
         {
             if(id.ToString() is null)
             {
@@ -138,11 +138,19 @@ namespace Website_Ecommerce.API.Controllers
             });
        }
 
-       [HttpGet("Get-all-items-of-User")]
-       public async Task<IEnumerable<ViewItemCartDto>> GetAllItemByIdUser(int id)
+       [HttpGet("get-all-items-of-user/{id}")]
+       public async Task<IActionResult> GetAllItemByIdUser(int id)
        {
-            var listItems = await _cartRepository.GetAllItemByIdUser(id);
-            return listItems;
+           var listItems = await _cartRepository.GetAllItemByIdUser(id);
+            return Ok( new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = listItems
+                }
+            });
        }
     }
 }
