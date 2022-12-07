@@ -40,13 +40,9 @@ import { EditCategoryComponent } from './pages/categories/edit-category/edit-cat
     MyshopComponent,
     AddProductComponent,
     CkeditorComponent,
-<<<<<<< HEAD
-    HttpClientModule
-=======
     CategoryComponent,
     AddCategoryComponent,
     EditCategoryComponent
->>>>>>> 64a52fee5c036bc202a594cf62c7f1e2e337a36c
   ],
   imports: [
     BrowserModule,
