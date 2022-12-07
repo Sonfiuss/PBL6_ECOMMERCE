@@ -7,7 +7,6 @@ import { DefaultComponent } from './layouts/default/default.component';
 import { HomeComponent } from './pages/home/home.component';
 import { DetailComponent } from './pages/detail/detail.component';
 import { BannerComponent } from './pages/home/banner/banner.component';
-import { ProductComponent } from './pages/home/product/product.component';
 import { HeaderComponent } from './pages/header/header.component';
 import { BrandComponent } from './pages/brand/brand.component';
 import { FooterComponent } from './pages/footer/footer.component';
@@ -21,6 +20,8 @@ import { CkeditorComponent } from './pages/myshop/ckeditor/ckeditor.component';
 import { CategoryComponent } from './pages/home/category/category.component';
 import { AddCategoryComponent } from './pages/categories/add-category/add-category.component';
 import { EditCategoryComponent } from './pages/categories/edit-category/edit-category.component';
+import { ProductComponent } from './pages/home/products/product/product.component';
+import { ProductDetailComponent } from './pages/home/products/product-detail/product-detail.component';
 
 
 
@@ -32,7 +33,6 @@ import { EditCategoryComponent } from './pages/categories/edit-category/edit-cat
     HomeComponent,
     DetailComponent,
     BannerComponent,
-    ProductComponent,
     HeaderComponent,
     BrandComponent,
     FooterComponent,
@@ -43,7 +43,9 @@ import { EditCategoryComponent } from './pages/categories/edit-category/edit-cat
     CkeditorComponent,
     CategoryComponent,
     AddCategoryComponent,
-    EditCategoryComponent
+    EditCategoryComponent,
+    ProductComponent,
+    ProductDetailComponent
   ],
   imports: [
     BrowserModule,
