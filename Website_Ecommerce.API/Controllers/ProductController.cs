@@ -16,6 +16,7 @@ namespace Website_Ecommerce.API.Controllers
     [Authorize(AuthenticationSchemes = "MyAuthKey")]
     //1:admin  2:shop  3:shipper  4:customer
     [CustomAuthorize(Allows = "2")]
+
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository _productRepository;

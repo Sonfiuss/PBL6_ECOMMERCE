@@ -28,7 +28,7 @@ namespace Website_Ecommerce.API.Data.Entities
         public ICollection<ProductDetail> ProductDetails { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
-        public IList<ProductCategory> ProductCategories { get; set;}
+        public IList<ProductCategory> ProductCategories { get; set;}        
         
 
     }

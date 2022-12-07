@@ -1,1 +1,5 @@
+<<<<<<< HEAD
+{"ContentRoots":["D:\\Semester7\\PBL6_Part3\\Website_Ecommerce.API\\wwwroot\\"],"Root":{"Children":{"1f1052cf5ba72a54f4c26eed377cb053.jpg":{"Children":null,"Asset":{"ContentRootIndex":0,"SubPath":"1f1052cf5ba72a54f4c26eed377cb053.jpg"},"Patterns":null},"avatar.jpg":{"Children":null,"Asset":{"ContentRootIndex":0,"SubPath":"avatar.jpg"},"Patterns":null},"logo.png":{"Children":null,"Asset":{"ContentRootIndex":0,"SubPath":"logo.png"},"Patterns":null}},"Asset":null,"Patterns":[{"ContentRootIndex":0,"Pattern":"**","Depth":0}]}}
+=======
 {"ContentRoots":["/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/"],"Root":{"Children":{"avatar.jpg":{"Children":null,"Asset":{"ContentRootIndex":0,"SubPath":"avatar.jpg"},"Patterns":null},"logo.png":{"Children":null,"Asset":{"ContentRootIndex":0,"SubPath":"logo.png"},"Patterns":null}},"Asset":null,"Patterns":[{"ContentRootIndex":0,"Pattern":"**","Depth":0}]}}
+>>>>>>> 64a52fee5c036bc202a594cf62c7f1e2e337a36c

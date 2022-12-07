@@ -1,6 +1,7 @@
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { User } from '../_models/app-user';
 
 const TOKEN_KEY = 'token'
 const API =  'https://localhost:7220';
@@ -17,6 +18,7 @@ export class BusinessService {
   ) { }
 
   login(data:any){
+    console.log(data);
     return this.httpClient.post(LOGIN_URL, JSON.stringify(data), this.getRequestOptions())
   }
   register(data:any){

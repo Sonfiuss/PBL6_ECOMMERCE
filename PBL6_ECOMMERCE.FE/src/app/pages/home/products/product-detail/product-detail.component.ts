@@ -10,10 +10,12 @@ import {MatTabsModule} from '@angular/material/tabs';
 })
 export class ProductDetailComponent implements OnInit {
 
-  constructor(private  productService : ProductService) { }
+  constructor(
+    private  productService : ProductService
+  ) { }
 
   ngOnInit(): void {
-    this.productData =this.productService.ProductDetails;
+
   }
   productData:any;
   price =399000;

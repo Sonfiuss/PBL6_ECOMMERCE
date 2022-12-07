@@ -28,12 +28,11 @@ export class HeaderComponent implements OnInit {
     else{
       this.active = false;
     }
-    this.myarr = this.token.split('"');
-    this.username = this.myarr[3];
-    console.log(this.username);
+    // this.myarr = this.token.split('"');
+    // this.username = this.myarr[3];
+    // console.log(this.username);
   }
   logout(){
-    console.log("thinh dep trsi")
     this.accountService.logout();
     window.location.reload();
 

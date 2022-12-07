@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DefaultComponent } from './layouts/default/default.component';
@@ -24,8 +23,6 @@ import { ProductComponent } from './pages/home/products/product/product.componen
 import { ProductDetailComponent } from './pages/home/products/product-detail/product-detail.component';
 
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +42,8 @@ import { ProductDetailComponent } from './pages/home/products/product-detail/pro
     AddCategoryComponent,
     EditCategoryComponent,
     ProductComponent,
-    ProductDetailComponent
+    ProductDetailComponent,
+    EditCategoryComponent
   ],
   imports: [
     BrowserModule,

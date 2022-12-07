@@ -141,7 +141,7 @@ namespace Website_Ecommerce.API.Controllers
        [HttpGet("get-all-items-of-user/{id}")]
        public async Task<IActionResult> GetAllItemByIdUser(int id)
        {
-            var listItems = await _cartRepository.GetAllItemByIdUser(id);
+           var listItems = await _cartRepository.GetAllItemByIdUser(id);
             return Ok( new Response<ResponseDefault>()
             {
                 State = true,
