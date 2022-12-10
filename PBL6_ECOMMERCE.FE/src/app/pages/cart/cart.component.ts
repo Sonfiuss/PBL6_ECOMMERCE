@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IsActiveMatchOptions } from '@angular/router';
 import { CartService } from 'src/app/_services/cart.service';
+import { VoucherService } from 'src/app/_services/voucher.service';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -9,8 +10,10 @@ import { CartService } from 'src/app/_services/cart.service';
 export class CartComponent implements OnInit {
   @Input() cart:any
   @Output() deletecartEvent = new EventEmitter<number>()
+  @Input() vouchers:any
   constructor(
-    private cartService : CartService
+    private cartService : CartService,
+    private voucherService : VoucherService
   ) { }
 
   // cart :Array<any>;
@@ -25,6 +28,7 @@ export class CartComponent implements OnInit {
   ngOnInit(): void {
     this.loadCart();
     this.checkarr();
+    this.showVoucher();
   }
 
   change(){
@@ -38,6 +42,14 @@ export class CartComponent implements OnInit {
       (err) => this.handleGetCartError(err)
     )
   }
+
+  handleGetCartError(err: any){
+    console.log(err)
+  }
+  handleGetCartSuccess(res: any){
+    this.cart = res.result.data
+    console.log(res)
+  }
   checkarr(){
     this.isChecked = new Array(100);
     for( let i =0; i < this.isChecked.length;i++){
@@ -45,16 +57,6 @@ export class CartComponent implements OnInit {
     }
 
   }
-  handleGetCartError(err: any){
-    console.log(err)
-    console.log("get done")
-  }
-  handleGetCartSuccess(res: any){
-    this.cart = res.result.data
-    console.log(res)
-    console.log("get done")
-  }
-
   checkValue(event : any,pd :any){
     if (event ==  true){
       this.oder.push(pd)
@@ -115,7 +117,20 @@ export class CartComponent implements OnInit {
     }
   }
 
-
+  showVoucher(){
+    this.voucherService.getVoucherAvaiable()
+    .subscribe(
+      (res) => this.handleGetVoucherSuccess(res),
+      (err) => this.handleGetVoucherError(err)
+    )
+  }
+  handleGetVoucherError(err: any){
+    console.log(err)
+  }
+  handleGetVoucherSuccess(res: any){
+    this.vouchers = res.result.data
+    console.log(res)
+  }
 }
 
 

@@ -10,6 +10,10 @@ import { CkeditorComponent} from './pages/myshop/ckeditor/ckeditor.component';
 import { DefaultComponent } from './layouts/default/default.component';
 import { AddCategoryComponent } from './pages/categories/add-category/add-category.component';
 import { EditCategoryComponent } from './pages/categories/edit-category/edit-category.component';
+import { MyaccountComponent } from './pages/myaccount/myaccount.component';
+import { InfoComponent } from './pages/myaccount/info/info.component';
+import { ChangepasswordComponent } from './pages/myaccount/changepassword/changepassword.component';
+import { MyaddressComponent } from './pages/myaccount/myaddress/myaddress.component';
 import { AuthGuard } from './_guards/auth.guard';
 
 const routes: Routes = [
@@ -49,6 +53,22 @@ const routes: Routes = [
       {
         path: 'edit-category/:id',
         component: EditCategoryComponent
+      },
+      {
+        path: 'myaccount',
+        component: MyaccountComponent
+      },
+      {
+        path: 'info',
+        component: InfoComponent
+      },
+      {
+        path: 'changepassword',
+        component: ChangepasswordComponent
+      },
+      {
+        path: 'myaddress',
+        component: MyaddressComponent
       }
     ]
   }

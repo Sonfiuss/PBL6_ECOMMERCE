@@ -21,6 +21,10 @@ import { AddCategoryComponent } from './pages/categories/add-category/add-catego
 import { EditCategoryComponent } from './pages/categories/edit-category/edit-category.component';
 import { ProductComponent } from './pages/home/products/product/product.component';
 import { ProductDetailComponent } from './pages/home/products/product-detail/product-detail.component';
+import { MyaccountComponent } from './pages/myaccount/myaccount.component';
+import { InfoComponent } from './pages/myaccount/info/info.component';
+import { ChangepasswordComponent } from './pages/myaccount/changepassword/changepassword.component';
+import { MyaddressComponent } from './pages/myaccount/myaddress/myaddress.component';
 
 
 @NgModule({
@@ -43,7 +47,11 @@ import { ProductDetailComponent } from './pages/home/products/product-detail/pro
     EditCategoryComponent,
     ProductComponent,
     ProductDetailComponent,
-    EditCategoryComponent
+    EditCategoryComponent,
+    MyaccountComponent,
+    InfoComponent,
+    ChangepasswordComponent,
+    MyaddressComponent
   ],
   imports: [
     BrowserModule,
