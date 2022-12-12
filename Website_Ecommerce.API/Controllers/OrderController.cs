@@ -189,7 +189,15 @@ namespace Website_Ecommerce.API.Controllers
         public async Task<IActionResult> ViewOrder(int orderId){
             Order order = await _orderRepository.Orders.FirstOrDefaultAsync(p => p.Id == orderId);
             
-            throw new ArgumentException();
+             return Ok( new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = order
+                }
+            });
         }
             
     }
