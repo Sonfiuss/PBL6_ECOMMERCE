@@ -54,7 +54,18 @@
       <div class="voucherShop">
         <div class="voucher_content">
           <i class="bi bi-ticket"></i><p>Shop voucher giảm đến {{shopVoucher.value | currency :"VND"}}</p>
-          <p class="list_voucher">Xen thêm voucher khác</p>
+          <p class="list_voucher" (click)="showVoucher()" >Xen thêm voucher khác</p>
+          <div class="voucher-content">
+            <p >SHOP VOUCHER</p>
+            <a href="">
+              <p>Giảm{{vouchers[0].value | currency: "VND"}}</p>
+              <p>Đơn tối thiểu{{vouchers[0].minPrice | currency: "VND"}}</p>
+              <p>HSD: {{vouchers[0].expired}}</p>
+            </a>
+            <a href="">{{vouchers[1].value}}</a>
+            <a href="">{{vouchers[2].value}}</a>
+            <a href="">{{vouchers[3].value}}</a>
+          </div>
         </div>
       </div>
       <div class="delivery">

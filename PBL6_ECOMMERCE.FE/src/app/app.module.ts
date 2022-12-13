@@ -19,14 +19,12 @@ import { CkeditorComponent } from './pages/myshop/ckeditor/ckeditor.component';
 import { CategoryComponent } from './pages/home/category/category.component';
 import { AddCategoryComponent } from './pages/categories/add-category/add-category.component';
 import { EditCategoryComponent } from './pages/categories/edit-category/edit-category.component';
-<<<<<<< HEAD
-import { RouterModule, Routes } from '@angular/router';
-
-
-=======
 import { ProductComponent } from './pages/home/products/product/product.component';
 import { ProductDetailComponent } from './pages/home/products/product-detail/product-detail.component';
->>>>>>> 61386e8f78229c2be630d58f04e906a27971cacd
+import { MyaccountComponent } from './pages/myaccount/myaccount.component';
+import { InfoComponent } from './pages/myaccount/info/info.component';
+import { ChangepasswordComponent } from './pages/myaccount/changepassword/changepassword.component';
+import { MyaddressComponent } from './pages/myaccount/myaddress/myaddress.component';
 
 
 @NgModule({
@@ -44,28 +42,23 @@ import { ProductDetailComponent } from './pages/home/products/product-detail/pro
     MyshopComponent,
     AddProductComponent,
     CkeditorComponent,
-<<<<<<< HEAD
-    HttpClientModule,
-=======
->>>>>>> 61386e8f78229c2be630d58f04e906a27971cacd
     CategoryComponent,
     AddCategoryComponent,
     EditCategoryComponent,
     ProductComponent,
     ProductDetailComponent,
-    EditCategoryComponent
-<<<<<<< HEAD
-    
-=======
->>>>>>> 61386e8f78229c2be630d58f04e906a27971cacd
+    EditCategoryComponent,
+    MyaccountComponent,
+    InfoComponent,
+    ChangepasswordComponent,
+    MyaddressComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule,
-    RouterModule
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
