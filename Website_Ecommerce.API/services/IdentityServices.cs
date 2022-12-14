@@ -1,14 +1,12 @@
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using System.Security.Cryptography;
-using Website_Ecommerce.API.Data.Entities;
+using System.Net.Mail;
+using System.Net;
 
 namespace Website_Ecommerce.API.services
 {
@@ -85,6 +83,43 @@ namespace Website_Ecommerce.API.services
             {
                 return false;
             }
+        }
+
+
+        private static Random random = new Random();
+        public static string RandomString(int length)
+        {
+            const string chars = "0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        public string SendingPasswordByEmail(string fromAddress, string toAddress, string password)
+        {
+            using SmtpClient email = new SmtpClient 
+            {
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                EnableSsl = true,
+                Host = "smtp.gmail.com",
+                Port = 587,
+                Credentials = new NetworkCredential(fromAddress, password)
+            };
+
+            string code = RandomString(6);
+
+            string subject = "Forget password";
+            string body = $"{code} la mat khau moi cua ban. Reset vao luc {DateTime.Now}";
+            try
+            {
+                email.Send(fromAddress, toAddress, subject, body);
+            }
+            catch (SmtpException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+            return code;
         }
     }
 };
