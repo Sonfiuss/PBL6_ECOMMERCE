@@ -1,8 +1,10 @@
 import 'package:ecommerce/data/model/cart.dart';
-import 'package:ecommerce/ui/feature/cart/bloc/cart_state.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../utilities/helpers/validator_helper/validator_helper.dart';
+
 import 'pay_state.dart';
 
 class PayPresenter extends Cubit<PayState> {
@@ -11,15 +13,28 @@ class PayPresenter extends Cubit<PayState> {
   }) : super(
           state ?? PayState.initial(),
         );
+
   void init(List<CartModel> cart) {
-    emit(state.copyWith(
-      cart: cart,
-      payStatus: PayStatus.inProgress,
-    ));
-    var sum = _sumPrice();
     emit(
-      state.copyWith(allPrice: sum, payStatus: PayStatus.success),
+      state.copyWith(
+        cart: cart,
+        address: "Đại Học Bách Khoa",
+        payStatus: PayStatus.inProgress,
+      ),
     );
+
+    var pricePay = _sumPrice();
+    emit(
+      state.copyWith(
+        allPrice: ValidatorHelper().setupPrice(pricePay),
+        pricePay: pricePay,
+        payStatus: PayStatus.success,
+      ),
+    );
+  }
+
+  void getAddress(String address) {
+    emit(state.copyWith(address: address));
   }
 
   void onTapIndex(int index) {

@@ -128,7 +128,7 @@ class ItemOrder extends StatelessWidget {
               ),
               Text(
                 'Phân loại :Af1 ${productCart.color ?? 'chua co mau'} Cao Cấp , size : ${productCart.size ?? 'chua co size'}',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 7,
                   fontWeight: FontWeight.w300,
                 ),

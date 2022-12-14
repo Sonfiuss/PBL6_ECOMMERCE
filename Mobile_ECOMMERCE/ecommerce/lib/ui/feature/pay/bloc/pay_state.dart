@@ -4,28 +4,26 @@ import '../../../../data/model/cart.dart';
 
 part 'pay_state.freezed.dart';
 
-enum PayStatus {
-   init,
-  inProgress,
-  success
-}
+enum PayStatus { init, inProgress, success }
+
 @freezed
 class PayState with _$PayState {
   factory PayState({
     required int current,
     required PayStatus payStatus,
-     required int allPrice,
+    required String allPrice,
     required List<CartModel> cart,
-   
+    required int pricePay,
+    required String address,
   }) = _PayState;
 
   const PayState._();
 
-  factory PayState.initial() =>PayState(
-        current:-1,
+  factory PayState.initial() => PayState(
+        current: -1,
         payStatus: PayStatus.init,
         cart: [],
-        allPrice:0
-       
+        allPrice: '0',
+        pricePay: 0, address: '',
       );
 }

@@ -17,6 +17,8 @@ class DetailPresenter extends Cubit<DetailState> {
         product: product,
         color: null,
         size: null,
+        currentSize: -1,
+        currentColor: -1,
         detailStatus: DetailStatus.init));
   }
 
@@ -32,14 +34,11 @@ class DetailPresenter extends Cubit<DetailState> {
 
     if (color == Colors.white) {
       colorName = 'White';
-    }
-    if (color == Colors.blue) {
+    } else if (color == Colors.blue) {
       colorName = 'Blue';
-    }
-    if (color == Colors.black) {
+    } else if (color == Colors.black) {
       colorName = 'Black';
-    }
-    if (color == Colors.red) {
+    } else if (color == Colors.red) {
       colorName = 'Red';
     } else {
       colorName = 'Màu không xác định';

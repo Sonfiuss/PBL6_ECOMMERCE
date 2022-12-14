@@ -1,5 +1,4 @@
 import 'package:ecommerce/data/model/cart.dart';
-import 'package:ecommerce/data/model/product.dart';
 import 'package:ecommerce/ui/feature/cart/bloc/cart_presenter.dart';
 import 'package:ecommerce/ui/feature/cart/bloc/cart_state.dart';
 import 'package:flutter/material.dart';
@@ -69,12 +68,13 @@ class ItemCart extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      product.color ?? 'chua co mau',
-                      style: TextStyle(fontSize: 10),
+                      ' Color : ${product.color ?? 'chua co mau'}',
+                      style: const TextStyle(fontSize: 10),
                     ),
                     Text(
-                      product.size ?? 'Chua co size',
-                      style: TextStyle(fontSize: 10),
+                      ' , Size : ${product.size ?? 'Chua co size'}',
+                      style: const TextStyle(fontSize: 10),
+
                     )
                   ],
                 ),

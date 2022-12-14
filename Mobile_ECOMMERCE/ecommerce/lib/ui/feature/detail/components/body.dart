@@ -1,5 +1,6 @@
 import 'package:ecommerce/data/model/product.dart';
 import 'package:ecommerce/ui/resources/app_colors.dart';
+import 'package:ecommerce/utilities/helpers/validator_helper/validator_helper.dart';
 import 'package:flutter/material.dart';
 
 import '../../../widget/start.dart';
@@ -14,7 +15,6 @@ class Body extends StatelessWidget {
     required this.product,
   }) : super(key: key);
   final Product product;
-   
 
   @override
   Widget build(BuildContext context) {
@@ -67,20 +67,36 @@ class Body extends StatelessWidget {
                                     children: [
                                       ...List.generate(
                                         5,
-                                        (index) => Star(check: true),
+                                        (index) => const Star(check: true),
                                       ),
                                     ],
                                   )
                                 ],
                               ),
                               const Spacer(),
-                              Text(
-                                '${product.price}',
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColors.red,
-                                ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    '${ValidatorHelper().setupPrice(product.priceBefore)} VND ',
+                                    style: const TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.red,
+                                        decoration: TextDecoration.lineThrough,
+                                        decorationStyle:
+                                            TextDecorationStyle.solid,
+                                        decorationThickness: 2),
+                                  ),
+                                  Text(
+                                    '${ValidatorHelper().setupPrice(product.price)} VND',
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.red,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),

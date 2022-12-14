@@ -22,7 +22,7 @@ class Profile extends StatelessWidget {
                 color: AppColors.black,
               ),
               onPressed: () {
-                Scaffold.of(context).openDrawer();
+                Navigator.pop(context);
               },
               tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
             );

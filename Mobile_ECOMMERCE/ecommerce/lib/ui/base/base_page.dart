@@ -37,7 +37,7 @@ abstract class BasePageState<Page extends BasePage> extends State<Page>
         child: buildPage(context),
       );
 
-  Future<bool> onWillPop() async => true;
+Future<bool> onWillPop() async => true;
 
   @mustCallSuper
   void onInitState() {

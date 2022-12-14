@@ -10,16 +10,15 @@ enum DetailStatus { init, inProgress, success }
 
 @Freezed(makeCollectionsUnmodifiable: false)
 class DetailState with _$DetailState {
-  factory DetailState({
-    required int currentSize,
-    required int currentColor,
-    required List<CartModel> cart,
-    required List<CartModel> pay,
-    required DetailStatus detailStatus,
-     String? color,
-     String? size,
-     required Product product
-  }) = _DetailState;
+  factory DetailState(
+      {required int currentSize,
+      required int currentColor,
+      required List<CartModel> cart,
+      required List<CartModel> pay,
+      required DetailStatus detailStatus,
+      String? color,
+      String? size,
+      required Product product}) = _DetailState;
 
   const DetailState._();
 
@@ -30,21 +29,22 @@ class DetailState with _$DetailState {
         pay: [],
         detailStatus: DetailStatus.init,
         product: Product(
-    id: 1,
-    image:
-        'https://lzd-img-global.slatic.net/g/p/6cee81e88ef9fcc5890c45298dcd7dde.jpg_720x720q80.jpg_.webp',
-    title:
-        'Giày là một cái gì đó rất này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ',
-    name: 'Giay Nike',
-    price: 1800000,
-    size: ['M', 'L', 'XL', 'XXL'],
-    color: [
-      Colors.red,
-      Colors.blue,
-      Colors.white,
-      Colors.black,
-    ],
-    favorites: 4.1,
-  ),
+          id: 1,
+          image:
+              'https://lzd-img-global.slatic.net/g/p/6cee81e88ef9fcc5890c45298dcd7dde.jpg_720x720q80.jpg_.webp',
+          title:
+              'Giày là một cái gì đó rất này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ',
+          name: 'Giay Nike',
+          price: 1800000,
+          priceBefore: 2000000,
+          size: ['M', 'L', 'XL', 'XXL'],
+          color: [
+            Colors.red,
+            Colors.blue,
+            Colors.white,
+            Colors.black,
+          ],
+          favorites: 4.1,
+        ),
       );
 }

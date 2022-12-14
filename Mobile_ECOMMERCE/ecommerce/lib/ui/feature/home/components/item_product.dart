@@ -1,3 +1,4 @@
+import 'package:ecommerce/utilities/helpers/validator_helper/validator_helper.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../data/model/product.dart';
@@ -27,7 +28,7 @@ class ItemProduct extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Hero(
-                tag:product.image,
+                tag: product.image,
                 child: Image.network(
                   product.image,
                   fit: BoxFit.fill,
@@ -47,13 +48,22 @@ class ItemProduct extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                   const Spacer(),
                     Text(
-                      '${product.price} VND',
+                      '${product.priceBefore} VND',
                       style: const TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.red,
+                          fontSize: 10,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.red,
+                          decoration: TextDecoration.lineThrough,
+                          decorationStyle: TextDecorationStyle.solid,
+                          decorationThickness: 2),
+                    ),
+                    Text(
+                      '${ValidatorHelper().setupPrice(product.price)} VND',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.red,
                       ),
                     ),
                   ],

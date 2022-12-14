@@ -18,8 +18,10 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$PayState {
   int get current => throw _privateConstructorUsedError;
   PayStatus get payStatus => throw _privateConstructorUsedError;
-  int get allPrice => throw _privateConstructorUsedError;
+  String get allPrice => throw _privateConstructorUsedError;
   List<CartModel> get cart => throw _privateConstructorUsedError;
+  int get pricePay => throw _privateConstructorUsedError;
+  String get address => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $PayStateCopyWith<PayState> get copyWith =>
@@ -32,7 +34,12 @@ abstract class $PayStateCopyWith<$Res> {
       _$PayStateCopyWithImpl<$Res, PayState>;
   @useResult
   $Res call(
-      {int current, PayStatus payStatus, int allPrice, List<CartModel> cart});
+      {int current,
+      PayStatus payStatus,
+      String allPrice,
+      List<CartModel> cart,
+      int pricePay,
+      String address});
 }
 
 /// @nodoc
@@ -52,6 +59,8 @@ class _$PayStateCopyWithImpl<$Res, $Val extends PayState>
     Object? payStatus = null,
     Object? allPrice = null,
     Object? cart = null,
+    Object? pricePay = null,
+    Object? address = null,
   }) {
     return _then(_value.copyWith(
       current: null == current
@@ -65,11 +74,19 @@ class _$PayStateCopyWithImpl<$Res, $Val extends PayState>
       allPrice: null == allPrice
           ? _value.allPrice
           : allPrice // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       cart: null == cart
           ? _value.cart
           : cart // ignore: cast_nullable_to_non_nullable
               as List<CartModel>,
+      pricePay: null == pricePay
+          ? _value.pricePay
+          : pricePay // ignore: cast_nullable_to_non_nullable
+              as int,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -82,7 +99,12 @@ abstract class _$$_PayStateCopyWith<$Res> implements $PayStateCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int current, PayStatus payStatus, int allPrice, List<CartModel> cart});
+      {int current,
+      PayStatus payStatus,
+      String allPrice,
+      List<CartModel> cart,
+      int pricePay,
+      String address});
 }
 
 /// @nodoc
@@ -100,6 +122,8 @@ class __$$_PayStateCopyWithImpl<$Res>
     Object? payStatus = null,
     Object? allPrice = null,
     Object? cart = null,
+    Object? pricePay = null,
+    Object? address = null,
   }) {
     return _then(_$_PayState(
       current: null == current
@@ -113,11 +137,19 @@ class __$$_PayStateCopyWithImpl<$Res>
       allPrice: null == allPrice
           ? _value.allPrice
           : allPrice // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       cart: null == cart
           ? _value._cart
           : cart // ignore: cast_nullable_to_non_nullable
               as List<CartModel>,
+      pricePay: null == pricePay
+          ? _value.pricePay
+          : pricePay // ignore: cast_nullable_to_non_nullable
+              as int,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -129,7 +161,9 @@ class _$_PayState extends _PayState {
       {required this.current,
       required this.payStatus,
       required this.allPrice,
-      required final List<CartModel> cart})
+      required final List<CartModel> cart,
+      required this.pricePay,
+      required this.address})
       : _cart = cart,
         super._();
 
@@ -138,7 +172,7 @@ class _$_PayState extends _PayState {
   @override
   final PayStatus payStatus;
   @override
-  final int allPrice;
+  final String allPrice;
   final List<CartModel> _cart;
   @override
   List<CartModel> get cart {
@@ -147,8 +181,13 @@ class _$_PayState extends _PayState {
   }
 
   @override
+  final int pricePay;
+  @override
+  final String address;
+
+  @override
   String toString() {
-    return 'PayState(current: $current, payStatus: $payStatus, allPrice: $allPrice, cart: $cart)';
+    return 'PayState(current: $current, payStatus: $payStatus, allPrice: $allPrice, cart: $cart, pricePay: $pricePay, address: $address)';
   }
 
   @override
@@ -161,12 +200,15 @@ class _$_PayState extends _PayState {
                 other.payStatus == payStatus) &&
             (identical(other.allPrice, allPrice) ||
                 other.allPrice == allPrice) &&
-            const DeepCollectionEquality().equals(other._cart, _cart));
+            const DeepCollectionEquality().equals(other._cart, _cart) &&
+            (identical(other.pricePay, pricePay) ||
+                other.pricePay == pricePay) &&
+            (identical(other.address, address) || other.address == address));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, current, payStatus, allPrice,
-      const DeepCollectionEquality().hash(_cart));
+      const DeepCollectionEquality().hash(_cart), pricePay, address);
 
   @JsonKey(ignore: true)
   @override
@@ -179,8 +221,10 @@ abstract class _PayState extends PayState {
   factory _PayState(
       {required final int current,
       required final PayStatus payStatus,
-      required final int allPrice,
-      required final List<CartModel> cart}) = _$_PayState;
+      required final String allPrice,
+      required final List<CartModel> cart,
+      required final int pricePay,
+      required final String address}) = _$_PayState;
   _PayState._() : super._();
 
   @override
@@ -188,9 +232,13 @@ abstract class _PayState extends PayState {
   @override
   PayStatus get payStatus;
   @override
-  int get allPrice;
+  String get allPrice;
   @override
   List<CartModel> get cart;
+  @override
+  int get pricePay;
+  @override
+  String get address;
   @override
   @JsonKey(ignore: true)
   _$$_PayStateCopyWith<_$_PayState> get copyWith =>

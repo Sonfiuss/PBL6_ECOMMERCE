@@ -1,4 +1,3 @@
-import 'package:ecommerce/ui/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class BoxColor extends StatelessWidget {

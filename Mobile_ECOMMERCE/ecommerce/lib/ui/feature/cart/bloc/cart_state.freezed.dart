@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$CartState {
   CartStatus get cartStatus => throw _privateConstructorUsedError;
-  int get allPrice => throw _privateConstructorUsedError;
+  String get allPrice => throw _privateConstructorUsedError;
   List<CartModel> get cart => throw _privateConstructorUsedError;
   List<IsCart> get isCart => throw _privateConstructorUsedError;
 
@@ -33,7 +33,7 @@ abstract class $CartStateCopyWith<$Res> {
   @useResult
   $Res call(
       {CartStatus cartStatus,
-      int allPrice,
+      String allPrice,
       List<CartModel> cart,
       List<IsCart> isCart});
 }
@@ -64,7 +64,7 @@ class _$CartStateCopyWithImpl<$Res, $Val extends CartState>
       allPrice: null == allPrice
           ? _value.allPrice
           : allPrice // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       cart: null == cart
           ? _value.cart
           : cart // ignore: cast_nullable_to_non_nullable
@@ -86,7 +86,7 @@ abstract class _$$_CartStateCopyWith<$Res> implements $CartStateCopyWith<$Res> {
   @useResult
   $Res call(
       {CartStatus cartStatus,
-      int allPrice,
+      String allPrice,
       List<CartModel> cart,
       List<IsCart> isCart});
 }
@@ -115,7 +115,7 @@ class __$$_CartStateCopyWithImpl<$Res>
       allPrice: null == allPrice
           ? _value.allPrice
           : allPrice // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       cart: null == cart
           ? _value.cart
           : cart // ignore: cast_nullable_to_non_nullable
@@ -141,7 +141,7 @@ class _$_CartState extends _CartState {
   @override
   final CartStatus cartStatus;
   @override
-  final int allPrice;
+  final String allPrice;
   @override
   final List<CartModel> cart;
   @override
@@ -183,7 +183,7 @@ class _$_CartState extends _CartState {
 abstract class _CartState extends CartState {
   factory _CartState(
       {required final CartStatus cartStatus,
-      required final int allPrice,
+      required final String allPrice,
       required final List<CartModel> cart,
       required final List<IsCart> isCart}) = _$_CartState;
   _CartState._() : super._();
@@ -191,7 +191,7 @@ abstract class _CartState extends CartState {
   @override
   CartStatus get cartStatus;
   @override
-  int get allPrice;
+  String get allPrice;
   @override
   List<CartModel> get cart;
   @override

@@ -88,9 +88,9 @@ class MenuPayMent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _payPresenter = injector.get<PayPresenter>();
+    final payPresenter = injector.get<PayPresenter>();
     return BlocBuilder<PayPresenter, PayState>(
-      bloc: _payPresenter,
+      bloc: payPresenter,
       builder: (context, state) => Row(
         children: [
           Icon(
@@ -110,7 +110,7 @@ class MenuPayMent extends StatelessWidget {
           ),
           Choose(
             function: (bool? value) {
-              _payPresenter.onTapIndex(index);
+              payPresenter.onTapIndex(index);
             },
             isChecked: index == state.current ? true : false,
           ),

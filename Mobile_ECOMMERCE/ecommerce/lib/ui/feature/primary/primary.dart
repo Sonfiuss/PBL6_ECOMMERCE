@@ -3,8 +3,6 @@ import 'package:ecommerce/ui/feature/home/home.dart';
 import 'package:ecommerce/ui/feature/profile/profile.dart';
 import 'package:flutter/material.dart';
 
-import '../../../data/model/cart.dart';
-
 class Primary extends StatefulWidget {
   const Primary({Key? key}) : super(key: key);
 
@@ -16,9 +14,9 @@ class _PrimaryState extends State<Primary> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static  final List<Widget> _widgetOptions = <Widget>[
-  const Home(),
-    Cart(),
+  static final List<Widget> _widgetOptions = <Widget>[
+    const Home(),
+    const Cart(),
     const Profile(),
   ];
 

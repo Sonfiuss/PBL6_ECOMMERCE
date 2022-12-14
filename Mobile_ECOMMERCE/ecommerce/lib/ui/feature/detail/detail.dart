@@ -1,4 +1,3 @@
-import 'package:ecommerce/data/model/cart.dart';
 import 'package:ecommerce/data/model/product.dart';
 import 'package:ecommerce/ui/feature/cart/cart.dart';
 import 'package:ecommerce/ui/feature/detail/bloc/detail_presenter.dart';
@@ -7,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../injection/injector.dart';
 import '../../base/base_page.dart';
-import '../../resources/app_colors.dart';
 import '../../widget/icon_top.dart';
 import 'components/body.dart';
 import 'components/bottomAppBarDetail.dart';

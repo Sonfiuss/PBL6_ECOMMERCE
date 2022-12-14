@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
@@ -12,7 +10,6 @@ class ButtonLogin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final random = Random();
     double size = MediaQuery.of(context).size.width;
     return Consumer<SignInViewModel>(
       builder: (context, value, child) => SizedBox(
@@ -36,7 +33,7 @@ class ButtonLogin extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
-                    color: Color.fromARGB(255, 14, 91, 154),
+                    color: const Color.fromARGB(255, 14, 91, 154),
                   ),
                   child: const Center(
                     child: Text(

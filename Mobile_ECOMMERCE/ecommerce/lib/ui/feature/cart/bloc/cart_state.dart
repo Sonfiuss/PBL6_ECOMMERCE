@@ -13,7 +13,7 @@ enum CartStatus {
 class CartState with _$CartState {
   factory CartState({
     required CartStatus cartStatus,
-    required int allPrice,
+    required String allPrice,
     required List<CartModel> cart,
     required List<IsCart> isCart
     ,
@@ -21,7 +21,7 @@ class CartState with _$CartState {
 
   const CartState._();
 
-  factory CartState.initial() => CartState(allPrice: 0, cart: [], isCart: [],cartStatus:CartStatus.init );
+  factory CartState.initial() => CartState(allPrice: '0', cart: [], isCart: [],cartStatus:CartStatus.init );
 }
 
 

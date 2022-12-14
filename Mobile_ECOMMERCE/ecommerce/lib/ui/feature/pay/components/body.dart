@@ -12,32 +12,34 @@ import 'payment_methods.dart';
 
 class Body extends StatelessWidget {
   const Body({
-    Key? key, required this.payPresenter,
+    Key? key,
+    required this.payPresenter,
   }) : super(key: key);
   final PayPresenter payPresenter;
 
-
-
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PayPresenter,PayState>(
-      bloc:payPresenter ,
-      builder:(context,state)=>
-       SingleChildScrollView(
+    return BlocBuilder<PayPresenter, PayState>(
+      bloc: payPresenter,
+      builder: (context, state) => SingleChildScrollView(
         child: Column(
-          children:  [
+          children: [
             const SizedBox(
               height: 10,
             ),
-            const Position(),
+            Position(text: state.address),
             const SizedBox(
               height: 10,
             ),
-            ListOrder(payPresenter: payPresenter,),
+            ListOrder(
+              payPresenter: payPresenter,
+            ),
             const SizedBox(
               height: 1,
             ),
-            AllPrice(sum: state.allPrice,),
+            AllPrice(
+              sum: state.allPrice,
+            ),
             const SizedBox(
               height: 10,
             ),

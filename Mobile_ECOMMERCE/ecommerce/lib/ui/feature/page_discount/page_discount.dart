@@ -2,8 +2,6 @@ import 'package:ecommerce/ui/base/base_page.dart';
 import 'package:ecommerce/ui/resources/app_colors.dart';
 import 'package:ecommerce/ui/widget/choose.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class PageDiscount extends BasePage {
   const PageDiscount({Key? key}) : super(key: key);
@@ -154,7 +152,7 @@ class MyCustomTriangleClipper extends CustomClipper<Path> {
   }
 
   @override
-  bool shouldReclip(CustomClipper old) {
+  bool shouldReclip(old) {
     return old != this;
   }
 }

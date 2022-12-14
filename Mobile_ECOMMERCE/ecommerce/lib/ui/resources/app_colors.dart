@@ -27,6 +27,8 @@ class AppColors {
   static const yellowColor = Colors.yellow;
   static const defaultIconFavoriteColor = Color(0xFFC1AEA6);
   static const defaultIconStarColor = Color(0xFFC4C4C4);
+  static const greyFillR = Color(0xFFDCDCDC);
+   static const greyTextL = Color(0xFFAEAEAE);
 
   //splash
   static const mainText = Color(0xFF2A2A37);

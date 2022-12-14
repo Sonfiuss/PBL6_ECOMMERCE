@@ -1,9 +1,8 @@
-import 'dart:ffi';
-
 import 'package:ecommerce/data/model/cart.dart';
 import 'package:ecommerce/ui/feature/cart/bloc/cart_state.dart';
-import 'package:ecommerce/ui/feature/cart/components/cart_counter.dart';
+
 import 'package:ecommerce/ui/feature/detail/bloc/detail_state.dart';
+import 'package:ecommerce/utilities/helpers/validator_helper/validator_helper.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +17,6 @@ class CartPresenter extends Cubit<CartState> {
   final DetailState _detailState;
 
   Future init() async {
-    
     emit(state.copyWith(cart: _detailState.cart, cartStatus: CartStatus.init));
     var listIsCart = <IsCart>[];
     var isProduct = <bool>[];
@@ -36,7 +34,7 @@ class CartPresenter extends Cubit<CartState> {
     emit(
       state.copyWith(isCart: listIsCart, cartStatus: CartStatus.inProgress),
     );
-    var sum = allPrice();
+    var sum = ValidatorHelper().setupPrice(allPrice());
     emit(
       state.copyWith(allPrice: sum, cartStatus: CartStatus.success),
     );
@@ -49,7 +47,7 @@ class CartPresenter extends Cubit<CartState> {
     emit(
       state.copyWith(
         cart: cartModel,
-        allPrice: allPrice(),
+        allPrice: ValidatorHelper().setupPrice(allPrice()),
       ),
     );
   }
@@ -64,7 +62,7 @@ class CartPresenter extends Cubit<CartState> {
     emit(
       state.copyWith(
         cart: cartModel,
-        allPrice: allPrice(),
+        allPrice: ValidatorHelper().setupPrice(allPrice()),
       ),
     );
   }
@@ -82,7 +80,7 @@ class CartPresenter extends Cubit<CartState> {
       state.copyWith(
           isCart: [...listIsCart],
           cartStatus: CartStatus.success,
-          allPrice: allPrice()),
+          allPrice: ValidatorHelper().setupPrice(allPrice())),
     );
     print(state.isCart[idStore].isProduct![idItem]);
   }
@@ -97,7 +95,7 @@ class CartPresenter extends Cubit<CartState> {
     emit(
       state.copyWith(
         cart: cartModel,
-        allPrice: allPrice(),
+        allPrice: ValidatorHelper().setupPrice(allPrice()),
       ),
     );
   }
@@ -112,7 +110,9 @@ class CartPresenter extends Cubit<CartState> {
     }
 
     emit(state.copyWith(
-        isCart: listIs, allPrice: allPrice(), cartStatus: CartStatus.success));
+        isCart: listIs,
+        allPrice: ValidatorHelper().setupPrice(allPrice()),
+        cartStatus: CartStatus.success));
   }
 
   int allPrice() {

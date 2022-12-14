@@ -1,15 +1,19 @@
 import 'package:ecommerce/ui/base/base_page.dart';
 import 'package:ecommerce/ui/feature/pay/bloc/pay_presenter.dart';
 import 'package:ecommerce/ui/feature/pay/bloc/pay_state.dart';
+import 'package:ecommerce/ui/feature/pay_success/pay_success.dart';
 
 import 'package:ecommerce/ui/resources/app_colors.dart';
-import 'package:ecommerce/ui/widget/button_common.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:momo_vn/momo_vn.dart';
 
 import '../../../data/model/cart.dart';
 import '../../../injection/injector.dart';
 import 'components/body.dart';
+import 'components/bottom_app_bar_pay.dart';
 
 class Pay extends BasePage {
   const Pay({Key? key, required this.listCart}) : super(key: key);
@@ -20,10 +24,55 @@ class Pay extends BasePage {
 }
 
 class _PayState extends State<Pay> {
+  late MomoVn _momoPay;
+  late PaymentResponse _momoPaymentResult;
+
   @override
   void initState() {
     payPresenter.init(widget.listCart);
     super.initState();
+    _momoPay = MomoVn();
+    _momoPay.on(MomoVn.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _momoPay.on(MomoVn.EVENT_PAYMENT_ERROR, _handlePaymentError);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _momoPay.clear();
+  }
+
+  Future<void> _setState() async {
+    if (_momoPaymentResult.isSuccess == true) {
+    } else {}
+  }
+
+  void _handlePaymentSuccess(PaymentResponse response) {
+    setState(() {
+      _momoPaymentResult = response;
+      _setState();
+    });
+    Fluttertoast.showToast(
+        msg: 'THÀNH CÔNG: ${response.phoneNumber}',
+        toastLength: Toast.LENGTH_SHORT);
+    Future.delayed(
+      const Duration(seconds: 1),
+    );
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const PaySuccess(),
+      ),
+    );
+  }
+
+  void _handlePaymentError(PaymentResponse response) {
+    setState(() {
+      _momoPaymentResult = response;
+      _setState();
+    });
+    Fluttertoast.showToast(
+        msg: 'THẤT BẠI: ${response.message}', toastLength: Toast.LENGTH_SHORT);
   }
 
   final payPresenter = injector.get<PayPresenter>();
@@ -45,7 +94,7 @@ class _PayState extends State<Pay> {
                   color: AppColors.black,
                 ),
                 onPressed: () {
-                  Scaffold.of(context).openDrawer();
+                  Navigator.pop(context);
                 },
                 tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
               );
@@ -60,35 +109,37 @@ class _PayState extends State<Pay> {
             ),
           ),
         ),
-        body: Body(payPresenter: payPresenter,),
-        bottomNavigationBar: Container(
-          height: 100,
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          color: AppColors.white,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text('Tổng'),
-                  Text(
-                    '${state.allPrice} VND',
-                    style: const TextStyle(
-                      color: AppColors.red,
-                    ),
-                  )
-                ],
-              ),
-              ButtonCommon(
-                txt: 'Đặt Hàng',
-                width: MediaQuery.of(context).size.width,
-                onTap: () {},
-                colorButton: AppColors.red,
-                colorText: AppColors.white,
-              )
-            ],
-          ),
+        body: Body(
+          payPresenter: payPresenter,
+        ),
+        bottomNavigationBar: BottomAppBarPay(
+          payPresenter: payPresenter,
+          onTap: () {
+            if (state.current == 2) {
+              final options = MomoPaymentInfo(
+                  merchantName: 'Test',
+                  appScheme: 'MOMOZ7NU20220930',
+                  merchantCode: 'MOMOZ7NU20220930',
+                  partnerCode: 'MOMOZ7NU20220930',
+                  amount: state.pricePay,
+                  orderId: '12321312',
+                  orderLabel: 'Thanh Toán Tiền',
+                  merchantNameLabel: 'HLGD',
+                  fee: 10,
+                  description: 'Thanh Toán Tiền',
+                  username: "Bao",
+                  partner: 'merchant',
+                  extra: '{"key1":"value1","key2":"value2"}',
+                  isTestMode: true);
+              try {
+                _momoPay.open(options);
+              } catch (e) {
+                debugPrint(e.toString());
+              }
+            } else {
+              null;
+            }
+          },
         ),
       ),
     );

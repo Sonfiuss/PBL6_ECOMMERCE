@@ -1,10 +1,7 @@
-import 'package:ecommerce/ui/base/base_page.dart';
 import 'package:ecommerce/ui/feature/cart/bloc/cart_state.dart';
 import 'package:ecommerce/ui/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../injection/injector.dart';
 import '../bloc/cart_presenter.dart';
 
 class CartCounter extends StatelessWidget {

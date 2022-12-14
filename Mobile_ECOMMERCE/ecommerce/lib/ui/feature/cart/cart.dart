@@ -1,9 +1,6 @@
 import 'package:ecommerce/ui/base/base_page.dart';
 import 'package:ecommerce/ui/resources/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../../../data/model/cart.dart';
 import '../../../injection/injector.dart';
 import 'bloc/cart_presenter.dart';
 import 'components/body.dart';

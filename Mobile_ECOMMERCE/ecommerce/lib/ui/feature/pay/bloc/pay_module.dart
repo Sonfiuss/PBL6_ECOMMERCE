@@ -1,3 +1,5 @@
+import 'package:ecommerce/ui/feature/page_map/bloc/map_presenter.dart';
+
 import '../../../../injection/injector.dart';
 import 'pay_presenter.dart';
 

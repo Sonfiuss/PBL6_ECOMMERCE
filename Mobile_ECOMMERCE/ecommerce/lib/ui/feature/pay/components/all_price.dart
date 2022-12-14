@@ -4,9 +4,10 @@ import '../../../resources/app_colors.dart';
 
 class AllPrice extends StatelessWidget {
   const AllPrice({
-    Key? key, required this.sum,
+    Key? key,
+    required this.sum,
   }) : super(key: key);
-  final int sum;
+  final String sum;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class AllPrice extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children:  [
+        children: [
           const Text(
             'Tổng số tiền : ',
             style: TextStyle(

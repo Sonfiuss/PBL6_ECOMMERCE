@@ -1,11 +1,9 @@
 import 'package:ecommerce/data/model/cart.dart';
-import 'package:ecommerce/data/model/product.dart';
 import 'package:ecommerce/ui/feature/cart/bloc/cart_presenter.dart';
 import 'package:ecommerce/ui/feature/cart/bloc/cart_state.dart';
 import 'package:ecommerce/ui/feature/cart/components/item_cart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../injection/injector.dart';
 import '../../../widget/choose.dart';
 
 class StoreCart extends StatelessWidget {

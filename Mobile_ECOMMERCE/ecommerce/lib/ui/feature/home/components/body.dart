@@ -2,8 +2,6 @@ import 'package:ecommerce/ui/feature/detail/detail.dart';
 import 'package:ecommerce/ui/feature/home/components/search.dart';
 import 'package:ecommerce/ui/feature/profile/profile.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../data/model/cart.dart';
 import '../../../../data/model/product.dart';
 import '../../../resources/app_colors.dart';
 import '../../cart/cart.dart';
