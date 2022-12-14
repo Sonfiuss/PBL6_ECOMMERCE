@@ -40,9 +40,10 @@ export class EditCategoryComponent implements OnInit {
     .subscribe(
       (res:any) => {
         this.form.patchValue({
-          id: res.result.id,
-          name: res.result.name
-        })
+          id: res.id,
+          name: res.name
+        }),
+        console.log(name)
       },
       (err:any) => {
         console.log(err)
