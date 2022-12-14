@@ -9,6 +9,7 @@
 // import 'package:ecommerce/ui/feature/sign_in/sign_in.dart';
 import 'package:ecommerce/ui/feature/cart/cart.dart';
 import 'package:ecommerce/ui/feature/home/home.dart';
+import 'package:ecommerce/ui/feature/pay_success/pay_success.dart';
 import 'package:ecommerce/ui/feature/primary/primary.dart';
 import 'package:ecommerce/ui/feature/profile/profile.dart';
 import 'package:ecommerce/ui/feature/sign_in/sign_in.dart';

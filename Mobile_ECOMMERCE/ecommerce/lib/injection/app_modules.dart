@@ -72,6 +72,7 @@ class AppModules {
     injector.registerLazySingleton<LoadingFullScreenHelper>(
       () => LoadingFullScreenHelper(),
     );
+    
 
     //user case
     // injector.registerLazySingleton<UpdateStateDeviceUseCase>(

@@ -4,6 +4,7 @@ class Product {
   final int id;
   String image, title, name;
   int price;
+  int priceBefore;
   List<String> size;
   List<Color> color;
   double favorites;
@@ -13,6 +14,7 @@ class Product {
     required this.title,
     required this.name,
     required this.price,
+    required this.priceBefore,
     required this.size,
     required this.favorites,
     required this.color,
@@ -28,6 +30,7 @@ List<Product> demoProduct = [
         'Giày là một cái gì đó rất này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ',
     name: 'Giay Nike',
     price: 1800000,
+    priceBefore: 2000000,
     size: ['M', 'L', 'XL', 'XXL'],
     color: [
       Colors.red,
@@ -45,6 +48,7 @@ List<Product> demoProduct = [
         'Giày là một cái gì đó rất này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ',
     name: 'Giay Nike',
     price: 5800000,
+    priceBefore: 6000000,
     size: ['M', 'L', 'XL', 'XXL'],
     color: [
       Colors.red,
@@ -62,6 +66,7 @@ List<Product> demoProduct = [
         'Giày là một cái gì đó rất này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ',
     name: 'Giay Nike',
     price: 2800000,
+    priceBefore: 3100000,
     size: ['M', 'L', 'XL', 'XXL'],
     color: [
       Colors.red,
@@ -79,6 +84,7 @@ List<Product> demoProduct = [
         'Giày là một cái gì đó rất này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ',
     name: 'Giay Nike',
     price: 800000,
+    priceBefore: 1200000,
     size: ['M', 'L', 'XL', 'XXL'],
     color: [
       Colors.red,
@@ -96,6 +102,7 @@ List<Product> demoProduct = [
         'Giày là một cái gì đó rất này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ này nọ và này nọ và này nọ',
     name: 'Giay Nike',
     price: 4800000,
+    priceBefore: 4900000,
     size: ['M', 'L', 'XL', 'XXL'],
     color: [
       Colors.red,

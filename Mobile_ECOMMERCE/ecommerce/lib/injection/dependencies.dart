@@ -1,4 +1,5 @@
 import 'package:ecommerce/ui/feature/cart/bloc/cart_module.dart';
+import 'package:ecommerce/ui/feature/page_map/bloc/map_module.dart';
 import 'package:ecommerce/ui/feature/pay/bloc/pay_module.dart';
 
 import '../ui/feature/detail/bloc/detail_module.dart';
@@ -41,8 +42,8 @@ class DependencyManager {
     // Pay modules
     await PayModule.inject();
 
-    // cart modules
-  //  await AddRoomModule.inject();
+    // Map modules
+    await MapModule.inject();
 
     // //home
     // await HomeModule.inject();

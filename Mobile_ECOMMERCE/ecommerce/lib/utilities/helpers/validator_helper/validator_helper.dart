@@ -28,4 +28,18 @@ class ValidatorHelper {
   bool isConfirmPassword(String confirmPassword, String password) {
     return confirmPassword == password;
   }
+
+  String setupPrice(int price) {
+    var newList = [];
+
+    newList = price.toString().split('');
+    var i = newList.length;
+
+    while (i > 3) {
+      i = i - 3;
+      newList.insert(i, ',');
+    }
+
+    return newList.join();
+  }
 }
