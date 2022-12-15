@@ -79,19 +79,26 @@ namespace Website_Ecommerce.API.Repositories
                                         (p, pd) => new {
                                             id = p.Id,
                                             name = p.Name,
-                                            productdetailId = _dataContext.ProductDetails.FirstOrDefault(x => x.ProductId == p.Id).Id,
+                                            productdetailId = pd.Id,
                                             price = pd.Price,
                                             initialPrice = pd.InitialPrice,
                                         });
+            
+
             var result = await pro_prodetail.Join(productimages, ppd => ppd.productdetailId, img => img.ProductDetailId,
                                         (ppd, img) => new ViewProductDTO {
                                             Id = ppd.id,
                                             Name = ppd.name,
                                             InitialPrice = ppd.initialPrice,
                                             Price = ppd.price,
-                                            ImageURL = _dataContext.ProductImages.FirstOrDefault(x => x.ProductDetailId == ppd.productdetailId).UrlImage
+                                            ImageURL = img.UrlImage
                                         }).ToListAsync();
-            return result;
+            var result2 = (from p in result
+                   group p by new {p.Id} //or group by new {p.ID, p.Name, p.Whatever}
+                   into mygroup
+                   select mygroup.FirstOrDefault()).OrderByDescending(x => x.Id).ToList();
+
+            return result2;
         }
 
         public void Update(Product product)
