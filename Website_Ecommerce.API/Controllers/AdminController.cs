@@ -10,7 +10,7 @@ namespace Website_Ecommerce.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = "MyAuthKey")]
+    // [Authorize(AuthenticationSchemes = "MyAuthKey")]
     public class AdminController : ControllerBase
     {
         private readonly IShopRepository _shopRepository;
@@ -67,10 +67,12 @@ namespace Website_Ecommerce.API.Controllers
         }
 
         //Get list Shop
+        //true la hoat dong
+        //false la khong hoat dong
         [HttpGet("get-list-shop-active")]
         public async Task<IActionResult> GetListShopActive()
         {
-            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
+            
             //check userId
             List<Shop> shops = await _shopRepository.Shops.Where(x => x.Status == true).ToListAsync();
             if(shops == null)

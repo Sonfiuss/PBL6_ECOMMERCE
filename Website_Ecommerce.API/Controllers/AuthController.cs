@@ -48,12 +48,8 @@ namespace Website_Ecommerce.API.Controllers
                     Message = ErrorCode.ExistUserOrEmail
                 });
             }
-            var check = false;
-            if (request.Role == 1) 
-            {
-                check = true;
-            }
-            
+            bool check = request.Role == 1;
+
             var user = new User {
                 Username = request.Username,
                 Email = request.Email,
