@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "JZSg3EmiSPCEMHkcBBY1tNXI8+r34AaD4CR2Ts2+bJc=",
+  "Hash": "Zf0UyLf1x2W//RbzGNCQCub4PE0VevT7uDDKMSJGgg0=",
   "Source": "Website_Ecommerce.API",
   "BasePath": "_content/Website_Ecommerce.API",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "Website_Ecommerce.API\\wwwroot",
       "Source": "Website_Ecommerce.API",
-      "ContentRoot": "D:\\Semester7\\PBL6_Part3\\Website_Ecommerce.API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Rauxalach\\Desktop\\1212\\PBL6_ECOMMERCE\\Website_Ecommerce.API\\wwwroot\\",
       "BasePath": "_content/Website_Ecommerce.API",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "D:\\Semester7\\PBL6_Part3\\Website_Ecommerce.API\\wwwroot\\1f1052cf5ba72a54f4c26eed377cb053.jpg",
+      "Identity": "C:\\Users\\Rauxalach\\Desktop\\1212\\PBL6_ECOMMERCE\\Website_Ecommerce.API\\wwwroot\\1f1052cf5ba72a54f4c26eed377cb053.jpg",
       "SourceId": "Website_Ecommerce.API",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Semester7\\PBL6_Part3\\Website_Ecommerce.API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Rauxalach\\Desktop\\1212\\PBL6_ECOMMERCE\\Website_Ecommerce.API\\wwwroot\\",
       "BasePath": "_content/Website_Ecommerce.API",
       "RelativePath": "1f1052cf5ba72a54f4c26eed377cb053.jpg",
       "AssetKind": "All",
@@ -34,10 +34,10 @@
       "OriginalItemSpec": "wwwroot\\1f1052cf5ba72a54f4c26eed377cb053.jpg"
     },
     {
-      "Identity": "D:\\Semester7\\PBL6_Part3\\Website_Ecommerce.API\\wwwroot\\avatar.jpg",
+      "Identity": "C:\\Users\\Rauxalach\\Desktop\\1212\\PBL6_ECOMMERCE\\Website_Ecommerce.API\\wwwroot\\avatar.jpg",
       "SourceId": "Website_Ecommerce.API",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Semester7\\PBL6_Part3\\Website_Ecommerce.API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Rauxalach\\Desktop\\1212\\PBL6_ECOMMERCE\\Website_Ecommerce.API\\wwwroot\\",
       "BasePath": "_content/Website_Ecommerce.API",
       "RelativePath": "avatar.jpg",
       "AssetKind": "All",
@@ -51,10 +51,10 @@
       "OriginalItemSpec": "wwwroot\\avatar.jpg"
     },
     {
-      "Identity": "D:\\Semester7\\PBL6_Part3\\Website_Ecommerce.API\\wwwroot\\logo.png",
+      "Identity": "C:\\Users\\Rauxalach\\Desktop\\1212\\PBL6_ECOMMERCE\\Website_Ecommerce.API\\wwwroot\\logo.png",
       "SourceId": "Website_Ecommerce.API",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Semester7\\PBL6_Part3\\Website_Ecommerce.API\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\Rauxalach\\Desktop\\1212\\PBL6_ECOMMERCE\\Website_Ecommerce.API\\wwwroot\\",
       "BasePath": "_content/Website_Ecommerce.API",
       "RelativePath": "logo.png",
       "AssetKind": "All",
