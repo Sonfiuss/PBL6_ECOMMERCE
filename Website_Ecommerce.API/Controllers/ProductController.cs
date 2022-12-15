@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +14,9 @@ namespace Website_Ecommerce.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = "MyAuthKey")]
-    // [CustomAuthorize(Allows = "Shop")]
+    //1:admin  2:shop  3:shipper  4:customer
+    [CustomAuthorize(Allows = "2")]
+
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
@@ -102,7 +100,7 @@ namespace Website_Ecommerce.API.Controllers
                 }
             });
         }
-
+        
         [HttpPut("update-product")]
         public async Task<IActionResult> UpdateProduct([FromBody] ProductDto request, CancellationToken cancellationToken)
         {
@@ -242,7 +240,7 @@ namespace Website_Ecommerce.API.Controllers
         }
 
         [HttpGet("get-product-by/{id}")]
-        public async Task<IActionResult> GetProductById([FromQuery] int id)
+        public async Task<IActionResult> GetProductById(int id)
         {
             if(id.ToString() is null)
             {
@@ -274,44 +272,7 @@ namespace Website_Ecommerce.API.Controllers
                 });
         }
 
-        [HttpGet("get-list-product")]
-        public async Task<IActionResult> GetListProduct()
-        {
-            
-            List<ProductDto> products = await _productRepository.Products
-                                                .Select(x => new ProductDto 
-                                                {
-                                                    Name = x.Name,
-                                                    Material = x.Material,
-                                                    Origin = x.Origin,
-                                                    Description = x.Description,
-                                                    Status = x.Status,
-                                                    Categories = x.ProductCategories.Where(y => y.ProductId == x.Id).Select(c => c.CategoryId).ToHashSet()
-                                                }).ToListAsync();
-            
-            if(products == null)
-            {
-                return BadRequest( new Response<ResponseDefault>()
-                {
-                    State = false,
-                    Message = ErrorCode.NotFound,
-                    Result = new ResponseDefault()
-                    {
-                        Data = "NotFound Product"
-                    }
-                });
-            }
-
-            return Ok( new Response<ResponseDefault>()
-                {
-                    State = true,
-                    Message = ErrorCode.Success,
-                    Result = new ResponseDefault()
-                    {
-                        Data = products
-                    }
-                });
-        }
+        
 
 
 #endregion

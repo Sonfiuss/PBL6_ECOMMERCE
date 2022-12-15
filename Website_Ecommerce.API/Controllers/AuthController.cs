@@ -19,6 +19,7 @@ namespace Website_Ecommerce.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class AuthController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
@@ -97,7 +98,7 @@ namespace Website_Ecommerce.API.Controllers
             }
         }
         
-        [AllowAnonymous]
+        
         [HttpPost("login")]
         public async Task<Response<ResponseToken>> Login(LoginDto request, CancellationToken cancellationToken)
         {
@@ -131,7 +132,7 @@ namespace Website_Ecommerce.API.Controllers
                     Message = ErrorCode.Success,
                     Result = new ResponseToken()
                     {
-                        Token = "Bearer " + token,
+                        Token = token,
                     }
                 };
             }
@@ -142,6 +143,129 @@ namespace Website_Ecommerce.API.Controllers
                     State = false,
                     Message = ErrorCode.BadRequest,
                 };
+            }
+        }
+
+        [HttpPut("reset-password")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordDto request, CancellationToken cancellationToken)
+        {
+            User user = await _userRepository.Users.FirstOrDefaultAsync(x => x.Username == request.Username);
+
+            if (user == null)
+            {
+                return BadRequest( new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.NotFound,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "Not Found User"
+                    }
+                });
+            }
+
+            // kiem tra pass cu
+            if (_identityServices.VerifyMD5Hash(user.Password, _identityServices.GetMD5(request.PasswordOld)))
+            {
+                if(request.PasswordNew == request.RePassword)
+                {
+                    user.Password = _identityServices.GetMD5(request.PasswordNew);
+                    _userRepository.Update(user);
+                }
+                else
+                {
+                    return BadRequest( new Response<ResponseDefault>()
+                    {
+                        State = false,
+                        Message = ErrorCode.PasswordNotMatch,
+                        Result = new ResponseDefault()
+                        {
+                            Data = "Password not match"
+                        }
+                    });
+                }
+            }
+            else
+            {
+                return BadRequest( new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.InvalidPassword,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "Password invalid"
+                    }
+                });
+            }
+
+            var result = await _userRepository.UnitOfWork.SaveAsync(cancellationToken);
+
+            if (result > 0)
+            {
+                return Ok( new Response<ResponseDefault>()
+                {
+                    State = true,
+                    Message = ErrorCode.Success,
+                    Result = new ResponseDefault()
+                    {
+                        Data = user.Id.ToString()
+                    }
+                });
+            }
+            else
+            {
+                return BadRequest( new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.BadRequest
+                });
+            }
+        }
+
+        [HttpPut("forget-password")]
+        public async Task<IActionResult> ForgetPassword([FromBody] ForgetPasswordDto request, CancellationToken cancellationToken)
+        {
+            User user = await _userRepository.Users.FirstOrDefaultAsync(x => x.Username == request.Username && x.Email == request.Email);
+
+            if (user == null)
+            {
+                return BadRequest( new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.NotFound,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "Not found user"
+                    }
+                });
+            }
+
+            var code =  _identityServices.SendingPasswordByEmail("vovanban184@gmail.com", user.Email, "bbvimewwunotzlin");
+            
+            user.Password = _identityServices.GetMD5(code);
+            _userRepository.Update(user);
+
+            var result = await _userRepository.UnitOfWork.SaveAsync(cancellationToken);
+
+            if (result > 0)
+            {
+                return Ok( new Response<ResponseDefault>()
+                {
+                    State = true,
+                    Message = ErrorCode.Success,
+                    Result = new ResponseDefault()
+                    {
+                        Data = user.Id.ToString()
+                    }
+                });
+            }
+            else
+            {
+                return BadRequest( new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.BadRequest
+                });
             }
         }
 

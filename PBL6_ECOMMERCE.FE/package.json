@@ -22,6 +22,7 @@
     "@ckeditor/ckeditor5-build-classic": "^35.3.2",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
+    "@material/tabs": "^2.3.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

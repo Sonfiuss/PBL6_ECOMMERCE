@@ -185,7 +185,7 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-        [HttpGet("get-shop-by-userid")]
+        [HttpGet("get-shop-by-current-user")]
         public async Task<IActionResult> GetShopById()
         {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
@@ -219,7 +219,7 @@ namespace Website_Ecommerce.API.Controllers
         
         #endregion
         #region "API Voucher Shop"
-        [HttpPost("add-voucher-of-Shop")]
+        [HttpPost("add-voucher-of-shop")]
         public async Task<IActionResult> AddVoucherShop(VoucherShopDto request, CancellationToken cancellationToken)
         {   
             request.CreateAt  = DateTime.Now;
@@ -326,7 +326,7 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-        [HttpGet("Get-voucher-of-shop-match")]
+        [HttpGet("get-voucher-of-shop-match")]
 
         public async Task<IActionResult> GetVoucherShopMatch(int price){
             List<VoucherProduct> vouchers = await _shopRepository.voucherProducts.Where(p => p.MinPrice > price && p.Amount > 0).ToListAsync();
@@ -397,7 +397,7 @@ namespace Website_Ecommerce.API.Controllers
         //         });
             
         // }
-        [HttpPatch("Confirm-Order")]
+        [HttpPatch("confirm-order")]
         public async Task<IActionResult> ConfirmOrder (int orderID, int productDetailId, int state, CancellationToken cancellationToken){
             var orderDetail = await _orderRepository.OrderDetails
                                 .FirstOrDefaultAsync(r => r.OrderId == orderID && r.ProductDetailId == productDetailId);

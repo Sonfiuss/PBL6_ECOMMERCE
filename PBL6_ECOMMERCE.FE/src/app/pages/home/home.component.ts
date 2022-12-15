@@ -11,23 +11,38 @@ import { Data } from 'src/app/_models/category';
 })
 export class HomeComponent implements OnInit {
 
-  constructor( private category :CategoryService) { }
-  categoryData:any;
-  photoData:any;
-  categoryList: ListCategory = new ListCategory();
-  list:any;
+  constructor(
+    private categoryService :CategoryService
+  ) { }
+
+  categories:Array<any> = []
   banners = [{id:1},{id:2}]
   arr : Array<Category> =new Array();
   data : Data =new Data();
+
   ngOnInit(): void {
-    this.category.getCategory().subscribe(res =>{
-      console.log(res);
-      this.categoryList = res;
-      console.log(this.categoryList);
-      // this.data = this.categoryList.result;
-      console.log(this.arr);
-    });
-    console.log(this.arr);
+    this.loadHome()
+  }
+
+  loadHome(){
+    this.categoryService.getCategories()
+    .subscribe(
+      (res) => this.handleGetCategorySuccess(res),
+      (err) => this.handleGetCategoryError(err)
+    )
+
+  }
+
+  handleGetCategoryError(err: any){
+    console.log(err)
+  }
+  handleGetCategorySuccess(res: any){
+    this.categories = res.result.data
+    console.log(res)
+  }
+  onDeleteCategoryEvent(categoryId:number){
+    console.log('Delete Category - ' + categoryId)
+    this.loadHome()
   }
 
 }
