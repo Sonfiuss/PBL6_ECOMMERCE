@@ -199,6 +199,46 @@ namespace Website_Ecommerce.API.Controllers
                 }
             });
         }
+        [HttpGet("view-order-by/{state}")]
+        public async Task<IActionResult> ViewOrderByStatus(int state){
+            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
+            
+            var orders = await  _orderRepository.Orders.Where(x => x.UserId == userId).ToListAsync();
+            List<OrderDetail> data = new List<OrderDetail>();
+            IEnumerable<OrderDetail> result = data;
+            foreach(var i in orders){
+                var listOrderDetail = await _orderRepository.OrderDetails.Where(x => x.OrderId == i.Id).ToListAsync();
+                foreach(var j in listOrderDetail){
+                    if(j.State == state){
+                       data.Append(j);
+                    }
+                }
+            }
+            return Ok( new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = data
+                }
+            });
+            
+
+        }
+        // [HttpPatch("update-state-order-by/{idOrder}")]
+        // public async Task<IActionResult> UpdateStateOrder(int idOrder){
+        //     var orderdetails = await _orderRepository.GetOrderDetail(idOrder);
+        //     var check = 0;
+        //     foreach (var item in orderdetails)
+        //     {
+        //      if(item.State == (int)StateOrderEnum.SENT){
+        //         check = 1;
+        //      }
+             
+        //     }
+        // }
+
             
     }
 

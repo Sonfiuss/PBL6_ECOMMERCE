@@ -36,4 +36,30 @@ namespace Website_Ecommerce.API.ModelDtos
         public int Role { get; set; }
 
     }
+
+    public class ResetPasswordDto
+    {
+        [Required]
+        [MaxLength(256)]
+        public string Username { get; set; }
+        [Required]
+        [MaxLength(256)]
+        public string PasswordOld { get; set; }
+        [Required]
+        [MaxLength(256)]
+        public string PasswordNew { get; set; }
+        [Required]
+        [MaxLength(256)]
+        public string RePassword { get; set; }
+    }
+
+    public class ForgetPasswordDto
+    {
+        [Required]
+        [MaxLength(256)]
+        public string Username { get; set; }
+        [Required]
+        [MaxLength(256)]
+        public string Email { get; set; }
+    }
 }

@@ -22,6 +22,7 @@ namespace Website_Ecommerce.API.Repositories
         void Add(Role role);
         void Update(Role role);
         void Delete(Role role);
+
         
 
     }
