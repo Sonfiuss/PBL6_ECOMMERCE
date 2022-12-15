@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'cart_state.dart';
 
@@ -20,6 +20,7 @@ mixin _$CartState {
   String get allPrice => throw _privateConstructorUsedError;
   List<CartModel> get cart => throw _privateConstructorUsedError;
   List<IsCart> get isCart => throw _privateConstructorUsedError;
+  List<CartModel> get cartPay => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $CartStateCopyWith<CartState> get copyWith =>
@@ -35,7 +36,8 @@ abstract class $CartStateCopyWith<$Res> {
       {CartStatus cartStatus,
       String allPrice,
       List<CartModel> cart,
-      List<IsCart> isCart});
+      List<IsCart> isCart,
+      List<CartModel> cartPay});
 }
 
 /// @nodoc
@@ -55,6 +57,7 @@ class _$CartStateCopyWithImpl<$Res, $Val extends CartState>
     Object? allPrice = null,
     Object? cart = null,
     Object? isCart = null,
+    Object? cartPay = null,
   }) {
     return _then(_value.copyWith(
       cartStatus: null == cartStatus
@@ -73,6 +76,10 @@ class _$CartStateCopyWithImpl<$Res, $Val extends CartState>
           ? _value.isCart
           : isCart // ignore: cast_nullable_to_non_nullable
               as List<IsCart>,
+      cartPay: null == cartPay
+          ? _value.cartPay
+          : cartPay // ignore: cast_nullable_to_non_nullable
+              as List<CartModel>,
     ) as $Val);
   }
 }
@@ -88,7 +95,8 @@ abstract class _$$_CartStateCopyWith<$Res> implements $CartStateCopyWith<$Res> {
       {CartStatus cartStatus,
       String allPrice,
       List<CartModel> cart,
-      List<IsCart> isCart});
+      List<IsCart> isCart,
+      List<CartModel> cartPay});
 }
 
 /// @nodoc
@@ -106,6 +114,7 @@ class __$$_CartStateCopyWithImpl<$Res>
     Object? allPrice = null,
     Object? cart = null,
     Object? isCart = null,
+    Object? cartPay = null,
   }) {
     return _then(_$_CartState(
       cartStatus: null == cartStatus
@@ -124,6 +133,10 @@ class __$$_CartStateCopyWithImpl<$Res>
           ? _value.isCart
           : isCart // ignore: cast_nullable_to_non_nullable
               as List<IsCart>,
+      cartPay: null == cartPay
+          ? _value.cartPay
+          : cartPay // ignore: cast_nullable_to_non_nullable
+              as List<CartModel>,
     ));
   }
 }
@@ -135,7 +148,8 @@ class _$_CartState extends _CartState {
       {required this.cartStatus,
       required this.allPrice,
       required this.cart,
-      required this.isCart})
+      required this.isCart,
+      required this.cartPay})
       : super._();
 
   @override
@@ -146,10 +160,12 @@ class _$_CartState extends _CartState {
   final List<CartModel> cart;
   @override
   final List<IsCart> isCart;
+  @override
+  final List<CartModel> cartPay;
 
   @override
   String toString() {
-    return 'CartState(cartStatus: $cartStatus, allPrice: $allPrice, cart: $cart, isCart: $isCart)';
+    return 'CartState(cartStatus: $cartStatus, allPrice: $allPrice, cart: $cart, isCart: $isCart, cartPay: $cartPay)';
   }
 
   @override
@@ -162,7 +178,8 @@ class _$_CartState extends _CartState {
             (identical(other.allPrice, allPrice) ||
                 other.allPrice == allPrice) &&
             const DeepCollectionEquality().equals(other.cart, cart) &&
-            const DeepCollectionEquality().equals(other.isCart, isCart));
+            const DeepCollectionEquality().equals(other.isCart, isCart) &&
+            const DeepCollectionEquality().equals(other.cartPay, cartPay));
   }
 
   @override
@@ -171,7 +188,8 @@ class _$_CartState extends _CartState {
       cartStatus,
       allPrice,
       const DeepCollectionEquality().hash(cart),
-      const DeepCollectionEquality().hash(isCart));
+      const DeepCollectionEquality().hash(isCart),
+      const DeepCollectionEquality().hash(cartPay));
 
   @JsonKey(ignore: true)
   @override
@@ -185,7 +203,8 @@ abstract class _CartState extends CartState {
       {required final CartStatus cartStatus,
       required final String allPrice,
       required final List<CartModel> cart,
-      required final List<IsCart> isCart}) = _$_CartState;
+      required final List<IsCart> isCart,
+      required final List<CartModel> cartPay}) = _$_CartState;
   _CartState._() : super._();
 
   @override
@@ -196,6 +215,8 @@ abstract class _CartState extends CartState {
   List<CartModel> get cart;
   @override
   List<IsCart> get isCart;
+  @override
+  List<CartModel> get cartPay;
   @override
   @JsonKey(ignore: true)
   _$$_CartStateCopyWith<_$_CartState> get copyWith =>

@@ -25,10 +25,12 @@ class CartPresenter extends Cubit<CartState> {
       for (var j = 0; j < state.cart[i].itemProduct.length; j++) {
         isProduct.add(true);
       }
-      listIsCart.add(IsCart(
-        isStore: true,
-        isProduct: isProduct,
-      ));
+      listIsCart.add(
+        IsCart(
+          isStore: true,
+          isProduct: isProduct,
+        ),
+      );
     }
 
     emit(
@@ -47,7 +49,9 @@ class CartPresenter extends Cubit<CartState> {
     emit(
       state.copyWith(
         cart: cartModel,
-        allPrice: ValidatorHelper().setupPrice(allPrice()),
+        allPrice: ValidatorHelper().setupPrice(
+          allPrice(),
+        ),
       ),
     );
   }
@@ -62,7 +66,9 @@ class CartPresenter extends Cubit<CartState> {
     emit(
       state.copyWith(
         cart: cartModel,
-        allPrice: ValidatorHelper().setupPrice(allPrice()),
+        allPrice: ValidatorHelper().setupPrice(
+          allPrice(),
+        ),
       ),
     );
   }
@@ -71,6 +77,7 @@ class CartPresenter extends Cubit<CartState> {
     emit(
       state.copyWith(cartStatus: CartStatus.inProgress),
     );
+    var listCartPay = <CartModel>[];
     var listIsCart = <IsCart>[];
     listIsCart.addAll(state.isCart);
     listIsCart[idStore].isProduct![idItem] =
@@ -78,30 +85,37 @@ class CartPresenter extends Cubit<CartState> {
 
     emit(
       state.copyWith(
-          isCart: [...listIsCart],
-          cartStatus: CartStatus.success,
-          allPrice: ValidatorHelper().setupPrice(allPrice())),
+        isCart: [...listIsCart],
+        allPrice: ValidatorHelper().setupPrice(
+          allPrice(),
+        ),
+        cartPay: listCartPay,
+        cartStatus: CartStatus.success,
+      ),
     );
-    print(state.isCart[idStore].isProduct![idItem]);
   }
 
   void onDismissed({required int idStore, required idItem}) {
     final List<CartModel> cartModel = [];
 
-    state.cart[idStore].itemProduct
-        .remove(state.cart[idStore].itemProduct[idItem]);
+    state.cart[idStore].itemProduct.remove(
+      state.cart[idStore].itemProduct[idItem],
+    );
     cartModel.addAll(state.cart);
 
     emit(
       state.copyWith(
         cart: cartModel,
-        allPrice: ValidatorHelper().setupPrice(allPrice()),
+        allPrice: ValidatorHelper().setupPrice(
+          allPrice(),
+        ),
       ),
     );
   }
 
   void chooseStore(int idStore) {
     var listIs = <IsCart>[];
+
     emit(state.copyWith(cartStatus: CartStatus.inProgress));
     listIs.addAll(state.isCart);
     listIs[idStore].isStore = !state.isCart[idStore].isStore!;
@@ -143,5 +157,26 @@ class CartPresenter extends Cubit<CartState> {
       ));
     }
     return listIsCart;
+  }
+
+  List<CartModel> createCartPay() {
+    final listCartPay = <CartModel>[];
+
+    var cartPay = <ProductCart>[];
+    for (var i = 0; i < state.cart.length; i++) {
+      for (var j = 0; j < state.cart[i].itemProduct.length; j++) {
+        if (state.isCart[i].isProduct![j] == true) {
+          cartPay.add(state.cart[i].itemProduct[j]);
+        }
+      }
+      if (cartPay != []) {
+        listCartPay.add(
+          CartModel(nameStore: state.cart[i].nameStore, itemProduct: cartPay),
+        );
+      }
+      cartPay = <ProductCart>[];
+    }
+
+    return listCartPay;
   }
 }

@@ -15,13 +15,14 @@ class CartState with _$CartState {
     required CartStatus cartStatus,
     required String allPrice,
     required List<CartModel> cart,
-    required List<IsCart> isCart
-    ,
+    required List<IsCart> isCart,
+    required List<CartModel> cartPay,
+    
   }) = _CartState;
 
   const CartState._();
 
-  factory CartState.initial() => CartState(allPrice: '0', cart: [], isCart: [],cartStatus:CartStatus.init );
+  factory CartState.initial() => CartState(allPrice: '0', cart: [], isCart: [],cartStatus:CartStatus.init,cartPay: [] );
 }
 
 
@@ -32,4 +33,5 @@ class IsCart {
   });
   bool? isStore;
   List<bool>? isProduct;
+  
 }

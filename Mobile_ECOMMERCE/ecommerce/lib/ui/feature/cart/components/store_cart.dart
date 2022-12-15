@@ -59,9 +59,7 @@ class StoreCart extends StatelessWidget {
             shrinkWrap: true,
             itemCount: cartModel.itemProduct.length,
             itemBuilder: (context, index) => Dismissible(
-              key: Key(
-                cartModel.itemProduct[index].id.toString(),
-              ),
+              key: UniqueKey(),
               onDismissed: (direction) {
                 cartPresenter.onDismissed(idStore: idStore, idItem: index);
               },

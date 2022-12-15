@@ -1,4 +1,5 @@
 import 'package:ecommerce/data/model/cart.dart';
+import 'package:ecommerce/ui/feature/cart/bloc/cart_state.dart';
 
 import 'package:flutter/material.dart';
 
@@ -8,13 +9,17 @@ import '../../../../utilities/helpers/validator_helper/validator_helper.dart';
 import 'pay_state.dart';
 
 class PayPresenter extends Cubit<PayState> {
-  PayPresenter({
+  PayPresenter(
+    this.cartState, {
     @visibleForTesting PayState? state,
   }) : super(
           state ?? PayState.initial(),
         );
+  final CartState cartState;
 
   void init(List<CartModel> cart) {
+   
+    // cartPay.add(cartState.cart[cartState.isCart.indexOf()]);
     emit(
       state.copyWith(
         cart: cart,

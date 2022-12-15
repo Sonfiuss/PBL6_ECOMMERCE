@@ -108,19 +108,22 @@ class CheckoutCart extends StatelessWidget {
                       ButtonCommon(
                           paddingHorizontal: 8,
                           txt: 'Thanh Toán',
-                          onTap: () {
+                          onTap: () async {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        Pay(listCart: state.cart)));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Pay(
+                                  listCart: cartPresenter.createCartPay(),
+                                ),
+                              ),
+                            );
                           },
                           colorButton: AppColors.red,
                           colorText: Colors.white)
                     ],
-                  )
+                  ),
                 ],
-              )
+              ),
             ],
           ),
         ),
