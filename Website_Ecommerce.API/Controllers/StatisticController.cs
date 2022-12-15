@@ -64,7 +64,7 @@ namespace Website_Ecommerce.API.Controllers
                 }
             });
         } 
-        [HttpGet("statistic-turnover-of-Months")]  
+        [HttpGet("statistic-turnover-of-months")]  
         public async Task<IActionResult> StatisticTurnoverOfMonths(DateTime Start, DateTime End){
             Dictionary<string, double> data  = new Dictionary<string, double>();
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
@@ -98,7 +98,7 @@ namespace Website_Ecommerce.API.Controllers
             });
         } 
 
-        [HttpGet("Statistic-product")]
+        [HttpGet("statistic-product")]
         public async Task<IActionResult> StatisticProduct(){
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
             var shop = _shopRepository.Shops.FirstOrDefault(x => x.UserId == userId);

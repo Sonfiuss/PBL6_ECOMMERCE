@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Website_Ecommerce.API.Data.Migrations
 {
-    public partial class fixcart : Migration
+    public partial class UpdateCart : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -375,8 +375,7 @@ namespace Website_Ecommerce.API.Data.Migrations
                     UserId = table.Column<int>(type: "int", nullable: false),
                     ProductDetailId = table.Column<int>(type: "int", nullable: false),
                     Amount = table.Column<int>(type: "int", nullable: false),
-                    State = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: true)
+                    State = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -387,11 +386,6 @@ namespace Website_Ecommerce.API.Data.Migrations
                         principalTable: "ProductDetails",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Carts_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Carts_Users_UserId",
                         column: x => x.UserId,
@@ -466,11 +460,6 @@ namespace Website_Ecommerce.API.Data.Migrations
                 name: "IX_Carts_ProductDetailId",
                 table: "Carts",
                 column: "ProductDetailId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Carts_ProductId",
-                table: "Carts",
-                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Carts_UserId",

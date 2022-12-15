@@ -1,44 +1,42 @@
 <div class="header">
-  <div class="header-content">
-    <div class="header-logo">
-      <b routerLink=""><img src="assets/img/logo_login.png" alt=""></b>
+    <div class="header-content">
+        <div class="header-logo">
+            <b routerLink=""><img src="assets/img/logo_login.png" alt=""></b>
+        </div>
+        <div class="login-text">
+            Đăng nhập
+        </div>
     </div>
-    <div class="login-text">
-       Đăng nhập
-    </div>
-  </div>
 </div>
 
 <div class="login-body">
-  <div class="body-content">
-    <div class="form-area">
-      <form action="" id="loginForm" (ngSubmit)="login()" #loginForm="ngForm">
-        <h2>Đăng nhập</h2>
-        <div class="username">
-          <input type="text"id="username" name="username"  [(ngModel)]="user.username" #username="ngModel"  placeholder="Tên đăng nhập"  >
-          <small *ngIf="username.invalid && (username.touched || username.dirty)" >Mật khẩu sai hoặc còn trống</small>
-          <small *ngIf="username.errors?.['required']">nhap ten vao</small>
+    <div class="body-content">
+        <div class="form-area">
+            <form [formGroup]="form" (ngSubmit)="submitData()">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" class="form-control" formControlName="username">
+                    <p class="text-muted" *ngIf="username?.invalid && (username?.dirty || username?.touched)">
+                        <span *ngIf="username?.errors?.['required']">
+                    username is required
+                    </span>
+                    </p>
+                </div>
+                <div class="form-group mt-3">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" formControlName="password">
+                    <p class="text-muted" *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+                        <span *ngIf="password?.errors?.['required']">
+                      password is required
+                    </span>
+                    </p>
+                </div>
+                <button type="submit" class="btn btn-primary my-3 me-3" [disabled]="form.invalid">
+              Login
+            </button>
+                <button class="btn btn-outline-danger" type="button">Cancel</button>
+            </form>
         </div>
-        <p></p>
-        <div class="password">
-          <input  type="password" id="password" name="password" [(ngModel)]="user.password" #password="ngModel" placeholder="Mật khẩu">
-          <small *ngIf="password.invalid && (password.touched || password.dirty)">Mật khẩu sai hoặc còn trống</small>
-        </div>
-        <button  class="submit-btn" type="submit" value="Submit" [disabled]="loginForm.invalid">ĐĂNG NHẬP</button>
-        <hr>
-        <div class="another-option">
-          <div class="row">
-            <div class="col-md-6">
-              <button class="another-btn"><img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" alt="">&nbsp;Google</button>
-            </div>
-            <div class="col-md-6">
-              <button class="another-btn"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/2021_Facebook_icon.svg/2048px-2021_Facebook_icon.svg.png" alt="">&nbsp;Facebook</button>
-            </div>
-          </div>
-        </div>
-      </form>
     </div>
-  </div>
 </div>
-<div>{{ (accountService.currentUser$ | async)?.username }}<</div>
 <app-footer></app-footer>

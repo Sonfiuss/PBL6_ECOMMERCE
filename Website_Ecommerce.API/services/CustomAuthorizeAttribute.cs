@@ -35,7 +35,7 @@ namespace Website_Ecommerce.API.services
                     Message = ErrorCode.Forbidden,
                     Result = new ResponseDefault()
                     {
-                        Data = "Bạn không có quyền truy cập."
+                        Data = "Bạn không có quyền truy cập kkk."
                     }
                 });
                 context.HttpContext.Response.StatusCode = StatusCodes.Status403Forbidden;
@@ -49,7 +49,7 @@ namespace Website_Ecommerce.API.services
                     Message = ErrorCode.Forbidden,
                     Result = new ResponseDefault()
                     {
-                        Data = "Bạn không có quyền truy cập."
+                        Data = "Bạn không có quyền truy cập 111."
                     }
                 });
                 context.HttpContext.Response.StatusCode = StatusCodes.Status403Forbidden;

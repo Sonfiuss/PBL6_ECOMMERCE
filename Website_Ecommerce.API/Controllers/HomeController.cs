@@ -4,6 +4,9 @@ using Website_Ecommerce.API.Response;
 using Website_Ecommerce.API.services;
 using Microsoft.AspNetCore.Hosting;
 using Newtonsoft.Json;
+using Website_Ecommerce.API.ModelDtos;
+using Website_Ecommerce.API.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Website_Ecommerce.API.Controllers
 {
@@ -12,8 +15,13 @@ namespace Website_Ecommerce.API.Controllers
     public class HomeController : ControllerBase
     {
         private readonly IHostEnvironment _environment;
-        public HomeController(IHostEnvironment environment){
+        private readonly IProductRepository _productRepository;
+        public HomeController(
+            IHostEnvironment environment,
+            IProductRepository productRepository
+            ){
             _environment = environment;
+            _productRepository = productRepository;
         }
         [HttpPost]
         public async Task<ActionResult> UpFile(List<IFormFile> files){
@@ -88,6 +96,46 @@ namespace Website_Ecommerce.API.Controllers
                     }
             });
         }
+
+        [HttpGet("get-list-product")]
+        public async Task<IActionResult> GetListProduct()
+        {
+            
+            List<ProductDto> products = await _productRepository.Products
+                                                .Select(x => new ProductDto 
+                                                {
+                                                    Id = x.Id,
+                                                    Name = x.Name,
+                                                    Material = x.Material,
+                                                    Origin = x.Origin,
+                                                    Description = x.Description,
+                                                    Status = x.Status,
+                                                    Categories = x.ProductCategories.Where(y => y.ProductId == x.Id).Select(c => c.CategoryId).ToHashSet()
+                                                }).ToListAsync();
+            
+            if(products == null)
+            {
+                return BadRequest( new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.NotFound,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "NotFound Product"
+                    }
+                });
+            }
+
+            return Ok( new Response<ResponseDefault>()
+                {
+                    State = true,
+                    Message = ErrorCode.Success,
+                    Result = new ResponseDefault()
+                    {
+                        Data = products
+                    }
+                });
+        }
     }
     // [HttpPost("UploadImage")]
     // public async Task<ActionResult> UploadImage(List<IFormFile> _uploadedfiles)
@@ -134,4 +182,6 @@ namespace Website_Ecommerce.API.Controllers
     //     return this._environment.ContentRootPath + "\\Uploads\\Product\\" + ProductCode;
     // }
     // }
+
+    
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Console } from 'console';
 
@@ -9,7 +9,7 @@ import { Console } from 'console';
   styleUrls: ['./ckeditor.component.css']
 })
 export class CkeditorComponent implements OnInit {
-  
+  @Input() view: 'grid'|'list' = 'grid';
   constructor() { }
   public Editor = ClassicEditor;
   public results: any; // Change it private to public
@@ -30,16 +30,6 @@ export class CkeditorComponent implements OnInit {
   }
   public getdata(){
     console.log(this.Editor.getData());
-    
-  //   let editors;
-  //   ClassicEditor.create(document.querySelector('#editor'))
-  //   .then((newEditor: any) => {editors = newEditor;})
-  //   .catch( (error: any) => {
-  //     console.error( error );
-  //     console.error("++++++++++++++++++")
-  // } );
-  //   console.log("================");
-  //   console.log(editors);
     
   }
   
