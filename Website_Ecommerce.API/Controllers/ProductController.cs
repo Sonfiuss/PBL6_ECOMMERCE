@@ -421,6 +421,20 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
         }
+    [HttpGet("get-productdetail-by/{productDetailId}")]
+    public async Task<IActionResult> GetProductDetailById(int productDetailId){
+        ProductDetail productDetail = await _productRepository.ProductDetails.Where(p => p.Id == productDetailId).FirstOrDefaultAsync();
+        ProductDetailDto productDetailDto= _mapper.Map<ProductDetailDto>(productDetail);
+        return Ok( new Response<ResponseDefault>()
+        {
+            State = true,
+            Message = ErrorCode.Success,
+            Result = new ResponseDefault()
+            {
+                Data = productDetailDto
+            }
+        });
+    }
 
 #endregion
 

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data;
 using Website_Ecommerce.API.Data.Entities;
+using Website_Ecommerce.API.ModelDtos;
 
 namespace Website_Ecommerce.API.Repositories
 {
@@ -66,6 +67,31 @@ namespace Website_Ecommerce.API.Repositories
         {
             _dataContext.Entry(productCategory).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
             
+        }
+
+        public async Task<IList<ViewProductDTO>> GetAllProduct()
+        {
+            var products = _dataContext.Products;
+            var productdetails = _dataContext.ProductDetails;
+            var productimages = _dataContext.ProductImages;
+
+            var pro_prodetail = products.Join(productdetails, p => p.Id, pd => pd.ProductId,
+                                        (p, pd) => new {
+                                            id = p.Id,
+                                            name = p.Name,
+                                            productdetailId = _dataContext.ProductDetails.FirstOrDefault(x => x.ProductId == p.Id).Id,
+                                            price = pd.Price,
+                                            initialPrice = pd.InitialPrice,
+                                        });
+            var result = await pro_prodetail.Join(productimages, ppd => ppd.productdetailId, img => img.ProductDetailId,
+                                        (ppd, img) => new ViewProductDTO {
+                                            Id = ppd.id,
+                                            Name = ppd.name,
+                                            InitialPrice = ppd.initialPrice,
+                                            Price = ppd.price,
+                                            ImageURL = _dataContext.ProductImages.FirstOrDefault(x => x.ProductDetailId == ppd.productdetailId).UrlImage
+                                        }).ToListAsync();
+            return result;
         }
 
         public void Update(Product product)
