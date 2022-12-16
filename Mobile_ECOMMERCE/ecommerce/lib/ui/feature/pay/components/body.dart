@@ -38,7 +38,7 @@ class Body extends StatelessWidget {
               height: 1,
             ),
             AllPrice(
-              sum: state.allPrice,
+              payPresenter: payPresenter,
             ),
             const SizedBox(
               height: 10,

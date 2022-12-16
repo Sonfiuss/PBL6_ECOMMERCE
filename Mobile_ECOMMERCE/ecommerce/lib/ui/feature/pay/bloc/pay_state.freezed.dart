@@ -20,6 +20,8 @@ mixin _$PayState {
   PayStatus get payStatus => throw _privateConstructorUsedError;
   String get allPrice => throw _privateConstructorUsedError;
   List<CartModel> get cart => throw _privateConstructorUsedError;
+  String? get priceDisCount => throw _privateConstructorUsedError;
+  String get beforePrice => throw _privateConstructorUsedError;
   int get pricePay => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
 
@@ -38,6 +40,8 @@ abstract class $PayStateCopyWith<$Res> {
       PayStatus payStatus,
       String allPrice,
       List<CartModel> cart,
+      String? priceDisCount,
+      String beforePrice,
       int pricePay,
       String address});
 }
@@ -59,6 +63,8 @@ class _$PayStateCopyWithImpl<$Res, $Val extends PayState>
     Object? payStatus = null,
     Object? allPrice = null,
     Object? cart = null,
+    Object? priceDisCount = freezed,
+    Object? beforePrice = null,
     Object? pricePay = null,
     Object? address = null,
   }) {
@@ -79,6 +85,14 @@ class _$PayStateCopyWithImpl<$Res, $Val extends PayState>
           ? _value.cart
           : cart // ignore: cast_nullable_to_non_nullable
               as List<CartModel>,
+      priceDisCount: freezed == priceDisCount
+          ? _value.priceDisCount
+          : priceDisCount // ignore: cast_nullable_to_non_nullable
+              as String?,
+      beforePrice: null == beforePrice
+          ? _value.beforePrice
+          : beforePrice // ignore: cast_nullable_to_non_nullable
+              as String,
       pricePay: null == pricePay
           ? _value.pricePay
           : pricePay // ignore: cast_nullable_to_non_nullable
@@ -103,6 +117,8 @@ abstract class _$$_PayStateCopyWith<$Res> implements $PayStateCopyWith<$Res> {
       PayStatus payStatus,
       String allPrice,
       List<CartModel> cart,
+      String? priceDisCount,
+      String beforePrice,
       int pricePay,
       String address});
 }
@@ -122,6 +138,8 @@ class __$$_PayStateCopyWithImpl<$Res>
     Object? payStatus = null,
     Object? allPrice = null,
     Object? cart = null,
+    Object? priceDisCount = freezed,
+    Object? beforePrice = null,
     Object? pricePay = null,
     Object? address = null,
   }) {
@@ -142,6 +160,14 @@ class __$$_PayStateCopyWithImpl<$Res>
           ? _value._cart
           : cart // ignore: cast_nullable_to_non_nullable
               as List<CartModel>,
+      priceDisCount: freezed == priceDisCount
+          ? _value.priceDisCount
+          : priceDisCount // ignore: cast_nullable_to_non_nullable
+              as String?,
+      beforePrice: null == beforePrice
+          ? _value.beforePrice
+          : beforePrice // ignore: cast_nullable_to_non_nullable
+              as String,
       pricePay: null == pricePay
           ? _value.pricePay
           : pricePay // ignore: cast_nullable_to_non_nullable
@@ -162,6 +188,8 @@ class _$_PayState extends _PayState {
       required this.payStatus,
       required this.allPrice,
       required final List<CartModel> cart,
+      required this.priceDisCount,
+      required this.beforePrice,
       required this.pricePay,
       required this.address})
       : _cart = cart,
@@ -182,13 +210,17 @@ class _$_PayState extends _PayState {
   }
 
   @override
+  final String? priceDisCount;
+  @override
+  final String beforePrice;
+  @override
   final int pricePay;
   @override
   final String address;
 
   @override
   String toString() {
-    return 'PayState(current: $current, payStatus: $payStatus, allPrice: $allPrice, cart: $cart, pricePay: $pricePay, address: $address)';
+    return 'PayState(current: $current, payStatus: $payStatus, allPrice: $allPrice, cart: $cart, priceDisCount: $priceDisCount, beforePrice: $beforePrice, pricePay: $pricePay, address: $address)';
   }
 
   @override
@@ -202,14 +234,26 @@ class _$_PayState extends _PayState {
             (identical(other.allPrice, allPrice) ||
                 other.allPrice == allPrice) &&
             const DeepCollectionEquality().equals(other._cart, _cart) &&
+            (identical(other.priceDisCount, priceDisCount) ||
+                other.priceDisCount == priceDisCount) &&
+            (identical(other.beforePrice, beforePrice) ||
+                other.beforePrice == beforePrice) &&
             (identical(other.pricePay, pricePay) ||
                 other.pricePay == pricePay) &&
             (identical(other.address, address) || other.address == address));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, current, payStatus, allPrice,
-      const DeepCollectionEquality().hash(_cart), pricePay, address);
+  int get hashCode => Object.hash(
+      runtimeType,
+      current,
+      payStatus,
+      allPrice,
+      const DeepCollectionEquality().hash(_cart),
+      priceDisCount,
+      beforePrice,
+      pricePay,
+      address);
 
   @JsonKey(ignore: true)
   @override
@@ -224,6 +268,8 @@ abstract class _PayState extends PayState {
       required final PayStatus payStatus,
       required final String allPrice,
       required final List<CartModel> cart,
+      required final String? priceDisCount,
+      required final String beforePrice,
       required final int pricePay,
       required final String address}) = _$_PayState;
   _PayState._() : super._();
@@ -236,6 +282,10 @@ abstract class _PayState extends PayState {
   String get allPrice;
   @override
   List<CartModel> get cart;
+  @override
+  String? get priceDisCount;
+  @override
+  String get beforePrice;
   @override
   int get pricePay;
   @override

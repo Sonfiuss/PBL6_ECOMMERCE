@@ -1,7 +1,12 @@
 import 'package:ecommerce/ui/base/base_page.dart';
+import 'package:ecommerce/ui/feature/page_discount/bloc/discount_presenter.dart';
+import 'package:ecommerce/ui/feature/page_discount/bloc/discount_state.dart';
 import 'package:ecommerce/ui/resources/app_colors.dart';
 import 'package:ecommerce/ui/widget/choose.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../injection/injector.dart';
 
 class PageDiscount extends BasePage {
   const PageDiscount({Key? key}) : super(key: key);
@@ -42,7 +47,10 @@ class _PageDiscountState extends State<PageDiscount> {
       body: Container(
         color: Colors.white,
         child: ListView.builder(
-            itemCount: 3, itemBuilder: (context, index) => Item()),
+            itemCount: 3,
+            itemBuilder: (context, index) => Item(
+                  index: index,
+                )),
       ),
     );
   }
@@ -51,59 +59,73 @@ class _PageDiscountState extends State<PageDiscount> {
 class Item extends StatelessWidget {
   const Item({
     Key? key,
+    required this.index,
   }) : super(key: key);
+
+  final int index;
 
   @override
   Widget build(BuildContext context) {
+    final discountPresenter = injector.get<DisCountPresenter>();
     final size = MediaQuery.of(context).size;
-    return ClipPath(
-      clipper: MyCustomTriangleClipper(),
-      child: Container(
-        height: 120,
-        width: size.width,
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        decoration: BoxDecoration(
-          border: Border.all(color: AppColors.primary, width: 0.7),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.network(
-              'https://cf.shopee.vn/file/a6ff372c86c4e242c76fb75f65ae7579',
-              fit: BoxFit.fill,
-            ),
-            const SizedBox(
-              width: 20,
-            ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Giảm 30%',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.red),
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                    'Đơn tối thiểu 50k',
-                    style: TextStyle(fontSize: 11),
-                  ),
-                  Text(
-                    'HSD: 30.11.2022',
-                    style: TextStyle(fontSize: 10, fontWeight: FontWeight.w300),
-                  ),
-                  CustomPaint()
-                ],
+    return BlocBuilder<DisCountPresenter, DisCountState>(
+      buildWhen: (previous, current) => previous.current != current.current,
+      bloc: discountPresenter,
+      builder: (context, state) => ClipPath(
+        clipper: MyCustomTriangleClipper(),
+        child: Container(
+          height: 120,
+          width: size.width,
+          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          decoration: BoxDecoration(
+            border: Border.all(color: AppColors.primary, width: 0.7),
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.network(
+                'https://cf.shopee.vn/file/a6ff372c86c4e242c76fb75f65ae7579',
+                fit: BoxFit.fill,
               ),
-            ),
-            Choose(isChecked: false, function: null)
-          ],
+              const SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'Giảm 30%',
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.red),
+                    ),
+                    SizedBox(
+                      height: 8,
+                    ),
+                    Text(
+                      'Đơn tối thiểu 50k',
+                      style: TextStyle(fontSize: 11),
+                    ),
+                    Text(
+                      'HSD: 30.11.2022',
+                      style:
+                          TextStyle(fontSize: 10, fontWeight: FontWeight.w300),
+                    ),
+                    CustomPaint()
+                  ],
+                ),
+              ),
+              Choose(
+                isChecked: index == state.current ? true : false,
+                function: (bool? value) {
+                  discountPresenter.onTapIndex(index);
+                },
+              )
+            ],
+          ),
         ),
       ),
     );

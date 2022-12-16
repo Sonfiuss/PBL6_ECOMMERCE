@@ -3,6 +3,7 @@ import 'package:ecommerce/ui/feature/page_map/bloc/map_module.dart';
 import 'package:ecommerce/ui/feature/pay/bloc/pay_module.dart';
 
 import '../ui/feature/detail/bloc/detail_module.dart';
+import '../ui/feature/page_discount/bloc/discount_module.dart';
 import './app_modules.dart';
 import './injector.dart';
 // import '../presentation/feature/add_device/config_wifi/bloc/config_wifi_module.dart';
@@ -45,8 +46,8 @@ class DependencyManager {
     // Map modules
     await MapModule.inject();
 
-    // //home
-    // await HomeModule.inject();
+    // discount
+    await DisCountModule.inject();
 
     // //room
     // await MyHomeModule.inject();

@@ -5,11 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../resources/app_colors.dart';
 import '../../../widget/button_common.dart';
+import '../../page_discount/page_discount.dart';
 
 class BottomAppBarPay extends StatelessWidget {
   const BottomAppBarPay({
     Key? key,
-    required this.payPresenter, required this.onTap,
+    required this.payPresenter,
+    required this.onTap,
   }) : super(key: key);
   final PayPresenter payPresenter;
   final Function() onTap;
@@ -19,12 +21,32 @@ class BottomAppBarPay extends StatelessWidget {
     return BlocBuilder<PayPresenter, PayState>(
       bloc: payPresenter,
       builder: (context, state) => Container(
-        height: 100,
+        height: 140,
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         color: AppColors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
+            Row(
+              children: [
+                IconButton(
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PageDiscount(),
+                    ),
+                  ),
+                  icon: const Icon(
+                    Icons.discount,
+                    color: AppColors.red,
+                  ),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                const Text('Mã giảm giá')
+              ],
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

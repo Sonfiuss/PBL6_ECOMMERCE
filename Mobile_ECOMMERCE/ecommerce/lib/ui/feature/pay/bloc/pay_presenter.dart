@@ -18,7 +18,6 @@ class PayPresenter extends Cubit<PayState> {
   final CartState cartState;
 
   void init(List<CartModel> cart) {
-   
     // cartPay.add(cartState.cart[cartState.isCart.indexOf()]);
     emit(
       state.copyWith(
@@ -31,8 +30,9 @@ class PayPresenter extends Cubit<PayState> {
     var pricePay = _sumPrice();
     emit(
       state.copyWith(
-        allPrice: ValidatorHelper().setupPrice(pricePay),
         pricePay: pricePay,
+        beforePrice: ValidatorHelper().setupPrice(pricePay),
+        allPrice: ValidatorHelper().setupPrice(pricePay),
         payStatus: PayStatus.success,
       ),
     );
@@ -58,5 +58,20 @@ class PayPresenter extends Cubit<PayState> {
       }
     }
     return sum;
+  }
+
+  void discount(int discount) {
+    double sum;
+    sum = (_sumPrice() * (100 - discount)) / 100;
+    emit(
+      state.copyWith(
+        allPrice: ValidatorHelper().setupPrice(
+          sum.toInt(),
+        ),
+        priceDisCount:
+            ValidatorHelper().setupPrice((_sumPrice() * discount) ~/ 100),
+        pricePay: sum.toInt(),
+      ),
+    );
   }
 }

@@ -13,6 +13,8 @@ class PayState with _$PayState {
     required PayStatus payStatus,
     required String allPrice,
     required List<CartModel> cart,
+    required String? priceDisCount,
+    required String beforePrice,
     required int pricePay,
     required String address,
   }) = _PayState;
@@ -24,6 +26,6 @@ class PayState with _$PayState {
         payStatus: PayStatus.init,
         cart: [],
         allPrice: '0',
-        pricePay: 0, address: '',
+        pricePay: 0, address: '', beforePrice: '', priceDisCount: null,
       );
 }

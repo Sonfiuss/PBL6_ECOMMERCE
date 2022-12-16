@@ -179,4 +179,10 @@ class CartPresenter extends Cubit<CartState> {
 
     return listCartPay;
   }
+
+  void discount(int discount) {
+    double sum;
+    sum = (allPrice() * (100 - discount)) / 100;
+    emit(state.copyWith(allPrice: ValidatorHelper().setupPrice(sum.toInt())));
+  }
 }
