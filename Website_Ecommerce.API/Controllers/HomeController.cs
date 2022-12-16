@@ -101,18 +101,8 @@ namespace Website_Ecommerce.API.Controllers
         public async Task<IActionResult> GetListProduct()
         {
             
-            List<ProductDto> products = await _productRepository.Products
-                                                .Select(x => new ProductDto 
-                                                {
-                                                    Id = x.Id,
-                                                    Name = x.Name,
-                                                    Material = x.Material,
-                                                    Origin = x.Origin,
-                                                    Description = x.Description,
-                                                    Status = x.Status,
-                                                    Categories = x.ProductCategories.Where(y => y.ProductId == x.Id).Select(c => c.CategoryId).ToHashSet()
-                                                }).ToListAsync();
-            
+            var products = await _productRepository.GetAllProduct();
+                                                
             if(products == null)
             {
                 return BadRequest( new Response<ResponseDefault>()

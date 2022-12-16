@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Website_Ecommerce.API.Data.Entities;
+using Website_Ecommerce.API.ModelDtos;
 
 namespace Website_Ecommerce.API.Repositories
 {
@@ -26,5 +27,6 @@ namespace Website_Ecommerce.API.Repositories
         void Add(ProductCategory productCategory);
         void Update(ProductCategory productCategory);
         void Delete(ProductCategory productCategory);
+        public Task<IList<ViewProductDTO>> GetAllProduct();
     }
 }

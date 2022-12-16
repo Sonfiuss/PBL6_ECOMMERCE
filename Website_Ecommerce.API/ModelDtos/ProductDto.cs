@@ -32,4 +32,11 @@ namespace Website_Ecommerce.API.ModelDtos
         public double Price { get; set; }
         public double InitialPrice { get; set; }
     }
+    public class ViewProductDTO{
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public double Price { get; set; }
+        public double InitialPrice { get; set; }
+        public string ImageURL{ get; set;}
+    }
 }

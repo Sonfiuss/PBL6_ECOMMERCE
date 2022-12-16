@@ -1,6 +1,10 @@
 {
   "Version": 1,
+<<<<<<< HEAD
   "Hash": "hm2w3jiFY5Gkx4aEBSoaUCoJe3C/ekkBbLlwW+5xwU4=",
+=======
+  "Hash": "Zf0UyLf1x2W//RbzGNCQCub4PE0VevT7uDDKMSJGgg0=",
+>>>>>>> 986bc03653bf9875c9baecd0cdb4fd1edc4ecbb6
   "Source": "Website_Ecommerce.API",
   "BasePath": "_content/Website_Ecommerce.API",
   "Mode": "Default",
@@ -10,17 +14,28 @@
     {
       "Name": "Website_Ecommerce.API/wwwroot",
       "Source": "Website_Ecommerce.API",
+<<<<<<< HEAD
       "ContentRoot": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/",
+=======
+      "ContentRoot": "C:\\Users\\Rauxalach\\Desktop\\1212\\PBL6_ECOMMERCE\\Website_Ecommerce.API\\wwwroot\\",
+>>>>>>> 986bc03653bf9875c9baecd0cdb4fd1edc4ecbb6
       "BasePath": "_content/Website_Ecommerce.API",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
+<<<<<<< HEAD
       "Identity": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/1f1052cf5ba72a54f4c26eed377cb053.jpg",
       "SourceId": "Website_Ecommerce.API",
       "SourceType": "Discovered",
       "ContentRoot": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/",
+=======
+      "Identity": "C:\\Users\\Rauxalach\\Desktop\\1212\\PBL6_ECOMMERCE\\Website_Ecommerce.API\\wwwroot\\1f1052cf5ba72a54f4c26eed377cb053.jpg",
+      "SourceId": "Website_Ecommerce.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Rauxalach\\Desktop\\1212\\PBL6_ECOMMERCE\\Website_Ecommerce.API\\wwwroot\\",
+>>>>>>> 986bc03653bf9875c9baecd0cdb4fd1edc4ecbb6
       "BasePath": "_content/Website_Ecommerce.API",
       "RelativePath": "1f1052cf5ba72a54f4c26eed377cb053.jpg",
       "AssetKind": "All",
@@ -34,10 +49,17 @@
       "OriginalItemSpec": "wwwroot/1f1052cf5ba72a54f4c26eed377cb053.jpg"
     },
     {
+<<<<<<< HEAD
       "Identity": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/avatar.jpg",
       "SourceId": "Website_Ecommerce.API",
       "SourceType": "Discovered",
       "ContentRoot": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/",
+=======
+      "Identity": "C:\\Users\\Rauxalach\\Desktop\\1212\\PBL6_ECOMMERCE\\Website_Ecommerce.API\\wwwroot\\avatar.jpg",
+      "SourceId": "Website_Ecommerce.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Rauxalach\\Desktop\\1212\\PBL6_ECOMMERCE\\Website_Ecommerce.API\\wwwroot\\",
+>>>>>>> 986bc03653bf9875c9baecd0cdb4fd1edc4ecbb6
       "BasePath": "_content/Website_Ecommerce.API",
       "RelativePath": "avatar.jpg",
       "AssetKind": "All",
@@ -51,10 +73,17 @@
       "OriginalItemSpec": "wwwroot/avatar.jpg"
     },
     {
+<<<<<<< HEAD
       "Identity": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/logo.png",
       "SourceId": "Website_Ecommerce.API",
       "SourceType": "Discovered",
       "ContentRoot": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/",
+=======
+      "Identity": "C:\\Users\\Rauxalach\\Desktop\\1212\\PBL6_ECOMMERCE\\Website_Ecommerce.API\\wwwroot\\logo.png",
+      "SourceId": "Website_Ecommerce.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Rauxalach\\Desktop\\1212\\PBL6_ECOMMERCE\\Website_Ecommerce.API\\wwwroot\\",
+>>>>>>> 986bc03653bf9875c9baecd0cdb4fd1edc4ecbb6
       "BasePath": "_content/Website_Ecommerce.API",
       "RelativePath": "logo.png",
       "AssetKind": "All",
