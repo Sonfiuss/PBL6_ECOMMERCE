@@ -189,8 +189,56 @@ namespace Website_Ecommerce.API.Controllers
         public async Task<IActionResult> ViewOrder(int orderId){
             Order order = await _orderRepository.Orders.FirstOrDefaultAsync(p => p.Id == orderId);
             
-            throw new ArgumentException();
+             return Ok( new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = order
+                }
+            });
         }
+        [HttpGet("view-order-of-user")]
+        public async Task<IActionResult> ViewOrderByStatus(int state){
+            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
+            var orders =  _orderRepository.Orders.Where(i => i.UserId == userId);
+            var orderdetails = _orderRepository.OrderDetails;   
+            var data = await orders.Join(orderdetails, o => o.Id, od => od.OrderId, 
+                                    (o,od) => new {
+                                        id = od.OrderId,
+                                        idShop = od.ShopId,
+                                        state = od.State,
+                                        idProductDetail = od.ProductDetailId,
+                                        amount = od.Amount,
+                                        price = od.Price
+                                    }).ToListAsync();                            
+
+            return Ok( new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = data
+                }
+            });
+        }
+
+        // }
+        // [HttpPatch("update-state-order-by/{idOrder}")]
+        // public async Task<IActionResult> UpdateStateOrder(int idOrder){
+        //     var orderdetails = await _orderRepository.GetOrderDetail(idOrder);
+        //     var check = 0;
+        //     foreach (var item in orderdetails)
+        //     {
+        //      if(item.State == (int)StateOrderEnum.SENT){
+        //         check = 1;
+        //      }
+             
+        //     }
+        // }
+
             
     }
 

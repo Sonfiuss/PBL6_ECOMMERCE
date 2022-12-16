@@ -19,7 +19,8 @@
         <div class="list-option">
           <div class="my-account">
             <p (click)="selected('myaccount')"><i class="bi bi-person"></i>&nbsp;&nbsp;Tài khoản Của tôi</p>
-            <div class="my-account-list" *ngIf="select == 'myaccount'">
+            <!-- *ngIf="select == 'myaccount' -->
+            <div class="my-account-list" >
               <div class="info" (click)="myaccountElement('info')">Hồ sơ</div>
               <div class="address" (click)="myaccountElement('address')">Địa chỉ</div>
               <div class="change-password" (click)="myaccountElement('password')">Đổi mật khẩu</div>

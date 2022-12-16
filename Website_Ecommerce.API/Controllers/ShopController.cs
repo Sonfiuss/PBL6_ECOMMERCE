@@ -414,7 +414,7 @@ namespace Website_Ecommerce.API.Controllers
             }
             
             orderDetail.State = state /*(int)StateOrderDetailEnum.CONFIRMED*/;
-            if(state == 2){
+            if(state == (int)StateOrderEnum.CONFIRMED){
                 orderDetail.ShopConfirmDate = DateTime.Now;
             }
             else{
