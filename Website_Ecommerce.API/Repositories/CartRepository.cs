@@ -32,7 +32,7 @@ namespace Website_Ecommerce.API.Repositories
 
         public void Update(Cart item)
         {
-            _dataContext.Update(item);
+            _dataContext.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         }
 
         public async Task<IEnumerable<ViewItemCartDto>> GetAllItemByIdUser(int id)

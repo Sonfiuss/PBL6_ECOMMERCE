@@ -23,6 +23,10 @@ namespace Website_Ecommerce.API.Profiles
             CreateMap<VoucherProduct, VoucherShopDto>();
             CreateMap<User, ShipperDto>();
 
+            CreateMap<User, ProfileDto>();
+            CreateMap<ProfileDto, User>();
+
+
         }
     }
 }

@@ -83,5 +83,8 @@ namespace Website_Ecommerce.API.ModelDtos
     //     public DateTime? ShopSendDate { get; set; }
     //     public DateTime? ShopConfirmDate { get; set; }
     // }
+    // public class ViewOrderState(){
+    //     public 
+    // }
 
 }
