@@ -51,7 +51,7 @@ import { MyaddressComponent } from './pages/myaccount/myaddress/myaddress.compon
     MyaccountComponent,
     InfoComponent,
     ChangepasswordComponent,
-    MyaddressComponent
+    MyaddressComponent,
   ],
   imports: [
     BrowserModule,
