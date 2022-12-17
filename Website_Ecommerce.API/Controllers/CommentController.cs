@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data.Entities;
 using Website_Ecommerce.API.ModelDtos;
 using Website_Ecommerce.API.Repositories;
@@ -20,17 +21,20 @@ namespace Website_Ecommerce.API.Controllers
         private readonly ICommentRepository _commentRepository;
         private readonly IHttpContextAccessor _httpContext;
         private readonly IProductRepository _productRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
         public CommentController(
             ICommentRepository commentRepository,
             IHttpContextAccessor httpContext,
             IProductRepository productRepository,
+            IUserRepository userRepository,
             IMapper mapper)
         {
             _commentRepository = commentRepository;
             _httpContext = httpContext;
             _productRepository = productRepository;
+            _userRepository = userRepository;
             _mapper = mapper;
         }
         
@@ -168,7 +172,14 @@ namespace Website_Ecommerce.API.Controllers
 
         public async Task<IActionResult> GetListComment(int productId)
         {
-            var categories = _commentRepository.Comments.Where(x => x.State == 1).Select(x => x.Content).ToList();
+            // var listcomments = await _commentRepository.Comments.Where(x => x.State == 1).Select(x => new {x.Id, x.UserId, x.Content}).ToListAsync();
+            var listCommentDetails = await  _commentRepository.Comments.Where(x => x.State == 1).Join(_userRepository.Users, c => c.UserId, u => u.Id,
+                                                                        (c,u) => new {
+                                                                            Id = c.Id,
+                                                                            Content = c.Content,
+                                                                            Username = u.Username,
+                                                                            Avatar = u.UrlAvatar
+                                                                        }).ToListAsync();
 
             return Ok( new Response<ResponseDefault>()
             {
@@ -176,7 +187,7 @@ namespace Website_Ecommerce.API.Controllers
                 Message = ErrorCode.Success,
                 Result = new ResponseDefault()
                 {
-                    Data = categories
+                    Data = listCommentDetails
                 }
             });
         }

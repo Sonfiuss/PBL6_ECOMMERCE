@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -24,13 +25,19 @@ namespace Website_Ecommerce.API.Controllers
     {
         private readonly IUserRepository _userRepository;
         private readonly IIdentityServices _identityServices;
+        private readonly IHttpContextAccessor _httpContext;
+        private readonly IMapper _mapper;
 
         public AuthController(
             IUserRepository userRepository, 
-            IIdentityServices identityServices)
+            IIdentityServices identityServices,
+            IHttpContextAccessor httpContext,
+            IMapper mapper)
         {
             _userRepository = userRepository;
             _identityServices = identityServices;
+            _httpContext = httpContext;
+            _mapper = mapper;
         }
         
         
@@ -48,12 +55,8 @@ namespace Website_Ecommerce.API.Controllers
                     Message = ErrorCode.ExistUserOrEmail
                 });
             }
-            var check = false;
-            if (request.Role == 1) 
-            {
-                check = true;
-            }
-            
+            bool check = request.Role == 1;
+
             var user = new User {
                 Username = request.Username,
                 Email = request.Email,
@@ -102,7 +105,7 @@ namespace Website_Ecommerce.API.Controllers
         [HttpPost("login")]
         public async Task<Response<ResponseToken>> Login(LoginDto request, CancellationToken cancellationToken)
         {
-            User user = await _userRepository.Users.FirstOrDefaultAsync(x => x.Username == request.Username);
+            User user = await _userRepository.Users.FirstOrDefaultAsync(x => x.Username == request.Username && x.IsBlock == false);
 
             if (user == null)
             {
@@ -227,7 +230,7 @@ namespace Website_Ecommerce.API.Controllers
         {
             User user = await _userRepository.Users.FirstOrDefaultAsync(x => x.Username == request.Username && x.Email == request.Email);
 
-            if (user == null)
+            if(user == null)
             {
                 return BadRequest( new Response<ResponseDefault>()
                 {
@@ -235,7 +238,7 @@ namespace Website_Ecommerce.API.Controllers
                     Message = ErrorCode.NotFound,
                     Result = new ResponseDefault()
                     {
-                        Data = "Not found user"
+                        Data = "Not"
                     }
                 });
             }
@@ -267,6 +270,49 @@ namespace Website_Ecommerce.API.Controllers
                     Message = ErrorCode.BadRequest
                 });
             }
+        }
+
+        [Authorize(AuthenticationSchemes = "MyAuthKey")]
+        [HttpPut("update-profile")]
+        public async Task<IActionResult> UpdateProfile(ProfileDto request, CancellationToken cancellationToken)
+        {
+            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
+
+            User user = _userRepository.Users.FirstOrDefault(x => x.Id == userId);
+
+            user.FirstName = request.FirstName;
+            user.LastName = request.LastName;
+            user.Gender = request.Gender;
+            user.Email = request.Email;
+            user.DateOfBirth = request.DateOfBirth;
+            user.UrlAvatar = request.UrlAvatar;
+            user.Phone = request.Phone;
+
+            _userRepository.Update(user);
+
+            var result = await _userRepository.UnitOfWork.SaveAsync(cancellationToken);
+
+            if(result > 0)
+            {
+                return Ok( new Response<ResponseDefault>()
+                {
+                    State = true,
+                    Message = ErrorCode.Success,
+                    Result = new ResponseDefault()
+                    {
+                        Data = user.Id.ToString()
+                    }
+                });
+            }
+            return BadRequest( new Response<ResponseDefault>()
+            {
+                State = false,
+                Message = ErrorCode.ExcuteDB,
+                Result = new ResponseDefault()
+                {
+                    Data = "Update category fail"
+                }
+            });
         }
 
         
