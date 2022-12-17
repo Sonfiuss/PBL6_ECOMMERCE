@@ -51,16 +51,20 @@ ul.account-nonactived > li > a {
 .navbar{
   background-color: white;
   height: 15%;
+  position: relative;
 }
 .bg-light{
-
   background-color: rgb(30, 69, 105);
 }
 .navbar-brand{
-  width: 120px;
+  position: absolute;
+  left :-3%;
+  width: 15%;
+  display:inline-block;
 }
 .navbar-brand>img{
   width: 120px;
+  height: 120px;
 }
 .navbar-custom{
   height: 100px;

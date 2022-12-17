@@ -15,6 +15,7 @@ import { InfoComponent } from './pages/myaccount/info/info.component';
 import { ChangepasswordComponent } from './pages/myaccount/changepassword/changepassword.component';
 import { MyaddressComponent } from './pages/myaccount/myaddress/myaddress.component';
 import { AuthGuard } from './_guards/auth.guard';
+import { SignupComponent } from './pages/signup/signup.component';
 
 const routes: Routes = [
   {
@@ -69,6 +70,10 @@ const routes: Routes = [
       {
         path: 'myaddress',
         component: MyaddressComponent
+      },
+      {
+        path: 'signup',
+        component: SignupComponent
       }
     ]
   }

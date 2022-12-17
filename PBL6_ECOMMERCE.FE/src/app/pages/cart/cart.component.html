@@ -62,9 +62,9 @@
               <p>Đơn tối thiểu{{vouchers[0].minPrice | currency: "VND"}}</p>
               <p>HSD: {{vouchers[0].expired}}</p>
             </a>
-            <a href="">{{vouchers[1].value}}</a>
+            <!-- <a href="">{{vouchers[1].value}}</a>
             <a href="">{{vouchers[2].value}}</a>
-            <a href="">{{vouchers[3].value}}</a>
+            <a href="">{{vouchers[3].value}}</a> -->
           </div>
         </div>
       </div>
@@ -82,7 +82,7 @@
       <div class="oder_btn">
         <p class="sum_price">Tổng thanh toán: {{sumPrice|currency : "VND"}}</p>
         <div class="btn_wrapped">
-          <button  >Mua hàng</button>
+          <button (click)="check(order)" >Mua hàng</button>
         </div>
       </div>
 

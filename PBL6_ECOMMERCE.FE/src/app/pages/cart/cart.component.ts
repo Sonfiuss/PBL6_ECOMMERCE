@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IsActiveMatchOptions } from '@angular/router';
 import { CartService } from 'src/app/_services/cart.service';
 import { VoucherService } from 'src/app/_services/voucher.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -11,13 +13,16 @@ export class CartComponent implements OnInit {
   @Input() cart:any
   @Output() deletecartEvent = new EventEmitter<number>()
   @Input() vouchers:any
+  data = {id : "1", username : "thinh"}
   constructor(
     private cartService : CartService,
-    private voucherService : VoucherService
+    private voucherService : VoucherService,
+    private router: Router,
+    // private transfereService :TransfereService
   ) { }
 
   // cart :Array<any>;
-  oder : Array<any> =[];
+  order : Array<any> =[];
   sumPrice : number = 0;
   shopVoucher = {
     id : 1,
@@ -44,7 +49,8 @@ export class CartComponent implements OnInit {
   }
 
   handleGetCartError(err: any){
-    console.log(err)
+    console.log(err);
+    console.log("thinhnguyen1233456");
   }
   handleGetCartSuccess(res: any){
     this.cart = res.result.data
@@ -59,24 +65,24 @@ export class CartComponent implements OnInit {
   }
   checkValue(event : any,pd :any){
     if (event ==  true){
-      this.oder.push(pd)
+      this.order.push(pd)
       // console.log(event)
-      console.log(this.oder)
-      // console.log(this.oder.length )
+      console.log(this.order)
+      // console.log(this.order.length )
       this.sumPrice += pd.price * pd.amount;
-      // for (let j = 0; j< this.oder.length; j++){
-      //   this.sumPrice += this.oder[j].price *this.oder[j].amount;
+      // for (let j = 0; j< this.order.length; j++){
+      //   this.sumPrice += this.order[j].price *this.order[j].amount;
       // }
     }
     else{
-      this.oder = this.oder.filter(item => item !== pd)
+      this.order = this.order.filter(item => item !== pd)
       // console.log(event)
-      // console.log(this.oder.length )
+      // console.log(this.order.length )
       // console.log(this.cart.length)
       // console.log(this.isChecked)
       this.sumPrice -= pd.price * pd.amount;
-      // for (let j = 0; j< this.oder.length; j++){
-      //   this.sumPrice = this.oder[j].price *this.oder[j].amount;
+      // for (let j = 0; j< this.order.length; j++){
+      //   this.sumPrice = this.order[j].price *this.order[j].amount;
       // }
     }
   }
@@ -92,7 +98,7 @@ export class CartComponent implements OnInit {
         }
       )
     }
-    this.oder = this.oder.filter(item => item !== pd)
+    this.order = this.order.filter(item => item !== pd)
     // this.cartService.deleteItem(pd.id)
   }
 
@@ -101,9 +107,9 @@ export class CartComponent implements OnInit {
     if (pd.amount > 1){
       pd.amount -= 1;
       if(this.isChecked[i] ){
-        this.oder = this.oder.filter(item => item !== pd)
+        this.order = this.order.filter(item => item !== pd)
         this.sumPrice -= pd.price
-        this.oder.push(pd)
+        this.order.push(pd)
       }
     }
   }
@@ -111,9 +117,9 @@ export class CartComponent implements OnInit {
   increaseQty(pd : any, i: any){
     pd.amount += 1;
     if(this.isChecked[i] ){
-      this.oder = this.oder.filter(item => item !== pd)
+      this.order = this.order.filter(item => item !== pd)
       this.sumPrice += pd.price
-      this.oder.push(pd)
+      this.order.push(pd)
     }
   }
 
@@ -130,7 +136,18 @@ export class CartComponent implements OnInit {
   handleGetVoucherSuccess(res: any){
     this.vouchers = res.result.data
     console.log(res)
+
+
   }
+  check(order: any){
+    console.log(order);
+    let data = JSON.stringify(order);
+    this.router.navigate(['/order'], { queryParams:  {data} ,  skipLocationChange: true });
+    // this.router.createUrlTree(['/order', {my_order: JSON.stringify(order)}]);
+
+  }
+
 }
+
 
 
