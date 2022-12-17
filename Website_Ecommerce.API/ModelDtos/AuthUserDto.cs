@@ -62,4 +62,19 @@ namespace Website_Ecommerce.API.ModelDtos
         [MaxLength(256)]
         public string Email { get; set; }
     }
+
+    
+    public class ProfileDto
+    {
+        [Required]
+        [MaxLength(256)]
+        public string Email { get; set; }
+        [MaxLength(11)]
+        public string Phone { get; set; }
+        public string UrlAvatar { get; set; }
+        public DateTime? DateOfBirth { get; set; }
+        public bool Gender { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+    }
 }
