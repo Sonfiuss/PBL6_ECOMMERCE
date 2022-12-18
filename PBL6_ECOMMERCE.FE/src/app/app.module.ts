@@ -26,6 +26,8 @@ import { InfoComponent } from './pages/myaccount/info/info.component';
 import { ChangepasswordComponent } from './pages/myaccount/changepassword/changepassword.component';
 import { MyaddressComponent } from './pages/myaccount/myaddress/myaddress.component';
 import { SignupComponent } from './pages/signup/signup.component';
+import { OrderComponent } from './pages/order/order.component';
+import { MyorderComponent } from './pages/myaccount/myorder/myorder.component';
 
 
 @NgModule({
@@ -53,7 +55,9 @@ import { SignupComponent } from './pages/signup/signup.component';
     InfoComponent,
     ChangepasswordComponent,
     MyaddressComponent,
-    SignupComponent
+    SignupComponent,
+    OrderComponent,
+    MyorderComponent
   ],
   imports: [
     BrowserModule,

@@ -16,6 +16,10 @@ import { ChangepasswordComponent } from './pages/myaccount/changepassword/change
 import { MyaddressComponent } from './pages/myaccount/myaddress/myaddress.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { SignupComponent } from './pages/signup/signup.component';
+import { OrderComponent } from './pages/order/order.component';
+import { MyorderComponent } from './pages/myaccount/myorder/myorder.component';
+import { DetailComponent } from './pages/detail/detail.component';
+import { ProductDetailComponent } from './pages/home/products/product-detail/product-detail.component';
 
 const routes: Routes = [
   {
@@ -74,7 +78,23 @@ const routes: Routes = [
       {
         path: 'signup',
         component: SignupComponent
-      }
+      },
+      {
+        path: 'order',
+        component: OrderComponent
+      },
+      {
+        path: 'myorder',
+        component: MyorderComponent
+      },
+      {
+        path: 'detail',
+        component: DetailComponent
+      },
+      {
+        path: 'product-detail',
+        component: ProductDetailComponent
+      },
     ]
   }
 ];

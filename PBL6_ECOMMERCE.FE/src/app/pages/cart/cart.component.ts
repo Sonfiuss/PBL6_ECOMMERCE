@@ -92,6 +92,8 @@ export class CartComponent implements OnInit {
       .subscribe(
         (res:any) => {
           this.deletecartEvent.emit(pd.id)
+          this.cart = this.cart.filter((item:any) => item !==pd)
+          console.log(this.cart);
         },
         (err) => {
           alert("Delete fail. Detail: " + JSON.stringify(err))

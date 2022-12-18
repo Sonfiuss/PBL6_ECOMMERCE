@@ -1,5 +1,3 @@
-
-
 .cart-page{
   margin-top: 3%;
   margin-left: 6%;
@@ -44,18 +42,24 @@ th{
   background-color: rgb(30, 69, 105);
   color: white;
 }
+
 .pd-image{
   position: observe;
   object-fit: fill;
-  width: 20%;
-
+  width: 600px;
 }
-
+.pd-image>p{
+  padding-left: 10px ;
+  width: 500px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline;
+}
 .pd-image >a>img{
-  width: 100%;
-  display: inline-block;
+  width: 100px;
+  display: inline;
   float: left;
-
 }
 .pd-image >a{
   display: inline-block;
@@ -65,12 +69,12 @@ th{
 .pd-image >p{
   display: inline;
   display: inline-block;
-  float: left;
-
 }
-/* p{
-  color: red;
-} */
+
+.pd-image >p{
+  display: inline-block;
+}
+
 .qty > input{
   width: 30px;
   height: 30px;
@@ -146,7 +150,7 @@ th{
 }
 
 
-.oder_voucher{
+.order_voucher{
   padding-left: 2%;
   margin-right: 8%;
   border: solid;
@@ -154,18 +158,18 @@ th{
   border-color: gray;
 }
 
-.oder{
+.order{
   padding-top: 50px;
   text-align: right;
 }
-.oder_voucher>i,.oder_voucher>p{
+.order_voucher>i,.order_voucher>p{
   padding-top: 10px;
   display: inline-block;
   margin-right: 3%;
   font-size: 15px;
 }
 
-.oder_btn{
+.order_btn{
   padding-left: 2%;
   margin-right: 8%;
   border: solid;
@@ -173,7 +177,7 @@ th{
   border-color: gray;
 }
 
-.oder_btn>i,.oder_btn>p{
+.order_btn>i,.order_btn>p{
   padding-top: 10px;
   display: inline-block;
   margin-right: 3%;
@@ -195,7 +199,17 @@ th{
   font-size: 10px;
   color: white;
 }
-
+.btn_wrapped>button:hover{
+  background-color: white;
+  color: rgb(30, 69, 105);
+  border: solid;
+  border-width: 1px;
+  padding-left: 19px;
+  padding-right: 19px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-color: rgb(30, 69, 105);
+}
 td>button{
   border: none;
   background-color: white;
@@ -204,7 +218,7 @@ td>button{
 .voucher-content{
   display: none;
   position: absolute;
-  bottom: 10%;
+  bottom: 22%;
   left: 30%;
   background-color: white;
   width: 300px;
@@ -215,22 +229,59 @@ td>button{
 .list_voucher:hover + .voucher-content{
   display: block;
 }
-
+.voucher-content:hover{
+  position: absolute;
+  bottom: 22%;
+  left: 30%;
+  background-color: white;
+  width: 300px;
+  border-style: solid;
+  border-color: gray;
+  border-width: 1px;
+}
 .voucher-content> p{
   display: block;
-  margin-top: 10px;
+  /* margin-top: 10px; */
   margin-left: 20px;
 }
-.voucher-content> a{
+/* .voucher-content> a{
   display: block;
   padding-top: 10px;
   padding-bottom: 10px;
   text-decoration: none;
+} */
+.voucher-content> table{
+  display: block;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  text-decoration: none;
 }
-.voucher-content:hover{
+.voucher-content>table>tr>th{
+  color: rgb(30, 69, 105) ;
+  background-color: white ;
+}
+.voucher-content>table>tbody{
+  margin-left: 20px;
+}
+/* .voucher-content:hover{
   display: block;
   margin-top: 10px;
-  margin-left: 20px;
+  margin-left: 200px;
+} */
+.voucher-value{
+  display: inline;
+}
+.voucher-value>p{
+  margin: 0;
+  font-size: 10px;
+}
+.voucher-img{
+  display: inline;
+  width: 30px;
+}
+.voucher-img>img{
+  width: 30px;
 }
 .voucher-content> a:hover {
   background-color: rgb(104, 104, 230);
