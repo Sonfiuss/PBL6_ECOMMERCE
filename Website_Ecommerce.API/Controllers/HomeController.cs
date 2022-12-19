@@ -171,6 +171,25 @@ namespace Website_Ecommerce.API.Controllers
                 }
             });
         }
+        [HttpGet("get-image-by-product-detail-id/{productDetailId}")]
+        public async Task<IActionResult> getImageByProductDetailId(int productDetailId){
+            ProductImage productImage = await _productRepository.ProductImages.Where(i => i.ProductDetailId == productDetailId).FirstOrDefaultAsync();
+            ProductImageDto productimageDto = new ProductImageDto(){
+                Id = productImage.Id,
+                ProductDetailId = productImage.ProductDetailId,
+                UrlImage = productImage.UrlImage
+            };
+            
+            return Ok( new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = productimageDto
+                }
+            });
+        }
     }
     // [HttpPost("UploadImage")]
     // public async Task<ActionResult> UploadImage(List<IFormFile> _uploadedfiles)
