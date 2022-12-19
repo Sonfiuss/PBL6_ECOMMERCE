@@ -55,13 +55,13 @@ namespace Website_Ecommerce.API.Controllers
                     Message = ErrorCode.ExistUserOrEmail
                 });
             }
-            bool check = request.Role == 1;
+            
 
             var user = new User {
                 Username = request.Username,
                 Email = request.Email,
                 Gender = request.Gender,
-                IsBlock = check,
+                IsBlock = false,
                 Password = _identityServices.GetMD5(request.Password)
             };
 
@@ -72,7 +72,7 @@ namespace Website_Ecommerce.API.Controllers
             var userRole = new UserRole()
             {
                 UserId = user.Id,
-                RoleId = request.Role
+                RoleId = 4
             };
 
             _userRepository.Add(userRole);
