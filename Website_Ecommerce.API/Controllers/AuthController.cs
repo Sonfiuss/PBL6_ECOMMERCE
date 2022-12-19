@@ -272,49 +272,6 @@ namespace Website_Ecommerce.API.Controllers
             }
         }
 
-        [Authorize(AuthenticationSchemes = "MyAuthKey")]
-        [HttpPut("update-profile")]
-        public async Task<IActionResult> UpdateProfile(ProfileDto request, CancellationToken cancellationToken)
-        {
-            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
-
-            User user = _userRepository.Users.FirstOrDefault(x => x.Id == userId);
-
-            user.FirstName = request.FirstName;
-            user.LastName = request.LastName;
-            user.Gender = request.Gender;
-            user.Email = request.Email;
-            user.DateOfBirth = request.DateOfBirth;
-            user.UrlAvatar = request.UrlAvatar;
-            user.Phone = request.Phone;
-
-            _userRepository.Update(user);
-
-            var result = await _userRepository.UnitOfWork.SaveAsync(cancellationToken);
-
-            if(result > 0)
-            {
-                return Ok( new Response<ResponseDefault>()
-                {
-                    State = true,
-                    Message = ErrorCode.Success,
-                    Result = new ResponseDefault()
-                    {
-                        Data = user.Id.ToString()
-                    }
-                });
-            }
-            return BadRequest( new Response<ResponseDefault>()
-            {
-                State = false,
-                Message = ErrorCode.ExcuteDB,
-                Result = new ResponseDefault()
-                {
-                    Data = "Update category fail"
-                }
-            });
-        }
-
         
         
     }
