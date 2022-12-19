@@ -18,6 +18,7 @@ namespace Website_Ecommerce.API.ModelDtos
 
     public class ProductImageDto
     {
+        public int Id {get; set;}
         public int ProductDetailId { get; set; }
         public string UrlImage { get; set; }
     }

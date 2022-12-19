@@ -3,10 +3,10 @@ import { BusinessService } from './business.service';
 import { HttpClient } from '@angular/common/http';
 
 const API =  'https://localhost:7220'
-const GET_ALL_ITEM_BY_USER_ID = (id:any) => API + '/api/Cart/get-all-items-of-user/' + id;
+const GET_ALL_ITEM_BY_USER_ID =  API + '/api/Cart/get-all-items-of-user';
 const ADD_ITEM_TO_CART = API + '/api/Cart/Add-item-to-cart' ;
 const UPDATE_ITEM_IN_CART = API + 'api/Cart/update-item-in-cart' ;
-const DELETE_ITEM_IN_CART = (id:any) => API + 'api/Cart/delete-item-in-cart/' + id;
+const DELETE_ITEM_IN_CART = (id:any) => API + '/api/Cart/delete-item-in-cart/' + id;
 
 
 @Injectable({
@@ -25,12 +25,11 @@ export class CartService {
     return this.httpClient.post(UPDATE_ITEM_IN_CART, this.businessService.getRequestOptions())
   }
   deleteItem(id:any){
-    console.log("thinh123")
     return this.httpClient.delete(DELETE_ITEM_IN_CART(id), this.businessService.getRequestOptions())
   }
   getCart(id:any){
     console.log(id)
-    return this.httpClient.get(GET_ALL_ITEM_BY_USER_ID(id), this.businessService.getRequestOptions())
+    return this.httpClient.get(GET_ALL_ITEM_BY_USER_ID, this.businessService.getRequestOptions())
   }
 
 }

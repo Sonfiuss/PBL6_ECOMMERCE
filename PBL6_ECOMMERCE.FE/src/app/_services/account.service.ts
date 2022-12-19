@@ -43,7 +43,7 @@ export class AccountService {
   }
   logout() {
     this.currentUser.next(null);
-    localStorage.removeItem('userToken');
+    localStorage.removeItem('token');
   }
 
   register(registerUser: RegisterUser): Observable<any> {

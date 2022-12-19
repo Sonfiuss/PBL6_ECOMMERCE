@@ -7,6 +7,8 @@ using Newtonsoft.Json;
 using Website_Ecommerce.API.ModelDtos;
 using Website_Ecommerce.API.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Website_Ecommerce.API.Data.Entities;
+using AutoMapper;
 
 namespace Website_Ecommerce.API.Controllers
 {
@@ -16,12 +18,21 @@ namespace Website_Ecommerce.API.Controllers
     {
         private readonly IHostEnvironment _environment;
         private readonly IProductRepository _productRepository;
+        private readonly IShopRepository _shopRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
         public HomeController(
             IHostEnvironment environment,
-            IProductRepository productRepository
+            IProductRepository productRepository,
+            IShopRepository shopRepository,
+            IUserRepository userRepository,
+            IMapper mapper
             ){
             _environment = environment;
             _productRepository = productRepository;
+            _shopRepository = shopRepository;
+            _userRepository = userRepository;
+            _mapper = mapper;
         }
         [HttpPost]
         public async Task<ActionResult> UpFile(List<IFormFile> files){
@@ -125,6 +136,59 @@ namespace Website_Ecommerce.API.Controllers
                         Data = products
                     }
                 });
+        }
+            [HttpGet("get-product-detail-by/{productId}")]
+        public async Task<IActionResult> GetProductDetailByProductId(int productId)
+        {
+            List<ProductDetail> productDetails = await _productRepository.ProductDetails.Where(x => x.ProductId == productId).ToListAsync();
+
+            List<ProductDetailDto> pds = _mapper.Map<List<ProductDetailDto>>(productDetails);
+
+            return Ok( new Response<ResponseDefault>()
+                {
+                    State = true,
+                    Message = ErrorCode.Success,
+                    Result = new ResponseDefault()
+                    {
+                        Data = pds
+                    }
+                });
+        }
+
+
+
+        [HttpGet("get-productdetail-by/{productDetailId}")]
+        public async Task<IActionResult> GetProductDetailById(int productDetailId){
+            ProductDetail productDetail = await _productRepository.ProductDetails.Where(p => p.Id == productDetailId).FirstOrDefaultAsync();
+            ProductDetailDto productDetailDto= _mapper.Map<ProductDetailDto>(productDetail);
+            return Ok( new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = productDetailDto
+                }
+            });
+        }
+        [HttpGet("get-image-by-product-detail-id/{productDetailId}")]
+        public async Task<IActionResult> getImageByProductDetailId(int productDetailId){
+            ProductImage productImage = await _productRepository.ProductImages.Where(i => i.ProductDetailId == productDetailId).FirstOrDefaultAsync();
+            ProductImageDto productimageDto = new ProductImageDto(){
+                Id = productImage.Id,
+                ProductDetailId = productImage.ProductDetailId,
+                UrlImage = productImage.UrlImage
+            };
+            
+            return Ok( new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = productimageDto
+                }
+            });
         }
     }
     // [HttpPost("UploadImage")]
