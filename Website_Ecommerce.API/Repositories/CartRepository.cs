@@ -44,6 +44,7 @@ namespace Website_Ecommerce.API.Repositories
                                         ,(i, pd) => new{
                                             id = i.Id,
                                             idProduct = pd.ProductId,
+                                            idProductDetail = pd.Id,
                                             initialprice = pd.InitialPrice,
                                             price = pd.Price,
                                             amount = i.Amount
@@ -52,6 +53,7 @@ namespace Website_Ecommerce.API.Repositories
             return await itemPdetail.Join(product, ip => ip.idProduct, p => p.Id, (ip, p) => new ViewItemCartDto{
                                             Id = ip.id,
                                             NameProduct = p.Name,
+                                            IdProductDetail = ip.idProductDetail,
                                             UserId = id,
                                             InitialPrice = ip.initialprice,
                                             Price = ip.price,
