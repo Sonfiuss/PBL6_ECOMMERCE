@@ -8,6 +8,8 @@ using Website_Ecommerce.API.services;
 
 namespace Website_Ecommerce.API.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     [Authorize(AuthenticationSchemes = "MyAuthKey")]
 
     public class UserController : ControllerBase
@@ -27,7 +29,7 @@ namespace Website_Ecommerce.API.Controllers
         }
 
         [HttpPut("update-profile")]
-        public async Task<IActionResult> UpdateProfile(ProfileDto request, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateProfile([FromBody] ProfileDto request, CancellationToken cancellationToken)
         {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
 
@@ -69,7 +71,7 @@ namespace Website_Ecommerce.API.Controllers
         }
 
         [HttpPost("request-role-shop")]
-        public async Task<IActionResult> GetUSerId(ShopDto request, CancellationToken cancellationToken)
+        public async Task<IActionResult> RequestRoleShop([FromBody] ShopDto request, CancellationToken cancellationToken)
         {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
 
@@ -81,7 +83,8 @@ namespace Website_Ecommerce.API.Controllers
             shop.Email = user.Email; //get shopid from token
             shop.Phone = request.Phone;
             shop.Status = false;
-            shop.TotalRate = 0;
+            //totalrate = -1 //confirm role shop
+            shop.TotalRate = -1;
             shop.AverageRate = 0;
             shop.UserId = userId;
             shop.Status = false;
@@ -99,8 +102,6 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-
-
 
             return Ok( new Response<ResponseDefault>()
             {
