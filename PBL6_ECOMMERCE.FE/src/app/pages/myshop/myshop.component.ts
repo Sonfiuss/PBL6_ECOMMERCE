@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ChildrenOutletContexts, Router } from '@angular/router';
 import { User } from 'src/app/_models/app-user';
 import { AccountService } from 'src/app/_services/account.service';
 
@@ -14,7 +14,8 @@ export class MyshopComponent implements OnInit {
   username : any = null;
   token : any;
   myarr : any;
-  constructor(public accountService: AccountService,private router :Router) { }
+  accountOpen = false;
+  constructor(public accountService: AccountService,private router :Router , private contexts: ChildrenOutletContexts) { }
   ngOnInit(): void {
     this.token = localStorage.getItem("userToken");
     console.log(this.token);
@@ -24,6 +25,9 @@ export class MyshopComponent implements OnInit {
     else{
       this.active = true;
     }
+  }
+  getRouteAnimationData() {
+    return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];
   }
 
 

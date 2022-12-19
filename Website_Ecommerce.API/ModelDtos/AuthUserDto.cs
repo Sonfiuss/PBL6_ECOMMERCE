@@ -32,8 +32,6 @@ namespace Website_Ecommerce.API.ModelDtos
         public string Email { get; set; }
         [Required]
         public bool Gender { get; set; }
-        [Required]
-        public int Role { get; set; }
 
     }
 

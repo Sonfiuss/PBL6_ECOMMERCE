@@ -140,10 +140,11 @@ namespace Website_Ecommerce.API.Controllers
             });
        }
 
-       [HttpGet("get-all-items-of-user/{id}")]
-       public async Task<IActionResult> GetAllItemByIdUser(int id)
+       [HttpGet("get-all-items-of-user")]
+       public async Task<IActionResult> GetAllItemByIdUser()
        {
-           var listItems = await _cartRepository.GetAllItemByIdUser(id);
+            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
+            var listItems = await _cartRepository.GetAllItemByIdUser(userId);
             return Ok( new Response<ResponseDefault>()
             {
                 State = true,
