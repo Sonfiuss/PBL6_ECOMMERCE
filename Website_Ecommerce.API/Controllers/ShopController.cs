@@ -41,50 +41,8 @@ namespace Website_Ecommerce.API.Controllers
             _orderRepository = orderRepository;
             _mapper = mapper;
         }
-        #region "API Add/ update/ delete / getListShop"
-        [HttpPost("add-shop")]
-        public async Task<IActionResult> GetUSerId(ShopDto request, CancellationToken cancellationToken)
-        {
-            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
-
-            var user = _userRepository.Users.FirstOrDefault(x => x.Id == userId);
-            
-            Shop shop = new Shop();
-            shop.Name = request.Name;
-            shop.Address = request.Address;
-            shop.Email = user.Email; //get shopid from token
-            shop.Phone = request.Phone;
-            shop.Status = false;
-            shop.TotalRate = 0;
-            shop.AverageRate = 0;
-            shop.UserId = userId;
-            _shopRepository.Add(shop);
-            var result = await _shopRepository.UnitOfWork.SaveAsync(cancellationToken);
-            if(result == 0)
-            {
-                return BadRequest( new Response<ResponseDefault>()
-                {
-                    State = false,
-                    Message = ErrorCode.ExcuteDB,
-                    Result = new ResponseDefault()
-                    {
-                        Data = "Add shop fail"
-                    }
-                });
-            }
-
-
-
-            return Ok( new Response<ResponseDefault>()
-            {
-                State = true,
-                Message = ErrorCode.Success,
-                Result = new ResponseDefault()
-                {
-                    Data = "Add shop success"
-                }
-            });
-        }
+        #region "API  update/ delete / getListShop"
+        
 
         [HttpPut("update-shop")]
         public async Task<IActionResult> UpdateShop(ShopDto request, CancellationToken cancellationToken)
