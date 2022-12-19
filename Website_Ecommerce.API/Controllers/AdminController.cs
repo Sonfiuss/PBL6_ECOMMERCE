@@ -126,5 +126,36 @@ namespace Website_Ecommerce.API.Controllers
                 }
             });
         }
+
+        [HttpPut("update-state-user-by/{id}")]
+        public async Task<IActionResult> BLockUser(int id, CancellationToken cancellationToken)
+        {
+            User user = await _userRepository.Users.FirstOrDefaultAsync(x => x.Id == id);
+            user.IsBlock = !user.IsBlock;
+            _userRepository.Update(user);
+            var result = await _userRepository.UnitOfWork.SaveAsync(cancellationToken);
+
+            if(result > 0)
+            {
+                return Ok( new Response<ResponseDefault>()
+                {
+                    State = true,
+                    Message = ErrorCode.Success,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "State of user" + user.Id.ToString() + ": " + user.IsBlock
+                    }
+                });
+            }
+            return BadRequest( new Response<ResponseDefault>()
+            {
+                State = false,
+                Message = ErrorCode.ExcuteDB,
+                Result = new ResponseDefault()
+                {
+                    Data = "Block user fail"
+                }
+            });
+        }
     }
 }
