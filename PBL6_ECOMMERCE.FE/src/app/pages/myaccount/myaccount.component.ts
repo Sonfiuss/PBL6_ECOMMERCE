@@ -23,7 +23,7 @@ export class MyaccountComponent implements OnInit {
       this.urlSafe= this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
     }
     else if(element == "myoder"){
-      this.urlSafe= this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+      this.urlSafe= this.sanitizer.bypassSecurityTrustResourceUrl("/myorder");
     }
     else{
       this.urlSafe= this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
