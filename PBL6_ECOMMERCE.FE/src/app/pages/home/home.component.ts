@@ -34,7 +34,6 @@ export class HomeComponent implements OnInit {
       (res) => this.handleGetCategorySuccess(res),
       (err) => this.handleGetCategoryError(err)
     )
-
   }
 
   handleGetCategoryError(err: any){
