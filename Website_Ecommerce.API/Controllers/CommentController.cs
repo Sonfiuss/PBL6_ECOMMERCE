@@ -37,7 +37,7 @@ namespace Website_Ecommerce.API.Controllers
             _userRepository = userRepository;
             _mapper = mapper;
         }
-        
+
         [HttpPost("add-comment")]
         public async Task<IActionResult> AddComment([FromBody] CommentDto request, CancellationToken cancellationToken)
         {
@@ -51,9 +51,9 @@ namespace Website_Ecommerce.API.Controllers
             _commentRepository.Add(comment);
             var result = await _commentRepository.UnitOfWork.SaveAsync(cancellationToken);
 
-            if(result > 0)
+            if (result > 0)
             {
-                return Ok( new Response<ResponseDefault>()
+                return Ok(new Response<ResponseDefault>()
                 {
                     State = true,
                     Message = ErrorCode.Success,
@@ -63,7 +63,7 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-            return BadRequest( new Response<ResponseDefault>()
+            return BadRequest(new Response<ResponseDefault>()
             {
                 State = false,
                 Message = ErrorCode.ExcuteDB,
@@ -73,7 +73,7 @@ namespace Website_Ecommerce.API.Controllers
                 }
             });
         }
-        
+
 
 
         [HttpPut("update-comment")]
@@ -82,9 +82,9 @@ namespace Website_Ecommerce.API.Controllers
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
 
             Comment comment = _commentRepository.Comments.FirstOrDefault(c => c.Id == request.Id && c.UserId == userId);
-            if(comment == null)
+            if (comment == null)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.NotFound,
@@ -99,9 +99,9 @@ namespace Website_Ecommerce.API.Controllers
             _commentRepository.Update(comment);
             var result = await _commentRepository.UnitOfWork.SaveAsync(cancellationToken);
 
-            if(result > 0)
+            if (result > 0)
             {
-                return Ok( new Response<ResponseDefault>()
+                return Ok(new Response<ResponseDefault>()
                 {
                     State = true,
                     Message = ErrorCode.Success,
@@ -111,7 +111,7 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-            return BadRequest( new Response<ResponseDefault>()
+            return BadRequest(new Response<ResponseDefault>()
             {
                 State = false,
                 Message = ErrorCode.ExcuteDB,
@@ -121,16 +121,16 @@ namespace Website_Ecommerce.API.Controllers
                 }
             });
         }
-        
-        [HttpPut("delete-Comment/{id}")]
+
+        [HttpPut("delete-comment/{id}")]
         public async Task<IActionResult> DeleteComment(int id)
         {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
 
             Comment comment = _commentRepository.Comments.FirstOrDefault(c => c.Id == id && c.UserId == userId);
-            if(comment == null)
+            if (comment == null)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.NotFound,
@@ -145,9 +145,9 @@ namespace Website_Ecommerce.API.Controllers
             _commentRepository.Update(comment);
             var result = await _commentRepository.UnitOfWork.SaveAsync();
 
-            if(result > 0)
+            if (result > 0)
             {
-                return Ok( new Response<ResponseDefault>()
+                return Ok(new Response<ResponseDefault>()
                 {
                     State = true,
                     Message = ErrorCode.Success,
@@ -157,7 +157,7 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-            return BadRequest( new Response<ResponseDefault>()
+            return BadRequest(new Response<ResponseDefault>()
             {
                 State = false,
                 Message = ErrorCode.ExcuteDB,
@@ -168,20 +168,20 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-        [HttpGet("list-comment-by/{productId}")]
-
+        [HttpGet("list-comment-by/{id}")]
         public async Task<IActionResult> GetListComment(int productId)
         {
             // var listcomments = await _commentRepository.Comments.Where(x => x.State == 1).Select(x => new {x.Id, x.UserId, x.Content}).ToListAsync();
-            var listCommentDetails = await  _commentRepository.Comments.Where(x => x.State == 1).Join(_userRepository.Users, c => c.UserId, u => u.Id,
-                                                                        (c,u) => new {
+            var listCommentDetails = await _commentRepository.Comments.Where(x => x.State == 1).Join(_userRepository.Users, c => c.UserId, u => u.Id,
+                                                                        (c, u) => new
+                                                                        {
                                                                             Id = c.Id,
                                                                             Content = c.Content,
                                                                             Username = u.Username,
                                                                             Avatar = u.UrlAvatar
                                                                         }).ToListAsync();
 
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -192,6 +192,6 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-        
+
     }
 }

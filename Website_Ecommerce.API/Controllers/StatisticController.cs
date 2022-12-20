@@ -20,19 +20,22 @@ namespace Website_Ecommerce.API.Controllers
         private readonly IShopRepository _shopRepository;
         private readonly IStatisticService _statisticService;
 
-        public StatisticController(IOrderRepository orderRepository,
-                                     IHttpContextAccessor httpContext, 
-                                     IShopRepository shopRepository,
-                                     IStatisticService statisticService){
+        public StatisticController(
+            IOrderRepository orderRepository,
+            IHttpContextAccessor httpContext,
+            IShopRepository shopRepository,
+            IStatisticService statisticService)
+        {
             _orderRepository = orderRepository;
             _shopRepository = shopRepository;
             _httpContext = httpContext;
             _statisticService = statisticService;
         }
-        
+
         [HttpGet("statistic-turnover-of-days")]
-        public async Task<IActionResult> StatisticTurnoverOfDays(DateTime Start, DateTime End){
-            Dictionary<string, double> data  = new Dictionary<string, double>();
+        public async Task<IActionResult> StatisticTurnoverOfDays(DateTime Start, DateTime End)
+        {
+            Dictionary<string, double> data = new Dictionary<string, double>();
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
             var shop = _shopRepository.Shops.FirstOrDefault(x => x.UserId == userId);
             var shopId = shop.Id;
@@ -44,68 +47,20 @@ namespace Website_Ecommerce.API.Controllers
                                             .OrderByDescending(x => x.ShopSendDate)
                                             .ToListAsync();
 
-            while(Start <= End){
+            while (Start <= End)
+            {
                 var totalTurnover = 0.0;
-                foreach (var i in orderDetails){
-                    if(DateOnly.FromDateTime(i.ShopConfirmDate.Value) == DateOnly.FromDateTime(Start)){
+                foreach (var i in orderDetails)
+                {
+                    if (DateOnly.FromDateTime(i.ShopConfirmDate.Value) == DateOnly.FromDateTime(Start))
+                    {
                         totalTurnover = totalTurnover += i.Price;
-                    }    
-                }   
+                    }
+                }
                 data.Add(DateOnly.FromDateTime(Start).ToString(), totalTurnover);
                 Start = Start.Add(timeSpan);
             }
-            return Ok( new Response<ResponseDefault>()
-            {
-                State = true,
-                Message = ErrorCode.BadRequest,
-                Result = new ResponseDefault()
-                {
-                    Data = data
-                }
-            });
-        } 
-        [HttpGet("statistic-turnover-of-months")]  
-        public async Task<IActionResult> StatisticTurnoverOfMonths(DateTime Start, DateTime End){
-            Dictionary<string, double> data  = new Dictionary<string, double>();
-            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
-            var shop = _shopRepository.Shops.FirstOrDefault(x => x.UserId == userId);
-            var shopId = shop.Id;
-
-            IList<OrderDetail> orderDetails = await _orderRepository
-                                            .OrderDetails
-                                            .Where(o => o.ShopId == shopId && o.State == 3/*(int)StateOrderEnum.RECEIVED%*/)
-                                            .OrderByDescending(x => x.ShopSendDate)
-                                            .ToListAsync();
-            
-            while(Start <= End){
-                var totalTurnover = 0.0;
-                foreach (var i in orderDetails){
-                    if(DateOnly.FromDateTime(i.ShopConfirmDate.Value) == DateOnly.FromDateTime(Start)){
-                        totalTurnover = totalTurnover += i.Price;
-                    }    
-                }   
-                data.Add(DateOnly.FromDateTime(Start).ToString(), totalTurnover);
-                Start = Start.AddMonths(1);
-            }
-            return Ok( new Response<ResponseDefault>()
-            {
-                State = true,
-                Message = ErrorCode.BadRequest,
-                Result = new ResponseDefault()
-                {
-                    Data = data
-                }
-            });
-        } 
-
-        [HttpGet("statistic-product")]
-        public async Task<IActionResult> StatisticProduct(){
-            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
-            var shop = _shopRepository.Shops.FirstOrDefault(x => x.UserId == userId);
-            var shopId = shop.Id;
-
-            var data = await _statisticService.StatisticProduct(shopId);
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.BadRequest,
@@ -115,5 +70,65 @@ namespace Website_Ecommerce.API.Controllers
                 }
             });
         }
+
+
+        [HttpGet("statistic-turnover-of-months")]
+        public async Task<IActionResult> StatisticTurnoverOfMonths(DateTime Start, DateTime End)
+        {
+            Dictionary<string, double> data = new Dictionary<string, double>();
+            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
+            var shop = _shopRepository.Shops.FirstOrDefault(x => x.UserId == userId);
+            var shopId = shop.Id;
+
+            IList<OrderDetail> orderDetails = await _orderRepository
+                                            .OrderDetails
+                                            .Where(o => o.ShopId == shopId && o.State == 3/*(int)StateOrderEnum.RECEIVED%*/)
+                                            .OrderByDescending(x => x.ShopSendDate)
+                                            .ToListAsync();
+
+            while (Start <= End)
+            {
+                var totalTurnover = 0.0;
+                foreach (var i in orderDetails)
+                {
+                    if (DateOnly.FromDateTime(i.ShopConfirmDate.Value) == DateOnly.FromDateTime(Start))
+                    {
+                        totalTurnover = totalTurnover += i.Price;
+                    }
+                }
+                data.Add(DateOnly.FromDateTime(Start).ToString(), totalTurnover);
+                Start = Start.AddMonths(1);
+            }
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.BadRequest,
+                Result = new ResponseDefault()
+                {
+                    Data = data
+                }
+            });
+        }
+
+        [HttpGet("statistic-product")]
+        public async Task<IActionResult> StatisticProduct()
+        {
+            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
+            var shop = _shopRepository.Shops.FirstOrDefault(x => x.UserId == userId);
+            var shopId = shop.Id;
+
+            var data = await _statisticService.StatisticProduct(shopId);
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.BadRequest,
+                Result = new ResponseDefault()
+                {
+                    Data = data
+                }
+            });
+        }
+
+        
     }
 }

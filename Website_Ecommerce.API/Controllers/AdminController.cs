@@ -5,12 +5,14 @@ using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data.Entities;
 using Website_Ecommerce.API.Repositories;
 using Website_Ecommerce.API.Response;
+using Website_Ecommerce.API.services;
 
 namespace Website_Ecommerce.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     // [Authorize(AuthenticationSchemes = "MyAuthKey")]
+    // [CustomAuthorize(Allows = "1")]
     public class AdminController : ControllerBase
     {
         private readonly IShopRepository _shopRepository;
@@ -34,17 +36,17 @@ namespace Website_Ecommerce.API.Controllers
             _userRepository = userRepository;
             _orderRepository = orderRepository;
             _mapper = mapper;
-        } 
+        }
 
         //Get list all user
         [HttpGet("get-list-user")]
         public async Task<IActionResult> GetListUser()
         {
-            
+
             List<User> users = await _userRepository.Users.ToListAsync();
-            if(users == null)
+            if (users == null)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.NotFound,
@@ -55,7 +57,7 @@ namespace Website_Ecommerce.API.Controllers
                 });
             }
 
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -66,18 +68,53 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
+
+
+        [HttpPut("update-state-user-by/{id}")]
+        public async Task<IActionResult> BLockUser(int userId, CancellationToken cancellationToken)
+        {
+            User user = await _userRepository.Users.FirstOrDefaultAsync(x => x.Id == userId);
+            user.IsBlock = !user.IsBlock;
+            _userRepository.Update(user);
+            var result = await _userRepository.UnitOfWork.SaveAsync(cancellationToken);
+
+            if (result > 0)
+            {
+                return Ok(new Response<ResponseDefault>()
+                {
+                    State = true,
+                    Message = ErrorCode.Success,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "State of user" + user.Id.ToString() + ": " + user.IsBlock.ToString()
+                    }
+                });
+            }
+            return BadRequest(new Response<ResponseDefault>()
+            {
+                State = false,
+                Message = ErrorCode.ExcuteDB,
+                Result = new ResponseDefault()
+                {
+                    Data = "Block user fail"
+                }
+            });
+        }
+
+        #region confirm role shop, update state of shop, get list shop waiting confirm role shop
+
         //Get list Shop
         //true la hoat dong
         //false la khong hoat dong
         [HttpGet("get-list-shop-active")]
         public async Task<IActionResult> GetListShopActive()
         {
-            
+
             //check userId
             List<Shop> shops = await _shopRepository.Shops.Where(x => x.Status == true).ToListAsync();
-            if(shops == null)
+            if (shops == null)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.NotFound,
@@ -88,7 +125,7 @@ namespace Website_Ecommerce.API.Controllers
                 });
             }
 
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -103,9 +140,9 @@ namespace Website_Ecommerce.API.Controllers
         public async Task<IActionResult> GetListShopNoActive()
         {
             List<Shop> shops = await _shopRepository.Shops.Where(x => x.Status == false).ToListAsync();
-            if(shops == null)
+            if (shops == null)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.NotFound,
@@ -116,7 +153,7 @@ namespace Website_Ecommerce.API.Controllers
                 });
             }
 
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -126,5 +163,109 @@ namespace Website_Ecommerce.API.Controllers
                 }
             });
         }
+
+        [HttpGet("get-list-shop-waiting-confirm")]
+        public async Task<IActionResult> GetListShopWaitingConfirm()
+        {
+            List<Shop> shops = await _shopRepository.Shops.Where(x => x.Status == false && x.TotalRate == -1).ToListAsync();
+            if (shops == null)
+            {
+                return BadRequest(new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.NotFound,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "Not Found Shop"
+                    }
+                });
+            }
+
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = shops
+                }
+            });
+        }
+
+        [HttpPut("confirm-role-shop-of-user-by/{id}")]
+        public async Task<IActionResult> ConfirmRoleShopOfUser(int shopId, CancellationToken cancellationToken)
+        {
+
+            Shop shop = await _shopRepository.Shops.FirstOrDefaultAsync(x => x.Id == shopId);
+            shop.Status = true;
+            shop.TotalRate = 0;
+            _shopRepository.Update(shop);
+
+            var userRole = new UserRole()
+            {
+                UserId = shop.UserId,
+                RoleId = 2
+            };
+
+            _userRepository.Add(userRole);
+
+            var result = await _shopRepository.UnitOfWork.SaveAsync(cancellationToken);
+            var result1 = await _userRepository.UnitOfWork.SaveAsync(cancellationToken);
+
+            if (result > 0 && result1 > 0)
+            {
+                return Ok(new Response<ResponseDefault>()
+                {
+                    State = true,
+                    Message = ErrorCode.Success,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "State of shop" + shop.Id.ToString() + ": " + shop.Status.ToString()
+                    }
+                });
+            }
+            return BadRequest(new Response<ResponseDefault>()
+            {
+                State = false,
+                Message = ErrorCode.ExcuteDB,
+                Result = new ResponseDefault()
+                {
+                    Data = "Block user fail"
+                }
+            });
+        }
+
+        [HttpPut("update-state-shop-by/{id}")]
+        public async Task<IActionResult> BlockShop(int shopId, CancellationToken cancellationToken)
+        {
+            Shop shop = await _shopRepository.Shops.FirstOrDefaultAsync(x => x.Id == shopId);
+            shop.Status = !shop.Status;
+            _shopRepository.Update(shop);
+            var result = await _shopRepository.UnitOfWork.SaveAsync(cancellationToken);
+
+            if (result > 0)
+            {
+                return Ok(new Response<ResponseDefault>()
+                {
+                    State = true,
+                    Message = ErrorCode.Success,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "State of shop" + shop.Id.ToString() + ": " + shop.Status.ToString()
+                    }
+                });
+            }
+            return BadRequest(new Response<ResponseDefault>()
+            {
+                State = false,
+                Message = ErrorCode.ExcuteDB,
+                Result = new ResponseDefault()
+                {
+                    Data = "Block user fail"
+                }
+            });
+        }
+
+        #endregion
     }
 }

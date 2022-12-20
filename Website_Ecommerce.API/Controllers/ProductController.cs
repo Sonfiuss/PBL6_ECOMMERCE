@@ -15,7 +15,7 @@ namespace Website_Ecommerce.API.Controllers
     [ApiController]
     [Authorize(AuthenticationSchemes = "MyAuthKey")]
     //1:admin  2:shop  3:shipper  4:customer
-    [CustomAuthorize(Allows = "2")]
+    // [CustomAuthorize(Allows = "4")]
 
     public class ProductController : ControllerBase
     {
@@ -404,37 +404,6 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-        [HttpGet("get-product-detail-by/{productId}")]
-        public async Task<IActionResult> GetProductDetailByProductId(int productId)
-        {
-            List<ProductDetail> productDetails = await _productRepository.ProductDetails.Where(x => x.ProductId == productId).ToListAsync();
-
-            List<ProductDetailDto> pds = _mapper.Map<List<ProductDetailDto>>(productDetails);
-
-            return Ok( new Response<ResponseDefault>()
-                {
-                    State = true,
-                    Message = ErrorCode.Success,
-                    Result = new ResponseDefault()
-                    {
-                        Data = pds
-                    }
-                });
-        }
-    [HttpGet("get-productdetail-by/{productDetailId}")]
-    public async Task<IActionResult> GetProductDetailById(int productDetailId){
-        ProductDetail productDetail = await _productRepository.ProductDetails.Where(p => p.Id == productDetailId).FirstOrDefaultAsync();
-        ProductDetailDto productDetailDto= _mapper.Map<ProductDetailDto>(productDetail);
-        return Ok( new Response<ResponseDefault>()
-        {
-            State = true,
-            Message = ErrorCode.Success,
-            Result = new ResponseDefault()
-            {
-                Data = productDetailDto
-            }
-        });
-    }
 
 #endregion
 
