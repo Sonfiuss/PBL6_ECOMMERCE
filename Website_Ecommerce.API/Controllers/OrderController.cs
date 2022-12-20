@@ -28,20 +28,24 @@ namespace Website_Ecommerce.API.Controllers
                 IHttpContextAccessor httpContext,
                 IProductRepository productRepository,
                 IShopRepository shopRepository,
-                IVoucherOrderRepository voucherOrderRepository){
+                IVoucherOrderRepository voucherOrderRepository)
+        {
             _shopRepository = shopRepository;
             _voucherOrderRepository = voucherOrderRepository;
             _orderRepository = orderRepository;
             _httpContext = httpContext;
             _productRepository = productRepository;
         }
+
+
         [HttpPost("add-order")]
-        public async Task<IActionResult> AddOrder([FromBody] OrderDto request, CancellationToken cancellationToken){
+        public async Task<IActionResult> AddOrder([FromBody] OrderDto request, CancellationToken cancellationToken)
+        {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
             VoucherOrder voucherOrder = _voucherOrderRepository.VoucherOrders.FirstOrDefault(x => x.Id == request.VoucherId);
-        
-            
-            var order = new Order{
+
+            var order = new Order
+            {
                 Id = request.Id,
                 UserId = userId,
                 Address = request.Address,
@@ -58,18 +62,22 @@ namespace Website_Ecommerce.API.Controllers
             //     order.VoucherId = null;
             // }
             // else{
-            if(voucherOrder != null){
+            if (voucherOrder != null)
+            {
                 voucherOrder.Amount = voucherOrder.Amount - 1;
                 _voucherOrderRepository.Update(voucherOrder);
                 _orderRepository.Add(order);
-            }else{
+            }
+            else
+            {
                 order.VoucherId = null;
                 _orderRepository.Add(order);
             }
 
-            var result = await  _orderRepository.UnitOfWork.SaveAsync(cancellationToken);
-            if(result <=0){
-                 return BadRequest( new Response<ResponseDefault>()
+            var result = await _orderRepository.UnitOfWork.SaveAsync(cancellationToken);
+            if (result <= 0)
+            {
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = true,
                     Message = ErrorCode.BadRequest,
@@ -81,38 +89,44 @@ namespace Website_Ecommerce.API.Controllers
             }
             Order thisOrder = _orderRepository.Orders.OrderByDescending(x => x.CreateDate).FirstOrDefault(x => x.UserId == userId);
 
-            foreach(var i in request.ItemOrderDtos){
+            foreach (var i in request.ItemOrderDtos)
+            {
                 ProductDetail productDetail = _productRepository.ProductDetails.FirstOrDefault(x => x.Id == i.ProductDetailId);
                 Product product = _productRepository.Products.FirstOrDefault(x => x.Id == productDetail.ProductId);
                 Shop shop = _shopRepository.Shops.FirstOrDefault(x => x.Id == product.ShopId);
                 VoucherProduct voucherProduct = new VoucherProduct();
-                if(i.VoucherProductId == 0){
+                if (i.VoucherProductId == 0)
+                {
                     i.VoucherProductId = null;
                     voucherProduct.Value = 0;
                 }
-                else{
+                else
+                {
                     voucherProduct = _shopRepository.voucherProducts.FirstOrDefault(x => x.Id == i.VoucherProductId);
                 }
-                var orderDetail = new OrderDetail{
+                var orderDetail = new OrderDetail
+                {
                     OrderId = thisOrder.Id,
                     ProductDetailId = i.ProductDetailId,
                     Amount = i.Amount,
                     ShopId = shop.Id,
                     State = (int)StateOrderDetailEnum.UNCONFIRMED,
                     Price = i.Price,
-                    VoucherProductId =  i.VoucherProductId
+                    VoucherProductId = i.VoucherProductId
                 };
                 _orderRepository.Add(orderDetail);
                 productDetail.Amount = productDetail.Amount - orderDetail.Amount;
-                if(orderDetail.VoucherProductId != null){
+                if (orderDetail.VoucherProductId != null)
+                {
                     voucherProduct.Amount = voucherProduct.Amount - 1;
                     _shopRepository.Update(voucherProduct);
                 }
                 _productRepository.Update(productDetail);
-                var resultI = await  _orderRepository.UnitOfWork.SaveAsync(cancellationToken);
-                if(resultI <= 0 ){
+                var resultI = await _orderRepository.UnitOfWork.SaveAsync(cancellationToken);
+                if (resultI <= 0)
+                {
                     _orderRepository.Delete(thisOrder);
-                    return BadRequest( new Response<ResponseDefault>()
+                    return BadRequest(new Response<ResponseDefault>()
                     {
                         State = true,
                         Message = ErrorCode.BadRequest,
@@ -123,21 +137,25 @@ namespace Website_Ecommerce.API.Controllers
                     });
                 }
             }
-           return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
                 {
-                    State = true,
-                    Message = ErrorCode.Success,
-                    Result = new ResponseDefault()
-                    {
-                        Data = ""
-                    }
-                });
+                    Data = ""
+                }
+            });
         }
+
+
         [HttpPatch("cancel-order-detail")]
-        public async Task<IActionResult> CancelOrder(int orderId, int productDetailId, CancellationToken cancellationToken){
-            var orderDetail = await  _orderRepository.OrderDetails.FirstOrDefaultAsync(x => x.OrderId == orderId && x.ProductDetailId == productDetailId);
-            if(orderDetail == null){
-                 return BadRequest( new Response<ResponseDefault>()
+        public async Task<IActionResult> CancelOrder(int orderId, int productDetailId, CancellationToken cancellationToken)
+        {
+            var orderDetail = await _orderRepository.OrderDetails.FirstOrDefaultAsync(x => x.OrderId == orderId && x.ProductDetailId == productDetailId);
+            if (orderDetail == null)
+            {
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = true,
                     Message = ErrorCode.Success,
@@ -147,8 +165,9 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-            if(orderDetail.State > (int)StateOrderEnum.RECEIVED){
-                return BadRequest( new Response<ResponseDefault>()
+            if (orderDetail.State > (int)StateOrderEnum.RECEIVED)
+            {
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = true,
                     Message = ErrorCode.Success,
@@ -160,9 +179,10 @@ namespace Website_Ecommerce.API.Controllers
             }
             orderDetail.State = (int)StateOrderEnum.CANCALLED;
             _orderRepository.Update(orderDetail);
-            var result = await  _orderRepository.UnitOfWork.SaveAsync(cancellationToken);
-            if(result == 0){
-                return BadRequest( new Response<ResponseDefault>()
+            var result = await _orderRepository.UnitOfWork.SaveAsync(cancellationToken);
+            if (result == 0)
+            {
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = true,
                     Message = ErrorCode.Success,
@@ -173,7 +193,7 @@ namespace Website_Ecommerce.API.Controllers
                 });
             }
 
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -183,13 +203,16 @@ namespace Website_Ecommerce.API.Controllers
                 }
             });
 
-            
+
         }
+
+
         [HttpGet("view-order")]
-        public async Task<IActionResult> ViewOrder(int orderId){
+        public async Task<IActionResult> ViewOrder(int orderId)
+        {
             Order order = await _orderRepository.Orders.FirstOrDefaultAsync(p => p.Id == orderId);
-            
-             return Ok( new Response<ResponseDefault>()
+
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -199,22 +222,26 @@ namespace Website_Ecommerce.API.Controllers
                 }
             });
         }
+
+
         [HttpGet("view-order-of-user")]
-        public async Task<IActionResult> ViewOrderByStatus(int state){
+        public async Task<IActionResult> ViewOrderByStatus(int state)
+        {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
-            var orders =  _orderRepository.Orders.Where(i => i.UserId == userId);
-            var orderdetails = _orderRepository.OrderDetails;   
-            var data = await orders.Join(orderdetails, o => o.Id, od => od.OrderId, 
-                                    (o,od) => new {
+            var orders = _orderRepository.Orders.Where(i => i.UserId == userId);
+            var orderdetails = _orderRepository.OrderDetails;
+            var data = await orders.Join(orderdetails, o => o.Id, od => od.OrderId,
+                                    (o, od) => new
+                                    {
                                         id = od.OrderId,
                                         idShop = od.ShopId,
                                         state = od.State,
                                         idProductDetail = od.ProductDetailId,
                                         amount = od.Amount,
                                         price = od.Price
-                                    }).ToListAsync();                            
+                                    }).ToListAsync();
 
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -235,11 +262,11 @@ namespace Website_Ecommerce.API.Controllers
         //      if(item.State == (int)StateOrderEnum.SENT){
         //         check = 1;
         //      }
-             
+
         //     }
         // }
 
-            
+
     }
 
 }

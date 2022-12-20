@@ -5,12 +5,14 @@ using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data.Entities;
 using Website_Ecommerce.API.Repositories;
 using Website_Ecommerce.API.Response;
+using Website_Ecommerce.API.services;
 
 namespace Website_Ecommerce.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     // [Authorize(AuthenticationSchemes = "MyAuthKey")]
+    // [CustomAuthorize(Allows = "1")]
     public class AdminController : ControllerBase
     {
         private readonly IShopRepository _shopRepository;
@@ -34,17 +36,17 @@ namespace Website_Ecommerce.API.Controllers
             _userRepository = userRepository;
             _orderRepository = orderRepository;
             _mapper = mapper;
-        } 
+        }
 
         //Get list all user
         [HttpGet("get-list-user")]
         public async Task<IActionResult> GetListUser()
         {
-            
+
             List<User> users = await _userRepository.Users.ToListAsync();
-            if(users == null)
+            if (users == null)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.NotFound,
@@ -55,7 +57,7 @@ namespace Website_Ecommerce.API.Controllers
                 });
             }
 
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -66,7 +68,7 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-        
+
 
         [HttpPut("update-state-user-by/{id}")]
         public async Task<IActionResult> BLockUser(int userId, CancellationToken cancellationToken)
@@ -76,9 +78,9 @@ namespace Website_Ecommerce.API.Controllers
             _userRepository.Update(user);
             var result = await _userRepository.UnitOfWork.SaveAsync(cancellationToken);
 
-            if(result > 0)
+            if (result > 0)
             {
-                return Ok( new Response<ResponseDefault>()
+                return Ok(new Response<ResponseDefault>()
                 {
                     State = true,
                     Message = ErrorCode.Success,
@@ -88,7 +90,7 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-            return BadRequest( new Response<ResponseDefault>()
+            return BadRequest(new Response<ResponseDefault>()
             {
                 State = false,
                 Message = ErrorCode.ExcuteDB,
@@ -107,12 +109,12 @@ namespace Website_Ecommerce.API.Controllers
         [HttpGet("get-list-shop-active")]
         public async Task<IActionResult> GetListShopActive()
         {
-            
+
             //check userId
             List<Shop> shops = await _shopRepository.Shops.Where(x => x.Status == true).ToListAsync();
-            if(shops == null)
+            if (shops == null)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.NotFound,
@@ -123,7 +125,7 @@ namespace Website_Ecommerce.API.Controllers
                 });
             }
 
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -138,9 +140,9 @@ namespace Website_Ecommerce.API.Controllers
         public async Task<IActionResult> GetListShopNoActive()
         {
             List<Shop> shops = await _shopRepository.Shops.Where(x => x.Status == false).ToListAsync();
-            if(shops == null)
+            if (shops == null)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.NotFound,
@@ -151,7 +153,7 @@ namespace Website_Ecommerce.API.Controllers
                 });
             }
 
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -166,9 +168,9 @@ namespace Website_Ecommerce.API.Controllers
         public async Task<IActionResult> GetListShopWaitingConfirm()
         {
             List<Shop> shops = await _shopRepository.Shops.Where(x => x.Status == false && x.TotalRate == -1).ToListAsync();
-            if(shops == null)
+            if (shops == null)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.NotFound,
@@ -179,7 +181,7 @@ namespace Website_Ecommerce.API.Controllers
                 });
             }
 
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -193,15 +195,26 @@ namespace Website_Ecommerce.API.Controllers
         [HttpPut("confirm-role-shop-of-user-by/{id}")]
         public async Task<IActionResult> ConfirmRoleShopOfUser(int shopId, CancellationToken cancellationToken)
         {
+
             Shop shop = await _shopRepository.Shops.FirstOrDefaultAsync(x => x.Id == shopId);
             shop.Status = true;
             shop.TotalRate = 0;
             _shopRepository.Update(shop);
-            var result = await _shopRepository.UnitOfWork.SaveAsync(cancellationToken);
 
-            if(result > 0)
+            var userRole = new UserRole()
             {
-                return Ok( new Response<ResponseDefault>()
+                UserId = shop.UserId,
+                RoleId = 2
+            };
+
+            _userRepository.Add(userRole);
+
+            var result = await _shopRepository.UnitOfWork.SaveAsync(cancellationToken);
+            var result1 = await _userRepository.UnitOfWork.SaveAsync(cancellationToken);
+
+            if (result > 0 && result1 > 0)
+            {
+                return Ok(new Response<ResponseDefault>()
                 {
                     State = true,
                     Message = ErrorCode.Success,
@@ -211,7 +224,7 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-            return BadRequest( new Response<ResponseDefault>()
+            return BadRequest(new Response<ResponseDefault>()
             {
                 State = false,
                 Message = ErrorCode.ExcuteDB,
@@ -230,9 +243,9 @@ namespace Website_Ecommerce.API.Controllers
             _shopRepository.Update(shop);
             var result = await _shopRepository.UnitOfWork.SaveAsync(cancellationToken);
 
-            if(result > 0)
+            if (result > 0)
             {
-                return Ok( new Response<ResponseDefault>()
+                return Ok(new Response<ResponseDefault>()
                 {
                     State = true,
                     Message = ErrorCode.Success,
@@ -242,7 +255,7 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-            return BadRequest( new Response<ResponseDefault>()
+            return BadRequest(new Response<ResponseDefault>()
             {
                 State = false,
                 Message = ErrorCode.ExcuteDB,

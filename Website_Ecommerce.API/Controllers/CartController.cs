@@ -12,13 +12,13 @@ namespace Website_Ecommerce.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = "MyAuthKey")]
-    public class CartController:ControllerBase
-    {   
+    public class CartController : ControllerBase
+    {
         private readonly IMapper _mapper;
         private readonly ICartRepository _cartRepository;
         private readonly IHttpContextAccessor _httpContext;
         public CartController(
-            ICartRepository cartRepository, 
+            ICartRepository cartRepository,
             IMapper mapper,
             IHttpContextAccessor httpContext)
         {
@@ -27,7 +27,7 @@ namespace Website_Ecommerce.API.Controllers
             _cartRepository = cartRepository;
         }
         [HttpPost("add-item-to-cart")]
-        public async Task<IActionResult> AddItemToCart([FromBody]CartDto request, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddItemToCart([FromBody] CartDto request, CancellationToken cancellationToken)
         {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
             request.UserId = userId;
@@ -35,9 +35,9 @@ namespace Website_Ecommerce.API.Controllers
             item.State = true;
             _cartRepository.Add(item);
             var result = await _cartRepository.UnitOfWork.SaveAsync(cancellationToken);
-            if(result == 0)
+            if (result == 0)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.ExcuteDB,
@@ -47,7 +47,7 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -63,14 +63,14 @@ namespace Website_Ecommerce.API.Controllers
         {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
             request.UserId = userId;
-        
+
             var item = _mapper.Map<Cart>(request);
             item.State = true;
             _cartRepository.Update(item);
             var result = await _cartRepository.UnitOfWork.SaveAsync(cancellationToken);
-            if(result == 0)
+            if (result == 0)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.ExcuteDB,
@@ -81,9 +81,7 @@ namespace Website_Ecommerce.API.Controllers
                 });
             }
 
-
-
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -98,14 +96,14 @@ namespace Website_Ecommerce.API.Controllers
         [HttpDelete("delete-item-in-cart/{id}")]
         public async Task<IActionResult> DeleteItemInCart(int id)
         {
-            if(id.ToString() is null)
+            if (id.ToString() is null)
             {
                 return BadRequest(null);
             }
             var item = await _cartRepository.Carts.FirstOrDefaultAsync(x => x.Id == id);
-            if(item == null)
+            if (item == null)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.NotFound,
@@ -119,9 +117,9 @@ namespace Website_Ecommerce.API.Controllers
             _cartRepository.Delete(item);
             var result = await _cartRepository.UnitOfWork.SaveAsync();
 
-            if(result > 0)
+            if (result > 0)
             {
-                return Ok( new Response<ResponseDefault>()
+                return Ok(new Response<ResponseDefault>()
                 {
                     State = true,
                     Message = ErrorCode.Success,
@@ -131,21 +129,23 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-            return BadRequest( new Response<ResponseDefault>(){
+            return BadRequest(new Response<ResponseDefault>()
+            {
                 State = false,
-                Message= ErrorCode.ExistedDB,
-                Result = new ResponseDefault(){
+                Message = ErrorCode.ExistedDB,
+                Result = new ResponseDefault()
+                {
                     Data = "Delete item fail"
                 }
             });
-       }
+        }
 
-       [HttpGet("get-all-items-of-user")]
-       public async Task<IActionResult> GetAllItemByIdUser()
-       {
+        [HttpGet("get-all-items-of-user")]
+        public async Task<IActionResult> GetAllItemByIdUser()
+        {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
             var listItems = await _cartRepository.GetAllItemByIdUser(userId);
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -154,6 +154,6 @@ namespace Website_Ecommerce.API.Controllers
                     Data = listItems
                 }
             });
-       }
+        }
     }
 }

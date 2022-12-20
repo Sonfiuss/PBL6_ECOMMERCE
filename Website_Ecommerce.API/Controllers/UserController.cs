@@ -28,6 +28,7 @@ namespace Website_Ecommerce.API.Controllers
             _shopRepository = shopRepository;
         }
 
+
         [HttpPut("update-profile")]
         public async Task<IActionResult> UpdateProfile([FromBody] ProfileDto request, CancellationToken cancellationToken)
         {
@@ -47,9 +48,9 @@ namespace Website_Ecommerce.API.Controllers
 
             var result = await _userRepository.UnitOfWork.SaveAsync(cancellationToken);
 
-            if(result > 0)
+            if (result > 0)
             {
-                return Ok( new Response<ResponseDefault>()
+                return Ok(new Response<ResponseDefault>()
                 {
                     State = true,
                     Message = ErrorCode.Success,
@@ -59,7 +60,7 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-            return BadRequest( new Response<ResponseDefault>()
+            return BadRequest(new Response<ResponseDefault>()
             {
                 State = false,
                 Message = ErrorCode.ExcuteDB,
@@ -70,13 +71,14 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
+
         [HttpPost("request-role-shop")]
         public async Task<IActionResult> RequestRoleShop([FromBody] ShopDto request, CancellationToken cancellationToken)
         {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
 
             var user = _userRepository.Users.FirstOrDefault(x => x.Id == userId);
-            
+
             Shop shop = new Shop();
             shop.Name = request.Name;
             shop.Address = request.Address;
@@ -90,9 +92,10 @@ namespace Website_Ecommerce.API.Controllers
             shop.Status = false;
             _shopRepository.Add(shop);
             var result = await _shopRepository.UnitOfWork.SaveAsync(cancellationToken);
-            if(result == 0)
+            
+            if (result == 0)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.ExcuteDB,
@@ -103,7 +106,7 @@ namespace Website_Ecommerce.API.Controllers
                 });
             }
 
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,

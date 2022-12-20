@@ -9,11 +9,13 @@ using Website_Ecommerce.API.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data.Entities;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Website_Ecommerce.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AllowAnonymous]
     public class HomeController : ControllerBase
     {
         private readonly IHostEnvironment _environment;
@@ -27,7 +29,8 @@ namespace Website_Ecommerce.API.Controllers
             IShopRepository shopRepository,
             IUserRepository userRepository,
             IMapper mapper
-            ){
+            )
+        {
             _environment = environment;
             _productRepository = productRepository;
             _shopRepository = shopRepository;
@@ -35,15 +38,18 @@ namespace Website_Ecommerce.API.Controllers
             _mapper = mapper;
         }
         [HttpPost]
-        public async Task<ActionResult> UpFile(List<IFormFile> files){
+        public async Task<ActionResult> UpFile(List<IFormFile> files)
+        {
             const bool AllowLimitFileSize = true;
-            
+
             var baseUrl = "https://localhost:7220";
             var listFileError = new List<FileUploadInfo>();
             var limitFileSize = 8388608;
             string result = "";
-            if(files.Count <= 0){
-                return BadRequest( new Response<ResponseDefault>(){
+            if (files.Count <= 0)
+            {
+                return BadRequest(new Response<ResponseDefault>()
+                {
                     State = false,
                     Message = "Please select file to upload",
                     Result = new ResponseDefault()
@@ -54,9 +60,11 @@ namespace Website_Ecommerce.API.Controllers
             }
             // var listFileTypeAllow = "jpg|png|gif|xls|xlsx";   
 
-            if(listFileError.Count() > 0){
+            if (listFileError.Count() > 0)
+            {
 
-                return BadRequest( new Response<ResponseDefault>(){
+                return BadRequest(new Response<ResponseDefault>()
+                {
                     State = false,
                     Message = ErrorCode.NotFound,
                     Result = new ResponseDefault()
@@ -65,10 +73,14 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-            if(AllowLimitFileSize){
-                foreach(var i in files){
-                    if(i.Length > limitFileSize){
-                        listFileError.Add(new FileUploadInfo(){
+            if (AllowLimitFileSize)
+            {
+                foreach (var i in files)
+                {
+                    if (i.Length > limitFileSize)
+                    {
+                        listFileError.Add(new FileUploadInfo()
+                        {
                             filename = i.FileName,
                             filesize = i.Length
                         });
@@ -76,8 +88,10 @@ namespace Website_Ecommerce.API.Controllers
                 }
             }
             var listLinkUploaded = new List<string>();
-            if(listFileError.Count() > 0){
-                return BadRequest( new Response<ResponseDefault>(){
+            if (listFileError.Count() > 0)
+            {
+                return BadRequest(new Response<ResponseDefault>()
+                {
                     State = false,
                     Message = ErrorCode.NotFound,
                     Result = new ResponseDefault()
@@ -86,37 +100,41 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-            foreach(var i in files){
-                if(i.Length > 0){
+            foreach (var i in files)
+            {
+                if (i.Length > 0)
+                {
                     var templateUrl = i.FileName;
                     string filePath = Path.Combine($"{_environment.ContentRootPath}/wwwroot/", templateUrl);
                     string fileName = Path.GetFileName(filePath);
-                    using(var stream = System.IO.File.Create(filePath)){
+                    using (var stream = System.IO.File.Create(filePath))
+                    {
                         await i.CopyToAsync(stream);
                     }
                     listLinkUploaded.Add($"{baseUrl}/wwwroot/{i.FileName}");
                 }
 
             }
-            return Ok( new Response<ResponseDefault>(){
-                    State = true,
-                    Message = ErrorCode.Success,
-                    Result = new ResponseDefault()
-                    {
-                        Data = JsonConvert.SerializeObject(listLinkUploaded)
-                    }
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = JsonConvert.SerializeObject(listLinkUploaded)
+                }
             });
         }
 
         [HttpGet("get-list-product")]
         public async Task<IActionResult> GetListProduct()
         {
-            
+
             var products = await _productRepository.GetAllProduct();
-                                                
-            if(products == null)
+
+            if (products == null)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.NotFound,
@@ -127,41 +145,43 @@ namespace Website_Ecommerce.API.Controllers
                 });
             }
 
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
                 {
-                    State = true,
-                    Message = ErrorCode.Success,
-                    Result = new ResponseDefault()
-                    {
-                        Data = products
-                    }
-                });
+                    Data = products
+                }
+            });
         }
-            [HttpGet("get-product-detail-by/{productId}")]
+
+        [HttpGet("get-product-detail-by/{productId}")]
         public async Task<IActionResult> GetProductDetailByProductId(int productId)
         {
             List<ProductDetail> productDetails = await _productRepository.ProductDetails.Where(x => x.ProductId == productId).ToListAsync();
 
             List<ProductDetailDto> pds = _mapper.Map<List<ProductDetailDto>>(productDetails);
 
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
                 {
-                    State = true,
-                    Message = ErrorCode.Success,
-                    Result = new ResponseDefault()
-                    {
-                        Data = pds
-                    }
-                });
+                    Data = pds
+                }
+            });
         }
 
 
 
         [HttpGet("get-productdetail-by/{productDetailId}")]
-        public async Task<IActionResult> GetProductDetailById(int productDetailId){
+        public async Task<IActionResult> GetProductDetailById(int productDetailId)
+        {
             ProductDetail productDetail = await _productRepository.ProductDetails.Where(p => p.Id == productDetailId).FirstOrDefaultAsync();
-            ProductDetailDto productDetailDto= _mapper.Map<ProductDetailDto>(productDetail);
-            return Ok( new Response<ResponseDefault>()
+            ProductDetailDto productDetailDto = _mapper.Map<ProductDetailDto>(productDetail);
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -172,15 +192,17 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
         [HttpGet("get-image-by-product-detail-id/{productDetailId}")]
-        public async Task<IActionResult> getImageByProductDetailId(int productDetailId){
+        public async Task<IActionResult> getImageByProductDetailId(int productDetailId)
+        {
             ProductImage productImage = await _productRepository.ProductImages.Where(i => i.ProductDetailId == productDetailId).FirstOrDefaultAsync();
-            ProductImageDto productimageDto = new ProductImageDto(){
+            ProductImageDto productimageDto = new ProductImageDto()
+            {
                 Id = productImage.Id,
                 ProductDetailId = productImage.ProductDetailId,
                 UrlImage = productImage.UrlImage
             };
-            
-            return Ok( new Response<ResponseDefault>()
+
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -228,8 +250,8 @@ namespace Website_Ecommerce.API.Controllers
     //     }
     //     return Ok(Results);
     // }
-        
-        
+
+
     // [NonAction]
     // private string GetFilePath(string ProductCode)
     // {
@@ -237,5 +259,5 @@ namespace Website_Ecommerce.API.Controllers
     // }
     // }
 
-    
+
 }

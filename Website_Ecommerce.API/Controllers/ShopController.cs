@@ -42,7 +42,7 @@ namespace Website_Ecommerce.API.Controllers
             _mapper = mapper;
         }
         #region "API  update/ delete / getListShop"
-        
+
 
         [HttpPut("update-shop")]
         public async Task<IActionResult> UpdateShop(ShopDto request, CancellationToken cancellationToken)
@@ -50,9 +50,9 @@ namespace Website_Ecommerce.API.Controllers
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
             //check userId
             Shop shop = _shopRepository.Shops.FirstOrDefault(x => x.UserId == userId);
-            if(shop == null)
+            if (shop == null)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.NotFound,
@@ -69,9 +69,9 @@ namespace Website_Ecommerce.API.Controllers
             shop.Status = false;
             _shopRepository.Update(shop);
             var result = await _shopRepository.UnitOfWork.SaveAsync(cancellationToken);
-            if(result == 0)
+            if (result == 0)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.ExcuteDB,
@@ -84,7 +84,7 @@ namespace Website_Ecommerce.API.Controllers
 
 
 
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -98,14 +98,14 @@ namespace Website_Ecommerce.API.Controllers
         [HttpDelete("delete-shop/{id}")]
         public async Task<IActionResult> DeleteShop(int id)
         {
-            if(id.ToString() is null)
+            if (id.ToString() is null)
             {
                 return BadRequest(null);
             }
             var shop = _shopRepository.Shops.FirstOrDefault(x => x.Id == id);
-            if(shop == null)
+            if (shop == null)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.NotFound,
@@ -117,12 +117,12 @@ namespace Website_Ecommerce.API.Controllers
             }
 
             _shopRepository.Delete(shop);
-            
+
             var result = await _shopRepository.UnitOfWork.SaveAsync();
 
-            if(result > 0)
+            if (result > 0)
             {
-                return Ok( new Response<ResponseDefault>()
+                return Ok(new Response<ResponseDefault>()
                 {
                     State = true,
                     Message = ErrorCode.Success,
@@ -132,7 +132,7 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-            return BadRequest( new Response<ResponseDefault>()
+            return BadRequest(new Response<ResponseDefault>()
             {
                 State = false,
                 Message = ErrorCode.ExcuteDB,
@@ -149,9 +149,9 @@ namespace Website_Ecommerce.API.Controllers
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
             //check userId
             Shop shop = await _shopRepository.Shops.FirstOrDefaultAsync(x => x.UserId == userId);
-            if(shop == null)
+            if (shop == null)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.NotFound,
@@ -161,9 +161,9 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-            
 
-            return Ok( new Response<ResponseDefault>()
+
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -174,13 +174,13 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-        
+
         #endregion
         #region "API Voucher Shop"
         [HttpPost("add-voucher-of-shop")]
         public async Task<IActionResult> AddVoucherShop(VoucherShopDto request, CancellationToken cancellationToken)
-        {   
-            request.CreateAt  = DateTime.Now;
+        {
+            request.CreateAt = DateTime.Now;
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
 
             var user = _userRepository.Users.FirstOrDefault(x => x.Id == userId);
@@ -190,9 +190,9 @@ namespace Website_Ecommerce.API.Controllers
             voucherProduct.ShopId = shop.Id;
             _shopRepository.Add(voucherProduct);
             var result = await _shopRepository.UnitOfWork.SaveAsync(cancellationToken);
-            if(result == 0)
+            if (result == 0)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.ExcuteDB,
@@ -202,7 +202,7 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -217,18 +217,18 @@ namespace Website_Ecommerce.API.Controllers
         {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
 
-            
+
             var shop = _shopRepository.Shops.FirstOrDefault(x => x.UserId == userId);
 
-            
+
             VoucherProduct voucher = _mapper.Map<VoucherProduct>(request);
             voucher.ShopId = shop.Id;
 
             _shopRepository.Update(voucher);
             var result = await _shopRepository.UnitOfWork.SaveAsync(cancellationToken);
-            if(result == 0)
+            if (result == 0)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.ExcuteDB,
@@ -238,7 +238,7 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-                        return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -249,13 +249,14 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
         [HttpGet("get-voucher-of-shop")]
-        public async Task<IActionResult> GetVoucherOfShop(){
+        public async Task<IActionResult> GetVoucherOfShop()
+        {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
             var shop = _shopRepository.Shops.FirstOrDefault(x => x.UserId == userId);
-            
-            List<VoucherProduct> list =  await _shopRepository.voucherProducts.Where(x => x.ShopId == shop.Id).ToListAsync();
+
+            List<VoucherProduct> list = await _shopRepository.voucherProducts.Where(x => x.ShopId == shop.Id).ToListAsync();
             List<VoucherShopDto> listDto = _mapper.Map<List<VoucherShopDto>>(list);
-             return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -267,13 +268,14 @@ namespace Website_Ecommerce.API.Controllers
 
         }
         [HttpGet("get-voucher-of-shop-by/{id}")]
-        public async Task<IActionResult> GetVoucherbyId(int id){
+        public async Task<IActionResult> GetVoucherbyId(int id)
+        {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
             var shop = _shopRepository.Shops.FirstOrDefault(x => x.UserId == userId);
-            
-            VoucherProduct voucherProduct =  await _shopRepository.voucherProducts.Where(x => x.ShopId == shop.Id && x.Id == id).FirstOrDefaultAsync();
+
+            VoucherProduct voucherProduct = await _shopRepository.voucherProducts.Where(x => x.ShopId == shop.Id && x.Id == id).FirstOrDefaultAsync();
             VoucherShopDto voucherProductDto = _mapper.Map<VoucherShopDto>(voucherProduct);
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -286,20 +288,22 @@ namespace Website_Ecommerce.API.Controllers
 
         [HttpGet("get-voucher-of-shop-match")]
 
-        public async Task<IActionResult> GetVoucherShopMatch(int price){
+        public async Task<IActionResult> GetVoucherShopMatch(int price)
+        {
             List<VoucherProduct> vouchers = await _shopRepository.voucherProducts.Where(p => p.MinPrice > price && p.Amount > 0).ToListAsync();
-            if(vouchers.Count() <= 0){
-            return Ok( new Response<ResponseDefault>()
+            if (vouchers.Count() <= 0)
             {
-                State = true,
-                Message = ErrorCode.Success,
-                Result = new ResponseDefault()
+                return Ok(new Response<ResponseDefault>()
                 {
-                    Data = "Khong co voucher nao phu hop"
-                }
-            });
+                    State = true,
+                    Message = ErrorCode.Success,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "Khong co voucher nao phu hop"
+                    }
+                });
             }
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -312,15 +316,17 @@ namespace Website_Ecommerce.API.Controllers
         #endregion
         #region "API Order of Shop"
         [HttpGet("get-list-order-detail-unconfirm-by-shop")]
-        public async Task<IActionResult> GetListUnConfirmOrder(){
+        public async Task<IActionResult> GetListUnConfirmOrder()
+        {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
             var shop = _shopRepository.Shops.FirstOrDefault(x => x.UserId == userId);
             var shopId = shop.Id;
             var listOrderDetailOfShop = await _orderRepository.OrderDetails
                                         .Where(r => r.ShopId == shopId && r.State == (int)StateOrderDetailEnum.UNCONFIRMED)
                                         .ToListAsync();
-            if(listOrderDetailOfShop.Count ==0){
-                 return Ok( new Response<ResponseDefault>()
+            if (listOrderDetailOfShop.Count == 0)
+            {
+                return Ok(new Response<ResponseDefault>()
                 {
                     State = true,
                     Message = ErrorCode.BadRequest,
@@ -330,20 +336,20 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.BadRequest,
+                Result = new ResponseDefault()
                 {
-                    State = true,
-                    Message = ErrorCode.BadRequest,
-                    Result = new ResponseDefault()
-                    {
-                        Data = listOrderDetailOfShop
-                    }
-                });
-            
+                    Data = listOrderDetailOfShop
+                }
+            });
+
         }
         // [HttpGet("get-list-order-detail-of-shop")]
         // public async Task<IActionResult> getListOrderDetailOfShop(){
-            
+
         //     return Ok( new Response<ResponseDefault>()
         //         {
         //             State = true,
@@ -353,14 +359,16 @@ namespace Website_Ecommerce.API.Controllers
         //                 Data = orderDetails
         //             }
         //         });
-            
+
         // }
         [HttpPatch("confirm-order")]
-        public async Task<IActionResult> ConfirmOrder (int orderID, int productDetailId, int state, CancellationToken cancellationToken){
+        public async Task<IActionResult> ConfirmOrder(int orderID, int productDetailId, int state, CancellationToken cancellationToken)
+        {
             var orderDetail = await _orderRepository.OrderDetails
                                 .FirstOrDefaultAsync(r => r.OrderId == orderID && r.ProductDetailId == productDetailId);
-            if(orderDetail == null){
-                return BadRequest( new Response<ResponseDefault>()
+            if (orderDetail == null)
+            {
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = true,
                     Message = ErrorCode.BadRequest,
@@ -368,20 +376,23 @@ namespace Website_Ecommerce.API.Controllers
                     {
                         Data = "Not found Order"
                     }
-                }); 
+                });
             }
-            
+
             orderDetail.State = state /*(int)StateOrderDetailEnum.CONFIRMED*/;
-            if(state == (int)StateOrderEnum.CONFIRMED){
+            if (state == (int)StateOrderEnum.CONFIRMED)
+            {
                 orderDetail.ShopConfirmDate = DateTime.Now;
             }
-            else{
+            else
+            {
                 orderDetail.ShopSendDate = DateTime.Now;
             }
             _orderRepository.Update(orderDetail);
             var result = await _orderRepository.UnitOfWork.SaveAsync(cancellationToken);
-            if(result == 0){
-                return BadRequest( new Response<ResponseDefault>()
+            if (result == 0)
+            {
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = true,
                     Message = ErrorCode.BadRequest,
@@ -391,15 +402,15 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.BadRequest,
+                Result = new ResponseDefault()
                 {
-                    State = true,
-                    Message = ErrorCode.BadRequest,
-                    Result = new ResponseDefault()
-                    {
-                        Data = "successful"
-                    }
-                });
+                    Data = "successful"
+                }
+            });
 
 
         }
