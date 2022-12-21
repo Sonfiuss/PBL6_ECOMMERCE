@@ -41,7 +41,7 @@ export class CartComponent implements OnInit {
   }
 
   loadCart(){
-    this.cartService.getCart(2)
+    this.cartService.getCart()
     .subscribe(
       (res) => this.handleGetCartSuccess(res),
       (err) => this.handleGetCartError(err)

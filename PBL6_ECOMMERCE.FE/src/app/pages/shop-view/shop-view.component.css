@@ -1,0 +1,43 @@
+
+
+
+.shop-overview{
+  margin-top: 50px;
+  margin-right: 70px;
+  margin-bottom: 50px;
+  margin-left: 70px;
+}
+
+.avatar-shop{
+  background: linear-gradient(180deg, rgba(3,3,25,1) 0%, rgba(18,96,113,1) 100%);
+  border-radius: 2%;
+  margin-right: 20px;
+}
+
+.avatar{
+  width : 150px;
+  display: inline-block;
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+.avatar>img{
+  border: solid;
+  border-color: gray;
+  border-width: 3px;
+  border-radius: 50%;
+  width: 100px;
+}
+.shop-name{
+  display: inline-block;
+  margin-top: -10px;
+  color :white;
+  /* font-weight: bold; */
+  font-size: 20px;
+  font-family: Helvetica Neue,Helvetica,Arial,文泉驛正黑,WenQuanYi Zen Hei,Hiragino Sans GB,儷黑 Pro,LiHei Pro,Heiti TC,微軟正黑體,Microsoft JhengHei UI,Microsoft JhengHei,sans-serif;
+}
+
+.shop-indicator,.shop-info{
+  margin-top: 10px;
+}
+

@@ -18,8 +18,8 @@ export class CartService {
     private httpClient: HttpClient,
     private businessService: BusinessService
   ) { }
-  addItem2Cart(){
-    return this.httpClient.post(ADD_ITEM_TO_CART , this.businessService.getRequestOptions())
+  addItem2Cart(data: any){
+    return this.httpClient.post(ADD_ITEM_TO_CART , JSON.stringify(data) , this.businessService.getRequestOptions())
   }
   updateItem(){
     return this.httpClient.post(UPDATE_ITEM_IN_CART, this.businessService.getRequestOptions())
@@ -27,8 +27,7 @@ export class CartService {
   deleteItem(id:any){
     return this.httpClient.delete(DELETE_ITEM_IN_CART(id), this.businessService.getRequestOptions())
   }
-  getCart(id:any){
-    console.log(id)
+  getCart(){
     return this.httpClient.get(GET_ALL_ITEM_BY_USER_ID, this.businessService.getRequestOptions())
   }
 

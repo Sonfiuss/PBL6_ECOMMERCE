@@ -20,6 +20,8 @@ export class InfoComponent implements OnInit {
       reader.readAsDataURL(e.target.files[0]);
       reader.onload=(event:any)=>{
         this.avtUrl=event.target.result;
+        console.log(event.target.result);
+
       }
     }
   }

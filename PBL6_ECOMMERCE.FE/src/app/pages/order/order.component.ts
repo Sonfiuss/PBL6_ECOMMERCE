@@ -41,15 +41,17 @@ export class OrderComponent implements OnInit {
     this.order2 =this.order.map((obj: any) => ({
       amount : obj.amount,
       price : obj.price,
-      idProductDetail : obj.idProductDetail
+      productDetailId : obj.idProductDetail
+
     }))
+    console.log(this.order2);
     this.order2.map((obj:any) => {
       obj.orderId=0,
-      obj.voucherProductId =0,
+      obj.voucherProductId =1,
       obj.note = "nothing";
       return obj;
     })
-    console.log(this.order2);
+    console.log(this.order);
     const submitData = {
       "id": 0,
       "state": 0,
@@ -60,20 +62,16 @@ export class OrderComponent implements OnInit {
       "voucherId": 1,
       "paymentMethodId": 0,
       "totalPrice": 3000,
-      "itemOrderDtos": [{
-        "orderId": 0,
-        "productDetailId": 2,
-        "voucherProductId": 0,
-        "amount": 4,
-        "price": 476456,
-        "note": "string"
-      }]
+      "itemOrderDtos": this.order2
+
     }
+    console.log(submitData)
     this.orderService.addOrder(submitData)
     .subscribe(
       (res:any) => {
         //return home
         this.router.navigate(['/'])
+        alert("them dc roi")
       },
       (err) => {
         alert("k them dc")

@@ -20,6 +20,7 @@ import { OrderComponent } from './pages/order/order.component';
 import { MyorderComponent } from './pages/myaccount/myorder/myorder.component';
 import { DetailComponent } from './pages/detail/detail.component';
 import { ProductDetailComponent } from './pages/home/products/product-detail/product-detail.component';
+import { ShopViewComponent } from './pages/shop-view/shop-view.component';
 
 const routes: Routes = [
   {
@@ -92,8 +93,12 @@ const routes: Routes = [
         component: DetailComponent
       },
       {
-        path: 'product-detail',
+        path: 'product-detail/:id',
         component: ProductDetailComponent
+      },
+      {
+        path: 'shop-view',
+        component: ShopViewComponent
       },
     ]
   }
