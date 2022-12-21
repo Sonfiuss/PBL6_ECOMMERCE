@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data;
 using Website_Ecommerce.API.Data.Entities;
@@ -66,7 +62,7 @@ namespace Website_Ecommerce.API.Repositories
         public void Delete(ProductCategory productCategory)
         {
             _dataContext.Entry(productCategory).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
-            
+
         }
 
         public async Task<IList<ViewProductDTO>> GetAllProduct()
@@ -76,17 +72,19 @@ namespace Website_Ecommerce.API.Repositories
             var productimages = _dataContext.ProductImages;
 
             var pro_prodetail = products.Join(productdetails, p => p.Id, pd => pd.ProductId,
-                                        (p, pd) => new {
+                                        (p, pd) => new
+                                        {
                                             id = p.Id,
                                             name = p.Name,
                                             productdetailId = pd.Id,
                                             price = pd.Price,
                                             initialPrice = pd.InitialPrice,
                                         });
-            
+
 
             var result = await pro_prodetail.Join(productimages, ppd => ppd.productdetailId, img => img.ProductDetailId,
-                                        (ppd, img) => new ViewProductDTO {
+                                        (ppd, img) => new ViewProductDTO
+                                        {
                                             Id = ppd.id,
                                             Name = ppd.name,
                                             InitialPrice = ppd.initialPrice,
@@ -94,9 +92,9 @@ namespace Website_Ecommerce.API.Repositories
                                             ImageURL = img.UrlImage
                                         }).ToListAsync();
             var result2 = (from p in result
-                   group p by new {p.Id} //or group by new {p.ID, p.Name, p.Whatever}
+                           group p by new { p.Id } //or group by new {p.ID, p.Name, p.Whatever}
                    into mygroup
-                   select mygroup.FirstOrDefault()).OrderByDescending(x => x.Id).ToList();
+                           select mygroup.FirstOrDefault()).OrderByDescending(x => x.Id).ToList();
 
             return result2;
         }

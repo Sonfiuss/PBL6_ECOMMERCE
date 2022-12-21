@@ -88,14 +88,14 @@ namespace PBL4.WebAPI
             // }, ServiceLifetime.Scoped);
             //set up dependency entity
             //set up DI Repository
-            services.AddTransient<IIdentityServices, IdentityServices>();
+            services.AddScoped<IIdentityServices, IdentityServices>();
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<ICategroyRepository, CategroyRepository>();
-            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddTransient<ICartRepository, CartRepository>();
             services.AddTransient<IVoucherOrderRepository, VoucherOrderRepository>();
             services.AddTransient<IShopRepository, ShopRepository>();
-            services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddTransient<IStatisticService, StatisticService>();
             services.AddTransient<ICommentRepository, CommentRepository>();
 

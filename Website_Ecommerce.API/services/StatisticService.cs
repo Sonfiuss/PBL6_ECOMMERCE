@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data;
 using Website_Ecommerce.API.Data.Entities;
 using Website_Ecommerce.API.Enum;
 using Website_Ecommerce.API.ModelDtos;
-using Website_Ecommerce.API.Repositories;
 
 namespace Website_Ecommerce.API.services
 {

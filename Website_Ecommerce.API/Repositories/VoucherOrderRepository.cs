@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data;
 using Website_Ecommerce.API.Data.Entities;
@@ -15,7 +11,8 @@ namespace Website_Ecommerce.API.Repositories
 
         public IQueryable<VoucherOrder> VoucherOrders => _dataContext.VoucherOrders;
 
-        public VoucherOrderRepository(DataContext dataContext){
+        public VoucherOrderRepository(DataContext dataContext)
+        {
             _dataContext = dataContext;
         }
 
@@ -36,8 +33,8 @@ namespace Website_Ecommerce.API.Repositories
 
         public async Task<IList<VoucherOrder>> GetAllVoucherMatch()
         {
-            var voucherOrder = await _dataContext.VoucherOrders.Where( x => x.Expired >= DateTime.Now).ToListAsync();
+            var voucherOrder = await _dataContext.VoucherOrders.Where(x => x.Expired >= DateTime.Now).ToListAsync();
             return voucherOrder;
-        }   
+        }
     }
 }

@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Website_Ecommerce.API.Data.Entities;
 
 namespace Website_Ecommerce.API.Repositories
@@ -13,8 +9,8 @@ namespace Website_Ecommerce.API.Repositories
         void Add(OrderDetail orderDetail);
         void Update(OrderDetail orderDetail);
         void Delete(OrderDetail orderDetail);
-        IQueryable<Order> Orders {get;}
-        IQueryable<OrderDetail> OrderDetails {get;}
+        IQueryable<Order> Orders { get; }
+        IQueryable<OrderDetail> OrderDetails { get; }
         /// <summary>
         /// <param name = "userId"></param>
         /// </summary>
@@ -22,7 +18,7 @@ namespace Website_Ecommerce.API.Repositories
         /// <summary>
         /// <param name = "userId"></param>
         /// </summary>
-        Task<IEnumerable<Order>> GetAllOrderOfUser (int id);
+        Task<IEnumerable<Order>> GetAllOrderOfUser(int id);
         /// <summary>
         /// <param name = "orderId"></param>
         /// </summary>

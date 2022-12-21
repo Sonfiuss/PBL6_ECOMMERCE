@@ -13,7 +13,7 @@ namespace Website_Ecommerce.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(AuthenticationSchemes = "MyAuthKey")]
-    [CustomAuthorize(Allows = "Shop")]
+    // [CustomAuthorize(Allows = "2")]
     public class CategoryController : ControllerBase
     {
         private readonly ICategroyRepository _categroyRepository;
