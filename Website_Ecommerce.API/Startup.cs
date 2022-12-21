@@ -99,7 +99,6 @@ namespace PBL4.WebAPI
             services.AddTransient<IStatisticService, StatisticService>();
             services.AddTransient<ICommentRepository, CommentRepository>();
 
-            services.AddTransient<IIdentityServices, IdentityServices>();
             services.AddTransient<IAppQueries>(x=> new AppQueries(Configuration["ConnectionString"]));
 
             //using Auto Mapper

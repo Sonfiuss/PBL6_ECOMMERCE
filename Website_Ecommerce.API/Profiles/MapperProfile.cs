@@ -26,6 +26,9 @@ namespace Website_Ecommerce.API.Profiles
 
             CreateMap<User, ProfileDto>();
             CreateMap<ProfileDto, User>();
+
+            CreateMap<ShopDto, Shop>();
+
             
 
 

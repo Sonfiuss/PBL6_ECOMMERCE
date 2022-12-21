@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Website_Ecommerce.API.Data.Entities;
@@ -17,15 +18,18 @@ namespace Website_Ecommerce.API.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IHttpContextAccessor _httpContext;
         private readonly IShopRepository _shopRepository;
+        private readonly IMapper _mapper;
 
         public UserController(
             IUserRepository userRepository,
             IHttpContextAccessor httpContext,
-            IShopRepository shopRepository)
+            IShopRepository shopRepository,
+            IMapper mapper)
         {
             _userRepository = userRepository;
             _httpContext = httpContext;
             _shopRepository = shopRepository;
+            _mapper = mapper;
         }
 
 
@@ -35,6 +39,8 @@ namespace Website_Ecommerce.API.Controllers
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
 
             User user = _userRepository.Users.FirstOrDefault(x => x.Id == userId);
+
+            // user = _mapper.Map< ProfileDto, User>(request);
 
             user.FirstName = request.FirstName;
             user.LastName = request.LastName;
@@ -80,10 +86,8 @@ namespace Website_Ecommerce.API.Controllers
             var user = _userRepository.Users.FirstOrDefault(x => x.Id == userId);
 
             Shop shop = new Shop();
-            shop.Name = request.Name;
-            shop.Address = request.Address;
-            shop.Email = user.Email; //get shopid from token
-            shop.Phone = request.Phone;
+            shop = _mapper.Map<ShopDto, Shop>(request);
+            shop.Email = user.Email;
             shop.Status = false;
             //totalrate = -1 //confirm role shop
             shop.TotalRate = -1;
@@ -91,8 +95,9 @@ namespace Website_Ecommerce.API.Controllers
             shop.UserId = userId;
             shop.Status = false;
             _shopRepository.Add(shop);
+
             var result = await _shopRepository.UnitOfWork.SaveAsync(cancellationToken);
-            
+
             if (result == 0)
             {
                 return BadRequest(new Response<ResponseDefault>()
