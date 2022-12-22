@@ -18,6 +18,7 @@ namespace Website_Ecommerce.API.Data.Entities
         public int Amount { get; set; }
         public DateTime CreateAt { get; set; }
         public DateTime Expired { get; set; }
+        public string Description { get; set; }
         public ICollection<Order> Orders { get; set; }
     }
 }

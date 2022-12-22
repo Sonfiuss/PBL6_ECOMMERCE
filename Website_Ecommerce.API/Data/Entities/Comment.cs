@@ -24,6 +24,7 @@ namespace Website_Ecommerce.API.Data.Entities
         [MaxLength(1024)]
         public string Content { get; set; }
         public int State { get; set; }
+        public int Rate { get; set; }
         
     }
 }

@@ -52,6 +52,12 @@ namespace Website_Ecommerce.API.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int>("CreateBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreate")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(128)
@@ -74,6 +80,9 @@ namespace Website_Ecommerce.API.Data.Migrations
                         .HasColumnType("varchar(1024)");
 
                     b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rate")
                         .HasColumnType("int");
 
                     b.Property<int>("State")
@@ -228,6 +237,9 @@ namespace Website_Ecommerce.API.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<float>("AverageRate")
+                        .HasColumnType("float");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -244,11 +256,17 @@ namespace Website_Ecommerce.API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int>("Saled")
+                        .HasColumnType("int");
+
                     b.Property<int>("ShopId")
                         .HasColumnType("int");
 
                     b.Property<bool>("Status")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("TotalRate")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -354,6 +372,9 @@ namespace Website_Ecommerce.API.Data.Migrations
                     b.Property<float>("AverageRate")
                         .HasColumnType("float");
 
+                    b.Property<DateTime>("DateCreate")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(128)
                         .HasColumnType("varchar(128)");
@@ -372,6 +393,9 @@ namespace Website_Ecommerce.API.Data.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<int>("TotalCategory")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalProduct")
                         .HasColumnType("int");
 
                     b.Property<int>("TotalRate")
@@ -397,6 +421,9 @@ namespace Website_Ecommerce.API.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreate")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime(6)");
@@ -468,6 +495,9 @@ namespace Website_Ecommerce.API.Data.Migrations
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("Expired")
                         .HasColumnType("datetime(6)");
 
@@ -493,6 +523,9 @@ namespace Website_Ecommerce.API.Data.Migrations
 
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("Expired")
                         .HasColumnType("datetime(6)");
