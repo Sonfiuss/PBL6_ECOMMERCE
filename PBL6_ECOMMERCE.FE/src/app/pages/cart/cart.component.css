@@ -108,11 +108,10 @@ th{
 
 .voucher_content{
   padding-left: 2%;
-  margin-right: 8%;
+  /* margin-right: 2%; */
   border: solid;
   border-width: 1px;
   border-color: gray;
-  border-bottom: none;
 }
 .voucher_content>i ,.voucher_content>p{
   padding-top: 10px;
@@ -285,4 +284,54 @@ td>button{
 }
 .voucher-content> a:hover {
   background-color: rgb(104, 104, 230);
+}
+tfoot{
+  display:none;
+}
+.modal-body{
+  overflow: scroll;
+  overflow-x: hidden;
+  height : 400px;
+}
+.load-voucher{
+  margin-left: 20px;
+  margin-right: 20px;
+
+}
+.voucher-border{
+  border :solid;
+  border-width: 1px;
+  border-color: rgb(202, 199, 199);
+  box-shadow: 1px 2px rgb(202, 199, 199);
+  border-radius: 1%;
+}
+.img-shop{
+  width: 115px;
+  height: 115px;
+
+}
+.img-shop>img{
+  border-radius: 50%;
+  width: 60px;
+  margin-top: 24%;
+  margin-left: 12%;
+}
+.list-voucher{
+  border-left: dashed;
+  border-color: rgb(202, 199, 199);
+  border-width: 0.5px;
+}
+.content-voucher{
+  padding-top: 7%;
+}
+.content-voucher>p{
+  margin:0
+}
+.btn-light {
+  color: white;
+  background-color:  rgb(30, 69, 105) ; ;
+}
+.btn-light:hover{
+  color: rgb(30, 69, 105);
+  background-color:  white ;
 }
