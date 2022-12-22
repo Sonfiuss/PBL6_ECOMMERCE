@@ -24,6 +24,7 @@ export class OrderComponent implements OnInit {
   orderSend :any;
   target : any;
   orderVoucherValue :number =0;
+  orderVoucherId :number =0;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -48,6 +49,7 @@ export class OrderComponent implements OnInit {
       console.log(this.order);
     });
     this.loadVoucherShop()
+    this.loadVoucherOrder()
     this.order.map((obj:any) => {
       obj.voucherProductId =0,
       obj.totalPrice= obj.price*obj.amount,
@@ -78,9 +80,9 @@ export class OrderComponent implements OnInit {
       "recipientName": "Thinhnguyen",
       "recipientPhone": "0965243513",
       "userId": 0,
-      "voucherId": 1,
+      "voucherId": this.orderVoucherId,
       "paymentMethodId": 0,
-      "totalPrice": 3000,
+      "totalPrice": this.sumPrice,
       "itemOrderDtos": this.orderSend
 
     }
@@ -88,7 +90,7 @@ export class OrderComponent implements OnInit {
     .subscribe(
       (res:any) => {
         //return home
-        this.router.navigate(['/'])
+        this.router.navigate(['/cart'])
         alert("them dc roi")
       },
       (err) => {
@@ -106,8 +108,9 @@ export class OrderComponent implements OnInit {
 
   openModalOrderVoucher(content: any) {
     this.orderVoucherValue = 0
+    this.orderVoucherId = 0
 		this.modalService.open(content, { centered: true });
-    this.loadVoucherOrder()
+
 	}
 
   loadVoucherShop(){
@@ -147,8 +150,9 @@ export class OrderComponent implements OnInit {
     this.order[this.target].voucherProductId = id;
     this.loadSumPrice()
   }
-  selectedOrderVoucher(val:any){
+  selectedOrderVoucher(val:any,id:any){
     this.orderVoucherValue = val
+    this.orderVoucherId = id
     this.loadSumPrice()
   }
 
