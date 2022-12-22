@@ -162,19 +162,16 @@ export class OrderComponent implements OnInit {
     this.sumPrice -= this.orderVoucherValue
   }
   deleteItem(){
-    if(window.confirm("Ban thuc su muon xoa")){
-      for (let i=0 ; i< this.order.length; i++){
-        this.cartService.deleteItem(this.order[i].id)
-      .subscribe(
-        (res:any) => {
+    for (let i=0 ; i< this.order.length; i++){
+      this.cartService.deleteItem(this.order[i].id)
+    .subscribe(
+      (res:any) => {
 
-        },
-        (err) => {
-          alert("Delete fail. Detail: " + JSON.stringify(err))
-        }
-      )
+      },
+      (err) => {
+        alert("Delete fail. Detail: " + JSON.stringify(err))
       }
-
+    )
     }
 
   }
