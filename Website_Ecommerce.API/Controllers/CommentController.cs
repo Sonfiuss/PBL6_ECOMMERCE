@@ -43,11 +43,27 @@ namespace Website_Ecommerce.API.Controllers
         {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
 
+            var existComment = await _commentRepository.Comments.FirstOrDefaultAsync(x => x.ProductId == request.ProductId && x.UserId == userId);
+            if(existComment != null)
+            {
+                return BadRequest(new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.ExistedDB,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "Ban da danh gia roi"
+                    }
+                });
+            }
+
             Comment comment = new Comment();
             comment.Content = request.Content;
             comment.UserId = userId;
             comment.ProductId = request.ProductId;
-            comment.State = 1; //ton tai
+            // 0 is delete, 1 is ton tai
+            comment.State = 1;
+            comment.Rate = request.Rate;
             _commentRepository.Add(comment);
             var result = await _commentRepository.UnitOfWork.SaveAsync(cancellationToken);
 
@@ -96,6 +112,7 @@ namespace Website_Ecommerce.API.Controllers
             }
 
             comment.Content = request.Content;
+            comment.Rate = request.Rate;
             _commentRepository.Update(comment);
             var result = await _commentRepository.UnitOfWork.SaveAsync(cancellationToken);
 

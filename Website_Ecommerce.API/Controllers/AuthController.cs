@@ -63,7 +63,8 @@ namespace Website_Ecommerce.API.Controllers
                 Email = request.Email,
                 Gender = request.Gender,
                 IsBlock = false,
-                Password = _identityServices.GetMD5(request.Password)
+                Password = _identityServices.GetMD5(request.Password),
+                DateCreate = DateTime.Now
             };
 
             _userRepository.Add(user);

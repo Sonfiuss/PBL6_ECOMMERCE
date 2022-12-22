@@ -53,6 +53,9 @@ namespace Website_Ecommerce.API.Controllers
             product.Origin = request.Origin;
             product.Description = request.Description;
             product.Status = request.Status;
+            product.TotalRate = 0;
+            product.Saled = 0;
+            product.AverageRate = 0;
             _productRepository.Add(product);
             var result = await _productRepository.UnitOfWork.SaveAsync(cancellationToken);
             if(result == 0)

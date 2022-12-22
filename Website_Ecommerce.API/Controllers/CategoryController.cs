@@ -18,20 +18,27 @@ namespace Website_Ecommerce.API.Controllers
     {
         private readonly ICategroyRepository _categroyRepository;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContext;
 
         public CategoryController(
             ICategroyRepository categroyRepository,
-            IMapper mapper)
+            IMapper mapper,
+            IHttpContextAccessor httpContext)
         {
             _categroyRepository = categroyRepository;
             _mapper = mapper;
+            _httpContext = httpContext;
         }
 
         [HttpPost("add-category")]
         public async Task<IActionResult> AddCategory([FromBody] CategoryDto request, CancellationToken cancellationToken)
         {
+            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
+
             Category category = new Category();
             category.Name = request.Name;
+            category.CreateBy = userId;
+            category.DateCreate = DateTime.Now;
             _categroyRepository.Add(category);
             var result = await _categroyRepository.UnitOfWork.SaveAsync(cancellationToken);
 
