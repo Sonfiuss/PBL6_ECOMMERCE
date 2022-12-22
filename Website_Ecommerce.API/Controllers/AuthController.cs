@@ -40,11 +40,16 @@ namespace Website_Ecommerce.API.Controllers
             _mapper = mapper;
         }
 
-
-
+        /// <summary>
+        /// Register 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto request, CancellationToken cancellationToken)
         {
+            // Check username & email khong trung
             User isExist = await _userRepository.Users.FirstOrDefaultAsync(x => x.Username == request.Username || x.Email == request.Email);
 
             if (isExist != null)
@@ -55,7 +60,6 @@ namespace Website_Ecommerce.API.Controllers
                     Message = ErrorCode.ExistUserOrEmail
                 });
             }
-
 
             var user = new User
             {
@@ -103,10 +107,16 @@ namespace Website_Ecommerce.API.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Login
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns> Token </returns>
         [HttpPost("login")]
         public async Task<Response<ResponseToken>> Login(LoginDto request, CancellationToken cancellationToken)
         {
+            // Check username va account active
             User user = await _userRepository.Users.FirstOrDefaultAsync(x => x.Username == request.Username && x.IsBlock == false);
 
             if (user == null)
@@ -118,11 +128,12 @@ namespace Website_Ecommerce.API.Controllers
                 };
             }
 
-
+            // Check password
             if (_identityServices.VerifyMD5Hash(user.Password, _identityServices.GetMD5(request.Password)))
             {
+                // Thoi gian token co hieu luc
                 int timeOut = 60 * 60 * 24;
-
+                // Lay roleId cua user
                 List<int> roleIds = _userRepository.UserRoles
                     .Where(x => x.UserId == user.Id).Select(x => x.RoleId).ToList();
 
@@ -151,10 +162,17 @@ namespace Website_Ecommerce.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Reset password
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [Authorize(AuthenticationSchemes = "MyAuthKey")]
         [HttpPut("reset-password")]
         public async Task<IActionResult> ResetPassword(ResetPasswordDto request, CancellationToken cancellationToken)
         {
+            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
             User user = await _userRepository.Users.FirstOrDefaultAsync(x => x.Username == request.Username);
 
             if (user == null)
@@ -170,7 +188,7 @@ namespace Website_Ecommerce.API.Controllers
                 });
             }
 
-            // kiem tra pass cu
+            // Check pass
             if (_identityServices.VerifyMD5Hash(user.Password, _identityServices.GetMD5(request.PasswordOld)))
             {
                 if (request.PasswordNew == request.RePassword)
@@ -228,6 +246,12 @@ namespace Website_Ecommerce.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Forget password
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPut("forget-password")]
         public async Task<IActionResult> ForgetPassword([FromBody] ForgetPasswordDto request, CancellationToken cancellationToken)
         {
@@ -241,7 +265,7 @@ namespace Website_Ecommerce.API.Controllers
                     Message = ErrorCode.NotFound,
                     Result = new ResponseDefault()
                     {
-                        Data = "Not"
+                        Data = "Not Found"
                     }
                 });
             }

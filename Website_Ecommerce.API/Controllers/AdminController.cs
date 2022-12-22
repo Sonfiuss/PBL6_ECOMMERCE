@@ -38,11 +38,13 @@ namespace Website_Ecommerce.API.Controllers
             _mapper = mapper;
         }
 
-        //Get list all user
+        /// <summary>
+        /// Get list user
+        /// </summary>
+        /// <returns> List<User> </returns>
         [HttpGet("get-list-user")]
         public async Task<IActionResult> GetListUser()
         {
-
             List<User> users = await _userRepository.Users.ToListAsync();
             if (users == null)
             {
@@ -69,7 +71,12 @@ namespace Website_Ecommerce.API.Controllers
         }
 
 
-
+        /// <summary>
+        /// Update state of user by userId
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPut("update-state-user-by/{id}")]
         public async Task<IActionResult> BLockUser(int userId, CancellationToken cancellationToken)
         {
@@ -103,14 +110,14 @@ namespace Website_Ecommerce.API.Controllers
 
         #region confirm role shop, update state of shop, get list shop waiting confirm role shop
 
-        //Get list Shop
-        //true la hoat dong
-        //false la khong hoat dong
+        /// <summary>
+        /// Get list shop active
+        /// </summary>
+        /// <returns> List<Shop> </returns>
         [HttpGet("get-list-shop-active")]
         public async Task<IActionResult> GetListShopActive()
         {
-
-            //check userId
+            // State = true la active
             List<Shop> shops = await _shopRepository.Shops.Where(x => x.Status == true).ToListAsync();
             if (shops == null)
             {
@@ -136,6 +143,10 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
+        /// <summary>
+        /// Get list shop no active
+        /// </summary>
+        /// <returns> List<Shop> </returns>
         [HttpGet("get-list-shop-no-active")]
         public async Task<IActionResult> GetListShopNoActive()
         {
@@ -164,9 +175,14 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
+        /// <summary>
+        /// Get list shop wating confirm register by admin
+        /// </summary>
+        /// <returns> List<Shop> </returns>
         [HttpGet("get-list-shop-waiting-confirm")]
         public async Task<IActionResult> GetListShopWaitingConfirm()
         {
+            // State xac nhan la Status = false & TotalRate = -1
             List<Shop> shops = await _shopRepository.Shops.Where(x => x.Status == false && x.TotalRate == -1).ToListAsync();
             if (shops == null)
             {
@@ -192,6 +208,12 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
+        /// <summary>
+        /// Confirm role shop of user by id
+        /// </summary>
+        /// <param name="shopId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPut("confirm-role-shop-of-user-by/{id}")]
         public async Task<IActionResult> ConfirmRoleShopOfUser(int shopId, CancellationToken cancellationToken)
         {
@@ -235,6 +257,12 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
+        /// <summary>
+        /// Update state active of shop by id
+        /// </summary>
+        /// <param name="shopId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPut("update-state-shop-by/{id}")]
         public async Task<IActionResult> BlockShop(int shopId, CancellationToken cancellationToken)
         {

@@ -21,7 +21,7 @@ namespace Website_Ecommerce.API.Repositories
             _dataContext.Add(voucherOrder);
         }
 
-        public async Task<IEnumerable<VoucherOrder>> GetAllVoucherbyDate(DateTime start, DateTime end)
+        public async Task<IEnumerable<VoucherOrder>> GetAllVoucherByDate(DateTime start, DateTime end)
         {
             return await _dataContext.VoucherOrders.Where(x => x.CreateAt >= start && x.Expired <= end).ToListAsync();
         }
@@ -31,7 +31,7 @@ namespace Website_Ecommerce.API.Repositories
             _dataContext.Entry(voucherOrder).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         }
 
-        public async Task<IList<VoucherOrder>> GetAllVoucherMatch()
+        public async Task<List<VoucherOrder>> GetAllVoucherMatch()
         {
             var voucherOrder = await _dataContext.VoucherOrders.Where(x => x.Expired >= DateTime.Now).ToListAsync();
             return voucherOrder;

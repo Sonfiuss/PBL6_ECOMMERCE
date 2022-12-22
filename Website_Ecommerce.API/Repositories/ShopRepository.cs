@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data;
 using Website_Ecommerce.API.Data.Entities;
 
@@ -37,9 +38,9 @@ namespace Website_Ecommerce.API.Repositories
             _dataContext.Entry(voucherProduct).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
         }
 
-        public IList<VoucherProduct> GetGetVoucherMatch(ProductDetail productdetail)
+        public async Task<List<VoucherProduct>> GetVoucherMatch(ProductDetail productdetail)
         {
-            return _dataContext.VoucherProducts.Where(p => p.MinPrice < productdetail.Price).ToList();
+            return await _dataContext.VoucherProducts.Where(p => p.MinPrice < productdetail.Price).ToListAsync();
         }
 
         public void Update(Shop shop)
@@ -52,5 +53,34 @@ namespace Website_Ecommerce.API.Repositories
             _dataContext.Entry(voucherProduct).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         }
 
+        public async Task<int> CountTotalProduct(int id)
+        {
+            return await _dataContext.Products.CountAsync(x => x.ShopId == id);
+        }
+
+        public async Task<int> CountTotalRating(int id)
+        {
+            var listQuantityRate = await _dataContext.Shops
+            .Join(_dataContext.Products,
+            shop => shop.Id,
+            product => product.ShopId,
+            (shop, product) => new { shop, product })
+            .Where(x => x.shop.Id == id)
+            .Select(x => x.product.TotalRate)
+            .ToListAsync();
+
+            int result = 0;
+            foreach (var i in listQuantityRate)
+            {
+                result += i;
+            }
+
+            return result;
+        }
+
+        public async Task<double> AvgRating(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

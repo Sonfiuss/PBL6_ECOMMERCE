@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -38,13 +34,19 @@ namespace Website_Ecommerce.API.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Add comment
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost("add-comment")]
         public async Task<IActionResult> AddComment([FromBody] CommentDto request, CancellationToken cancellationToken)
         {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
 
-            var existComment = await _commentRepository.Comments.FirstOrDefaultAsync(x => x.ProductId == request.ProductId && x.UserId == userId);
-            if(existComment != null)
+            Comment existComment = await _commentRepository.Comments.FirstOrDefaultAsync(x => x.ProductId == request.ProductId && x.UserId == userId);
+            if (existComment != null)
             {
                 return BadRequest(new Response<ResponseDefault>()
                 {
@@ -57,15 +59,18 @@ namespace Website_Ecommerce.API.Controllers
                 });
             }
 
-            Comment comment = new Comment();
-            comment.Content = request.Content;
-            comment.UserId = userId;
-            comment.ProductId = request.ProductId;
-            // 0 is delete, 1 is ton tai
-            comment.State = 1;
-            comment.Rate = request.Rate;
+            Comment comment = new Comment
+            {
+                Content = request.Content,
+                UserId = userId,
+                ProductId = request.ProductId,
+                // 0 is delete, 1 is ton tai
+                State = 1,
+                Rate = request.Rate
+            };
+
             _commentRepository.Add(comment);
-            var result = await _commentRepository.UnitOfWork.SaveAsync(cancellationToken);
+            int result = await _commentRepository.UnitOfWork.SaveAsync(cancellationToken);
 
             if (result > 0)
             {
@@ -91,7 +96,12 @@ namespace Website_Ecommerce.API.Controllers
         }
 
 
-
+        /// <summary>
+        /// Update comment
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPut("update-comment")]
         public async Task<IActionResult> UpdateComment([FromBody] CommentDto request, CancellationToken cancellationToken)
         {
@@ -110,9 +120,7 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-
-            comment.Content = request.Content;
-            comment.Rate = request.Rate;
+            comment = _mapper.Map(request, comment);
             _commentRepository.Update(comment);
             var result = await _commentRepository.UnitOfWork.SaveAsync(cancellationToken);
 
@@ -139,6 +147,11 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
+        /// <summary>
+        /// Delete commnet by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPut("delete-comment/{id}")]
         public async Task<IActionResult> DeleteComment(int id)
         {
@@ -185,18 +198,15 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
+        /// <summary>
+        /// List comment of product 
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
         [HttpGet("list-comment-by/{id}")]
         public async Task<IActionResult> GetListComment(int productId)
         {
-            // var listcomments = await _commentRepository.Comments.Where(x => x.State == 1).Select(x => new {x.Id, x.UserId, x.Content}).ToListAsync();
-            var listCommentDetails = await _commentRepository.Comments.Where(x => x.State == 1).Join(_userRepository.Users, c => c.UserId, u => u.Id,
-                                                                        (c, u) => new
-                                                                        {
-                                                                            Id = c.Id,
-                                                                            Content = c.Content,
-                                                                            Username = u.Username,
-                                                                            Avatar = u.UrlAvatar
-                                                                        }).ToListAsync();
+            var listCommentDetails = await _commentRepository.GetCommentDetails();
 
             return Ok(new Response<ResponseDefault>()
             {

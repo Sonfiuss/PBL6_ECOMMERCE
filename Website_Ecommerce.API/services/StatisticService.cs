@@ -5,14 +5,14 @@ using Website_Ecommerce.API.ModelDtos;
 
 namespace Website_Ecommerce.API.services
 {
-    public  class StatisticService : IStatisticService
-    {   
+    public class StatisticService : IStatisticService
+    {
         private DataContext _dataContext;
         public StatisticService(DataContext dataContext)
-                                    {
+        {
             _dataContext = dataContext;
         }
-        
+
         public async Task<IList<ShopStatisticProductDto>> StatisticProduct(int idShop)
         {
             var products = _dataContext.Products;
@@ -20,7 +20,7 @@ namespace Website_Ecommerce.API.services
             var orderConfirmed = _dataContext.OrderDetails.Where(x => x.State == (int)StateOrderEnum.SHOP_SENT && x.ShopId == idShop);
             var orderUnConfirm = _dataContext.OrderDetails.Where(x => x.State == (int)StateOrderEnum.SENT && x.ShopId == idShop);
 
-            var listSold =  orderConfirmed.GroupBy(o => o.ProductDetailId)
+            var listSold = orderConfirmed.GroupBy(o => o.ProductDetailId)
                                                     .Select(od => new OrderDetail
                                                     {
                                                         ProductDetailId = od.First().ProductDetailId,
@@ -28,17 +28,20 @@ namespace Website_Ecommerce.API.services
                                                     });
 
             var sumOrderUnconfirmed = orderUnConfirm.GroupBy(o => o.ProductDetailId)
-                                                    .Select(od => new OrderDetail{
+                                                    .Select(od => new OrderDetail
+                                                    {
                                                         ProductDetailId = od.First().ProductDetailId,
-                                                        Amount = od.Sum(d=> d.Amount)
+                                                        Amount = od.Sum(d => d.Amount)
                                                     });
-            var order_product_detail =  productdetails.GroupJoin(listSold, p => p.Id, s => s.ProductDetailId, (p, sol) => 
-                                                                new{
+            var order_product_detail = productdetails.GroupJoin(listSold, p => p.Id, s => s.ProductDetailId, (p, sol) =>
+                                                                new
+                                                                {
                                                                     p = p,
                                                                     sol = sol
                                                                 }).SelectMany(temp => temp.sol.DefaultIfEmpty(),
-                                                                (temp, Sol) => 
-                                                                new{
+                                                                (temp, Sol) =>
+                                                                new
+                                                                {
                                                                     Sold = (Sol == null) ? "0" : Sol.Amount.ToString(),
                                                                     Id = temp.p.Id,
                                                                     ProductId = temp.p.ProductId,

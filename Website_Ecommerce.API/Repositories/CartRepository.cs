@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data;
 using Website_Ecommerce.API.Data.Entities;
-using Website_Ecommerce.API.ModelDtos;
+using Website_Ecommerce.API.ModelQueries;
 
 namespace Website_Ecommerce.API.Repositories
 {
@@ -32,7 +32,12 @@ namespace Website_Ecommerce.API.Repositories
             _dataContext.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         }
 
-        public async Task<IEnumerable<ViewItemCartDto>> GetAllItemByIdUser(int id)
+        /// <summary>
+        /// Get all item by userId
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<ItemCartQueryModel>> GetAllItemByIdUser(int id)
         {
             var itemCart = _dataContext.Carts.Where(x => x.UserId == id && x.State == true);
             var pdetail = _dataContext.ProductDetails;
@@ -48,7 +53,7 @@ namespace Website_Ecommerce.API.Repositories
                                             amount = i.Amount
                                         });
 
-            return await itemPdetail.Join(product, ip => ip.idProduct, p => p.Id, (ip, p) => new ViewItemCartDto
+            return await itemPdetail.Join(product, ip => ip.idProduct, p => p.Id, (ip, p) => new ItemCartQueryModel
             {
                 Id = ip.id,
                 NameProduct = p.Name,

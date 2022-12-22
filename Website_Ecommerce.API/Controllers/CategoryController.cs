@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data.Entities;
 using Website_Ecommerce.API.ModelDtos;
+using Website_Ecommerce.API.ModelQueries;
 using Website_Ecommerce.API.Repositories;
 using Website_Ecommerce.API.Response;
-using Website_Ecommerce.API.services;
 
 namespace Website_Ecommerce.API.Controllers
 {
@@ -30,15 +30,23 @@ namespace Website_Ecommerce.API.Controllers
             _httpContext = httpContext;
         }
 
+        /// <summary>
+        /// Add category
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost("add-category")]
         public async Task<IActionResult> AddCategory([FromBody] CategoryDto request, CancellationToken cancellationToken)
         {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
 
-            Category category = new Category();
-            category.Name = request.Name;
-            category.CreateBy = userId;
-            category.DateCreate = DateTime.Now;
+            Category category = new Category
+            {
+                Name = request.Name,
+                CreateBy = userId,
+                DateCreate = DateTime.Now
+            };
             _categroyRepository.Add(category);
             var result = await _categroyRepository.UnitOfWork.SaveAsync(cancellationToken);
 
@@ -65,7 +73,12 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-
+        /// <summary>
+        /// Update Category
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPut("update-category")]
         public async Task<IActionResult> UpdateCategory([FromBody] CategoryDto request, CancellationToken cancellationToken)
         {
@@ -110,6 +123,11 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
+        /// <summary>
+        /// Delete category by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("delete-category/{id}")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
@@ -153,11 +171,14 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
+        /// <summary>
+        /// Get list category
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("list-category")]
-
         public async Task<IActionResult> GetListCategory()
         {
-            var categories = await _categroyRepository.Categories.Select(x => new Category { Id = x.Id, Name = x.Name }).ToListAsync();
+            var categories = await _categroyRepository.Categories.Select(x => new CategoryQueryModel { Id = x.Id, Name = x.Name }).ToListAsync();
 
             return Ok(new Response<ResponseDefault>()
             {
@@ -174,7 +195,7 @@ namespace Website_Ecommerce.API.Controllers
         public async Task<IActionResult> GetCategoryById(int id)
         {
             return Ok(await _categroyRepository.Categories
-                .Select(x => new { x.Id, x.Name })
+                .Select(x => new CategoryQueryModel { Id = x.Id, Name = x.Name })
                 .FirstOrDefaultAsync(x => x.Id == id)
             );
         }

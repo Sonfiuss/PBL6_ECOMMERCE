@@ -10,12 +10,9 @@ namespace Website_Ecommerce.API.ModelQueries
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Material { get; set; }
-        public string Origin { get; set; }
-        public string Description { get; set; }
-        public int Status { get; set; }
-        
-        public List<ProductDetail> productDetails { get; set;}
-        public List<ProductImage> productImages { get; set; }
+        public double Price { get; set; }
+        public double InitialPrice { get; set; }
+        public string ImageURL { get; set; }
+        // public int Saled { get; set; }
     }
 }

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +25,12 @@ namespace Website_Ecommerce.API.Controllers
             _voucherOrderRepository = voucherOrder;
         }
 
-
+        /// <summary>
+        /// Add voucher by admin
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost("add-voucher-by-admin")]
         public async Task<IActionResult> Add([FromBody] VoucherOrderDto request, CancellationToken cancellationToken)
         {
@@ -56,6 +60,12 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
+        /// <summary>
+        /// Update voucher by admin
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost("update-voucher-by-admin")]
         public async Task<IActionResult> Update([FromBody] VoucherOrderDto request, CancellationToken cancellationToken)
         {
@@ -85,7 +95,12 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-
+        /// <summary>
+        /// Delete voucher by admin follow id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpDelete("delete-Voucher-by-admin/{id}")]
         public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
         {
@@ -130,8 +145,12 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-
-        [HttpGet("GetVoucherOrderby/{id}")]
+        /// <summary>
+        /// Get voucher order by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("get-voucher-order-by/{id}")]
         public async Task<IActionResult> GetVoucherOrderById(int id)
         {
             var voucherOrder = await _voucherOrderRepository.VoucherOrders.FirstOrDefaultAsync(p => p.Id == id);
@@ -158,7 +177,10 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-
+        /// <summary>
+        /// Get all voucher order by admin
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("get-all-voucher-order-by-admin")]
         public async Task<IActionResult> GetAllVoucherOrder()
         {
@@ -186,11 +208,16 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="timeIn"></param>
+        /// <param name="timeOut"></param>
+        /// <returns></returns>Get voucher order by time
         [HttpGet("get-voucher-order-by-time")]
         public async Task<IActionResult> getVoucherOrderByTime(DateTime timeIn, DateTime timeOut)
         {
-            var listVoucher = await _voucherOrderRepository.GetAllVoucherbyDate(timeIn, timeOut);
+            var listVoucher = await _voucherOrderRepository.GetAllVoucherByDate(timeIn, timeOut);
             return Ok(new Response<ResponseDefault>()
             {
                 State = true,
@@ -202,7 +229,10 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-
+        /// <summary>
+        /// get voucher availablility
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("get-voucher-availability")]
         public async Task<IActionResult> getVoucherAvailability()
         {
@@ -219,6 +249,6 @@ namespace Website_Ecommerce.API.Controllers
 
         }
 
-        
+
     }
 }

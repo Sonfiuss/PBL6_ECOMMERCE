@@ -1,15 +1,6 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace PBL4.WebAPI
 {
@@ -22,15 +13,15 @@ namespace PBL4.WebAPI
         {
             IPAddress ipAddress = IPAddress.Parse("127.0.0.1"); // conver a ip address to IpAddress Instance
             serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            
-            
+
+
             serverSocket.Bind(new IPEndPoint(ipAddress, myPort));
             serverSocket.Listen(10); //quantity of client can listen
             Console.WriteLine("Enpoint dung de giao tiep cua server: ", serverSocket.LocalEndPoint.ToString());
             // khi co 1 client connect toi thi khoi tao 1 thread moi
             Thread myThread = new Thread(ListenClientConnect);
             myThread.Start();
-            
+
             CreateHostBuilder(args).Build().Run();
             Console.ReadLine();
         }
@@ -39,7 +30,7 @@ namespace PBL4.WebAPI
         /// </summary>
         private static void ListenClientConnect()
         {
-            while(true)
+            while (true)
             {
                 Socket clientSocket = serverSocket.Accept();
                 clientSocket.Send(Encoding.ASCII.GetBytes("Server Say Hello to Client : "
@@ -59,7 +50,7 @@ namespace PBL4.WebAPI
                     Console.WriteLine("client endpoint: ", myClientSocket.RemoteEndPoint.ToString(),
                         Encoding.ASCII.GetString(result, 0, receiveNumber)); // 0: offset 
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                     myClientSocket.Shutdown(SocketShutdown.Both); // disable two socket client and server while exception occur

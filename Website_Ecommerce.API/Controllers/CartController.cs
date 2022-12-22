@@ -26,13 +26,24 @@ namespace Website_Ecommerce.API.Controllers
             _mapper = mapper;
             _cartRepository = cartRepository;
         }
+
+        /// <summary>
+        /// Add item to cart
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost("add-item-to-cart")]
         public async Task<IActionResult> AddItemToCart([FromBody] CartDto request, CancellationToken cancellationToken)
         {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
-            request.UserId = userId;
-            var item = _mapper.Map<Cart>(request);
-            item.State = true;
+
+            Cart item = new Cart()
+            {
+                State = true,
+                UserId = userId
+            };
+            item = _mapper.Map(request, item);
             _cartRepository.Add(item);
             var result = await _cartRepository.UnitOfWork.SaveAsync(cancellationToken);
             if (result == 0)
@@ -58,14 +69,23 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
+        /// <summary>
+        /// Update item in cart
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost("update-item-in-cart")]
         public async Task<IActionResult> UpdateItemCart([FromBody] CartDto request, CancellationToken cancellationToken)
         {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
-            request.UserId = userId;
 
-            var item = _mapper.Map<Cart>(request);
-            item.State = true;
+            Cart item = new Cart()
+            {
+                State = true,
+                UserId = userId
+            };
+            item = _mapper.Map(request, item);
             _cartRepository.Update(item);
             var result = await _cartRepository.UnitOfWork.SaveAsync(cancellationToken);
             if (result == 0)
@@ -92,7 +112,11 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-
+        /// <summary>
+        /// Delete item in cart by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("delete-item-in-cart/{id}")]
         public async Task<IActionResult> DeleteItemInCart(int id)
         {
@@ -140,6 +164,10 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
+        /// <summary>
+        /// Get all items of user
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("get-all-items-of-user")]
         public async Task<IActionResult> GetAllItemByIdUser()
         {

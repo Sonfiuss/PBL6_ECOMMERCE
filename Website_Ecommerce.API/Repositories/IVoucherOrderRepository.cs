@@ -7,8 +7,20 @@ namespace Website_Ecommerce.API.Repositories
         void Add(VoucherOrder voucherOrder);
         void Update(VoucherOrder voucherOrder);
         IQueryable<VoucherOrder> VoucherOrders { get; }
-        Task<IEnumerable<VoucherOrder>> GetAllVoucherbyDate(DateTime start, DateTime end);
+
+        /// <summary>
+        /// Get all voucher by date
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        Task<IEnumerable<VoucherOrder>> GetAllVoucherByDate(DateTime start, DateTime end);
         // Task<IList<VoucherOrder>> GetAllVoucherbyCheckVoucher(Order order);
-        Task<IList<VoucherOrder>> GetAllVoucherMatch();
+
+        /// <summary>
+        /// Get all voucher match
+        /// </summary>
+        /// <returns></returns>
+        Task<List<VoucherOrder>> GetAllVoucherMatch();
     }
 }

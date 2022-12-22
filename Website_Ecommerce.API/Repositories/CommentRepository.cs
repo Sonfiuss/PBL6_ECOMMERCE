@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data;
 using Website_Ecommerce.API.Data.Entities;
 using Website_Ecommerce.API.ModelQueries;
@@ -32,17 +33,24 @@ namespace Website_Ecommerce.API.Repositories
             _dataContext.Entry(comment).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         }
 
-        public async Task<List<UserCommentQueryModel>> GetComments()
+        /// <summary>
+        /// Get list comment detail
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<CommentDetailQueryModel>> GetCommentDetails()
         {
-            var listComment = from comment in _dataContext.Comments 
-                            join user in _dataContext.Users  on comment.UserId equals user.Id
-                            select new UserCommentQueryModel {
-                                Username = user.Username,
-                                Avatar = user.UrlAvatar,
-                                Content = comment.Content
-                            };
-            return (List<UserCommentQueryModel>)listComment;               
-            
+            var listCommentDetails = await _dataContext.Comments.Where(x => x.State == 1).Join(_dataContext.Users, c => c.UserId, u => u.Id,
+                                                                        (c, u) => new CommentDetailQueryModel
+                                                                        {
+                                                                            Id = c.Id,
+                                                                            ProductId = c.ProductId,
+                                                                            Content = c.Content,
+                                                                            Username = u.Username,
+                                                                            Avatar = u.UrlAvatar,
+                                                                            Rate = c.Rate
+                                                                        }).ToListAsync();
+            return listCommentDetails;
+
         }
 
     }

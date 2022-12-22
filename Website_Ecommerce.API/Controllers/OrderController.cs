@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -37,7 +33,12 @@ namespace Website_Ecommerce.API.Controllers
             _productRepository = productRepository;
         }
 
-
+        /// <summary>
+        /// Add order
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost("add-order")]
         public async Task<IActionResult> AddOrder([FromBody] OrderDto request, CancellationToken cancellationToken)
         {
@@ -55,13 +56,9 @@ namespace Website_Ecommerce.API.Controllers
                 VoucherId = request.VoucherId,
                 State = (int)StateOrderEnum.SENT,
                 TotalPrice = request.totalPrice
-                // TotalPrice = totalPrice
             };
-            // if(voucherOrder.MinPrice > totalPrice){
-            //     //Message Can't apply voucher to Order 
-            //     order.VoucherId = null;
-            // }
-            // else{
+
+
             if (voucherOrder != null)
             {
                 voucherOrder.Amount = voucherOrder.Amount - 1;
@@ -75,18 +72,19 @@ namespace Website_Ecommerce.API.Controllers
             }
 
             var result = await _orderRepository.UnitOfWork.SaveAsync(cancellationToken);
-            if (result <= 0)
+            if (result == 0)
             {
                 return BadRequest(new Response<ResponseDefault>()
                 {
                     State = true,
-                    Message = ErrorCode.BadRequest,
+                    Message = ErrorCode.ExcuteDB,
                     Result = new ResponseDefault()
                     {
-                        Data = ""
+                        Data = "ExcutedDB"
                     }
                 });
             }
+
             Order thisOrder = _orderRepository.Orders.OrderByDescending(x => x.CreateDate).FirstOrDefault(x => x.UserId == userId);
 
             foreach (var i in request.ItemOrderDtos)
@@ -104,6 +102,7 @@ namespace Website_Ecommerce.API.Controllers
                 {
                     voucherProduct = _shopRepository.voucherProducts.FirstOrDefault(x => x.Id == i.VoucherProductId);
                 }
+
                 var orderDetail = new OrderDetail
                 {
                     OrderId = thisOrder.Id,
@@ -115,6 +114,7 @@ namespace Website_Ecommerce.API.Controllers
                     VoucherProductId = i.VoucherProductId
                 };
                 _orderRepository.Add(orderDetail);
+
                 productDetail.Amount = productDetail.Amount - orderDetail.Amount;
                 if (orderDetail.VoucherProductId != null)
                 {
@@ -122,6 +122,7 @@ namespace Website_Ecommerce.API.Controllers
                     _shopRepository.Update(voucherProduct);
                 }
                 _productRepository.Update(productDetail);
+
                 var resultI = await _orderRepository.UnitOfWork.SaveAsync(cancellationToken);
                 if (resultI <= 0)
                 {
@@ -129,10 +130,10 @@ namespace Website_Ecommerce.API.Controllers
                     return BadRequest(new Response<ResponseDefault>()
                     {
                         State = true,
-                        Message = ErrorCode.BadRequest,
+                        Message = ErrorCode.ExcuteDB,
                         Result = new ResponseDefault()
                         {
-                            Data = ""
+                            Data = "ExcuteDB"
                         }
                     });
                 }
@@ -143,12 +144,18 @@ namespace Website_Ecommerce.API.Controllers
                 Message = ErrorCode.Success,
                 Result = new ResponseDefault()
                 {
-                    Data = ""
+                    Data = "Add order success"
                 }
             });
         }
 
-
+        /// <summary>
+        /// Cancel order detail
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="productDetailId"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPatch("cancel-order-detail")]
         public async Task<IActionResult> CancelOrder(int orderId, int productDetailId, CancellationToken cancellationToken)
         {
@@ -158,37 +165,39 @@ namespace Website_Ecommerce.API.Controllers
                 return BadRequest(new Response<ResponseDefault>()
                 {
                     State = true,
-                    Message = ErrorCode.Success,
+                    Message = ErrorCode.NotFound,
                     Result = new ResponseDefault()
                     {
-                        Data = ""
+                        Data = "Not Found OrderDetail"
                     }
                 });
             }
+
             if (orderDetail.State > (int)StateOrderEnum.RECEIVED)
             {
                 return BadRequest(new Response<ResponseDefault>()
                 {
                     State = true,
-                    Message = ErrorCode.Success,
+                    Message = ErrorCode.ExcuteDB,
                     Result = new ResponseDefault()
                     {
-                        Data = "Khong the huy don hang"
+                        Data = "Can't cancel order"
                     }
                 });
             }
             orderDetail.State = (int)StateOrderEnum.CANCALLED;
             _orderRepository.Update(orderDetail);
+
             var result = await _orderRepository.UnitOfWork.SaveAsync(cancellationToken);
             if (result == 0)
             {
                 return BadRequest(new Response<ResponseDefault>()
                 {
                     State = true,
-                    Message = ErrorCode.Success,
+                    Message = ErrorCode.ExcuteDB,
                     Result = new ResponseDefault()
                     {
-                        Data = "Khong the huy don hang"
+                        Data = "Can't cancel order"
                     }
                 });
             }
@@ -199,14 +208,17 @@ namespace Website_Ecommerce.API.Controllers
                 Message = ErrorCode.Success,
                 Result = new ResponseDefault()
                 {
-                    Data = "Da Huy don hang"
+                    Data = "Cancel Order Success"
                 }
             });
 
-
         }
 
-
+        /// <summary>
+        /// View Order by orderId
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
         [HttpGet("view-order")]
         public async Task<IActionResult> ViewOrder(int orderId)
         {
@@ -223,7 +235,11 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-
+        /// <summary>
+        /// View Order of User
+        /// </summary>
+        /// <param name="state"></param>
+        /// <returns></returns>
         [HttpGet("view-order-of-user")]
         public async Task<IActionResult> ViewOrderByStatus(int state)
         {

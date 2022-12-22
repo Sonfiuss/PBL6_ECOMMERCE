@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data;
 using Website_Ecommerce.API.Data.Entities;
 using Website_Ecommerce.API.ModelDtos;
+using Website_Ecommerce.API.ModelQueries;
 
 namespace Website_Ecommerce.API.Repositories
 {
@@ -65,39 +66,6 @@ namespace Website_Ecommerce.API.Repositories
 
         }
 
-        public async Task<IList<ViewProductDTO>> GetAllProduct()
-        {
-            var products = _dataContext.Products;
-            var productdetails = _dataContext.ProductDetails;
-            var productimages = _dataContext.ProductImages;
-
-            var pro_prodetail = products.Join(productdetails, p => p.Id, pd => pd.ProductId,
-                                        (p, pd) => new
-                                        {
-                                            id = p.Id,
-                                            name = p.Name,
-                                            productdetailId = pd.Id,
-                                            price = pd.Price,
-                                            initialPrice = pd.InitialPrice,
-                                        });
-
-
-            var result = await pro_prodetail.Join(productimages, ppd => ppd.productdetailId, img => img.ProductDetailId,
-                                        (ppd, img) => new ViewProductDTO
-                                        {
-                                            Id = ppd.id,
-                                            Name = ppd.name,
-                                            InitialPrice = ppd.initialPrice,
-                                            Price = ppd.price,
-                                            ImageURL = img.UrlImage
-                                        }).ToListAsync();
-            var result2 = (from p in result
-                           group p by new { p.Id } //or group by new {p.ID, p.Name, p.Whatever}
-                   into mygroup
-                           select mygroup.FirstOrDefault()).OrderByDescending(x => x.Id).ToList();
-
-            return result2;
-        }
 
         public void Update(Product product)
         {
@@ -117,6 +85,86 @@ namespace Website_Ecommerce.API.Repositories
         public void Update(ProductCategory productCategory)
         {
             _dataContext.Entry(productCategory).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        }
+
+        /// <summary>
+        /// Avg Rating of product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<double> AvgRating(int id)
+        {
+            int[] listValueRate = await _dataContext.Comments.Where(x => x.Rate != 0).Select(x => x.Rate).ToArrayAsync();
+            int totalRate = await _dataContext.Comments.CountAsync(x => x.ProductId == id);
+            int sum = 0;
+            foreach (int i in listValueRate)
+            {
+                sum += i;
+            }
+            double result = sum / totalRate;
+
+            return Math.Round(result, 1);
+        }
+
+        /// <summary>
+        /// Count rating of product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<int> CountRating(int id)
+        {
+            return await _dataContext.Comments.CountAsync(x => x.ProductId == id);
+        }
+
+        /// <summary>
+        /// Get adll product
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IList<ProductQueryModel>> GetAllProduct()
+        {
+            var products = _dataContext.Products;
+            var productdetails = _dataContext.ProductDetails;
+            var productimages = _dataContext.ProductImages;
+
+            var pro_prodetail = products.Join(productdetails, p => p.Id, pd => pd.ProductId,
+                                        (p, pd) => new
+                                        {
+                                            id = p.Id,
+                                            name = p.Name,
+                                            productdetailId = pd.Id,
+                                            price = pd.Price,
+                                            initialPrice = pd.InitialPrice
+                                        });
+
+
+            var result = await pro_prodetail.Join(productimages, ppd => ppd.productdetailId, img => img.ProductDetailId,
+                                        (ppd, img) => new ProductQueryModel
+                                        {
+                                            Id = ppd.id,
+                                            Name = ppd.name,
+                                            InitialPrice = ppd.initialPrice,
+                                            Price = ppd.price,
+                                            ImageURL = img.UrlImage
+                                        }).ToListAsync();
+            var result2 = (from p in result
+                           group p by new { p.Id } //or group by new {p.ID, p.Name, p.Whatever}
+                   into mygroup
+                           select mygroup.FirstOrDefault()).OrderByDescending(x => x.Id).ToList();
+
+            // var data = await _dataContext.Products
+            //     .Join(_dataContext.ProductDetails,
+            //     product => product.Id,
+            //     productDetail => productDetail.ProductId,
+            //     (product, productDetail) => new { product, productDetail})
+            //     .Join(_dataContext.ProductImages,
+            //     productDetail => productDetail.,
+            //     productimage => productimage.ProductDetailId,
+            //     (productdetail, productimage) => new ProductQueryModel
+            //     {
+            //         Id = productdetail.
+            //     })
+
+            return result2;
         }
     }
 }

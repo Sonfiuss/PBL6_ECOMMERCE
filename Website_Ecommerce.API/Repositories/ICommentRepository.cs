@@ -10,6 +10,10 @@ namespace Website_Ecommerce.API.Repositories
         void Update(Comment comment);
         void Delete(Comment comment);
 
-        Task<List<UserCommentQueryModel>> GetComments();
+        /// <summary>
+        /// Get list commnet detail
+        /// </summary>
+        /// <returns></returns>
+        Task<List<CommentDetailQueryModel>> GetCommentDetails();
     }
 }

@@ -2,8 +2,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data.Entities;
-using Website_Ecommerce.API.Enum;
-using Website_Ecommerce.API.ModelDtos;
 using Website_Ecommerce.API.Repositories;
 using Website_Ecommerce.API.Response;
 using Website_Ecommerce.API.services;
@@ -32,6 +30,12 @@ namespace Website_Ecommerce.API.Controllers
             _statisticService = statisticService;
         }
 
+        /// <summary>
+        /// Statistic turnover of days
+        /// </summary>
+        /// <param name="Start"></param>
+        /// <param name="End"></param>
+        /// <returns></returns>
         [HttpGet("statistic-turnover-of-days")]
         public async Task<IActionResult> StatisticTurnoverOfDays(DateTime Start, DateTime End)
         {
@@ -43,7 +47,7 @@ namespace Website_Ecommerce.API.Controllers
 
             IList<OrderDetail> orderDetails = await _orderRepository
                                             .OrderDetails
-                                            .Where(o => o.ShopId == shopId && o.State == 3/*(int)StateOrderEnum.RECEIVED%*/)
+                                            .Where(o => o.ShopId == shopId && o.State == 3)
                                             .OrderByDescending(x => x.ShopSendDate)
                                             .ToListAsync();
 
@@ -71,7 +75,12 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-
+        /// <summary>
+        /// Statistic turnover of months
+        /// </summary>
+        /// <param name="Start"></param>
+        /// <param name="End"></param>
+        /// <returns></returns>
         [HttpGet("statistic-turnover-of-months")]
         public async Task<IActionResult> StatisticTurnoverOfMonths(DateTime Start, DateTime End)
         {
@@ -110,6 +119,10 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
+        /// <summary>
+        /// Statistic product
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("statistic-product")]
         public async Task<IActionResult> StatisticProduct()
         {
@@ -129,6 +142,6 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-        
+
     }
 }

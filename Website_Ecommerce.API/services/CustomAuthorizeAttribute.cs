@@ -13,10 +13,10 @@ namespace Website_Ecommerce.API.services
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             List<string> userRoles = context.HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value).ToList();
-            //nếu không cần quyền
+            // Nếu không cần quyền
             if (string.IsNullOrEmpty(Allows))
                 return;
-            //token gửi lên không có role
+            // Token gửi lên không có role
             List<string> allowRoles = null;
             if (Allows != null)
             {
@@ -30,7 +30,7 @@ namespace Website_Ecommerce.API.services
                     Message = ErrorCode.Forbidden,
                     Result = new ResponseDefault()
                     {
-                        Data = "Bạn không có quyền truy cập kkk."
+                        Data = "Bạn không có quyền truy cập."
                     }
                 });
                 context.HttpContext.Response.StatusCode = StatusCodes.Status403Forbidden;
@@ -44,7 +44,7 @@ namespace Website_Ecommerce.API.services
                     Message = ErrorCode.Forbidden,
                     Result = new ResponseDefault()
                     {
-                        Data = "Bạn không có quyền truy cập 111."
+                        Data = "Bạn không có quyền truy cập."
                     }
                 });
                 context.HttpContext.Response.StatusCode = StatusCodes.Status403Forbidden;
