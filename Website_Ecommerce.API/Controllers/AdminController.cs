@@ -93,7 +93,7 @@ namespace Website_Ecommerce.API.Controllers
                     Message = ErrorCode.Success,
                     Result = new ResponseDefault()
                     {
-                        Data = "State of user" + user.Id.ToString() + ": " + user.IsBlock.ToString()
+                        Data = $"State of user {user.Id.ToString()}: {user.IsBlock.ToString()}"
                     }
                 });
             }
@@ -242,7 +242,7 @@ namespace Website_Ecommerce.API.Controllers
                     Message = ErrorCode.Success,
                     Result = new ResponseDefault()
                     {
-                        Data = "State of shop" + shop.Id.ToString() + ": " + shop.Status.ToString()
+                        Data = $"State of shop  {shop.Id.ToString()}: {shop.Status.ToString()}"
                     }
                 });
             }
@@ -279,7 +279,7 @@ namespace Website_Ecommerce.API.Controllers
                     Message = ErrorCode.Success,
                     Result = new ResponseDefault()
                     {
-                        Data = "State of shop" + shop.Id.ToString() + ": " + shop.Status.ToString()
+                        Data = $"State of shop {shop.Id.ToString()}: {shop.Status.ToString()}"
                     }
                 });
             }

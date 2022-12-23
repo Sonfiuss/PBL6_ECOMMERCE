@@ -166,6 +166,7 @@ namespace Website_Ecommerce.API.Repositories
         public async Task<List<ProductQueryModel>> GetListProducByShop(int shopId)
         {
             var data = await _dataContext.Products
+                .Where(x => x.ShopId == shopId)
                 .Join(_dataContext.ProductDetails,
                 product => product.Id,
                 productDetail => productDetail.ProductId,
@@ -186,5 +187,37 @@ namespace Website_Ecommerce.API.Repositories
 
             return data;
         }
+
+
+        /// <summary>
+        /// Search Product
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public async Task<List<ProductQueryModel>> SearchProduct(string key)
+        {
+            var data = await _dataContext.Products
+                .Where(x => x.Name.ToLower().Contains(key))
+                .Join(_dataContext.ProductDetails,
+                product => product.Id,
+                productDetail => productDetail.ProductId,
+                (product, productDetail) => new { product, productDetail })
+                .Join(_dataContext.ProductImages,
+                productProductDetail => productProductDetail.productDetail.Id,
+                productimage => productimage.ProductDetailId,
+                (productProductDetail, productimage) => new ProductQueryModel
+                {
+                    Id = productProductDetail.product.Id,
+                    Name = productProductDetail.product.Name,
+                    Price = productProductDetail.productDetail.Price,
+                    InitialPrice = productProductDetail.productDetail.InitialPrice,
+                    ImageURL = productimage.UrlImage,
+                    Saled = productProductDetail.product.Saled
+                })
+                .ToListAsync();
+
+            return data;
+        }
+
     }
 }

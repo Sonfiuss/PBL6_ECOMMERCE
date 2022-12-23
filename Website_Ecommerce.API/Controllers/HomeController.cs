@@ -283,11 +283,47 @@ namespace Website_Ecommerce.API.Controllers
         /// Search product by productName, categoryName
         /// </summary>
         /// <returns></returns>
-        // [HttpGet("search-product-by/{key}")]
-        // public async Task<IActionResult> SearchProduct(string key)
-        // {
+        [HttpGet("search-product-by/{key}")]
+        public async Task<IActionResult> SearchProduct(string key)
+        {
+            if (key is null)
+            {
+                return Ok(new Response<ResponseDefault>()
+                {
+                    State = true,
+                    Message = ErrorCode.Success,
+                    Result = new ResponseDefault()
+                    {
+                        Data = await _productRepository.GetAllProduct()
+                    }
+                });
+            }
 
-        // }
+            var listProduct = await _productRepository.SearchProduct(key);
+
+            if (listProduct == null)
+            {
+                return BadRequest(new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.NotFound,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "NotFound Product"
+                    }
+                });
+            }
+
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = listProduct
+                }
+            });
+        }
     }
 
     // [HttpPost("UploadImage")]

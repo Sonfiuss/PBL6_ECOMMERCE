@@ -49,5 +49,12 @@ namespace Website_Ecommerce.API.Repositories
         /// <param name="shopId"></param>
         /// <returns></returns>
         Task<List<ProductQueryModel>> GetListProducByShop(int shopId);
+
+        /// <summary>
+        /// Search Product
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        Task<List<ProductQueryModel>> SearchProduct(string key);
     }
 }
