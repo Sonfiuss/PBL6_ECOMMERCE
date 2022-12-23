@@ -213,7 +213,7 @@ namespace Website_Ecommerce.API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get voucher order by time
         /// </summary>
         /// <param name="timeIn"></param>
         /// <param name="timeOut"></param>
