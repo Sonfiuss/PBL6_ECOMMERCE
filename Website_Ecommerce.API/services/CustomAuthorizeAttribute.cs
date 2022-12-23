@@ -1,12 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Website_Ecommerce.API.Response;
 
 namespace Website_Ecommerce.API.services
@@ -17,11 +12,11 @@ namespace Website_Ecommerce.API.services
         public string Allows { get; set; }
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            List<string> userRoles = context.HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.Role).Select(x=>x.Value).ToList();
-            //nếu không cần quyền
+            List<string> userRoles = context.HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value).ToList();
+            // Nếu không cần quyền
             if (string.IsNullOrEmpty(Allows))
                 return;
-            //token gửi lên không có role
+            // Token gửi lên không có role
             List<string> allowRoles = null;
             if (Allows != null)
             {
@@ -35,13 +30,13 @@ namespace Website_Ecommerce.API.services
                     Message = ErrorCode.Forbidden,
                     Result = new ResponseDefault()
                     {
-                        Data = "Bạn không có quyền truy cập kkk."
+                        Data = "Bạn không có quyền truy cập."
                     }
                 });
                 context.HttpContext.Response.StatusCode = StatusCodes.Status403Forbidden;
             }
             int countPass = allowRoles.Intersect(userRoles).Count();
-            if(countPass == 0)
+            if (countPass == 0)
             {
                 context.Result = new BadRequestObjectResult(new Response<ResponseDefault>()
                 {
@@ -49,7 +44,7 @@ namespace Website_Ecommerce.API.services
                     Message = ErrorCode.Forbidden,
                     Result = new ResponseDefault()
                     {
-                        Data = "Bạn không có quyền truy cập 111."
+                        Data = "Bạn không có quyền truy cập."
                     }
                 });
                 context.HttpContext.Response.StatusCode = StatusCodes.Status403Forbidden;

@@ -18,6 +18,15 @@ namespace Website_Ecommerce.API.services
         {
             _audience = options.Value ?? throw new ArgumentException(nameof(options.Value));
         }
+
+        /// <summary>
+        /// Generate token
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="username"></param>
+        /// <param name="roles"></param>
+        /// <param name="expires"></param>
+        /// <returns></returns>
         public string GenerateToken(int userId, string username, List<int> roles, int expires)
         {
             var now = DateTime.UtcNow;
@@ -43,6 +52,11 @@ namespace Website_Ecommerce.API.services
             return new JwtSecurityTokenHandler().WriteToken(jwt);
         }
 
+        /// <summary>
+        /// Get MD5
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public string GetMD5(string text)
         {
             using (MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider())
@@ -58,18 +72,12 @@ namespace Website_Ecommerce.API.services
             }
         }
 
-        public string GetRandomLetters(int count)
-        {
-            string chars = "$%#@!*abcdefghijklmnopqrstuvwxyz1234567890?;:ABCDEFGHIJKLMNOPQRSTUVWXYZ^&";
-            StringBuilder output = new StringBuilder();
-            Random random = new Random();
-            for (int i = 0; i < count; i++)
-            {
-                output.Append(random.Next(0, chars.Length - 1));
-            }
-            return output.ToString();
-        }
-
+        /// <summary>
+        /// Verify MD5 hash
+        /// </summary>
+        /// <param name="inputHash"></param>
+        /// <param name="hashVerify"></param>
+        /// <returns></returns>
         public bool VerifyMD5Hash(string inputHash, string hashVerify)
         {
             // Create a StringComparer an compare the hashes.
@@ -86,17 +94,29 @@ namespace Website_Ecommerce.API.services
         }
 
 
-        private static Random random = new Random();
+        private static Random s_random = new Random();
+        /// <summary>
+        /// Random string
+        /// </summary>
+        /// <param name="length"></param>
+        /// <returns></returns>
         public static string RandomString(int length)
         {
             const string chars = "0123456789";
             return new string(Enumerable.Repeat(chars, length)
-                .Select(s => s[random.Next(s.Length)]).ToArray());
+                .Select(s => s[s_random.Next(s.Length)]).ToArray());
         }
 
+        /// <summary>
+        /// Send password by email
+        /// </summary>
+        /// <param name="fromAddress"></param>
+        /// <param name="toAddress"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public string SendingPasswordByEmail(string fromAddress, string toAddress, string password)
         {
-            using SmtpClient email = new SmtpClient 
+            using SmtpClient email = new SmtpClient
             {
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,

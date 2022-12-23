@@ -29,7 +29,7 @@ namespace Website_Ecommerce.API.Controllers
         private readonly IMapper _mapper;
 
         public AuthController(
-            IUserRepository userRepository, 
+            IUserRepository userRepository,
             IIdentityServices identityServices,
             IHttpContextAccessor httpContext,
             IMapper mapper)
@@ -39,30 +39,36 @@ namespace Website_Ecommerce.API.Controllers
             _httpContext = httpContext;
             _mapper = mapper;
         }
-        
-        
 
+        /// <summary>
+        /// Register 
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto request, CancellationToken cancellationToken)
         {
+            // Check username & email khong trung
             User isExist = await _userRepository.Users.FirstOrDefaultAsync(x => x.Username == request.Username || x.Email == request.Email);
 
             if (isExist != null)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.ExistUserOrEmail
                 });
             }
-            
 
-            var user = new User {
+            var user = new User
+            {
                 Username = request.Username,
                 Email = request.Email,
                 Gender = request.Gender,
                 IsBlock = false,
-                Password = _identityServices.GetMD5(request.Password)
+                Password = _identityServices.GetMD5(request.Password),
+                DateCreate = DateTime.Now
             };
 
             _userRepository.Add(user);
@@ -81,7 +87,7 @@ namespace Website_Ecommerce.API.Controllers
 
             if (result > 0)
             {
-                return Ok( new Response<ResponseDefault>()
+                return Ok(new Response<ResponseDefault>()
                 {
                     State = true,
                     Message = ErrorCode.Success,
@@ -93,18 +99,24 @@ namespace Website_Ecommerce.API.Controllers
             }
             else
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.BadRequest
                 });
             }
         }
-        
-        
+
+        /// <summary>
+        /// Login
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns> Token </returns>
         [HttpPost("login")]
         public async Task<Response<ResponseToken>> Login(LoginDto request, CancellationToken cancellationToken)
         {
+            // Check username va account active
             User user = await _userRepository.Users.FirstOrDefaultAsync(x => x.Username == request.Username && x.IsBlock == false);
 
             if (user == null)
@@ -116,16 +128,17 @@ namespace Website_Ecommerce.API.Controllers
                 };
             }
 
-            
+            // Check password
             if (_identityServices.VerifyMD5Hash(user.Password, _identityServices.GetMD5(request.Password)))
             {
-                int timeOut = 60 * 60 *24;
-
+                // Thoi gian token co hieu luc
+                int timeOut = 60 * 60 * 24;
+                // Lay roleId cua user
                 List<int> roleIds = _userRepository.UserRoles
                     .Where(x => x.UserId == user.Id).Select(x => x.RoleId).ToList();
 
                 string token = _identityServices.GenerateToken(
-                    user.Id,user.Username,
+                    user.Id, user.Username,
                     roleIds,
                     timeOut);
 
@@ -149,14 +162,22 @@ namespace Website_Ecommerce.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Reset password
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [Authorize(AuthenticationSchemes = "MyAuthKey")]
         [HttpPut("reset-password")]
         public async Task<IActionResult> ResetPassword(ResetPasswordDto request, CancellationToken cancellationToken)
         {
+            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
             User user = await _userRepository.Users.FirstOrDefaultAsync(x => x.Username == request.Username);
 
             if (user == null)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.NotFound,
@@ -167,17 +188,17 @@ namespace Website_Ecommerce.API.Controllers
                 });
             }
 
-            // kiem tra pass cu
+            // Check pass
             if (_identityServices.VerifyMD5Hash(user.Password, _identityServices.GetMD5(request.PasswordOld)))
             {
-                if(request.PasswordNew == request.RePassword)
+                if (request.PasswordNew == request.RePassword)
                 {
                     user.Password = _identityServices.GetMD5(request.PasswordNew);
                     _userRepository.Update(user);
                 }
                 else
                 {
-                    return BadRequest( new Response<ResponseDefault>()
+                    return BadRequest(new Response<ResponseDefault>()
                     {
                         State = false,
                         Message = ErrorCode.PasswordNotMatch,
@@ -190,7 +211,7 @@ namespace Website_Ecommerce.API.Controllers
             }
             else
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.InvalidPassword,
@@ -205,7 +226,7 @@ namespace Website_Ecommerce.API.Controllers
 
             if (result > 0)
             {
-                return Ok( new Response<ResponseDefault>()
+                return Ok(new Response<ResponseDefault>()
                 {
                     State = true,
                     Message = ErrorCode.Success,
@@ -217,7 +238,7 @@ namespace Website_Ecommerce.API.Controllers
             }
             else
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.BadRequest
@@ -225,26 +246,32 @@ namespace Website_Ecommerce.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Forget password
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPut("forget-password")]
         public async Task<IActionResult> ForgetPassword([FromBody] ForgetPasswordDto request, CancellationToken cancellationToken)
         {
             User user = await _userRepository.Users.FirstOrDefaultAsync(x => x.Username == request.Username && x.Email == request.Email);
 
-            if(user == null)
+            if (user == null)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.NotFound,
                     Result = new ResponseDefault()
                     {
-                        Data = "Not"
+                        Data = "Not Found"
                     }
                 });
             }
 
-            var code =  _identityServices.SendingPasswordByEmail("vovanban184@gmail.com", user.Email, "bbvimewwunotzlin");
-            
+            var code = _identityServices.SendingPasswordByEmail("vovanban184@gmail.com", user.Email, "bbvimewwunotzlin");
+
             user.Password = _identityServices.GetMD5(code);
             _userRepository.Update(user);
 
@@ -252,7 +279,7 @@ namespace Website_Ecommerce.API.Controllers
 
             if (result > 0)
             {
-                return Ok( new Response<ResponseDefault>()
+                return Ok(new Response<ResponseDefault>()
                 {
                     State = true,
                     Message = ErrorCode.Success,
@@ -264,7 +291,7 @@ namespace Website_Ecommerce.API.Controllers
             }
             else
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.BadRequest
@@ -272,7 +299,7 @@ namespace Website_Ecommerce.API.Controllers
             }
         }
 
-        
-        
+
+
     }
 }

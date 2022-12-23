@@ -1,5 +1,3 @@
-
-
 namespace Website_Ecommerce.API.ModelDtos
 {
     public class ShipperDto

@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Website_Ecommerce.API.ModelDtos
 {
@@ -61,7 +57,7 @@ namespace Website_Ecommerce.API.ModelDtos
         public string Email { get; set; }
     }
 
-    
+
     public class ProfileDto
     {
         [Required]

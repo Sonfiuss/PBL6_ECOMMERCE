@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Website_Ecommerce.API.Data.Entities
 {
@@ -24,6 +20,12 @@ namespace Website_Ecommerce.API.Data.Entities
         public Shop Shop { get; set;}
         [Required]
         public bool Status { get; set; }
+        [Required]
+        public int TotalRate { get; set; }
+        [Required]
+        public float AverageRate { get; set; }
+        [Required]
+        public int Saled { get; set; }
 
         public ICollection<ProductDetail> ProductDetails { get; set; }
 

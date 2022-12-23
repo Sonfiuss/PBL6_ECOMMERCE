@@ -1,14 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Website_Ecommerce.API.Data.Entities;
-
 namespace Website_Ecommerce.API.ModelDtos
 {
     public class OrderDto
     {
-
         public int Id { get; set; }
         public int State { get; set; }
         public string Address { get; set; }
@@ -16,12 +9,12 @@ namespace Website_Ecommerce.API.ModelDtos
         public string RecipientName { get; set; }
         public string RecipientPhone { get; set; }
         public int UserId { get; set; }
-        public int? VoucherId { get; set; } 
-        public int paymentMethodId {get; set;}
-        public double totalPrice {get; set; }
+        public int? VoucherId { get; set; }
+        public int paymentMethodId { get; set; }
+        public double totalPrice { get; set; }
         public IList<ItemOrderDto> ItemOrderDtos { get; set; }
 
-        
+
         // <summary>
         // Map from Model Order to Order Dto
         // </summary>
@@ -48,7 +41,7 @@ namespace Website_Ecommerce.API.ModelDtos
         //     return orderDto;
         // }
     }
-    
+
 
     public class ItemOrderDto
     {
@@ -71,7 +64,7 @@ namespace Website_Ecommerce.API.ModelDtos
         public int Inventory { get; set; }
 
     }
-    
+
     // public class ShopViewOrderDetailDto
     // {
     //     public int OrderId { get; set; }
@@ -83,7 +76,8 @@ namespace Website_Ecommerce.API.ModelDtos
     //     public DateTime? ShopSendDate { get; set; }
     //     public DateTime? ShopConfirmDate { get; set; }
     // }
-    public class ViewOrderState{
+    public class ViewOrderState
+    {
         public int IdShop;
         public string Name;
         public string Size;

@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Website_Ecommerce.API.Data.Entities;
 
 namespace Website_Ecommerce.API.Repositories
@@ -12,11 +8,38 @@ namespace Website_Ecommerce.API.Repositories
         void Add(Shop shop);
         void Update(Shop shop);
         void Delete(Shop shop);
-        IQueryable<VoucherProduct> voucherProducts{get;}
+        IQueryable<VoucherProduct> voucherProducts { get; }
         void Add(VoucherProduct voucherProduct);
         void Update(VoucherProduct voucherProduct);
         void Delete(VoucherProduct voucherProduct);
-        IList<VoucherProduct> GetGetVoucherMatch(ProductDetail productdetail);
-        
+
+        /// <summary>
+        /// Get voucher match
+        /// </summary>
+        /// <param name="productdetail"></param>
+        /// <returns></returns>
+        Task<List<VoucherProduct>> GetVoucherMatch(ProductDetail productdetail);
+
+        /// <summary>
+        /// Count totalRating
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<int> CountTotalRating(int id);
+
+        /// <summary>
+        /// Count totalProduct
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<int> CountTotalProduct(int id);
+
+        /// <summary>
+        /// Avg Rating
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<double> AvgRating(int id);
+
     }
 }

@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data.Entities;
 using Website_Ecommerce.API.ModelDtos;
+using Website_Ecommerce.API.ModelQueries;
 using Website_Ecommerce.API.Repositories;
 using Website_Ecommerce.API.Response;
-using Website_Ecommerce.API.services;
 
 namespace Website_Ecommerce.API.Controllers
 {
@@ -15,7 +15,7 @@ namespace Website_Ecommerce.API.Controllers
     [ApiController]
     [Authorize(AuthenticationSchemes = "MyAuthKey")]
     //1:admin  2:shop  3:shipper  4:customer
-    // [CustomAuthorize(Allows = "4")]
+    // [CustomAuthorize(Allows = "2")]
 
     public class ProductController : ControllerBase
     {
@@ -39,25 +39,37 @@ namespace Website_Ecommerce.API.Controllers
             _httpContext = httpContext;
 
         }
-#region Product
-        
+        #region Product
+
+        /// <summary>
+        /// Add Product
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost("add-product")]
         public async Task<IActionResult> AddProduct([FromBody] ProductDto request, CancellationToken cancellationToken)
         {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
             var shop = _shopRepository.Shops.FirstOrDefault(x => x.UserId == userId);
-            Product product = new Product();
-            product.Name = request.Name;
-            product.Material = request.Material;
-            product.ShopId = shop.Id; //get shopid from token
-            product.Origin = request.Origin;
-            product.Description = request.Description;
-            product.Status = request.Status;
-            _productRepository.Add(product);
-            var result = await _productRepository.UnitOfWork.SaveAsync(cancellationToken);
-            if(result == 0)
+            Product product = new Product()
             {
-                return BadRequest( new Response<ResponseDefault>()
+                Name = request.Name,
+                Material = request.Material,
+                ShopId = shop.Id, //get shopid from token
+                Origin = request.Origin,
+                Description = request.Description,
+                Status = request.Status,
+                TotalRate = 0,
+                Saled = 0,
+                AverageRate = 0,
+            };
+            _productRepository.Add(product);
+
+            var result = await _productRepository.UnitOfWork.SaveAsync(cancellationToken);
+            if (result == 0)
+            {
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.ExcuteDB,
@@ -68,17 +80,17 @@ namespace Website_Ecommerce.API.Controllers
                 });
             }
 
-            //add product categories
-            ProductCategory pc = new ProductCategory();
-            foreach(var items in request.Categories)
+            // Add ProductCategories
+            ProductCategory productCategory = new ProductCategory();
+            foreach (var items in request.Categories)
             {
-                pc.ProductId = product.Id;
-                pc.CategoryId = items;
-                _productRepository.Add(pc);
+                productCategory.ProductId = product.Id;
+                productCategory.CategoryId = items;
+                _productRepository.Add(productCategory);
                 var result1 = await _productRepository.UnitOfWork.SaveAsync(cancellationToken);
-                if(result1 == 0)
+                if (result1 == 0)
                 {
-                    return BadRequest( new Response<ResponseDefault>()
+                    return BadRequest(new Response<ResponseDefault>()
                     {
                         State = false,
                         Message = ErrorCode.ExcuteDB,
@@ -90,7 +102,7 @@ namespace Website_Ecommerce.API.Controllers
                 }
             }
 
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -100,17 +112,23 @@ namespace Website_Ecommerce.API.Controllers
                 }
             });
         }
-        
+
+        /// <summary>
+        /// Update product
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPut("update-product")]
         public async Task<IActionResult> UpdateProduct([FromBody] ProductDto request, CancellationToken cancellationToken)
         {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
             var shop = _shopRepository.Shops.FirstOrDefault(x => x.UserId == userId);
-            //lay userId, nguoi tao la nguoi xoa
+            // Lay userId, nguoi tao la nguoi xoa
             Product product = _productRepository.Products.FirstOrDefault(p => p.Id == request.Id && p.ShopId == shop.Id);
-            if(product == null)
+            if (product == null)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.NotFound,
@@ -121,18 +139,13 @@ namespace Website_Ecommerce.API.Controllers
                 });
             }
 
-            product.Name = request.Name;
-            product.Material = request.Material;
-            product.Origin = request.Origin;
-            product.Description = request.Description;
-            product.Status = request.Status;
+            product = _mapper.Map(request, product);
             _productRepository.Update(product);
-            var result = await _productRepository.UnitOfWork.SaveAsync(cancellationToken);
 
             List<ProductCategory> cateOld = _productRepository.ProductCategories.Where(p => p.ProductId == product.Id).ToList();
             if (cateOld.Count != 0)
             {
-                //get cate giu nguyen
+                // Get nhung category khong thay doi
                 HashSet<ProductCategory> cateSame = new HashSet<ProductCategory>();
                 foreach (int cateId in request.Categories)
                 {
@@ -142,7 +155,7 @@ namespace Website_Ecommerce.API.Controllers
                         cateSame.Add(same);
                     }
                 }
-                //get cate exam delete 
+                // Get nhung category khong con (delete) 
                 List<ProductCategory> cateDel = cateOld.Except(cateSame).ToList();
                 foreach (ProductCategory examDel in cateDel)
                 {
@@ -163,21 +176,21 @@ namespace Website_Ecommerce.API.Controllers
                     _productRepository.Add(new ProductCategory() { CategoryId = cateId, ProductId = product.Id });
                 }
             }
-            int result1 = await _productRepository.UnitOfWork.SaveAsync(cancellationToken);
+            int result = await _productRepository.UnitOfWork.SaveAsync(cancellationToken);
 
-            if(result > 0 && result1 > 0)
+            if (result > 0)
             {
-                return Ok( new Response<ResponseDefault>()
+                return Ok(new Response<ResponseDefault>()
                 {
                     State = true,
                     Message = ErrorCode.Success,
                     Result = new ResponseDefault()
                     {
-                        Data = product.Id.ToString()
+                        Data = product.Id.ToString() + " update success"
                     }
                 });
             }
-            return BadRequest( new Response<ResponseDefault>()
+            return BadRequest(new Response<ResponseDefault>()
             {
                 State = false,
                 Message = ErrorCode.ExcuteDB,
@@ -188,21 +201,26 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
+        /// <summary>
+        /// Delete product by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPut("delete-product/{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
             var shop = _shopRepository.Shops.FirstOrDefault(x => x.UserId == userId);
 
-            if(id.ToString() is null)
+            if (id.ToString() is null)
             {
                 return BadRequest(null);
             }
-            //get shopId, check shop tao => moi xoa
+            // Get shopId, check shop nao tao => shop do xoa
             Product product = await _productRepository.Products.FirstOrDefaultAsync(p => p.Id == id && p.ShopId == shop.Id);
-            if(product == null)
+            if (product == null)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.NotFound,
@@ -216,9 +234,9 @@ namespace Website_Ecommerce.API.Controllers
             _productRepository.Update(product);
             var result = await _productRepository.UnitOfWork.SaveAsync();
 
-            if(result > 0)
+            if (result > 0)
             {
-                return Ok( new Response<ResponseDefault>()
+                return Ok(new Response<ResponseDefault>()
                 {
                     State = true,
                     Message = ErrorCode.Success,
@@ -228,7 +246,7 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-            return BadRequest( new Response<ResponseDefault>()
+            return BadRequest(new Response<ResponseDefault>()
             {
                 State = false,
                 Message = ErrorCode.ExcuteDB,
@@ -239,18 +257,23 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
+        /// <summary>
+        /// Get product by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("get-product-by/{id}")]
         public async Task<IActionResult> GetProductById(int id)
         {
-            if(id.ToString() is null)
+            if (id.ToString() is null)
             {
                 return BadRequest(null);
             }
-            //get shopId, check shop tao => moi xoa
+            // Get shopId, check shop tao => moi xoa
             Product product = await _productRepository.Products.FirstOrDefaultAsync(p => p.Id == id);
-            if(product == null)
+            if (product == null)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.NotFound,
@@ -261,34 +284,76 @@ namespace Website_Ecommerce.API.Controllers
                 });
             }
 
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
                 {
-                    State = true,
-                    Message = ErrorCode.Success,
-                    Result = new ResponseDefault()
-                    {
-                        Data = product
-                    }
-                });
+                    Data = product
+                }
+            });
         }
 
-        
+        /// <summary>
+        /// Get list product by shopId
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("get-list-product-by/{id}")]
+        public async Task<IActionResult> GetListProducByShop(int id)
+        {
+            if (id.ToString() is null)
+            {
+                return BadRequest(null);
+            }
 
+            var listProduct = await _productRepository.GetListProducByShop(id);
 
-#endregion
+            if (listProduct == null)
+            {
+                return BadRequest(new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.NotFound,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "NotFound Product"
+                    }
+                });
+            }
 
-#region ProductDetail
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = listProduct
+                }
+            });
+        }
 
+        #endregion
+
+        #region ProductDetail
+
+        /// <summary>
+        /// Add ProductDetail
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost("add-product-detail")]
         public async Task<IActionResult> AddProductDetail([FromBody] ProductDetailDto request, CancellationToken cancellationToken)
         {
-            var productImage = _mapper.Map<ProductDetail>(request);
+            var productDetail = _mapper.Map<ProductDetailDto, ProductDetail>(request);
 
-            _productRepository.Add(productImage);
+            _productRepository.Add(productDetail);
             var result = await _productRepository.UnitOfWork.SaveAsync(cancellationToken);
-            if(result == 0)
+            if (result == 0)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.ExcuteDB,
@@ -298,7 +363,7 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -309,14 +374,19 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-
+        /// <summary>
+        /// Update ProductDetail
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPut("update-product-detail")]
         public async Task<IActionResult> UpdateProductDetail([FromBody] ProductDetailDto request, CancellationToken cancellationToken)
         {
             ProductDetail productDetail = _productRepository.ProductDetails.FirstOrDefault(p => p.Id == request.Id);
-            if(productDetail == null)
+            if (productDetail == null)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.NotFound,
@@ -331,9 +401,9 @@ namespace Website_Ecommerce.API.Controllers
             _productRepository.Update(productDetail);
             var result = await _productRepository.UnitOfWork.SaveAsync(cancellationToken);
 
-            if(result > 0)
+            if (result > 0)
             {
-                return Ok( new Response<ResponseDefault>()
+                return Ok(new Response<ResponseDefault>()
                 {
                     State = true,
                     Message = ErrorCode.Success,
@@ -343,7 +413,7 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-            return BadRequest( new Response<ResponseDefault>()
+            return BadRequest(new Response<ResponseDefault>()
             {
                 State = false,
                 Message = ErrorCode.ExcuteDB,
@@ -354,20 +424,23 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-
-
+        /// <summary>
+        /// Delete ProductDetail by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("delete-product-detail-by/{id}")]
         public async Task<IActionResult> DeleteProductDetail(int id)
         {
-            if(id.ToString() is null)
+            if (id.ToString() is null)
             {
                 return BadRequest(null);
             }
 
             ProductDetail product = await _productRepository.ProductDetails.FirstOrDefaultAsync(p => p.Id == id);
-            if(product == null)
+            if (product == null)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.NotFound,
@@ -381,9 +454,9 @@ namespace Website_Ecommerce.API.Controllers
             _productRepository.Delete(product);
             var result = await _productRepository.UnitOfWork.SaveAsync();
 
-            if(result > 0)
+            if (result > 0)
             {
-                return Ok( new Response<ResponseDefault>()
+                return Ok(new Response<ResponseDefault>()
                 {
                     State = true,
                     Message = ErrorCode.Success,
@@ -393,7 +466,7 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-            return BadRequest( new Response<ResponseDefault>()
+            return BadRequest(new Response<ResponseDefault>()
             {
                 State = false,
                 Message = ErrorCode.ExcuteDB,
@@ -405,21 +478,30 @@ namespace Website_Ecommerce.API.Controllers
         }
 
 
-#endregion
+        #endregion
 
-#region ProductImage
-        
+        #region ProductImage
+
+        /// <summary>
+        /// Add ProductImage
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
         [HttpPost("add-product-image")]
         public async Task<IActionResult> AddProductImage([FromBody] ProductImageDto request, CancellationToken cancellationToken)
         {
-            ProductImage productImage = new ProductImage();
-            productImage.UrlImage = request.UrlImage;
-            productImage.ProductDetailId = request.ProductDetailId;
-            _productRepository.Add(productImage);
-            var result = await _productRepository.UnitOfWork.SaveAsync(cancellationToken);
-            if(result == 0)
+            ProductImage productImage = new ProductImage
             {
-                return BadRequest( new Response<ResponseDefault>()
+                UrlImage = request.UrlImage,
+                ProductDetailId = request.ProductDetailId
+            };
+            _productRepository.Add(productImage);
+
+            var result = await _productRepository.UnitOfWork.SaveAsync(cancellationToken);
+            if (result == 0)
+            {
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.ExcuteDB,
@@ -429,7 +511,7 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-            return Ok( new Response<ResponseDefault>()
+            return Ok(new Response<ResponseDefault>()
             {
                 State = true,
                 Message = ErrorCode.Success,
@@ -440,18 +522,23 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
+        /// <summary>
+        /// Delete ProductImage by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("delete-product-image-by/{id}")]
         public async Task<IActionResult> DeleteProductImage([FromQuery] int id)
         {
-            if(id.ToString() is null)
+            if (id.ToString() is null)
             {
                 return BadRequest(null);
             }
-            //get shopId, check shop tao => moi xoa
+            // Get shopId, check shop tao => moi xoa
             ProductImage product = await _productRepository.ProductImages.FirstOrDefaultAsync(p => p.Id == id);
-            if(product == null)
+            if (product == null)
             {
-                return BadRequest( new Response<ResponseDefault>()
+                return BadRequest(new Response<ResponseDefault>()
                 {
                     State = false,
                     Message = ErrorCode.NotFound,
@@ -461,13 +548,13 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-
             _productRepository.Delete(product);
+
             var result = await _productRepository.UnitOfWork.SaveAsync();
 
-            if(result > 0)
+            if (result > 0)
             {
-                return Ok( new Response<ResponseDefault>()
+                return Ok(new Response<ResponseDefault>()
                 {
                     State = true,
                     Message = ErrorCode.Success,
@@ -477,7 +564,8 @@ namespace Website_Ecommerce.API.Controllers
                     }
                 });
             }
-            return BadRequest( new Response<ResponseDefault>()
+
+            return BadRequest(new Response<ResponseDefault>()
             {
                 State = false,
                 Message = ErrorCode.ExcuteDB,
@@ -486,9 +574,10 @@ namespace Website_Ecommerce.API.Controllers
                     Data = "Delete ProductImage fail"
                 }
             });
+
         }
 
-#endregion
+        #endregion
 
     }
 }

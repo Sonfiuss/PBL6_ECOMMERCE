@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Website_Ecommerce.API.Data.Entities;
-using Website_Ecommerce.API.ModelDtos;
+using Website_Ecommerce.API.ModelQueries;
 
 namespace Website_Ecommerce.API.Repositories
 {
@@ -27,6 +23,31 @@ namespace Website_Ecommerce.API.Repositories
         void Add(ProductCategory productCategory);
         void Update(ProductCategory productCategory);
         void Delete(ProductCategory productCategory);
-        public Task<IList<ViewProductDTO>> GetAllProduct();
+        /// <summary>
+        /// Get all product
+        /// </summary>
+        /// <returns></returns>
+        Task<List<ProductQueryModel>> GetAllProduct();
+
+        /// <summary>
+        /// Count Rating of Product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<int> CountRating(int id);
+
+        /// <summary>
+        /// AvgRating of Product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<double> AvgRating(int id);
+
+        /// <summary>
+        /// Get list product of shop by shopId
+        /// </summary>
+        /// <param name="shopId"></param>
+        /// <returns></returns>
+        Task<List<ProductQueryModel>> GetListProducByShop(int shopId);
     }
 }

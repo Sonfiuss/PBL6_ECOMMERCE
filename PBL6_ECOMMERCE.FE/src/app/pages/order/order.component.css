@@ -52,12 +52,17 @@
   position: relative;
 }
 
+.row{
+  width: 110%;
+}
+
 table{
   border: none;
 }
 
 td{
   border: none;
+  text-align: left;
 }
 tr{
   border: none;
@@ -82,11 +87,11 @@ th{
 .pd-image{
   position: observe;
   object-fit: fill;
-  width: 400px;
+  width: 350px;
 }
 .pd-image>p{
   padding-left: 40px ;
-  width: 350px;
+  width: 300px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
@@ -124,7 +129,9 @@ th{
   color :red;
   text-align: right;
 }
-
+.order_voucher{
+  width: 100%;
+}
 .payment{
   padding-top: 50px;
 }
@@ -158,6 +165,7 @@ th{
   border-width: 1px;
   border-color: gray;
   text-align: right;
+  width: 100%;
 }
 
 .order_btn>i,.order_btn>p{
@@ -183,6 +191,7 @@ th{
 }
 
 .btn_wrapped>button:hover{
+
   background-color: white;
   color: rgb(30, 69, 105);
   border: solid;
@@ -193,3 +202,27 @@ th{
   padding-bottom: 4px;
   border-color: rgb(30, 69, 105);
 }
+input[type=radio] {
+  border: 0px;
+  width: 100%;
+  height: 2em;
+  background-color: rgb(30, 69, 105);
+  margin-top: 100%;
+  /* opacity: 0;
+  cursor: pointer; */
+}
+.modal-body{
+  overflow: scroll;
+  overflow-x: hidden;
+  height : 400px;
+}
+/* input[type=radio]:checked:after {
+  border: 0px;
+  width: 100%;
+  height: 2em;
+  background-color: rgb(30, 69, 105);
+}
+
+.container input:checked ~ .checkmark {
+  background-color: #c60e0e;
+} */

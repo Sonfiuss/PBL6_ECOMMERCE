@@ -28,6 +28,8 @@ import { MyaddressComponent } from './pages/myaccount/myaddress/myaddress.compon
 import { SignupComponent } from './pages/signup/signup.component';
 import { OrderComponent } from './pages/order/order.component';
 import { MyorderComponent } from './pages/myaccount/myorder/myorder.component';
+import { ShopViewComponent } from './pages/shop-view/shop-view.component';
+import { AdminComponent } from './pages/admin/admin.component';
 
 
 @NgModule({
@@ -57,7 +59,9 @@ import { MyorderComponent } from './pages/myaccount/myorder/myorder.component';
     MyaddressComponent,
     SignupComponent,
     OrderComponent,
-    MyorderComponent
+    MyorderComponent,
+    ShopViewComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

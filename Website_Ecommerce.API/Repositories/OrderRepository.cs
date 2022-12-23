@@ -1,5 +1,3 @@
-
-
 using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data;
 using Website_Ecommerce.API.Data.Entities;
@@ -16,7 +14,8 @@ namespace Website_Ecommerce.API.Repositories
 
         public IQueryable<OrderDetail> OrderDetails => _dataContext.OrderDetails;
 
-        public OrderRepository(DataContext dataContext){
+        public OrderRepository(DataContext dataContext)
+        {
             _dataContext = dataContext;
         }
 
@@ -25,25 +24,40 @@ namespace Website_Ecommerce.API.Repositories
             _dataContext.Orders.Add(order);
         }
 
+        /// <summary>
+        /// Get last order
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public async Task<Order> GetLastOrder(int userId)
         {
-            var Orders =  _dataContext.Orders;
+            var Orders = _dataContext.Orders;
             var orderDetails = _dataContext.OrderDetails;
-            
+
             return await _dataContext.Orders.LastOrDefaultAsync(x => x.UserId == userId);
         }
 
+        /// <summary>
+        /// Get all order of user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<Order>> GetAllOrderOfUser(int id)
         {
             return await _dataContext.Orders.Where(x => x.UserId == id).ToListAsync();
         }
 
+        /// <summary>
+        /// Get order detail
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<OrderDetail>> GetOrderDetail(int id)
         {
             return await _dataContext.OrderDetails.Where(x => x.OrderId == id).ToListAsync();
         }
 
-        public void Delete(Order  order )
+        public void Delete(Order order)
         {
             _dataContext.Entry(order).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
         }

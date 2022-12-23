@@ -26,6 +26,7 @@
                 </div>
             </div>
             <div class="col-lg-6 col-md-6">
+              <form action="" [formGroup]="form" (ngSubmit)="submitData()">
                 <div class="product__details__text mt-4-4 mb-4">
                     <div class="pd-name  mt-4 ">
                         <h3><b style="font-size:20px ; color :rgb(30, 69, 105); ">Áo sơ mi nam NEW SKY MAX </b></h3>
@@ -40,19 +41,38 @@
                             <span>(18 reviews)</span>
                         </div>
                     </div>
-                    <div class="product__details__price mt-4 pb-4"><b>{{ price | currency: "VND" }}<del style="color: gray;font-size: 15px;">{{ 900000 | currency: "VND" }}</del></b></div>
+                    <div class="product__details__price mt-4 pb-4"><b>{{ price | currency: "VND" }}<del style="color: gray;font-size: 15px;">{{ initialPrice| currency: "VND" }}</del></b></div>
                     <div class="pd-overview  mt-4 pb-4">
                         <p>{{overview}}</p>
+                    </div>
+                    <div class="pd-size  mt-4 pb-4" *ngIf="checkSize == true">
+                      <div class="size-title" style="display: inline-block;">
+                        Kích cỡ :
+                      </div>
+                      <div class="list-size" *ngFor="let size of sizePd" style="display: inline-block;">
+                        <!-- <p [ngClass]="{'btn-change' : (selectedSize === size)}" (click)="submit(size)">{{size}}</p> -->
+                        <input type="radio" class="form-control btn-check"  name="size"  value={{size}} id={{size}} formControlName="size" autocomplete="off" (click)="onSizeItemChange($event)" checked>
+                        <label class="btn btn-outline-danger" for={{size}}>{{size}}</label>
+                      </div>
+                    </div>
+                    <div class="pd-color  mt-4 pb-4" *ngIf="checkColor == true">
+                      <div class="color-title" style="display: inline-block;" >
+                        Màu sắc :
+                      </div>
+                      <div class="list-color" *ngFor="let color of arrColorHave" style="display: inline-block;">
+                        <input type="radio" class="form-control btn-check"  name="color" value={{color}} id={{color}} autocomplete="off" formControlName="color" (click)="onColorItemChange($event)" >
+                        <label class="btn btn-outline-danger" for={{color}}>{{color}}</label>
+                      </div>
                     </div>
                     <div class="product__details__quantity mt-4 pb-4">
                         <div class="quantity ">
                             <div class="pro-qty">
                                 <button class="decrease-qty" (click)="QtyDecrease(qty)">-</button>
-                                <input class="qty-number" type="text" [value]="qty" readonly>
+                                <input class="qty-number" type="text" [value]="qty"  readonly>
                                 <button class="decrease-qty" (click)="QtyIncrease(qty)">+</button>
                             </div>
                         </div>
-                        <a id="btn-add-to-card" class="btn btn-secondary">ADD TO CARD</a>
+                        <button id="btn-add-to-card" class="btn btn-secondary" (click)="add2Cart()" [disabled]=" (this.idPdSelected == null) ? 'disabled': null">ADD TO CARD</button>
                     </div>
                     <div class="sum-price mt-4 pb-4">
                         <p>Tổng tiền: {{sum_price | currency :"VND"}}</p>
@@ -60,8 +80,8 @@
                     <div class="seller-contact">
                         <a href=""><i class="fa fa-phone" aria-hidden="true">Liên hệ chủ shop</i></a>
                     </div>
-
                 </div>
+              </form>
             </div>
             <div class="col-lg-12 mt-4">
                 <div class="product__details__tab">

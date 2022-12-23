@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace Website_Ecommerce.API.ModelDtos
 {
     public class VoucherOrderDto
@@ -13,9 +8,11 @@ namespace Website_Ecommerce.API.ModelDtos
         public int Amount { get; set; }
         public DateTime CreateAt { get; set; }
         public DateTime Expired { get; set; }
-        public bool State { get; set;}
+        public bool State { get; set; }
     }
-    public class VoucherShopDto{
+    
+    public class VoucherShopDto
+    {
         public int Id { get; set; }
         public int ShopId { get; set; }
         public double Value { get; set; }
@@ -23,7 +20,7 @@ namespace Website_Ecommerce.API.ModelDtos
         public int Amount { get; set; }
         public DateTime CreateAt { get; set; }
         public DateTime Expired { get; set; }
-        public bool State { get; set;}
+        public bool State { get; set; }
 
     }
 }

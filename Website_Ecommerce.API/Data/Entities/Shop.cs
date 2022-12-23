@@ -33,6 +33,10 @@ namespace Website_Ecommerce.API.Data.Entities
         public int TotalRate{ get; set; }
         [Required]
         public bool Status { get; set; }
+        [Required]
+        public DateTime DateCreate { get; set; }
+        [Required]
+        public int TotalProduct { get; set; }
         public ICollection<Product> Products { get; set; }
         public ICollection<VoucherProduct> VoucherProducts { get; set; }
         
