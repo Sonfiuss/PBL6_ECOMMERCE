@@ -123,8 +123,11 @@
   border-right: #818181 2px solid;
 }
 .main-of-nav{
-  width: 70%;
+  position: absolute;
+  width: 77%;
   flex: 1;
+  right: 1%;
+
 }
 .section-content{
   width: 100%;

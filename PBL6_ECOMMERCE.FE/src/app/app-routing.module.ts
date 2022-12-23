@@ -20,6 +20,7 @@ import { ProductDetailComponent } from './pages/home/products/product-detail/pro
 import { ShopViewComponent } from './pages/shop-view/shop-view.component';
 import { MyShopHeaderComponent } from './pages/my-shop/my-shop-header/my-shop-header.component';
 import { AddProductComponent } from './pages/my-shop/add-product/add-product.component';
+import { ViewListProductComponent } from './pages/my-shop/view-list-product/view-list-product.component';
 
 const routes: Routes = [
   {
@@ -29,8 +30,13 @@ const routes: Routes = [
       {
         path: 'addproduct',
         component: AddProductComponent
+      },
+      {
+        path: 'products',
+        component: ViewListProductComponent
       }
     ]
+    
   },
   {  
     path: '',

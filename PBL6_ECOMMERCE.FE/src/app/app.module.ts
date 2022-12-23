@@ -29,6 +29,9 @@ import { ShopViewComponent } from './pages/shop-view/shop-view.component';
 import { AdminComponent } from './pages/admin/admin.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MyShopModule } from './pages/my-shop/my-shop.module';
+// import { MatTableModule } from '@angular/material/table';
+// import { MatButtonModule } from '@angular/material/button';
+// import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -66,7 +69,11 @@ import { MyShopModule } from './pages/my-shop/my-shop.module';
     FormsModule,
     ReactiveFormsModule,
     MyShopModule,
-    NgbModule
+    NgbModule,
+    BrowserModule,
+    // MatTableModule,
+    // MatButtonModule,
+    // MatPaginatorModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

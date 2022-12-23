@@ -1,1 +1,90 @@
-<p>view-list-product works!</p>
+<div class = "mode-view">
+    <div class = "mode-button">
+        <button class = "view-all"></button>
+        <button class = "view-stocking"></button>
+        <button class = "view-out-of-stock"></button>
+    </div>
+    <div class = "search">
+        <i class="bi bi-search"></i>
+        <input type="text" placeholder = "Tìm kiếm">
+    </div>
+</div>
+<div class = "list-product-of-shop">
+    <div>
+    <table class="data">
+        <tr>
+          <th>STT</th>
+          <th>Tên sản phẩm</th>
+          <th>Loại hàng</th>
+          <th>Tình trạng</th>
+          <th>Giá gốc</th>
+          <th>Giá bán</th>
+          <th>Đã bán </th>
+          <th>Tồn kho</th>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>Áo dài tay nam</td>
+          <td>Áo sơ mi</td>
+          <td>Còn hàng</td>
+          <td>300000</td>
+          <td>200000</td>
+          <td>10</td>
+          <td>100</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Áo dài tay nam ấm dành cho mùa đông</td>
+            <td>Áo khoác</td>
+            <td>Còn hàng</td>
+            <td>300000</td>
+            <td>200000</td>
+            <td>10</td>
+            <td>100</td>
+          </tr>
+      </table>
+    </div>
+    <!-- <div>
+        <table mat-table matSort [dataSource]="dataSource">
+          <tbody>
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="weight">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Weight </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+          </ng-container>
+      
+          <ng-container matColumnDef="symbol">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </th>
+            <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </tbody>
+        </table>
+      
+        <table>
+          <tr *ngIf="!dataSource.data.length">
+            <td style="text-align: center;" [attr.colspan]="displayedColumns.length">
+              No Records Found!
+            </td>
+          </tr>
+        </table>
+      
+      </div>
+      <mat-paginator
+        [pageSize]="5"
+        [pageSizeOptions]="[5, 10, 15]"
+        showFirstLastButtons
+      >
+      </mat-paginator> -->
+</div>

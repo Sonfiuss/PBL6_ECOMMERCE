@@ -8,18 +8,18 @@ import { CkeditorComponent } from './ckeditor/ckeditor.component';
 import { ViewListProductComponent } from './view-list-product/view-list-product.component';
 
 
+
 @NgModule({
   declarations: [
     MyShopHeaderComponent,
     AddProductComponent,
     CkeditorComponent,
-    ViewListProductComponent,
+    ViewListProductComponent
     
   ],
   imports: [
     CommonModule,
-    MyShopRoutingModule
-    
+    MyShopRoutingModule,
   ]
 })
 export class MyShopModule { }
