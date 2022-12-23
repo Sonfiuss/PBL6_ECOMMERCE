@@ -1,45 +1,55 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output ,ViewEncapsulation } from '@angular/core';
 import { IsActiveMatchOptions } from '@angular/router';
 import { CartService } from 'src/app/_services/cart.service';
 import { VoucherService } from 'src/app/_services/voucher.service';
 import { Router } from '@angular/router';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ShopService } from 'src/app/_services/shop.service';
+
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css']
+  styleUrls: ['./cart.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class CartComponent implements OnInit {
   @Input() cart:any
   @Output() deletecartEvent = new EventEmitter<number>()
   @Input() vouchers:any
+  @Input() orderVouchers:any
   data = {id : "1", username : "thinh"}
   constructor(
     private cartService : CartService,
     private voucherService : VoucherService,
     private router: Router,
+    private modalService: NgbModal,
+    private shopService :ShopService
     // private transfereService :TransfereService
   ) { }
 
-  // cart :Array<any>;
+	openModalShopVoucher(content: any) {
+		this.modalService.open(content, { centered: true });
+	}
+  openModalOrderVoucher(content: any) {
+		this.modalService.open(content, { centered: true });
+    this.loadVoucherOrder()
+	}
   order : Array<any> =[];
   sumPrice : number = 0;
-  shopVoucher = {
-    id : 1,
-    value  : 100000
-  }
-
-  isChecked :Array<any> ;
+  isChecked : Array<any>[] = []
+  // arrCheck : Array<Array<number>>
+  arrCheck : Array<any>[]= []
+  arrShopId: Array<number> = [];
+  listPdShop : Array<any>[]=[];
+  showingVoucher = false
   ngOnInit(): void {
     this.loadCart();
-    this.checkarr();
-    this.showVoucher();
-  }
+    this.loadVoucherShop()
+    this.loadVoucherOrder()
+    console.log(this.orderVouchers);
 
-  change(){
-    this.cart.splice(1,1);
   }
-
   loadCart(){
     this.cartService.getCart()
     .subscribe(
@@ -55,44 +65,58 @@ export class CartComponent implements OnInit {
   handleGetCartSuccess(res: any){
     this.cart = res.result.data
     console.log(res)
+    this.loadPdShop()
   }
-  checkarr(){
-    this.isChecked = new Array(100);
-    for( let i =0; i < this.isChecked.length;i++){
-      this.isChecked[i] = false;
-    }
 
+  loadPdShop(){
+    for (var i = 0; i<this.cart.length; i++){
+      this.arrShopId.push(this.cart[i].idShop)
+      console.log();
+    }
+    this.arrShopId = this.arrShopId.filter((value,index) => this.arrShopId.indexOf(value) === index)
+    console.log(this.arrShopId);
+    for(var i = 0; i<this.arrShopId.length; i++){
+      this.listPdShop.push(this.cart.filter((x:any) => {return this.arrShopId[i] === x.idShop}))
+    }
+    console.log(this.arrShopId);
+    this.checkMatrix()
   }
-  checkValue(event : any,pd :any){
-    if (event ==  true){
+
+  checkMatrix(){
+
+    for(var j =0 ; j < this.arrShopId.length ; j++){
+      let arrCheckValue =[]
+      for (var i = 0; i < 30 ; i++){
+        arrCheckValue.push(false)
+      }
+      this.isChecked.push(arrCheckValue)
+    }
+    console.log(this.isChecked)
+  }
+
+  checkValue(i:any,j:any,pd :any){
+      if (this.isChecked[i][j] ==  true){
       this.order.push(pd)
-      // console.log(event)
       console.log(this.order)
-      // console.log(this.order.length )
       this.sumPrice += pd.price * pd.amount;
-      // for (let j = 0; j< this.order.length; j++){
-      //   this.sumPrice += this.order[j].price *this.order[j].amount;
-      // }
     }
     else{
       this.order = this.order.filter(item => item !== pd)
-      // console.log(event)
-      // console.log(this.order.length )
-      // console.log(this.cart.length)
-      // console.log(this.isChecked)
       this.sumPrice -= pd.price * pd.amount;
-      // for (let j = 0; j< this.order.length; j++){
-      //   this.sumPrice = this.order[j].price *this.order[j].amount;
-      // }
     }
+
   }
-  deleteItem(pd : any){
+
+  deleteItem(pd : any,i:any){
     if(window.confirm("Ban thuc su muon xoa")){
       this.cartService.deleteItem(pd.id)
       .subscribe(
         (res:any) => {
           this.deletecartEvent.emit(pd.id)
           this.cart = this.cart.filter((item:any) => item !==pd)
+          this.listPdShop[i] = this.listPdShop[i].filter((item:any)=> item !== pd )
+          this.sumPrice -= pd.price * pd.amount;
+          console.log(this.listPdShop[i]);
           console.log(this.cart);
         },
         (err) => {
@@ -104,7 +128,7 @@ export class CartComponent implements OnInit {
     // this.cartService.deleteItem(pd.id)
   }
 
-  decreaseQty(pd : any, i:any){
+  decreaseQty(pd : any, i: any,j:any){
 
     if (pd.amount > 1){
       pd.amount -= 1;
@@ -116,17 +140,18 @@ export class CartComponent implements OnInit {
     }
   }
 
-  increaseQty(pd : any, i: any){
+  increaseQty(pd : any, i: any,j:any){
     pd.amount += 1;
-    if(this.isChecked[i] ){
+    if(this.isChecked[i][j] ){
       this.order = this.order.filter(item => item !== pd)
       this.sumPrice += pd.price
       this.order.push(pd)
     }
   }
 
-  showVoucher(){
-    this.voucherService.getVoucherAvaiable()
+
+  loadVoucherShop(){
+    this.shopService.getAllVoucherShop()
     .subscribe(
       (res) => this.handleGetVoucherSuccess(res),
       (err) => this.handleGetVoucherError(err)
@@ -138,7 +163,20 @@ export class CartComponent implements OnInit {
   handleGetVoucherSuccess(res: any){
     this.vouchers = res.result.data
     console.log(res)
-
+  }
+  loadVoucherOrder(){
+    this.voucherService.getVoucherAvaiable()
+    .subscribe(
+      (res) => this.handleGetOrderVoucherSuccess(res),
+      (err) => this.handleGetOrderVoucherError(err)
+    )
+  }
+  handleGetOrderVoucherError(err: any){
+    console.log(err)
+  }
+  handleGetOrderVoucherSuccess(res: any){
+    this.orderVouchers = res.result.data
+    console.log(this.orderVouchers);
 
   }
   check(order: any){
