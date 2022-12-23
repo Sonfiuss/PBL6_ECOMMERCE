@@ -14,6 +14,6 @@ namespace Website_Ecommerce.API.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<IEnumerable<ItemCartQueryModel>> GetAllItemByIdUser(int id);
+        Task<List<ItemCartQueryModel>> GetAllItemByIdUser(int id);
     }
 }

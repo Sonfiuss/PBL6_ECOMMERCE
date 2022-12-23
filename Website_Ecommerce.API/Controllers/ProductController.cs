@@ -295,6 +295,11 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
+        /// <summary>
+        /// Get list product by shopId
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("get-list-product-by/{id}")]
         public async Task<IActionResult> GetListProducByShop(int id)
         {

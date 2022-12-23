@@ -255,6 +255,12 @@ namespace Website_Ecommerce.API.Controllers
         #endregion
 
         #region Voucher Product
+
+        /// <summary>
+        /// Get list voucher by shopId
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("get-voucher-product-by/{id}")]
         public async Task<IActionResult> GetListVoucherProductByShopId(int id)
         {

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "uLkWswdqIQnp7X3EdrmtC1ijw800fPe8uISU5KGwAfM=",
+  "Hash": "hm2w3jiFY5Gkx4aEBSoaUCoJe3C/ekkBbLlwW+5xwU4=",
   "Source": "Website_Ecommerce.API",
   "BasePath": "_content/Website_Ecommerce.API",
   "Mode": "Default",
@@ -10,7 +10,7 @@
     {
       "Name": "Website_Ecommerce.API/wwwroot",
       "Source": "Website_Ecommerce.API",
-      "ContentRoot": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/",
+      "ContentRoot": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/",
       "BasePath": "_content/Website_Ecommerce.API",
       "Pattern": "**"
     }
@@ -20,7 +20,7 @@
       "Identity": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/1f1052cf5ba72a54f4c26eed377cb053.jpg",
       "SourceId": "Website_Ecommerce.API",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/",
+      "ContentRoot": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/",
       "BasePath": "_content/Website_Ecommerce.API",
       "RelativePath": "1f1052cf5ba72a54f4c26eed377cb053.jpg",
       "AssetKind": "All",
@@ -37,7 +37,7 @@
       "Identity": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/avatar.jpg",
       "SourceId": "Website_Ecommerce.API",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/",
+      "ContentRoot": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/",
       "BasePath": "_content/Website_Ecommerce.API",
       "RelativePath": "avatar.jpg",
       "AssetKind": "All",
@@ -54,7 +54,7 @@
       "Identity": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/logo.png",
       "SourceId": "Website_Ecommerce.API",
       "SourceType": "Discovered",
-      "ContentRoot": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/",
+      "ContentRoot": "/Users/vovanban/Documents/Kỳ 7/PBL6_ECOMMERCE/Website_Ecommerce.API/wwwroot/",
       "BasePath": "_content/Website_Ecommerce.API",
       "RelativePath": "logo.png",
       "AssetKind": "All",
