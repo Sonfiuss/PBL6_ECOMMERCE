@@ -1,0 +1,143 @@
+
+    <div class = "header">
+        <H3>Thông tin sản phẩm</H3>
+    </div>
+    <body>
+        <div class = "view-add-product">
+            <div class = "mandatory">
+                <label class="mandatory" style = "width: 70%">*Tên sản phẩm:</label>
+                <input type="textbox" placeholder = "  Nhập vào">
+            </div>
+            <br>
+            <div>
+                <label class="mandatory" style = "width: 30%">*Loại hàng:</label>
+                <select class="mandatory" style="width: 50%; height:100">
+                    <option value="">Vest</option>
+                    <option value="">Cravat</option>
+                </select>
+            </div>
+            <br>
+            <div class = "list-product-detail">
+                <table>
+                    <tr>
+                        <td>STT</td>
+                        <td>Kích cỡ</td>
+                        <td>Màu sắc</td>
+                        <td>Số lượng</td>
+                        <td>Giá gốc</td>
+                        <td>Giá bán</td>
+                        <td>Hình ảnh</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>5000</td>
+                        <td>Nâu be</td>
+                        <td>500</td>
+                        <td>300000</td>
+                        <td>249000</td>
+                        <td src = "https://www.facebook.com/DNCT43/photos/a.724595638257442/1137301103653558/?__cft__[0]=AZUSClfKnEHeK9Ppc8nxJtXoL8UBAyH-uTOPzaEZ83jzZFwAk6V_JjRsxxBphr_n418b0Xw0uWOTbV7COxbQ0kh3pUfccnYbcxUnpLM_Ty45_CWkntxcJMCBTjyuTo32jD7Zqy-VIfQRZXlkegSxo53Noj-ssejS9TxdqC1bUZHrngFWuXAGvljyvHGL6pYdOtdde9Uvx2BtYY3jEl9vWb8X&__tn__=EH-R"></td>
+                    </tr>
+                </table>
+            </div>
+            <br>
+            <div [ngClass]="{
+                'expand': expand,
+                'show-ckediter': true
+            }">
+    
+                <div class = "description-expand">
+                    <div class  = "title-description">
+                        <span class = mandatory-icon>*</span>
+                        <label style= "width: 20%"> Mô tả </label>
+                    </div>
+                    <div>
+                        <i (click)="expand=!expand" class="bi bi-aspect-ratio"></i>
+                    </div>
+                </div>
+                
+                <br>
+                <div class = "ckeditor">
+                    <iframe style = "width: 100%" src="/ckeditor"></iframe>
+                </div>
+            </div>
+            
+        </div> 
+        <div class = "view-add-product-detail">
+            <span>Product Image </span>
+           <br>
+            <div class = "combo-drag-area">
+                <div class = "drag-area mr-2" >
+                    <div class = "icon"> <i class="bi bi-image"></i></div>
+                        <header>Drag or Drop to Upload File</header>
+                        <span>OR</span>
+                        <button>Browse</button>
+                    <input type="file">
+                </div>
+                <div class = "two-drag-area">
+                    <div class = "drag-area-mini mb-2">
+                        <div class = "icon"> <i class="bi bi-image"></i></div>
+                            <header>Drag or Drop to Upload File</header>
+                        <input type="file" hidden >
+                    </div>
+                    <div class = "drag-area-mini">
+                        <div class = "icon"> <i class="bi bi-image"></i></div>
+                            <header>Drag or Drop to Upload File</header>
+                        <input type="file" hidden >
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class = "product-detail">ImageDetail</div> 
+            <div  class="mandatory-input">
+                <div class = "edit-label-edit-title">
+                    <span class="mandatory-icon">*</span>
+                    <span >Size</span>
+                </div>   
+                <input type="text" placeholder="  Nhập vào" size="large" resize="none" rows="2" minrows="2" maxlength="Infinity" restrictiontype="input" max="Infinity" min="-Infinity" class="shopee-input__input">
+            </div>
+            <div class="mandatory-input">
+                <div class = "edit-label-edit-title">
+                    <span class="mandatory-icon">*</span>
+                    <span >Color</span>
+                </div>
+                <input type="text" placeholder="  Nhập vào" size="large" resize="none" rows="2" minrows="2" maxlength="Infinity" restrictiontype="input" max="Infinity" min="-Infinity" class="shopee-input__input">
+            </div> 
+            <div class="mandatory-input">
+                <div class = "edit-label-edit-title">
+                    <span class="mandatory-icon">*</span>
+                    <span >Số lượng</span>
+                </div>
+                <input type="number" placeholder="  Nhập số lượng" size="large" resize="none" rows="2" minrows="2" maxlength="Infinity" restrictiontype="input" max="Infinity" min="-Infinity" class="shopee-input__input">
+            </div> 
+            <br>
+            <div class = "mandatory-input-price">
+                    <div class = "price-input" >
+                        <span class ="mandatory-icon">*</span>
+                        <span> Giá gốc</span>
+                        <br>
+                        <input type="number" placeholder="  VND">
+                    </div>
+                    <div class = "price-input">
+                        <span class ="mandatory-icon">*</span>
+                        <span> Giá bán</span>
+                        <br>
+                        <input  type="number"  placeholder="  VND">
+                    </div>
+                <!-- <div class = "price-title">
+                    <span class ="mandatory-icon">*</span>
+                    <span> Giá bán</span>
+                    <input  type="number"  placeholder="  VND">
+                </div> -->
+            </div>
+           <br> 
+            <div class = "button-confirm-change">
+                <div class = "button-add-productdetail"> 
+                    <button>Thêm sản phẩm</button>
+                </div>
+                <div class = "button-save-product">
+                    <button>Lưu sản phẩm</button>
+                </div>
+            </div>
+        </div>
+
+    </body>
