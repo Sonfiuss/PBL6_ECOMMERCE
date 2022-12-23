@@ -39,31 +39,6 @@ namespace Website_Ecommerce.API.Repositories
         /// <returns></returns>
         public async Task<List<ItemCartQueryModel>> GetAllItemByIdUser(int id)
         {
-            // var itemCart = _dataContext.Carts.Where(x => x.UserId == id && x.State == true);
-            // var pdetail = _dataContext.ProductDetails;
-            // var product = _dataContext.Products;
-            // var itemPdetail = itemCart.Join(pdetail, i => i.ProductDetailId, pd => pd.Id
-            //                             , (i, pd) => new
-            //                             {
-            //                                 id = i.Id,
-            //                                 idProduct = pd.ProductId,
-            //                                 idProductDetail = pd.Id,
-            //                                 initialprice = pd.InitialPrice,
-            //                                 price = pd.Price,
-            //                                 amount = i.Amount
-            //                             });
-
-            // return await itemPdetail.Join(product, ip => ip.idProduct, p => p.Id, (ip, p) => new ItemCartQueryModel
-            // {
-            //     Id = ip.id,
-            //     NameProduct = p.Name,
-            //     IdProductDetail = ip.idProductDetail,
-            //     UserId = id,
-            //     InitialPrice = ip.initialprice,
-            //     Price = ip.price,
-            //     Amount = ip.amount
-            // }).ToListAsync();
-
             var data = await _dataContext.Carts.Where(x => x.UserId == id && x.State == true)
                                         .Join(_dataContext.ProductDetails,
                                         cart => cart.ProductDetailId,
