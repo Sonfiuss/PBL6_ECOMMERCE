@@ -278,6 +278,16 @@ namespace Website_Ecommerce.API.Controllers
                 }
             });
         }
+
+        /// <summary>
+        /// Search product by productName, categoryName
+        /// </summary>
+        /// <returns></returns>
+        // [HttpGet("search-product-by/{key}")]
+        // public async Task<IActionResult> SearchProduct(string key)
+        // {
+
+        // }
     }
 
     // [HttpPost("UploadImage")]
