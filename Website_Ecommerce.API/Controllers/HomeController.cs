@@ -137,7 +137,7 @@ namespace Website_Ecommerce.API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get all product
         /// </summary>
         /// <returns></returns>get list product
         [HttpGet("get-list-product")]
