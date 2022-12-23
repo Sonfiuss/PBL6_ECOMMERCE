@@ -27,7 +27,7 @@ namespace Website_Ecommerce.API.Repositories
         /// Get all product
         /// </summary>
         /// <returns></returns>
-        Task<IList<ProductQueryModel>> GetAllProduct();
+        Task<List<ProductQueryModel>> GetAllProduct();
 
         /// <summary>
         /// Count Rating of Product
@@ -42,5 +42,12 @@ namespace Website_Ecommerce.API.Repositories
         /// <param name="id"></param>
         /// <returns></returns>
         Task<double> AvgRating(int id);
+
+        /// <summary>
+        /// Get list product of shop by shopId
+        /// </summary>
+        /// <param name="shopId"></param>
+        /// <returns></returns>
+        Task<List<ProductQueryModel>> GetListProducByShop(int shopId);
     }
 }

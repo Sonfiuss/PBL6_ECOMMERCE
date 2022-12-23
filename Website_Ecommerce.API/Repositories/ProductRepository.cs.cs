@@ -120,7 +120,7 @@ namespace Website_Ecommerce.API.Repositories
         /// Get adll product
         /// </summary>
         /// <returns></returns>
-        public async Task<IList<ProductQueryModel>> GetAllProduct()
+        public async Task<List<ProductQueryModel>> GetAllProduct()
         {
             var products = _dataContext.Products;
             var productdetails = _dataContext.ProductDetails;
@@ -133,7 +133,8 @@ namespace Website_Ecommerce.API.Repositories
                                             name = p.Name,
                                             productdetailId = pd.Id,
                                             price = pd.Price,
-                                            initialPrice = pd.InitialPrice
+                                            initialPrice = pd.InitialPrice,
+                                            saled = p.Saled
                                         });
 
 
@@ -144,27 +145,46 @@ namespace Website_Ecommerce.API.Repositories
                                             Name = ppd.name,
                                             InitialPrice = ppd.initialPrice,
                                             Price = ppd.price,
-                                            ImageURL = img.UrlImage
+                                            ImageURL = img.UrlImage,
+                                            Saled = ppd.saled
                                         }).ToListAsync();
             var result2 = (from p in result
                            group p by new { p.Id } //or group by new {p.ID, p.Name, p.Whatever}
                    into mygroup
                            select mygroup.FirstOrDefault()).OrderByDescending(x => x.Id).ToList();
 
-            // var data = await _dataContext.Products
-            //     .Join(_dataContext.ProductDetails,
-            //     product => product.Id,
-            //     productDetail => productDetail.ProductId,
-            //     (product, productDetail) => new { product, productDetail})
-            //     .Join(_dataContext.ProductImages,
-            //     productDetail => productDetail.,
-            //     productimage => productimage.ProductDetailId,
-            //     (productdetail, productimage) => new ProductQueryModel
-            //     {
-            //         Id = productdetail.
-            //     })
+
 
             return result2;
+        }
+
+        /// <summary>
+        /// Get list product of Shop by shopId
+        /// </summary>
+        /// <param name="shopId"></param>
+        /// <returns></returns>
+        public async Task<List<ProductQueryModel>> GetListProducByShop(int shopId)
+        {
+            var data = await _dataContext.Products
+                .Join(_dataContext.ProductDetails,
+                product => product.Id,
+                productDetail => productDetail.ProductId,
+                (product, productDetail) => new { product, productDetail })
+                .Join(_dataContext.ProductImages,
+                productProductDetail => productProductDetail.productDetail.Id,
+                productimage => productimage.ProductDetailId,
+                (productProductDetail, productimage) => new ProductQueryModel
+                {
+                    Id = productProductDetail.product.Id,
+                    Name = productProductDetail.product.Name,
+                    Price = productProductDetail.productDetail.Price,
+                    InitialPrice = productProductDetail.productDetail.InitialPrice,
+                    ImageURL = productimage.UrlImage,
+                    Saled = productProductDetail.product.Saled
+                })
+                .ToListAsync();
+
+            return data;
         }
     }
 }

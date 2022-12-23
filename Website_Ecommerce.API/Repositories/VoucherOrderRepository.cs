@@ -18,7 +18,7 @@ namespace Website_Ecommerce.API.Repositories
 
         public void Add(VoucherOrder voucherOrder)
         {
-            _dataContext.Add(voucherOrder);
+            _dataContext.VoucherOrders.Add(voucherOrder);
         }
 
         public async Task<IEnumerable<VoucherOrder>> GetAllVoucherByDate(DateTime start, DateTime end)

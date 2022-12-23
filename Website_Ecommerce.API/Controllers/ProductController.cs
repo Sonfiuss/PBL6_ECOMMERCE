@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data.Entities;
 using Website_Ecommerce.API.ModelDtos;
+using Website_Ecommerce.API.ModelQueries;
 using Website_Ecommerce.API.Repositories;
 using Website_Ecommerce.API.Response;
 
@@ -294,8 +295,39 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
+        [HttpGet("get-list-product-by/{id}")]
+        public async Task<IActionResult> GetListProducByShop(int id)
+        {
+            if (id.ToString() is null)
+            {
+                return BadRequest(null);
+            }
 
+            var listProduct = await _productRepository.GetListProducByShop(id);
 
+            if (listProduct == null)
+            {
+                return BadRequest(new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.NotFound,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "NotFound Product"
+                    }
+                });
+            }
+
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = listProduct
+                }
+            });
+        }
 
         #endregion
 

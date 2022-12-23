@@ -13,6 +13,6 @@ namespace Website_Ecommerce.API.ModelQueries
         public double Price { get; set; }
         public double InitialPrice { get; set; }
         public string ImageURL { get; set; }
-        // public int Saled { get; set; }
+        public int Saled { get; set; }
     }
 }

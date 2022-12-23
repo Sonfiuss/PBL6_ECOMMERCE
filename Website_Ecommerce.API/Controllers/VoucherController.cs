@@ -16,15 +16,19 @@ namespace Website_Ecommerce.API.Controllers
     public class VoucherController : ControllerBase
     {
         private readonly IVoucherOrderRepository _voucherOrderRepository;
+        private readonly IVoucherProductRepository _voucherProductRepository;
         private readonly IMapper _mapper;
         public VoucherController(
-            IVoucherOrderRepository voucherOrder,
+            IVoucherOrderRepository voucherOrderRepository,
+            IVoucherProductRepository voucherProductRepository,
             IMapper mapper)
         {
             _mapper = mapper;
-            _voucherOrderRepository = voucherOrder;
+            _voucherOrderRepository = voucherOrderRepository;
+            _voucherProductRepository = voucherProductRepository;
         }
 
+        #region Voucher Order
         /// <summary>
         /// Add voucher by admin
         /// </summary>
@@ -215,7 +219,7 @@ namespace Website_Ecommerce.API.Controllers
         /// <param name="timeOut"></param>
         /// <returns></returns>Get voucher order by time
         [HttpGet("get-voucher-order-by-time")]
-        public async Task<IActionResult> getVoucherOrderByTime(DateTime timeIn, DateTime timeOut)
+        public async Task<IActionResult> GetVoucherOrderByTime(DateTime timeIn, DateTime timeOut)
         {
             var listVoucher = await _voucherOrderRepository.GetAllVoucherByDate(timeIn, timeOut);
             return Ok(new Response<ResponseDefault>()
@@ -234,7 +238,7 @@ namespace Website_Ecommerce.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("get-voucher-availability")]
-        public async Task<IActionResult> getVoucherAvailability()
+        public async Task<IActionResult> GetVoucherAvailability()
         {
             var vouchers = await _voucherOrderRepository.GetAllVoucherMatch();
             return Ok(new Response<ResponseDefault>()
@@ -248,6 +252,41 @@ namespace Website_Ecommerce.API.Controllers
             });
 
         }
+        #endregion
+
+        #region Voucher Product
+        [HttpGet("get-voucher-product-by/{id}")]
+        public async Task<IActionResult> GetListVoucherProductByShopId(int id)
+        {
+            var vouchers = await _voucherProductRepository.GetListVoucherProductById(id);
+            if (vouchers is null)
+            {
+                return BadRequest(new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.NotFound,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "NotFound Voucher of shop"
+                    }
+                });
+            }
+
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = vouchers
+                }
+            });
+
+        }
+
+        #endregion
+
+
 
 
     }
