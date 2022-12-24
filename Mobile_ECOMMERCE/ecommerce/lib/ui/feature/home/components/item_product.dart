@@ -45,9 +45,11 @@ class ItemProduct extends StatelessWidget {
                   children: [
                     Text(
                       product.name,
+                      maxLines: 1,
                       style: const TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w400,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     Text(
