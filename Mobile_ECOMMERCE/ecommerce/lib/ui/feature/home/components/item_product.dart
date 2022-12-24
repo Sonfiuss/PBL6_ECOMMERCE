@@ -1,3 +1,5 @@
+import 'package:ecommerce/data/model/home%20/data.dart';
+import 'package:ecommerce/data/model/home%20/home_get_product.dart';
 import 'package:ecommerce/utilities/helpers/validator_helper/validator_helper.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +12,7 @@ class ItemProduct extends StatelessWidget {
     required this.product,
     required this.onTap,
   }) : super(key: key);
-  final Product product;
+  final Data product;
   final Function() onTap;
 
   @override
@@ -28,9 +30,9 @@ class ItemProduct extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Hero(
-                tag: product.image,
+                tag: product.imageURL,
                 child: Image.network(
-                  product.image,
+                  product.imageURL,
                   fit: BoxFit.fill,
                 ),
               ),
@@ -49,7 +51,7 @@ class ItemProduct extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '${product.priceBefore} VND',
+                      '${product.initialPrice} VND',
                       style: const TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w400,

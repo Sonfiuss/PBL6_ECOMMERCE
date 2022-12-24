@@ -14,7 +14,7 @@ class Result {
   factory Result.fromJson(Map<String, dynamic> json) => _$ResultFromJson(json);
 
   @JsonKey(name: 'data')
-  final Data data;
+  final List<Data> data;
 
   Map<String, dynamic> toJson() => _$ResultToJson(this);
 }
