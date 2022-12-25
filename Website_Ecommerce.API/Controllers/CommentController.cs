@@ -198,27 +198,5 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-        /// <summary>
-        /// List comment of product 
-        /// </summary>
-        /// <param name="productId"></param>
-        /// <returns></returns>
-        [HttpGet("list-comment-by/{id}")]
-        public async Task<IActionResult> GetListComment(int productId)
-        {
-            var listCommentDetails = await _commentRepository.GetCommentDetails();
-
-            return Ok(new Response<ResponseDefault>()
-            {
-                State = true,
-                Message = ErrorCode.Success,
-                Result = new ResponseDefault()
-                {
-                    Data = listCommentDetails
-                }
-            });
-        }
-
-
     }
 }
