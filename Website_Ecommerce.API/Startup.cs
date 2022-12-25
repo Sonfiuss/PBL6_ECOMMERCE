@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
+using System.Reflection;
 using System.Text;
 using Website_Ecommerce.API.Data;
 using Website_Ecommerce.API.Queries;
@@ -69,6 +70,10 @@ namespace PBL4.WebAPI
                         new List<string>()
                     }
                 });
+
+                // using System.Reflection;
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
 
             var serverVersion = new MySqlServerVersion(new Version(8, 0, 30));

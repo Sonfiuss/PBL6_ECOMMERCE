@@ -234,7 +234,7 @@ namespace Website_Ecommerce.API.Controllers
         }
 
         /// <summary>
-        /// get voucher availablility
+        /// Get voucher availablility
         /// </summary>
         /// <returns></returns>
         [HttpGet("get-voucher-availability")]
@@ -291,9 +291,6 @@ namespace Website_Ecommerce.API.Controllers
         }
 
         #endregion
-
-
-
 
     }
 }

@@ -257,46 +257,6 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
-        /// <summary>
-        /// Get product by id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("get-product-by/{id}")]
-        public async Task<IActionResult> GetProductById(int id)
-        {
-            if (id.ToString() is null)
-            {
-                return BadRequest(null);
-            }
-            // Get shopId, check shop tao => moi xoa
-            Product product = await _productRepository.Products.FirstOrDefaultAsync(p => p.Id == id);
-            if (product == null)
-            {
-                return BadRequest(new Response<ResponseDefault>()
-                {
-                    State = false,
-                    Message = ErrorCode.NotFound,
-                    Result = new ResponseDefault()
-                    {
-                        Data = "NotFound Product"
-                    }
-                });
-            }
-
-            return Ok(new Response<ResponseDefault>()
-            {
-                State = true,
-                Message = ErrorCode.Success,
-                Result = new ResponseDefault()
-                {
-                    Data = product
-                }
-            });
-        }
-
-
-
         #endregion
 
         #region ProductDetail

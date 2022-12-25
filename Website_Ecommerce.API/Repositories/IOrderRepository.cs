@@ -12,15 +12,15 @@ namespace Website_Ecommerce.API.Repositories
         IQueryable<Order> Orders { get; }
         IQueryable<OrderDetail> OrderDetails { get; }
         /// <summary>
-        /// <param name = "userId"></param>
+        /// <param name = "id"></param>
         /// </summary>
         Task<Order> GetLastOrder(int id);
         /// <summary>
-        /// <param name = "userId"></param>
+        /// <param name = "id"></param>
         /// </summary>
         Task<IEnumerable<Order>> GetAllOrderOfUser(int id);
         /// <summary>
-        /// <param name = "orderId"></param>
+        /// <param name = "id"></param>
         /// </summary>
         Task<IEnumerable<OrderDetail>> GetOrderDetail(int id);
 

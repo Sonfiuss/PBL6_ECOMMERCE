@@ -166,6 +166,106 @@ namespace Website_Ecommerce.API.Repositories
         public async Task<List<ProductQueryModel>> GetListProducByShop(int shopId)
         {
             var data = await _dataContext.Products
+                .Where(x => x.ShopId == shopId)
+                .Join(_dataContext.ProductDetails,
+                product => product.Id,
+                productDetail => productDetail.ProductId,
+                (product, productDetail) => new { product, productDetail })
+                .Join(_dataContext.ProductImages,
+                productProductDetail => productProductDetail.productDetail.Id,
+                productimage => productimage.ProductDetailId,
+                (productProductDetail, productimage) => new ProductQueryModel
+                {
+                    Id = productProductDetail.product.Id,
+                    Name = productProductDetail.product.Name,
+                    Price = productProductDetail.productDetail.Price,
+                    InitialPrice = productProductDetail.productDetail.InitialPrice,
+                    ImageURL = productimage.UrlImage,
+                    Saled = productProductDetail.product.Saled
+                })
+                .ToListAsync();
+
+            var result2 = (from p in data
+                           group p by new { p.Id } //or group by new {p.ID, p.Name, p.Whatever}
+                   into mygroup
+                           select mygroup.FirstOrDefault()).OrderByDescending(x => x.Id).ToList();
+
+            return result2;
+        }
+
+        /// <summary>
+        /// Get list product of shop by shopId
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        public async Task<ProductProductDetailQueryModel> GetProductById(int productId)
+        {
+            var data = await _dataContext.Products
+                        .Where(x => x.Id == productId)
+                        .Select(x => new ProductProductDetailQueryModel
+                        {
+                            Id = x.Id,
+                            Name = x.Name,
+                            TotalRate = x.TotalRate,
+                            AverageRate = x.AverageRate
+                        })
+                        .FirstOrDefaultAsync();
+
+            return data;
+        }
+
+        /// <summary>
+        /// Get list product detail by shop id
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        public async Task<List<ProductDetailQueryModel>> GetListProductDetailByProductId(int productId)
+        {
+            var data = await _dataContext.ProductDetails
+                        .Where(x => x.ProductId == productId)
+                        .Select(x => new ProductDetailQueryModel
+                        {
+                            Id = x.Id,
+                            Size = x.Size,
+                            Color = x.Color,
+                            Amount = x.Amount,
+                            Price = x.Price,
+                            InitialPrice = x.InitialPrice
+                        })
+                        .ToListAsync();
+
+            return data;
+        }
+
+        /// <summary>
+        /// Get list product image by shop id
+        /// </summary>
+        /// <param name="productDetailId"></param>
+        /// <returns></returns>
+        public async Task<List<ProductImageQueryModel>> GetListProductImageByOfProductDetail(int productDetailId)
+        {
+            var data = await _dataContext.ProductImages
+                        .Where(x => x.ProductDetailId == productDetailId)
+                        .Select(x => new ProductImageQueryModel
+                        {
+                            Id = x.Id,
+                            UrlImage = x.UrlImage
+                        })
+                        .ToListAsync();
+
+            return data;
+        }
+
+
+        /// <summary>
+        /// Search Product
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public async Task<List<ProductQueryModel>> SearchProduct(string key)
+        {
+            var data = await _dataContext.Products
+                .Where(x => x.Name.ToLower().Contains(key))
                 .Join(_dataContext.ProductDetails,
                 product => product.Id,
                 productDetail => productDetail.ProductId,
@@ -186,5 +286,6 @@ namespace Website_Ecommerce.API.Repositories
 
             return data;
         }
+
     }
 }

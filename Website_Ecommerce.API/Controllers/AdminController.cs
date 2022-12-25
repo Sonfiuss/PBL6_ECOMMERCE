@@ -41,7 +41,7 @@ namespace Website_Ecommerce.API.Controllers
         /// <summary>
         /// Get list user
         /// </summary>
-        /// <returns> List<User> </returns>
+        /// <returns></returns>
         [HttpGet("get-list-user")]
         public async Task<IActionResult> GetListUser()
         {
@@ -93,7 +93,7 @@ namespace Website_Ecommerce.API.Controllers
                     Message = ErrorCode.Success,
                     Result = new ResponseDefault()
                     {
-                        Data = "State of user" + user.Id.ToString() + ": " + user.IsBlock.ToString()
+                        Data = $"State of user {user.Id.ToString()}: {user.IsBlock.ToString()}"
                     }
                 });
             }
@@ -113,7 +113,7 @@ namespace Website_Ecommerce.API.Controllers
         /// <summary>
         /// Get list shop active
         /// </summary>
-        /// <returns> List<Shop> </returns>
+        /// <returns></returns>
         [HttpGet("get-list-shop-active")]
         public async Task<IActionResult> GetListShopActive()
         {
@@ -146,7 +146,7 @@ namespace Website_Ecommerce.API.Controllers
         /// <summary>
         /// Get list shop no active
         /// </summary>
-        /// <returns> List<Shop> </returns>
+        /// <returns></returns>
         [HttpGet("get-list-shop-no-active")]
         public async Task<IActionResult> GetListShopNoActive()
         {
@@ -178,7 +178,7 @@ namespace Website_Ecommerce.API.Controllers
         /// <summary>
         /// Get list shop wating confirm register by admin
         /// </summary>
-        /// <returns> List<Shop> </returns>
+        /// <returns></returns>
         [HttpGet("get-list-shop-waiting-confirm")]
         public async Task<IActionResult> GetListShopWaitingConfirm()
         {
@@ -242,7 +242,7 @@ namespace Website_Ecommerce.API.Controllers
                     Message = ErrorCode.Success,
                     Result = new ResponseDefault()
                     {
-                        Data = "State of shop" + shop.Id.ToString() + ": " + shop.Status.ToString()
+                        Data = $"State of shop  {shop.Id.ToString()}: {shop.Status.ToString()}"
                     }
                 });
             }
@@ -279,7 +279,7 @@ namespace Website_Ecommerce.API.Controllers
                     Message = ErrorCode.Success,
                     Result = new ResponseDefault()
                     {
-                        Data = "State of shop" + shop.Id.ToString() + ": " + shop.Status.ToString()
+                        Data = $"State of shop {shop.Id.ToString()}: {shop.Status.ToString()}"
                     }
                 });
             }
