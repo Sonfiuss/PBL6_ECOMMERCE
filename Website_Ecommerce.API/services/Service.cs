@@ -8,6 +8,8 @@ using Website_Ecommerce.API.Repositories;
 using Microsoft.EntityFrameworkCore;
 using PBL6_ECOMMERCE.Website_Ecommerce.API.Response;
 using PBL6_ECOMMERCE.Website_Ecommerce.API.ModelDtos;
+using System.Text;
+using System.Reflection;
 
 namespace PBL6_ECOMMERCE.Website_Ecommerce.API.services
 {
@@ -77,97 +79,91 @@ namespace PBL6_ECOMMERCE.Website_Ecommerce.API.services
             }
         }
 
-        public Task<ResponseVnPay> returnUrl(ReturnRequest request)
+        public async Task<ResponseVnPay> returnUrl(ReturnRequest request)
         {
-            string returnContent = string.Empty;
-            if (request == null)
+            ResponseVnPay res = new ResponseVnPay();
+            if (request != null)
             {
                 string vnp_HashSecret = _configuration["vnp_HashSecret"]; //Secret key
-                var vnpayData = request;
                 VnPayLibrary vnpay = new VnPayLibrary();
-                foreach (string s in vnpayData)
+                string secureHash = "";
+                IList<PropertyInfo> properties = request.GetType().GetProperties().ToList();
+                foreach (var property in properties)
                 {
-                    //get all querystring data
-                    if (!string.IsNullOrEmpty(s) && s.StartsWith("vnp_"))
+                    var val = property.GetValue(request)?.ToString();
+                    if (String.IsNullOrEmpty(val) || property.Name == "vnp_SecureHash")
                     {
-                        vnpay.AddResponseData(s, vnpayData[s]);
+                        if (property.Name == "vnp_SecureHash")
+                        {
+                            secureHash = val;
+                        }
+                        continue;
+                    }
+                    else
+                    {
+                        vnpay.AddResponseData(property.Name, val);
                     }
                 }
-                //Lay danh sach tham so tra ve tu VNPAY
-                //vnp_TxnRef: Ma don hang merchant gui VNPAY tai command=pay    
-                //vnp_TransactionNo: Ma GD tai he thong VNPAY
-                //vnp_ResponseCode:Response code from VNPAY: 00: Thanh cong, Khac 00: Xem tai lieu
-                //vnp_SecureHash: HmacSHA512 cua du lieu tra ve
-
-                long orderId = Convert.ToInt64(vnpay.GetResponseData("vnp_TxnRef"));
-                long vnp_Amount = Convert.ToInt64(vnpay.GetResponseData("vnp_Amount"))/100;
+                string orderRef = vnpay.GetResponseData("vnp_TxnRef");
+                long vnp_Amount = Convert.ToInt64(vnpay.GetResponseData("vnp_Amount"))/10000;
                 long vnpayTranId = Convert.ToInt64(vnpay.GetResponseData("vnp_TransactionNo"));
                 string vnp_ResponseCode = vnpay.GetResponseData("vnp_ResponseCode");
                 string vnp_TransactionStatus = vnpay.GetResponseData("vnp_TransactionStatus");
-                String vnp_SecureHash = Request.QueryString["vnp_SecureHash"];
-                bool checkSignature = vnpay.ValidateSignature(vnp_SecureHash, vnp_HashSecret);
+                bool checkSignature = vnpay.ValidateSignature(secureHash, vnp_HashSecret);
                 if (checkSignature)
                 {
-                    //Cap nhat ket qua GD
-                    //Yeu cau: Truy van vao CSDL cua  Merchant => lay ra duoc OrderInfo
-                    //Giả sử OrderInfo lấy ra được như giả lập bên dưới
-                    OrderInfo order = new OrderInfo();//get from DB
-                    order.OrderId = orderId;
-                    order.Amount = 100000;
-                    order.PaymentTranId = vnpayTranId;
-                    order.Status = "0"; //0: Cho thanh toan,1: da thanh toan,2: GD loi
-                    //Kiem tra tinh trang Order
+                    Order order = await _orderRepository.Orders.FirstOrDefaultAsync(x => x.Reference == orderRef);
                     if (order != null)
                     {
-                        if (order.Amount == vnp_Amount) {
-                            if (order.Status == "0")
+                        if (order.TotalPrice == vnp_Amount) {
+                            if (order.State == 0) // pending
                             {
                                 if (vnp_ResponseCode == "00" && vnp_TransactionStatus == "00")
                                 {
-                                    //Thanh toan thanh cong
-                                    log.InfoFormat("Thanh toan thanh cong, OrderId={0}, VNPAY TranId={1}", orderId,
-                                        vnpayTranId);
-                                    order.Status = "1";
+                                    order.State = 1; // thanh cong
                                 }
                                 else
                                 {
-                                    //Thanh toan khong thanh cong. Ma loi: vnp_ResponseCode
-                                    //  displayMsg.InnerText = "Có lỗi xảy ra trong quá trình xử lý.Mã lỗi: " + vnp_ResponseCode;
-                                    log.InfoFormat("Thanh toan loi, OrderId={0}, VNPAY TranId={1},ResponseCode={2}",
-                                        orderId,
-                                        vnpayTranId, vnp_ResponseCode);
-                                    order.Status = "2";
+                                    order.State = 2; // loi
                                 }
-
-                                //Thêm code Thực hiện cập nhật vào Database 
-                                //Update Database
-
-                                returnContent = "{\"RspCode\":\"00\",\"Message\":\"Confirm Success\"}";
+                                _orderRepository.Update(order);
+                                res.Message = "Confirm Success";
+                                res.RspCode = "00";
+                                return res;
                             }
                             else
                             {
-                                returnContent = "{\"RspCode\":\"02\",\"Message\":\"Order already confirmed\"}";
+                                res.Message = "Order already confirmed";
+                                res.RspCode = "02";
+                                return res;
                             }
                         }
                         else
                         {
-                            returnContent = "{\"RspCode\":\"04\",\"Message\":\"invalid amount\"}";
+                            res.Message = "invalid amount";
+                            res.RspCode = "04";
+                            return res;
                         }
                     }
                     else
                     {
-                        returnContent = "{\"RspCode\":\"01\",\"Message\":\"Order not found\"}";
+                        res.Message = "Order not found";
+                        res.RspCode = "01";
+                        return res;
                     }
                 }
                 else
                 {
-                    log.InfoFormat("Invalid signature, InputData={0}", Request.RawUrl);
-                    returnContent = "{\"RspCode\":\"97\",\"Message\":\"Invalid signature\"}";
+                    res.Message = "Invalid signature";
+                    res.RspCode = "97";
+                    return res;
                 }
             }
             else
             {
-                returnContent = "{\"RspCode\":\"99\",\"Message\":\"Input data required\"}";
+                res.Message = "Input data required";
+                res.RspCode = "99";
+                return res;
             }
         }
     }
