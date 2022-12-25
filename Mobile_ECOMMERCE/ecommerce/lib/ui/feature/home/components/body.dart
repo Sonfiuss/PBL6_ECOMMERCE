@@ -1,17 +1,22 @@
 import 'package:ecommerce/ui/feature/detail/detail.dart';
+import 'package:ecommerce/ui/feature/home/bloc/home_state.dart';
 import 'package:ecommerce/ui/feature/home/components/search.dart';
 import 'package:ecommerce/ui/feature/profile/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../data/model/product.dart';
 import '../../../resources/app_colors.dart';
 import '../../cart/cart.dart';
+import '../bloc/home_presenter.dart';
 import 'genres.dart';
 import 'item_product.dart';
 
 class Body extends StatelessWidget {
   const Body({
-    Key? key,
+    Key? key, required this.homePresenter,
   }) : super(key: key);
+
+  final HomePresenter homePresenter;
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +82,7 @@ class Body extends StatelessWidget {
                           onPressed: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => Cart(
+                              builder: (context) =>const Cart(
                                  ),
                             ),
                           ),
@@ -171,29 +176,44 @@ class Body extends StatelessWidget {
                     Text('See all'),
                   ],
                 ),
-                GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: demoProduct.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 0.75,
-                  ),
-                  itemBuilder: (context, index) => ItemProduct(
-                      product: demoProduct[index],
-                      onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Detail(demoProduct[index]),
-                            ),
-                          )),
-                )
+              HomeGetListProduct(homePresenter: homePresenter,)
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class HomeGetListProduct extends StatelessWidget {
+  const HomeGetListProduct({
+    super.key, required this.homePresenter,
+  });
+ final HomePresenter homePresenter;
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<HomePresenter, HomeState>(
+      bloc: homePresenter,
+      builder: (context, state) => 
+      GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: state.productHome.length,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          childAspectRatio: 0.75,
+        ),
+        itemBuilder: (context, index) => ItemProduct(
+            product: state.productHome[index],
+            onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Detail(demoProduct[index]),
+                  ),
+                )),
       ),
     );
   }
