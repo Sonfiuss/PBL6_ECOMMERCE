@@ -55,15 +55,17 @@ p::cue-region(){
 .view-add-product{
   top: 10;
   right: 10;
-  width: 50%;
   padding-top: 20px;
   padding-left: 40px;
+  padding-right: 30px;
+  width: 40%;
+  
 }
 .view-add-product-detail{
   top: 10;
   right: 0;
   padding-top: 20px;
-  padding-left: 50px;
+  padding-left: 30px;
 }
 .show-ckeditor{
   position:fixed;
@@ -189,8 +191,9 @@ p::cue-region(){
   -webkit-box-pack: start;
   justify-content: flex-start
 }
+
 .mandatory-input input{
-  width: 100%;
+  width: 70%;
   border-radius: 6px;
   height: 40px;
 }
@@ -235,16 +238,20 @@ p::cue-region(){
   width: 10%;
   
 }
-
+.list-product-detail{
+  position: relative;
+  padding-bottom: 30px;
+}
 table {
+  position: absolute;
   border: 1px solid rgb(92, 92, 92);
   border-collapse: collapse;
-  width:100%;
+  width: 100%;
   text-align: center;
   border-radius: 2em;
 }
 td, th{
-  padding: 8px;
+  padding: 5px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
@@ -268,6 +275,8 @@ table td.expand {
 } 
 .button-confirm-change{
   display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 .button-add-productdetail{
   margin-left: 20px;

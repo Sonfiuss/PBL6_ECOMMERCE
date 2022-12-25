@@ -106,3 +106,6 @@ body {
     background-color: rgb(10, 78, 204); /* For browsers that do not support gradients */
     background-image: linear-gradient(to right, #1F4C74 ,rgb(247, 11, 101) , #E1B42B);
 }
+.edit-product{
+    size: 100%;
+}

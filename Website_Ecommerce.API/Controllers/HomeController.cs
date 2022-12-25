@@ -137,7 +137,7 @@ namespace Website_Ecommerce.API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get all product
         /// </summary>
         /// <returns></returns>get list product
         [HttpGet("get-list-product")]
@@ -283,58 +283,86 @@ namespace Website_Ecommerce.API.Controllers
         /// Search product by productName, categoryName
         /// </summary>
         /// <returns></returns>
-        // [HttpGet("search-product-by/{key}")]
-        // public async Task<IActionResult> SearchProduct(string key)
-        // {
+        [HttpGet("search-product-by/{key}")]
+        public async Task<IActionResult> SearchProduct(string key)
+        {
+            if (key is null)
+            {
+                return Ok(new Response<ResponseDefault>()
+                {
+                    State = true,
+                    Message = ErrorCode.Success,
+                    Result = new ResponseDefault()
+                    {
+                        Data = await _productRepository.GetAllProduct()
+                    }
+                });
+            }
 
-        // }
+            var listProduct = await _productRepository.SearchProduct(key);
+
+            if (listProduct == null)
+            {
+                return BadRequest(new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.NotFound,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "NotFound Product"
+                    }
+                });
+            }
+
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = listProduct
+                }
+            });
+        }
+
+        /// <summary>
+        /// Get product by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("get-product-by/{id}")]
+        public async Task<IActionResult> GetProductById(int id)
+        {
+            if (id.ToString() is null)
+            {
+                return BadRequest(null);
+            }
+            // Get shopId, check shop tao => moi xoa
+            Product product = await _productRepository.Products.FirstOrDefaultAsync(p => p.Id == id);
+            if (product == null)
+            {
+                return BadRequest(new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.NotFound,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "NotFound Product"
+                    }
+                });
+            }
+
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = product
+                }
+            });
+        }
     }
-
-    // [HttpPost("UploadImage")]
-    // public async Task<ActionResult> UploadImage(List<IFormFile> _uploadedfiles)
-    // {
-    //     bool Results = false;
-    //     try
-    //     {
-    //         foreach (IFormFile source in _uploadedfiles)
-    //         {
-    //             string Filename = source.FileName;
-    //             string Filepath = GetFilePath(Filename);
-
-    //             if (!System.IO.Directory.Exists(Filepath))
-    //             {
-    //                 System.IO.Directory.CreateDirectory(Filepath);
-    //             }
-
-    //             string imagepath = Filepath;
-
-    //             if (System.IO.File.Exists(imagepath))
-    //             {
-    //                 System.IO.File.Delete(imagepath);
-    //             }
-    //             using (FileStream stream = System.IO.File.Create(imagepath))
-    //             {
-    //                 await source.CopyToAsync(stream);
-    //                 Results = true;
-    //             }
-
-
-    //         }
-    //     }
-    //     catch (Exception ex)
-    //     {
-
-    //     }
-    //     return Ok(Results);
-    // }
-
-
-    // [NonAction]
-    // private string GetFilePath(string ProductCode)
-    // {
-    //     return this._environment.ContentRootPath + "\\Uploads\\Product\\" + ProductCode;
-    // }
-    // }
 
 
 }

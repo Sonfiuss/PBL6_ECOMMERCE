@@ -127,6 +127,7 @@ namespace Website_Ecommerce.API.Controllers
                 if (resultI <= 0)
                 {
                     _orderRepository.Delete(thisOrder);
+                    var resultDelete = _orderRepository.UnitOfWork.SaveAsync(cancellationToken);
                     return BadRequest(new Response<ResponseDefault>()
                     {
                         State = true,

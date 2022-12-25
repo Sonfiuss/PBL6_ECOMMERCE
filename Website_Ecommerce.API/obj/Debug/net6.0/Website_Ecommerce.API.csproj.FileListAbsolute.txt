@@ -6,6 +6,7 @@ D:\Semester7\TEST_PBL6\Website_Ecommerce.API\bin\Debug\net6.0\Website_Ecommerce.
 D:\Semester7\TEST_PBL6\Website_Ecommerce.API\bin\Debug\net6.0\Website_Ecommerce.API.runtimeconfig.json
 D:\Semester7\TEST_PBL6\Website_Ecommerce.API\bin\Debug\net6.0\Website_Ecommerce.API.dll
 D:\Semester7\TEST_PBL6\Website_Ecommerce.API\bin\Debug\net6.0\Website_Ecommerce.API.pdb
+D:\Semester7\TEST_PBL6\Website_Ecommerce.API\bin\Debug\net6.0\Website_Ecommerce.API.xml
 D:\Semester7\TEST_PBL6\Website_Ecommerce.API\bin\Debug\net6.0\AutoMapper.dll
 D:\Semester7\TEST_PBL6\Website_Ecommerce.API\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 D:\Semester7\TEST_PBL6\Website_Ecommerce.API\bin\Debug\net6.0\Dapper.dll
@@ -72,6 +73,7 @@ D:\Semester7\TEST_PBL6\Website_Ecommerce.API\obj\Debug\net6.0\scopedcss\bundle\W
 D:\Semester7\TEST_PBL6\Website_Ecommerce.API\obj\Debug\net6.0\Website_Ecommerce.API.csproj.CopyComplete
 D:\Semester7\TEST_PBL6\Website_Ecommerce.API\obj\Debug\net6.0\Website_Ecommerce.API.dll
 D:\Semester7\TEST_PBL6\Website_Ecommerce.API\obj\Debug\net6.0\refint\Website_Ecommerce.API.dll
+D:\Semester7\TEST_PBL6\Website_Ecommerce.API\obj\Debug\net6.0\Website_Ecommerce.API.xml
 D:\Semester7\TEST_PBL6\Website_Ecommerce.API\obj\Debug\net6.0\Website_Ecommerce.API.pdb
 D:\Semester7\TEST_PBL6\Website_Ecommerce.API\obj\Debug\net6.0\Website_Ecommerce.API.genruntimeconfig.cache
 D:\Semester7\TEST_PBL6\Website_Ecommerce.API\obj\Debug\net6.0\ref\Website_Ecommerce.API.dll

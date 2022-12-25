@@ -1,24 +1,42 @@
+import { ViewEncapsulation } from '@angular/compiler';
 import { Component,ViewChild, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // import {MatTableDataSource} from "@angular/material/table";
 // import {MatPaginator} from "@angular/material/paginator";
 // import {MatSort} from "@angular/material/sort";
 @Component({
   selector: 'app-view-list-product',
   templateUrl: './view-list-product.component.html',
-  styleUrls: ['./view-list-product.component.css']
+  styleUrls: ['./view-list-product.component.css'],
+
+
+  styles: [
+		`
+			.dark-modal .modal-content {
+				background-color: #292b2c;
+				color: white;
+			}
+			.dark-modal .close {
+				color: white;
+			}
+			.light-blue-backdrop {
+				background-color: #5cb3fd;
+			}
+		`,
+  ]
 })
 export class ViewListProductComponent implements OnInit {
-  // displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  //         dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-  //         @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  //         @ViewChild(MatSort, { static: true }) sort!: MatSort;
-  constructor() { }
+
+  closeResult: string;
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    // this.dataSource.paginator = this.paginator;
-    //         this.dataSource.sort = this.sort;
+
   }
-  
+  show_detail(content:any){
+    console.log("HULLO")
+    this.modalService.open(content, { size: 'lg' });
+  }
 
 }
 export interface PeriodicElement {

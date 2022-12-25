@@ -23,7 +23,7 @@
           <th>Tồn kho</th>
           <th>Thay đổi</th>
         </tr>
-        <tr>
+        <tr (click)="show_detail(longContent)">
           <td>1</td>
           <td>Áo dài tay nam</td>
           <td>Áo sơ mi</td>
@@ -33,8 +33,9 @@
           <td>10</td>
           <td>100</td>
           <td><i class="bi bi-plus-circle"></i></td>
+          
         </tr>
-        <tr>
+        <tr (click)="show_detail(longContent)">
             <td>2</td>
             <td>Áo dài tay nam ấm dành cho mùa đông</td>
             <td>Áo khoác</td>
@@ -49,3 +50,15 @@
     </div>
 
 </div>
+<ng-template #longContent let-modal>
+  <div class="modal-header">
+		<h4 class="modal-title">Chi tiết sản phẩm</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+
+  <div class="modal-body">
+    <div class = "edit-product">
+      <app-add-product></app-add-product>
+    </div>
+  </div>
+</ng-template>
