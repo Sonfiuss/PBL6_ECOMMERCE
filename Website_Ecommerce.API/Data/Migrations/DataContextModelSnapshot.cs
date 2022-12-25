@@ -125,6 +125,9 @@ namespace Website_Ecommerce.API.Data.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Reference")
+                        .HasColumnType("longtext");
+
                     b.Property<int>("State")
                         .HasColumnType("int");
 

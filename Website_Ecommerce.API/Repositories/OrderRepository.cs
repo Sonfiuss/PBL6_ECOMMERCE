@@ -77,5 +77,10 @@ namespace Website_Ecommerce.API.Repositories
         {
             _dataContext.Entry(orderDetail).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         }
+
+        public void Update(Order order)
+        {
+            _dataContext.Entry(order).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        }
     }
 }

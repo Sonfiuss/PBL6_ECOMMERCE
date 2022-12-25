@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using PBL6_ECOMMERCE.Website_Ecommerce.API.services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Text;
@@ -104,6 +105,7 @@ namespace PBL4.WebAPI
             services.AddTransient<IStatisticService, StatisticService>();
             services.AddTransient<ICommentRepository, CommentRepository>();
             services.AddTransient<IVoucherProductRepository, VoucherProductRepository>();
+            services.AddTransient<IServices, Service>();
 
             services.AddTransient<IAppQueries>(x => new AppQueries(Configuration["ConnectionString"]));
 
@@ -153,7 +155,7 @@ namespace PBL4.WebAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.IsProduction())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();

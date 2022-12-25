@@ -7,6 +7,7 @@ namespace Website_Ecommerce.API.Repositories
         void Add(Order order);
         void Delete(Order order);
         void Add(OrderDetail orderDetail);
+        void Update(Order order);
         void Update(OrderDetail orderDetail);
         void Delete(OrderDetail orderDetail);
         IQueryable<Order> Orders { get; }
