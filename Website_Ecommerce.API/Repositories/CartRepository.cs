@@ -38,7 +38,7 @@ namespace Website_Ecommerce.API.Repositories
         /// <param name="id"></param>
         /// <returns></returns>
         public async Task<List<ItemCartQueryModel>> GetAllItemByIdUser(int id)
-        {
+        {   
             var data = await _dataContext.Carts.Where(x => x.UserId == id && x.State == true)
                                         .Join(_dataContext.ProductDetails,
                                         cart => cart.ProductDetailId,
@@ -47,16 +47,31 @@ namespace Website_Ecommerce.API.Repositories
                                         .Join(_dataContext.Products,
                                         cartProductDetail => cartProductDetail.productDetail.ProductId,
                                         product => product.Id,
-                                        (cartProductDetail, product) => new ItemCartQueryModel
+                                        (cartProductDetail, product) => new
                                         {
-                                            Id = cartProductDetail.cart.Id,
-                                            NameProduct = product.Name,
-                                            IdProductDetail = cartProductDetail.productDetail.Id,
-                                            IdShop = product.ShopId,
-                                            UserId = cartProductDetail.cart.UserId,
-                                            InitialPrice = cartProductDetail.productDetail.InitialPrice,
-                                            Price = cartProductDetail.productDetail.Price,
-                                            Amount = cartProductDetail.cart.Amount
+                                            id = cartProductDetail.cart.Id,
+                                            nameProduct = product.Name,
+                                            idProductDetail = cartProductDetail.productDetail.Id,
+                                            idShop = product.ShopId,
+                                            userId = cartProductDetail.cart.UserId,
+                                            initialPrice = cartProductDetail.productDetail.InitialPrice,
+                                            price = cartProductDetail.productDetail.Price,
+                                            amount = cartProductDetail.cart.Amount,
+                                            
+                                        })
+                                        .Join(_dataContext.ProductImages, 
+                                        itemCart => itemCart.idProductDetail, 
+                                        img => img.ProductDetailId,
+                                        (itemCart, img) => new ItemCartQueryModel{
+                                            Id = itemCart.id,
+                                            NameProduct = itemCart.nameProduct,
+                                            IdProductDetail = itemCart.idProductDetail,
+                                            IdShop = itemCart.idShop,
+                                            UserId = itemCart.userId,
+                                            InitialPrice = itemCart.initialPrice,
+                                            Price = itemCart.price,
+                                            Amount = itemCart.amount,
+                                            UrlImage = img.UrlImage
                                         })
                                         .ToListAsync();
             return data;
