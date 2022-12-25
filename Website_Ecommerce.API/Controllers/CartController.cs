@@ -2,6 +2,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PBL6_ECOMMERCE.Website_Ecommerce.API.ModelDtos;
+using PBL6_ECOMMERCE.Website_Ecommerce.API.services;
 using Website_Ecommerce.API.Data.Entities;
 using Website_Ecommerce.API.ModelDtos;
 using Website_Ecommerce.API.Repositories;
@@ -17,14 +19,17 @@ namespace Website_Ecommerce.API.Controllers
         private readonly IMapper _mapper;
         private readonly ICartRepository _cartRepository;
         private readonly IHttpContextAccessor _httpContext;
+        private readonly IServices _services;
         public CartController(
             ICartRepository cartRepository,
             IMapper mapper,
-            IHttpContextAccessor httpContext)
+            IHttpContextAccessor httpContext,
+            IServices services)
         {
             _httpContext = httpContext;
             _mapper = mapper;
             _cartRepository = cartRepository;
+            _services = services;
         }
 
         /// <summary>
@@ -182,6 +187,33 @@ namespace Website_Ecommerce.API.Controllers
                     Data = listItems
                 }
             });
+        }
+
+        /// <summary>
+        /// Get payment link
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("vnay-payment-link")]
+        public async Task<IActionResult> PaymentLink(int orderId, string vnp_Returnurl)
+        {
+            var res = await _services.getPaymentLink(orderId, vnp_Returnurl);
+            if(!res.State)
+            {
+                return BadRequest(res);
+            }
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// update db
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("return-url")]
+        [AllowAnonymous]
+        public async Task<IActionResult> returnURL([FromQuery]ReturnRequest request)
+        {
+            var res = await _services.returnUrl(request);
+            return Ok(res);
         }
     }
 }

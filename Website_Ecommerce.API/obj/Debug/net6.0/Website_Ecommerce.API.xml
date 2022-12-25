@@ -113,6 +113,18 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Website_Ecommerce.API.Controllers.CartController.PaymentLink(System.Int32,System.String)">
+            <summary>
+            Get payment link
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Website_Ecommerce.API.Controllers.CartController.returnURL(PBL6_ECOMMERCE.Website_Ecommerce.API.ModelDtos.ReturnRequest)">
+            <summary>
+            update db
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Website_Ecommerce.API.Controllers.CategoryController.AddCategory(Website_Ecommerce.API.ModelDtos.CategoryDto,System.Threading.CancellationToken)">
             <summary>
             Add category

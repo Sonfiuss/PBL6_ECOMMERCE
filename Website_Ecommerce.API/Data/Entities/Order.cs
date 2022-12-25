@@ -18,6 +18,7 @@ namespace Website_Ecommerce.API.Data.Entities
         public string Address { get; set; }
         [Required]
         public string RecipientName { get; set;}
+        public string Reference { get; set;}
         [Required]
         public string RecipientPhone { get; set; }
         [Required]
