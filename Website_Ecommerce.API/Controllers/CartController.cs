@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PBL6_ECOMMERCE.Website_Ecommerce.API.ModelDtos;
 using PBL6_ECOMMERCE.Website_Ecommerce.API.services;
 using Website_Ecommerce.API.Data.Entities;
 using Website_Ecommerce.API.ModelDtos;
@@ -200,6 +201,18 @@ namespace Website_Ecommerce.API.Controllers
             {
                 return BadRequest(res);
             }
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// update db
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("return-url")]
+        [AllowAnonymous]
+        public async Task<IActionResult> returnURL([FromQuery]ReturnRequest request)
+        {
+            var res = await _services.returnUrl(request);
             return Ok(res);
         }
     }
