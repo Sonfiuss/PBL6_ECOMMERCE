@@ -483,7 +483,7 @@
         </member>
         <member name="M:Website_Ecommerce.API.Controllers.VoucherController.GetVoucherAvailability">
             <summary>
-            get voucher availablility
+            Get voucher availablility
             </summary>
             <returns></returns>
         </member>

@@ -85,6 +85,7 @@ namespace Website_Ecommerce.API.Data.Migrations
                 type: "datetime(6)",
                 nullable: false,
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+            // migrationBuilder.Sql("INSERT INTO PBL6_ECOMMERCE.Categories (Name, CreateBy, DateCreate) VALUES('Test', 1, '0001-01-01 00:00:00.000000') ");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -132,6 +133,7 @@ namespace Website_Ecommerce.API.Data.Migrations
             migrationBuilder.DropColumn(
                 name: "DateCreate",
                 table: "Categories");
+            // migrationBuilder.Sql("DELETE FROM PBL6_ECOMMERCE.Categories WHERE Name = 'Test' ");
         }
     }
 }
