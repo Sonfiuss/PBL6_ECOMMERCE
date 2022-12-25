@@ -172,13 +172,6 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:Website_Ecommerce.API.Controllers.CommentController.GetListComment(System.Int32)">
-            <summary>
-            List comment of product 
-            </summary>
-            <param name="productId"></param>
-            <returns></returns>
-        </member>
         <member name="M:Website_Ecommerce.API.Controllers.HomeController.UpFile(System.Collections.Generic.List{Microsoft.AspNetCore.Http.IFormFile})">
             <summary>
             UpFile
@@ -206,13 +199,6 @@
             <param name="productDetailId"></param>
             <returns></returns>
         </member>
-        <member name="M:Website_Ecommerce.API.Controllers.HomeController.GetImageByProductDetailId(System.Int32)">
-            <summary>
-            Get image by productDetailId
-            </summary>
-            <param name="productDetailId"></param>
-            <returns></returns>
-        </member>
         <member name="M:Website_Ecommerce.API.Controllers.HomeController.GetListProducByShop(System.Int32)">
             <summary>
             Get list product by shopId
@@ -226,11 +212,11 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Website_Ecommerce.API.Controllers.HomeController.GetProductById(System.Int32)">
+        <member name="M:Website_Ecommerce.API.Controllers.HomeController.GetListComment(System.Int32)">
             <summary>
-            Get product by id
+            List comment of product 
             </summary>
-            <param name="id"></param>
+            <param name="productId"></param>
             <returns></returns>
         </member>
         <member name="M:Website_Ecommerce.API.Controllers.OrderController.AddOrder(Website_Ecommerce.API.ModelDtos.OrderDto,System.Threading.CancellationToken)">
@@ -525,17 +511,17 @@
         </member>
         <member name="M:Website_Ecommerce.API.Repositories.IOrderRepository.GetLastOrder(System.Int32)">
             <summary>
-            <param name = "userId"></param>
+            <param name = "id"></param>
             </summary>
         </member>
         <member name="M:Website_Ecommerce.API.Repositories.IOrderRepository.GetAllOrderOfUser(System.Int32)">
             <summary>
-            <param name = "userId"></param>
+            <param name = "id"></param>
             </summary>
         </member>
         <member name="M:Website_Ecommerce.API.Repositories.IOrderRepository.GetOrderDetail(System.Int32)">
             <summary>
-            <param name = "orderId"></param>
+            <param name = "id"></param>
             </summary>
         </member>
         <member name="M:Website_Ecommerce.API.Repositories.IProductRepository.GetAllProduct">
@@ -570,6 +556,27 @@
             Search Product
             </summary>
             <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Website_Ecommerce.API.Repositories.IProductRepository.GetProductById(System.Int32)">
+            <summary>
+            Get list product of shop by shopId
+            </summary>
+            <param name="productId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Website_Ecommerce.API.Repositories.IProductRepository.GetListProductDetailByProductId(System.Int32)">
+            <summary>
+            Get list product detail by shop id
+            </summary>
+            <param name="productId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Website_Ecommerce.API.Repositories.IProductRepository.GetListProductImageByOfProductDetail(System.Int32)">
+            <summary>
+            Get list product image by shop id
+            </summary>
+            <param name="productDetailId"></param>
             <returns></returns>
         </member>
         <member name="M:Website_Ecommerce.API.Repositories.IShopRepository.GetVoucherMatch(Website_Ecommerce.API.Data.Entities.ProductDetail)">
@@ -667,6 +674,27 @@
             Get list product of Shop by shopId
             </summary>
             <param name="shopId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Website_Ecommerce.API.Repositories.ProductRepository.GetProductById(System.Int32)">
+            <summary>
+            Get list product of shop by shopId
+            </summary>
+            <param name="productId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Website_Ecommerce.API.Repositories.ProductRepository.GetListProductDetailByProductId(System.Int32)">
+            <summary>
+            Get list product detail by shop id
+            </summary>
+            <param name="productId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Website_Ecommerce.API.Repositories.ProductRepository.GetListProductImageByOfProductDetail(System.Int32)">
+            <summary>
+            Get list product image by shop id
+            </summary>
+            <param name="productDetailId"></param>
             <returns></returns>
         </member>
         <member name="M:Website_Ecommerce.API.Repositories.ProductRepository.SearchProduct(System.String)">
