@@ -58,6 +58,7 @@ class _PayState extends State<Pay> {
     Future.delayed(
       const Duration(seconds: 1),
     );
+     payPresenter.postOrder();
     Navigator.push(
       context,
       MaterialPageRoute(

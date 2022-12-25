@@ -1,9 +1,14 @@
+import 'package:dio/dio.dart';
 import 'package:ecommerce/data/model/cart.dart';
+import 'package:ecommerce/data/model/order/item_order_dtos.dart';
+import 'package:ecommerce/data/model/order/order.dart';
 import 'package:ecommerce/ui/feature/cart/bloc/cart_state.dart';
+import 'package:ecommerce/ui/feature/pay/components/list_order.dart';
 
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../data/model/source data/api_client.dart';
 import '../../../../utilities/helpers/validator_helper/validator_helper.dart';
 
 import 'pay_state.dart';
@@ -16,7 +21,7 @@ class PayPresenter extends Cubit<PayState> {
           state ?? PayState.initial(),
         );
   final CartState cartState;
-
+  ApiClient apiClient = ApiClient(Dio());
   void init(List<CartModel> cart) {
     // cartPay.add(cartState.cart[cartState.isCart.indexOf()]);
     emit(
@@ -73,5 +78,33 @@ class PayPresenter extends Cubit<PayState> {
         pricePay: sum.toInt(),
       ),
     );
+  }
+
+  Future<void> postOrder() async {
+    final order = Order(
+      message: 'aa',
+      address: state.address,
+      recipientName: 'Ngo Bao',
+      recipientPhone: '0912101998',
+      paymentMethodId: 0,
+      totalPrice: _sumPrice(),
+      itemOrderDtos: [
+        ItemOrderDtos(
+            productDetailId: 4,
+            amount: state.cart.first.itemProduct.first.amount,
+            price: state.cart.first.itemProduct.first.price,
+            note: 'giao trong tuaanf',
+            orderId: 0,
+            voucherProductId: 0)
+      ],
+      id:0,
+      createDate: '2022-12-25T08:28:45.982Z',
+      voucherId: 0,
+      state: 0,
+      userId: 0,
+      
+    );
+    await apiClient.postOrder(order,
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6InNob3AiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6WzJdLCJuYmYiOjE2NzE5NTc5MTEsImV4cCI6MTY3MjA0NDMxMSwiaXNzIjoiYjUyZWQyOGJmMDRmNDAwZjhhMTM2NmE5NDcwNTJiNTMiLCJhdWQiOiJQQkw2In0.XX6gF6De6L5QkxaYMm81cJO1vq0LIcH3z26PRJBa2gA');
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../data/model/cart.dart';
+import '../../../../data/model/home /data.dart';
 import 'detail_state.dart';
 
 class DetailPresenter extends Cubit<DetailState> {
@@ -12,9 +13,22 @@ class DetailPresenter extends Cubit<DetailState> {
   }) : super(
           state ?? DetailState.initial(),
         );
-  init(Product product) {
+  init(Product product, Data data) {
+    final Product productNew;
+    productNew = Product(
+      color: product.color,
+      favorites: product.favorites,
+      id: data.id,
+      image: data.imageURL,
+      name: data.name,
+      price: data.price,
+      priceBefore: data.initialPrice,
+      size: product.size,
+      title: product.title,
+    );
+
     emit(state.copyWith(
-        product: product,
+        product: productNew,
         color: null,
         size: null,
         currentSize: -1,

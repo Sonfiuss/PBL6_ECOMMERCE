@@ -64,7 +64,7 @@ class _PaySuccessState extends State<PaySuccess> {
                   ),
                 ],
               ),
-             const SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               const Text(
@@ -81,7 +81,7 @@ class _PaySuccessState extends State<PaySuccess> {
                     colorButton: AppColors.red,
                     colorText: AppColors.white,
                     colorBorder: AppColors.white,
-                    width: 200,
+                    width: 160,
                   ),
                   ButtonCommon(
                     txt: 'Xem chi tiết đơn hàng',
@@ -89,7 +89,7 @@ class _PaySuccessState extends State<PaySuccess> {
                     colorButton: AppColors.red,
                     colorText: AppColors.white,
                     colorBorder: AppColors.white,
-                    width: 200,
+                    width: 160,
                   ),
                 ],
               )

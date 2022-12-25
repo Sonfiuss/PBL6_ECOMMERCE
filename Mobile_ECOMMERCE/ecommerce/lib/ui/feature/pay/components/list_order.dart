@@ -115,34 +115,37 @@ class ItemOrder extends StatelessWidget {
           const SizedBox(
             width: 20,
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                productCart.name,
-                style: const TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w500,
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  productCart.name,
+                  maxLines: 1,
+                  style: const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w500,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
-              Text(
-                'Phân loại :Af1 ${productCart.color ?? 'chua co mau'} Cao Cấp , size : ${productCart.size ?? 'chua co size'}',
-                style: const TextStyle(
-                  fontSize: 7,
-                  fontWeight: FontWeight.w300,
+                Text(
+                  'Phân loại :Af1 ${productCart.color ?? 'chua co mau'} Cao Cấp , size : ${productCart.size ?? 'chua co size'}',
+                  style: const TextStyle(
+                    fontSize: 7,
+                    fontWeight: FontWeight.w300,
+                  ),
                 ),
-              ),
-              Text(
-                '${productCart.price}',
-                style: const TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w300,
+                Text(
+                  '${productCart.price}',
+                  style: const TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w300,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          const Spacer(),
           Align(
             alignment: Alignment.bottomRight,
             child: Text(

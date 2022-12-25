@@ -1,9 +1,11 @@
+import 'package:ecommerce/data/model/home%20/home_get_product.dart';
 import 'package:ecommerce/data/model/product.dart';
 import 'package:ecommerce/ui/feature/cart/cart.dart';
 import 'package:ecommerce/ui/feature/detail/bloc/detail_presenter.dart';
 import 'package:ecommerce/ui/feature/detail/bloc/detail_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../data/model/home /data.dart';
 import '../../../injection/injector.dart';
 import '../../base/base_page.dart';
 import '../../widget/icon_top.dart';
@@ -11,7 +13,12 @@ import 'components/body.dart';
 import 'components/bottomAppBarDetail.dart';
 
 class Detail extends BasePage {
-  const Detail(this.product, {Key? key}) : super(key: key);
+  const Detail({
+    required this.data,
+    required this.product,
+    Key? key,
+  }) : super(key: key);
+  final Data data;
   final Product product;
 
   @override
@@ -22,18 +29,20 @@ class _DetailState extends State<Detail> {
   final _detailPresenter = injector.get<DetailPresenter>();
   @override
   void initState() {
-    _detailPresenter.init(widget.product);
+    _detailPresenter.init(
+      widget.product,
+      widget.data,
+    );
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return 
-      BlocBuilder<DetailPresenter,DetailState>(
-        bloc: _detailPresenter,
-        builder: (context,state)=>Scaffold(
-         body: SafeArea(
+    return BlocBuilder<DetailPresenter, DetailState>(
+      bloc: _detailPresenter,
+      builder: (context, state) => Scaffold(
+        body: SafeArea(
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,11 +104,10 @@ class _DetailState extends State<Detail> {
             ),
           ),
         ),
-     
-      bottomNavigationBar: BottomAppBarDetail(
-        listProduct: [state.product],
-      ),
+        bottomNavigationBar: BottomAppBarDetail(
+          listProduct: [state.product],
         ),
+      ),
     );
   }
 }

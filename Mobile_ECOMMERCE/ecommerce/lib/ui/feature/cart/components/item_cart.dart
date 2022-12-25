@@ -47,59 +47,66 @@ class ItemCart extends StatelessWidget {
             fit: BoxFit.fill,
           ),
           const SizedBox(width: 20),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                product.name,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.black,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  product.name,
+                  maxLines: 1,
+                  style: const TextStyle(
+                    overflow: TextOverflow.ellipsis,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.black,
+                  ),
                 ),
-              ),
-              Container(
-                height: 20,
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: AppColors.primary),
-                child: Row(
+                Row(
                   children: [
-                    Text(
-                      ' Color : ${product.color ?? 'chua co mau'}',
-                      style: const TextStyle(fontSize: 10),
+                    Container(
+                      height: 20,
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: AppColors.primary),
+                      child: Row(
+                        children: [
+                          Text(
+                            ' Color : ${product.color ?? 'chua co mau'}',
+                            style: const TextStyle(fontSize: 10),
+                          ),
+                          Text(
+                            ' , Size : ${product.size ?? 'Chua co size'}',
+                            style: const TextStyle(fontSize: 10),
+                          )
+                        ],
+                      ),
                     ),
-                    Text(
-                      ' , Size : ${product.size ?? 'Chua co size'}',
-                      style: const TextStyle(fontSize: 10),
-
-                    )
                   ],
                 ),
-              ),
-              Row(
-                children: [
-                  Text(
-                    '${product.price}',
-                    style: const TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.black,
+                Row(
+                  children: [
+                    Text(
+                      '${product.price}',
+                      style: const TextStyle(
+                        fontSize: 11,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.black,
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    width: 50,
-                  ),
-                  CartCounter(
-                    cartPresenter: cartPresenter,
-                    idItem: idItem,
-                    idStore: idStore,
-                  )
-                ],
-              )
-            ],
+                    const SizedBox(
+                      width: 50,
+                    ),
+                    CartCounter(
+                      cartPresenter: cartPresenter,
+                      idItem: idItem,
+                      idStore: idStore,
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ],
       ),

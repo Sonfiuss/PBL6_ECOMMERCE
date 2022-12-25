@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart' hide Headers;
+import 'package:ecommerce/data/model/order/order.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../../utilities/constants/api_constants.dart';
@@ -13,4 +14,15 @@ abstract class ApiClient {
   ) = _ApiClient;
   @GET(ApiConstants.homeGetListProduct)
   Future<HomeGetProduct> getFilm();
+
+  @GET(ApiConstants.homeGetProductDetail)
+  Future<HomeGetProduct> getProductDetail(
+    @Path() int droductId,
+  );
+
+  @POST(ApiConstants.postOrder)
+  Future<Order> postOrder(
+    @Body() Order order,
+    @Header('Authorization') String token,
+  );
 }

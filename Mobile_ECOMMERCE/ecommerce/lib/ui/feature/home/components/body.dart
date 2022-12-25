@@ -13,7 +13,8 @@ import 'item_product.dart';
 
 class Body extends StatelessWidget {
   const Body({
-    Key? key, required this.homePresenter,
+    Key? key,
+    required this.homePresenter,
   }) : super(key: key);
 
   final HomePresenter homePresenter;
@@ -82,8 +83,7 @@ class Body extends StatelessWidget {
                           onPressed: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>const Cart(
-                                 ),
+                              builder: (context) => const Cart(),
                             ),
                           ),
                         ),
@@ -176,7 +176,9 @@ class Body extends StatelessWidget {
                     Text('See all'),
                   ],
                 ),
-              HomeGetListProduct(homePresenter: homePresenter,)
+                HomeGetListProduct(
+                  homePresenter: homePresenter,
+                )
               ],
             ),
           ),
@@ -188,15 +190,15 @@ class Body extends StatelessWidget {
 
 class HomeGetListProduct extends StatelessWidget {
   const HomeGetListProduct({
-    super.key, required this.homePresenter,
+    super.key,
+    required this.homePresenter,
   });
- final HomePresenter homePresenter;
+  final HomePresenter homePresenter;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomePresenter, HomeState>(
       bloc: homePresenter,
-      builder: (context, state) => 
-      GridView.builder(
+      builder: (context, state) => GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: state.productHome.length,
@@ -211,7 +213,10 @@ class HomeGetListProduct extends StatelessWidget {
             onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => Detail(demoProduct[index]),
+                    builder: (context) => Detail(
+                      product: demoProduct[index],
+                      data: state.productHome[index],
+                    ),
                   ),
                 )),
       ),
