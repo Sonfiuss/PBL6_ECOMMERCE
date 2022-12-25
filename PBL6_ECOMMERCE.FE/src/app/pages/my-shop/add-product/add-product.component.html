@@ -1,6 +1,6 @@
 
 <div class = "header">
-    <H3>Thông tin sản phẩm</H3>
+    <H5>Thông tin sản phẩm</H5>
 </div>
 <div class = "addproduct">
     <div class = "view-add-product">
@@ -50,7 +50,7 @@
             <div class = "description-expand">
                 <div class  = "title-description">
                     <span class = mandatory-icon>*</span>
-                    <label style= "width: 20%"> Mô tả </label>
+                    <span width = "20%">Mô tả</span>
                 </div>
                 <div>
                     <i (click)="expand=!expand" class="bi bi-aspect-ratio"></i>
@@ -65,7 +65,7 @@
         
     </div> 
     <div class = "view-add-product-detail">
-        <span>Product Image </span>
+        <h5>Hình ảnh</h5>
         <br>
         <div class = "combo-drag-area">
             <div class = "drag-area mr-2" >
@@ -73,7 +73,7 @@
                     <header>Drag or Drop to Upload File</header>
                     <span>OR</span>
                     <button>Browse</button>
-                <input type="file">
+                <input type="file" hidden>
             </div>
             <div class = "two-drag-area">
                 <div class = "drag-area-mini mb-2">
@@ -89,7 +89,9 @@
             </div>
         </div>
         <br>
-        <div class = "product-detail">ImageDetail</div> 
+        <div class = "product-detail">
+            <h5>Chi tiết sản phẩm</h5>
+        </div> 
         <div  class="mandatory-input">
             <div class = "edit-label-edit-title">
                 <span class="mandatory-icon">*</span>

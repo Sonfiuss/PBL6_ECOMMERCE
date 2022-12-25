@@ -6,11 +6,11 @@ import { AddProductComponent } from './add-product/add-product.component';
 import { CkeditorComponent } from './ckeditor/ckeditor.component';
 import { ViewListProductComponent } from './view-list-product/view-list-product.component';
 const routes: Routes = [
-  {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: "addproduct"
-  },
+  // {
+  //   path: '',
+  //   pathMatch: 'full',
+  //   redirectTo: "addproduct"
+  // },
   {
     path: '',
     component: DefaultComponent,

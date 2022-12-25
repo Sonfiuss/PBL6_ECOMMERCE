@@ -56,7 +56,7 @@ namespace Website_Ecommerce.API.Repositories
                                             UserId = cartProductDetail.cart.UserId,
                                             InitialPrice = cartProductDetail.productDetail.InitialPrice,
                                             Price = cartProductDetail.productDetail.Price,
-                                            Amount = cartProductDetail.productDetail.Amount
+                                            Amount = cartProductDetail.cart.Amount
                                         })
                                         .ToListAsync();
             return data;
