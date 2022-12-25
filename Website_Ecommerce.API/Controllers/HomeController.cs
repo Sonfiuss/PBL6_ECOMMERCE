@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Website_Ecommerce.API.ModelQueries;
 
 namespace Website_Ecommerce.API.Controllers
 {
@@ -177,9 +178,13 @@ namespace Website_Ecommerce.API.Controllers
         [HttpGet("get-product-detail-by/{productId}")]
         public async Task<IActionResult> GetProductDetailByProductId(int productId)
         {
-            List<ProductDetail> productDetails = await _productRepository.ProductDetails.Where(x => x.ProductId == productId).ToListAsync();
-
-            List<ProductDetailDto> productDetailDtos = _mapper.Map<List<ProductDetailDto>>(productDetails);
+            ProductProductDetailQueryModel productProductDetail = await _productRepository.GetProductById(productId);
+            productProductDetail.ProductDetails = await _productRepository.GetListProductDetailByProductId(productId);
+            // var productDetails = productProductDetail.ProductDetails;
+            foreach (var item in productProductDetail.ProductDetails)
+            {
+                item.ProductImages = await _productRepository.GetListProductImageByOfProductDetail(item.Id);
+            }
 
             return Ok(new Response<ResponseDefault>()
             {
@@ -187,7 +192,7 @@ namespace Website_Ecommerce.API.Controllers
                 Message = ErrorCode.Success,
                 Result = new ResponseDefault()
                 {
-                    Data = productDetailDtos
+                    Data = productProductDetail
                 }
             });
         }
@@ -209,33 +214,6 @@ namespace Website_Ecommerce.API.Controllers
                 Result = new ResponseDefault()
                 {
                     Data = productDetailDto
-                }
-            });
-        }
-
-        /// <summary>
-        /// Get image by productDetailId
-        /// </summary>
-        /// <param name="productDetailId"></param>
-        /// <returns></returns>
-        [HttpGet("get-image-by-product-detail-id/{productDetailId}")]
-        public async Task<IActionResult> GetImageByProductDetailId(int productDetailId)
-        {
-            ProductImage productImage = await _productRepository.ProductImages.Where(i => i.ProductDetailId == productDetailId).FirstOrDefaultAsync();
-            ProductImageDto productimageDto = new ProductImageDto()
-            {
-                Id = productImage.Id,
-                ProductDetailId = productImage.ProductDetailId,
-                UrlImage = productImage.UrlImage
-            };
-
-            return Ok(new Response<ResponseDefault>()
-            {
-                State = true,
-                Message = ErrorCode.Success,
-                Result = new ResponseDefault()
-                {
-                    Data = productimageDto
                 }
             });
         }
@@ -321,44 +299,6 @@ namespace Website_Ecommerce.API.Controllers
                 Result = new ResponseDefault()
                 {
                     Data = listProduct
-                }
-            });
-        }
-
-        /// <summary>
-        /// Get product by id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("get-product-by/{id}")]
-        public async Task<IActionResult> GetProductById(int id)
-        {
-            if (id.ToString() is null)
-            {
-                return BadRequest(null);
-            }
-            // Get shopId, check shop tao => moi xoa
-            Product product = await _productRepository.Products.FirstOrDefaultAsync(p => p.Id == id);
-            if (product == null)
-            {
-                return BadRequest(new Response<ResponseDefault>()
-                {
-                    State = false,
-                    Message = ErrorCode.NotFound,
-                    Result = new ResponseDefault()
-                    {
-                        Data = "NotFound Product"
-                    }
-                });
-            }
-
-            return Ok(new Response<ResponseDefault>()
-            {
-                State = true,
-                Message = ErrorCode.Success,
-                Result = new ResponseDefault()
-                {
-                    Data = product
                 }
             });
         }

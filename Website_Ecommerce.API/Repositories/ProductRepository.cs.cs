@@ -185,6 +185,74 @@ namespace Website_Ecommerce.API.Repositories
                 })
                 .ToListAsync();
 
+            var result2 = (from p in data
+                           group p by new { p.Id } //or group by new {p.ID, p.Name, p.Whatever}
+                   into mygroup
+                           select mygroup.FirstOrDefault()).OrderByDescending(x => x.Id).ToList();
+
+            return result2;
+        }
+
+        /// <summary>
+        /// Get list product of shop by shopId
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        public async Task<ProductProductDetailQueryModel> GetProductById(int productId)
+        {
+            var data = await _dataContext.Products
+                        .Where(x => x.Id == productId)
+                        .Select(x => new ProductProductDetailQueryModel
+                        {
+                            Id = x.Id,
+                            Name = x.Name,
+                            TotalRate = x.TotalRate,
+                            AverageRate = x.AverageRate
+                        })
+                        .FirstOrDefaultAsync();
+
+            return data;
+        }
+
+        /// <summary>
+        /// Get list product detail by shop id
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        public async Task<List<ProductDetailQueryModel>> GetListProductDetailByProductId(int productId)
+        {
+            var data = await _dataContext.ProductDetails
+                        .Where(x => x.ProductId == productId)
+                        .Select(x => new ProductDetailQueryModel
+                        {
+                            Id = x.Id,
+                            Size = x.Size,
+                            Color = x.Color,
+                            Amount = x.Amount,
+                            Price = x.Price,
+                            InitialPrice = x.InitialPrice
+                        })
+                        .ToListAsync();
+
+            return data;
+        }
+
+        /// <summary>
+        /// Get list product image by shop id
+        /// </summary>
+        /// <param name="productDetailId"></param>
+        /// <returns></returns>
+        public async Task<List<ProductImageQueryModel>> GetListProductImageByOfProductDetail(int productDetailId)
+        {
+            var data = await _dataContext.ProductImages
+                        .Where(x => x.ProductDetailId == productDetailId)
+                        .Select(x => new ProductImageQueryModel
+                        {
+                            Id = x.Id,
+                            UrlImage = x.UrlImage
+                        })
+                        .ToListAsync();
+
             return data;
         }
 
