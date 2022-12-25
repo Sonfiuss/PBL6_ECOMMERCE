@@ -243,11 +243,10 @@
             <param name="orderId"></param>
             <returns></returns>
         </member>
-        <member name="M:Website_Ecommerce.API.Controllers.OrderController.ViewOrderByStatus(System.Int32)">
+        <member name="M:Website_Ecommerce.API.Controllers.OrderController.ViewOrderByStatus">
             <summary>
             View Order of User
             </summary>
-            <param name="state"></param>
             <returns></returns>
         </member>
         <member name="M:Website_Ecommerce.API.Controllers.ProductController.AddProduct(Website_Ecommerce.API.ModelDtos.ProductDto,System.Threading.CancellationToken)">

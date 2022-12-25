@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Website_Ecommerce.API.Data;
 
@@ -10,9 +11,10 @@ using Website_Ecommerce.API.Data;
 namespace Website_Ecommerce.API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221225105128_UpdateSaledProductDetail")]
+    partial class UpdateSaledProductDetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -495,9 +497,6 @@ namespace Website_Ecommerce.API.Data.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int>("Booked")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime(6)");
 
@@ -509,9 +508,6 @@ namespace Website_Ecommerce.API.Data.Migrations
 
                     b.Property<double>("MinPrice")
                         .HasColumnType("double");
-
-                    b.Property<int>("Sale")
-                        .HasColumnType("int");
 
                     b.Property<double>("Value")
                         .HasColumnType("double");
@@ -530,9 +526,6 @@ namespace Website_Ecommerce.API.Data.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int>("Booked")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime(6)");
 
@@ -544,9 +537,6 @@ namespace Website_Ecommerce.API.Data.Migrations
 
                     b.Property<double>("MinPrice")
                         .HasColumnType("double");
-
-                    b.Property<int>("Sale")
-                        .HasColumnType("int");
 
                     b.Property<int>("ShopId")
                         .HasColumnType("int");

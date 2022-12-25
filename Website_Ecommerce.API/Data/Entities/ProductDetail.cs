@@ -23,6 +23,8 @@ namespace Website_Ecommerce.API.Data.Entities
         [Required]
         public double Price { get; set; }
         public double InitialPrice { get; set; }
+        public int Saled {get; set; }
+        public int Booked {get; set;}
         public ICollection<Cart> Carts { get; set; }
 
         public ICollection<ProductImage> ProductImages { get; set; }

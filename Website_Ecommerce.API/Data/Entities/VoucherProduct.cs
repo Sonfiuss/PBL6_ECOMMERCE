@@ -17,6 +17,8 @@ namespace Website_Ecommerce.API.Data.Entities
         public double Value { get; set; }
         public double MinPrice { get; set; }
         public int Amount { get; set; }
+        public int Booked { get; set; }
+        public int Sale { get; set; }
         public DateTime CreateAt { get; set; }
         public DateTime Expired { get; set; }
         public string Description { get; set; }

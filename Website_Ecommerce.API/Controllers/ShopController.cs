@@ -21,6 +21,7 @@ namespace Website_Ecommerce.API.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IOrderRepository _orderRepository;
         private readonly IMapper _mapper;
+        private readonly IVoucherOrderRepository _voucherOrderRepository;
 
         public ShopController(
             IShopRepository shopRepository,
@@ -28,7 +29,8 @@ namespace Website_Ecommerce.API.Controllers
             IMapper mapper,
             IProductRepository productRepository,
             IOrderRepository orderRepository,
-            IHttpContextAccessor httpContext)
+            IHttpContextAccessor httpContext,
+            IVoucherOrderRepository voucherOrderRepository)
         {
             _productRepository = productRepository;
             _shopRepository = shopRepository;
@@ -36,6 +38,7 @@ namespace Website_Ecommerce.API.Controllers
             _userRepository = userRepository;
             _orderRepository = orderRepository;
             _mapper = mapper;
+            _voucherOrderRepository = voucherOrderRepository;
         }
         #region "API  update/ delete / getListShop"
 
@@ -413,6 +416,7 @@ namespace Website_Ecommerce.API.Controllers
         {
             var orderDetail = await _orderRepository.OrderDetails
                                 .FirstOrDefaultAsync(r => r.OrderId == orderID && r.ProductDetailId == productDetailId);
+            
             if (orderDetail == null)
             {
                 return BadRequest(new Response<ResponseDefault>()
@@ -427,6 +431,11 @@ namespace Website_Ecommerce.API.Controllers
             }
 
             orderDetail.State = state /*(int)StateOrderDetailEnum.CONFIRMED*/;
+            var thisProductDetail = _productRepository.ProductDetails.Where(x => x.Id == orderDetail.ProductDetailId).FirstOrDefault();
+            thisProductDetail.Amount = thisProductDetail.Amount - orderDetail.Amount;
+            thisProductDetail.Booked = thisProductDetail.Booked - orderDetail.Amount;
+            thisProductDetail.Saled = thisProductDetail.Saled + orderDetail.Amount;
+            // var thisvoucherOrder = _voucherOrderRepository.VoucherOrders.Where(x => x.Id == orderDetail.)
             if (state == (int)StateOrderEnum.CONFIRMED)
             {
                 orderDetail.ShopConfirmDate = DateTime.Now;
