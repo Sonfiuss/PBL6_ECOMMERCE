@@ -22,12 +22,14 @@ namespace Website_Ecommerce.API.Controllers
         private readonly IProductRepository _productRepository;
         private readonly IShopRepository _shopRepository;
         private readonly IUserRepository _userRepository;
+        private readonly ICommentRepository _commentRepository;
         private readonly IMapper _mapper;
         public HomeController(
             IHostEnvironment environment,
             IProductRepository productRepository,
             IShopRepository shopRepository,
             IUserRepository userRepository,
+            ICommentRepository commentRepository,
             IMapper mapper
             )
         {
@@ -35,6 +37,7 @@ namespace Website_Ecommerce.API.Controllers
             _productRepository = productRepository;
             _shopRepository = shopRepository;
             _userRepository = userRepository;
+            _commentRepository = commentRepository;
             _mapper = mapper;
         }
 
@@ -299,6 +302,27 @@ namespace Website_Ecommerce.API.Controllers
                 Result = new ResponseDefault()
                 {
                     Data = listProduct
+                }
+            });
+        }
+
+        /// <summary>
+        /// List comment of product 
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        [HttpGet("list-comment-by/{id}")]
+        public async Task<IActionResult> GetListComment(int productId)
+        {
+            var listCommentDetails = await _commentRepository.GetCommentDetails();
+
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = listCommentDetails
                 }
             });
         }
