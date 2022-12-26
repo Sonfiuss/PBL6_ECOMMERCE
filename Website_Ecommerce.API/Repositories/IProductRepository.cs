@@ -27,7 +27,7 @@ namespace Website_Ecommerce.API.Repositories
         /// Get all product
         /// </summary>
         /// <returns></returns>
-        Task<IList<ProductQueryModel>> GetAllProduct();
+        Task<List<ProductQueryModel>> GetAllProduct();
 
         /// <summary>
         /// Count Rating of Product
@@ -42,5 +42,40 @@ namespace Website_Ecommerce.API.Repositories
         /// <param name="id"></param>
         /// <returns></returns>
         Task<double> AvgRating(int id);
+
+        /// <summary>
+        /// Get list product of shop by shopId
+        /// </summary>
+        /// <param name="shopId"></param>
+        /// <returns></returns>
+        Task<List<ProductQueryModel>> GetListProducByShop(int shopId);
+
+        /// <summary>
+        /// Search Product
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        Task<List<ProductQueryModel>> SearchProduct(string key);
+
+        /// <summary>
+        /// Get list product of shop by shopId
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        Task<ProductProductDetailQueryModel> GetProductById(int productId);
+
+        /// <summary>
+        /// Get list product detail by shop id
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        Task<List<ProductDetailQueryModel>> GetListProductDetailByProductId(int productId);
+
+        /// <summary>
+        /// Get list product image by shop id
+        /// </summary>
+        /// <param name="productDetailId"></param>
+        /// <returns></returns>
+        Task<List<ProductImageQueryModel>> GetListProductImageByOfProductDetail(int productDetailId);
     }
 }

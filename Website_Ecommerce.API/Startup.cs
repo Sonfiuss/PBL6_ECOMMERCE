@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using PBL6_ECOMMERCE.Website_Ecommerce.API.services;
 using System.IdentityModel.Tokens.Jwt;
+using System.Reflection;
 using System.Text;
 using Website_Ecommerce.API.Data;
 using Website_Ecommerce.API.Queries;
@@ -69,11 +71,15 @@ namespace PBL4.WebAPI
                         new List<string>()
                     }
                 });
+
+                // using System.Reflection;
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
-            
+
             var serverVersion = new MySqlServerVersion(new Version(8, 0, 30));
             services.AddDbContext<DataContext>(
-                dbContextOptions => 
+                dbContextOptions =>
                 {
                     dbContextOptions
                     .UseMySql(Configuration["ConnectionString"], serverVersion)
@@ -81,7 +87,7 @@ namespace PBL4.WebAPI
                     .EnableSensitiveDataLogging()
                     .EnableDetailedErrors();
                 }, ServiceLifetime.Scoped);
-            
+
             // services.AddDbContext<DataContext>(options =>
             // {
             //     options.UseSqlServer(Configuration["ConnectionString"]);
@@ -98,8 +104,10 @@ namespace PBL4.WebAPI
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddTransient<IStatisticService, StatisticService>();
             services.AddTransient<ICommentRepository, CommentRepository>();
+            services.AddTransient<IVoucherProductRepository, VoucherProductRepository>();
+            services.AddTransient<IServices, Service>();
 
-            services.AddTransient<IAppQueries>(x=> new AppQueries(Configuration["ConnectionString"]));
+            services.AddTransient<IAppQueries>(x => new AppQueries(Configuration["ConnectionString"]));
 
             //using Auto Mapper
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -147,11 +155,11 @@ namespace PBL4.WebAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.IsProduction())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                
+
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PBL6.WebAPI v1"));
                 /*app.UseSwaggerUI(c=> {
                     c.DisplayRequestDuration();
@@ -170,7 +178,7 @@ namespace PBL4.WebAPI
             app.UseAuthorization();
 
 
-            
+
 
             app.UseEndpoints(endpoints =>
             {

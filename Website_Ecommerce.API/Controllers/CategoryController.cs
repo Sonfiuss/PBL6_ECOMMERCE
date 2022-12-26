@@ -191,6 +191,11 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
+        /// <summary>
+        /// Get category by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("get-category-by/{id}")]
         public async Task<IActionResult> GetCategoryById(int id)
         {

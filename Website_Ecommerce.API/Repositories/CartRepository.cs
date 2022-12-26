@@ -37,32 +37,45 @@ namespace Website_Ecommerce.API.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<ItemCartQueryModel>> GetAllItemByIdUser(int id)
-        {
-            var itemCart = _dataContext.Carts.Where(x => x.UserId == id && x.State == true);
-            var pdetail = _dataContext.ProductDetails;
-            var product = _dataContext.Products;
-            var itemPdetail = itemCart.Join(pdetail, i => i.ProductDetailId, pd => pd.Id
-                                        , (i, pd) => new
+        public async Task<List<ItemCartQueryModel>> GetAllItemByIdUser(int id)
+        {   
+            var data = await _dataContext.Carts.Where(x => x.UserId == id && x.State == true)
+                                        .Join(_dataContext.ProductDetails,
+                                        cart => cart.ProductDetailId,
+                                        productDetail => productDetail.Id,
+                                        (cart, productDetail) => new { cart, productDetail })
+                                        .Join(_dataContext.Products,
+                                        cartProductDetail => cartProductDetail.productDetail.ProductId,
+                                        product => product.Id,
+                                        (cartProductDetail, product) => new
                                         {
-                                            id = i.Id,
-                                            idProduct = pd.ProductId,
-                                            idProductDetail = pd.Id,
-                                            initialprice = pd.InitialPrice,
-                                            price = pd.Price,
-                                            amount = i.Amount
-                                        });
+                                            id = cartProductDetail.cart.Id,
+                                            nameProduct = product.Name,
+                                            idProductDetail = cartProductDetail.productDetail.Id,
+                                            idShop = product.ShopId,
+                                            userId = cartProductDetail.cart.UserId,
+                                            initialPrice = cartProductDetail.productDetail.InitialPrice,
+                                            price = cartProductDetail.productDetail.Price,
+                                            amount = cartProductDetail.cart.Amount,
+                                            
+                                        })
+                                        .Join(_dataContext.ProductImages, 
+                                        itemCart => itemCart.idProductDetail, 
+                                        img => img.ProductDetailId,
+                                        (itemCart, img) => new ItemCartQueryModel{
+                                            Id = itemCart.id,
+                                            NameProduct = itemCart.nameProduct,
+                                            IdProductDetail = itemCart.idProductDetail,
+                                            IdShop = itemCart.idShop,
+                                            UserId = itemCart.userId,
+                                            InitialPrice = itemCart.initialPrice,
+                                            Price = itemCart.price,
+                                            Amount = itemCart.amount,
+                                            UrlImage = img.UrlImage
+                                        })
+                                        .ToListAsync();
+            return data;
 
-            return await itemPdetail.Join(product, ip => ip.idProduct, p => p.Id, (ip, p) => new ItemCartQueryModel
-            {
-                Id = ip.id,
-                NameProduct = p.Name,
-                IdProductDetail = ip.idProductDetail,
-                UserId = id,
-                InitialPrice = ip.initialprice,
-                Price = ip.price,
-                Amount = ip.amount
-            }).ToListAsync();
         }
     }
 }

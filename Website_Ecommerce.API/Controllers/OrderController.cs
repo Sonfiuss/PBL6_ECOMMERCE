@@ -61,7 +61,7 @@ namespace Website_Ecommerce.API.Controllers
 
             if (voucherOrder != null)
             {
-                voucherOrder.Amount = voucherOrder.Amount - 1;
+                voucherOrder.Booked = voucherOrder.Booked + 1;
                 _voucherOrderRepository.Update(voucherOrder);
                 _orderRepository.Add(order);
             }
@@ -115,10 +115,10 @@ namespace Website_Ecommerce.API.Controllers
                 };
                 _orderRepository.Add(orderDetail);
 
-                productDetail.Amount = productDetail.Amount - orderDetail.Amount;
+                productDetail.Booked = productDetail.Booked + orderDetail.Amount;
                 if (orderDetail.VoucherProductId != null)
                 {
-                    voucherProduct.Amount = voucherProduct.Amount - 1;
+                    voucherProduct.Amount = voucherProduct.Booked + 1;
                     _shopRepository.Update(voucherProduct);
                 }
                 _productRepository.Update(productDetail);
@@ -127,6 +127,7 @@ namespace Website_Ecommerce.API.Controllers
                 if (resultI <= 0)
                 {
                     _orderRepository.Delete(thisOrder);
+                    var delete = await _orderRepository.UnitOfWork.SaveAsync(cancellationToken);
                     return BadRequest(new Response<ResponseDefault>()
                     {
                         State = true,
@@ -238,10 +239,9 @@ namespace Website_Ecommerce.API.Controllers
         /// <summary>
         /// View Order of User
         /// </summary>
-        /// <param name="state"></param>
         /// <returns></returns>
         [HttpGet("view-order-of-user")]
-        public async Task<IActionResult> ViewOrderByStatus(int state)
+        public async Task<IActionResult> ViewOrderByStatus()
         {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
             var orders = _orderRepository.Orders.Where(i => i.UserId == userId);

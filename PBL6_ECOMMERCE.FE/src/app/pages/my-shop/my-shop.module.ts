@@ -3,15 +3,28 @@ import { CommonModule } from '@angular/common';
 
 import { MyShopRoutingModule } from './my-shop-routing.module';
 import { MyShopHeaderComponent } from './my-shop-header/my-shop-header.component';
+import { AddProductComponent } from './add-product/add-product.component';
+import { CkeditorComponent } from './ckeditor/ckeditor.component';
+import { ViewListProductComponent } from './view-list-product/view-list-product.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { ManageOrderComponent } from './manage-order/manage-order.component';
+
 
 
 @NgModule({
   declarations: [
-    MyShopHeaderComponent
+    MyShopHeaderComponent,
+    AddProductComponent,
+    CkeditorComponent,
+    ViewListProductComponent,
+    ProductDetailComponent,
+    ManageOrderComponent
+    
   ],
   imports: [
     CommonModule,
-    MyShopRoutingModule
+    MyShopRoutingModule,
+    
   ]
 })
 export class MyShopModule { }

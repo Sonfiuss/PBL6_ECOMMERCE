@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Website_Ecommerce.API.ModelQueries;
 
 namespace Website_Ecommerce.API.Controllers
 {
@@ -21,12 +22,14 @@ namespace Website_Ecommerce.API.Controllers
         private readonly IProductRepository _productRepository;
         private readonly IShopRepository _shopRepository;
         private readonly IUserRepository _userRepository;
+        private readonly ICommentRepository _commentRepository;
         private readonly IMapper _mapper;
         public HomeController(
             IHostEnvironment environment,
             IProductRepository productRepository,
             IShopRepository shopRepository,
             IUserRepository userRepository,
+            ICommentRepository commentRepository,
             IMapper mapper
             )
         {
@@ -34,6 +37,7 @@ namespace Website_Ecommerce.API.Controllers
             _productRepository = productRepository;
             _shopRepository = shopRepository;
             _userRepository = userRepository;
+            _commentRepository = commentRepository;
             _mapper = mapper;
         }
 
@@ -137,7 +141,7 @@ namespace Website_Ecommerce.API.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get all product
         /// </summary>
         /// <returns></returns>get list product
         [HttpGet("get-list-product")]
@@ -177,9 +181,13 @@ namespace Website_Ecommerce.API.Controllers
         [HttpGet("get-product-detail-by/{productId}")]
         public async Task<IActionResult> GetProductDetailByProductId(int productId)
         {
-            List<ProductDetail> productDetails = await _productRepository.ProductDetails.Where(x => x.ProductId == productId).ToListAsync();
-
-            List<ProductDetailDto> productDetailDtos = _mapper.Map<List<ProductDetailDto>>(productDetails);
+            ProductProductDetailQueryModel productProductDetail = await _productRepository.GetProductById(productId);
+            productProductDetail.ProductDetails = await _productRepository.GetListProductDetailByProductId(productId);
+            // var productDetails = productProductDetail.ProductDetails;
+            foreach (var item in productProductDetail.ProductDetails)
+            {
+                item.ProductImages = await _productRepository.GetListProductImageByOfProductDetail(item.Id);
+            }
 
             return Ok(new Response<ResponseDefault>()
             {
@@ -187,7 +195,7 @@ namespace Website_Ecommerce.API.Controllers
                 Message = ErrorCode.Success,
                 Result = new ResponseDefault()
                 {
-                    Data = productDetailDtos
+                    Data = productProductDetail
                 }
             });
         }
@@ -214,20 +222,32 @@ namespace Website_Ecommerce.API.Controllers
         }
 
         /// <summary>
-        /// Get image by productDetailId
+        /// Get list product by shopId
         /// </summary>
-        /// <param name="productDetailId"></param>
+        /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("get-image-by-product-detail-id/{productDetailId}")]
-        public async Task<IActionResult> GetImageByProductDetailId(int productDetailId)
+        [HttpGet("get-list-product-of-shop-by/{id}")]
+        public async Task<IActionResult> GetListProducByShop(int id)
         {
-            ProductImage productImage = await _productRepository.ProductImages.Where(i => i.ProductDetailId == productDetailId).FirstOrDefaultAsync();
-            ProductImageDto productimageDto = new ProductImageDto()
+            if (id.ToString() is null)
             {
-                Id = productImage.Id,
-                ProductDetailId = productImage.ProductDetailId,
-                UrlImage = productImage.UrlImage
-            };
+                return BadRequest(null);
+            }
+
+            var listProduct = await _productRepository.GetListProducByShop(id);
+
+            if (listProduct == null)
+            {
+                return BadRequest(new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.NotFound,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "NotFound Product"
+                    }
+                });
+            }
 
             return Ok(new Response<ResponseDefault>()
             {
@@ -235,57 +255,78 @@ namespace Website_Ecommerce.API.Controllers
                 Message = ErrorCode.Success,
                 Result = new ResponseDefault()
                 {
-                    Data = productimageDto
+                    Data = listProduct
+                }
+            });
+        }
+
+        /// <summary>
+        /// Search product by productName, categoryName
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("search-product-by/{key}")]
+        public async Task<IActionResult> SearchProduct(string key)
+        {
+            if (key is null)
+            {
+                return Ok(new Response<ResponseDefault>()
+                {
+                    State = true,
+                    Message = ErrorCode.Success,
+                    Result = new ResponseDefault()
+                    {
+                        Data = await _productRepository.GetAllProduct()
+                    }
+                });
+            }
+
+            var listProduct = await _productRepository.SearchProduct(key);
+
+            if (listProduct == null)
+            {
+                return BadRequest(new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.NotFound,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "NotFound Product"
+                    }
+                });
+            }
+
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = listProduct
+                }
+            });
+        }
+
+        /// <summary>
+        /// List comment of product 
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
+        [HttpGet("list-comment-by/{id}")]
+        public async Task<IActionResult> GetListComment(int productId)
+        {
+            var listCommentDetails = await _commentRepository.GetCommentDetails();
+
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = listCommentDetails
                 }
             });
         }
     }
-
-    // [HttpPost("UploadImage")]
-    // public async Task<ActionResult> UploadImage(List<IFormFile> _uploadedfiles)
-    // {
-    //     bool Results = false;
-    //     try
-    //     {
-    //         foreach (IFormFile source in _uploadedfiles)
-    //         {
-    //             string Filename = source.FileName;
-    //             string Filepath = GetFilePath(Filename);
-
-    //             if (!System.IO.Directory.Exists(Filepath))
-    //             {
-    //                 System.IO.Directory.CreateDirectory(Filepath);
-    //             }
-
-    //             string imagepath = Filepath;
-
-    //             if (System.IO.File.Exists(imagepath))
-    //             {
-    //                 System.IO.File.Delete(imagepath);
-    //             }
-    //             using (FileStream stream = System.IO.File.Create(imagepath))
-    //             {
-    //                 await source.CopyToAsync(stream);
-    //                 Results = true;
-    //             }
-
-
-    //         }
-    //     }
-    //     catch (Exception ex)
-    //     {
-
-    //     }
-    //     return Ok(Results);
-    // }
-
-
-    // [NonAction]
-    // private string GetFilePath(string ProductCode)
-    // {
-    //     return this._environment.ContentRootPath + "\\Uploads\\Product\\" + ProductCode;
-    // }
-    // }
 
 
 }

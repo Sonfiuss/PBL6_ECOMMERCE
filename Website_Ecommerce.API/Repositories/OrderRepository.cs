@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data;
 using Website_Ecommerce.API.Data.Entities;
+using Website_Ecommerce.API.Enum;
+using Website_Ecommerce.API.ModelQueries;
 
 namespace Website_Ecommerce.API.Repositories
 {
@@ -50,12 +52,8 @@ namespace Website_Ecommerce.API.Repositories
         /// <summary>
         /// Get order detail
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="order"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<OrderDetail>> GetOrderDetail(int id)
-        {
-            return await _dataContext.OrderDetails.Where(x => x.OrderId == id).ToListAsync();
-        }
 
         public void Delete(Order order)
         {
@@ -76,6 +74,78 @@ namespace Website_Ecommerce.API.Repositories
         public void Update(OrderDetail orderDetail)
         {
             _dataContext.Entry(orderDetail).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        }
+
+        public void Update(Order order)
+        {
+            _dataContext.Entry(order).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+        }
+
+        public async Task<List<OrderDetailShowbyShop>> GetOrderDetail(int id)
+        {
+            var orderdetails = _dataContext.OrderDetails.Where(x => x.ShopId == id);
+            var products = _dataContext.Products.Where(x => x.ShopId == id);
+            var productdetails = _dataContext.ProductDetails;
+            var voucherproducts = _dataContext.VoucherProducts;
+            var orders = _dataContext.Orders;
+
+            var result = orderdetails.Join(productdetails,
+                                        od => od.ProductDetailId,
+                                        pd => pd.Id,
+                                        (od, pd) => new {
+                                            id = od.OrderId,
+                                            size = pd.Size,
+                                            color = pd.Color,
+                                            amount = od.Amount,
+                                            confirm = od.ShopConfirmDate,
+                                            price = od.Price,
+                                            note = od.Note,
+                                            state = od.State,
+                                            idproduct = pd.ProductId,
+                                            voucher = od.VoucherProductId
+                                        }).Join(voucherproducts, x => x.voucher, v => v.Id
+                                                ,(x, v) => new { 
+                                                    id = x.id,
+                                                    size = x.size,
+                                                    color = x.color,
+                                                    amount = x.amount,
+                                                    confirm = x.confirm,
+                                                    price = x.price,
+                                                    note = x.note,
+                                                    state = x.state,
+                                                    idproduct = x.idproduct,
+                                                    voucher = v.Value
+                                                });
+            var result2 = result.Join(products, opd => opd.idproduct
+                                                , p => p.Id,
+                                                (opd, p)=> new {
+                                                    id = opd.id,
+                                                    name = p.Name,
+                                                    size = opd.size,
+                                                    color = opd.color,
+                                                    amount = opd.amount,
+                                                    confirm = opd.confirm,
+                                                    voucher = opd.voucher,
+                                                    price = opd.price,
+                                                    note = opd.note,
+                                                    state = opd.state,
+                                                });
+            var result3 = await result2.Join(orders, x => x.id, o => o.Id,
+                                                (x, o) => new OrderDetailShowbyShop{
+                                                    OrderId = x.id,
+                                                    Name = x.name,
+                                                    Size = x.size,
+                                                    Color = x.color,
+                                                    Amount = x.amount,
+                                                    ConfirmAt = x.confirm,
+                                                    CreateAt = o.CreateDate,
+                                                    Price = x.price,
+                                                    DiscountShop = x.voucher,
+                                                    Note = x.note,
+                                                    Sate = x.state
+
+                                    }).OrderByDescending(x => x.OrderId).ToListAsync();
+            return result3;
         }
     }
 }

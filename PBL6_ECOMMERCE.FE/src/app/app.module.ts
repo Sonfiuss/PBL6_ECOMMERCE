@@ -13,9 +13,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { CartComponent } from './pages/cart/cart.component';
 import { LoginComponent } from './pages/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MyshopComponent } from './pages/myshop/myshop.component';
-import { AddProductComponent } from './pages/myshop/add-product/add-product.component';
-import { CkeditorComponent } from './pages/myshop/ckeditor/ckeditor.component';
 import { CategoryComponent } from './pages/home/category/category.component';
 import { AddCategoryComponent } from './pages/categories/add-category/add-category.component';
 import { EditCategoryComponent } from './pages/categories/edit-category/edit-category.component';
@@ -36,6 +33,13 @@ import { OrderModule } from 'ngx-order-pipe';
 import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatIconModule} from '@angular/material/icon';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MyShopModule } from './pages/my-shop/my-shop.module';
+// import {MatTabsModule} from '@angular/material/tabs';
+
+// import { MatTableModule } from '@angular/material/table';
+// import { MatButtonModule } from '@angular/material/button';
+// import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -50,9 +54,6 @@ import {MatIconModule} from '@angular/material/icon';
     FooterComponent,
     CartComponent,
     LoginComponent,
-    MyshopComponent,
-    AddProductComponent,
-    CkeditorComponent,
     CategoryComponent,
     AddCategoryComponent,
     EditCategoryComponent,
@@ -81,6 +82,12 @@ import {MatIconModule} from '@angular/material/icon';
     MatTabsModule,
     BrowserAnimationsModule,
     MatIconModule,
+    MyShopModule,
+    NgbModule,
+    BrowserModule,
+    // MatTableModule,
+    // MatButtonModule,
+    // MatPaginatorModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
