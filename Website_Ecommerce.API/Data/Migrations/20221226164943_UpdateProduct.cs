@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Website_Ecommerce.API.Data.Migrations
+namespace Website_Ecommerce.API.Migrations
 {
-    public partial class UpdateCart : Migration
+    public partial class UpdateProduct : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,7 +20,9 @@ namespace Website_Ecommerce.API.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    DateCreate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreateBy = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -82,7 +84,8 @@ namespace Website_Ecommerce.API.Data.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     LastName = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    IsBlock = table.Column<bool>(type: "tinyint(1)", nullable: true)
+                    IsBlock = table.Column<bool>(type: "tinyint(1)", nullable: true),
+                    DateCreate = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -100,7 +103,9 @@ namespace Website_Ecommerce.API.Data.Migrations
                     MinPrice = table.Column<double>(type: "double", nullable: false),
                     Amount = table.Column<int>(type: "int", nullable: false),
                     CreateAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Expired = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    Expired = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Description = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -128,7 +133,9 @@ namespace Website_Ecommerce.API.Data.Migrations
                     TotalCategory = table.Column<int>(type: "int", nullable: false),
                     AverageRate = table.Column<float>(type: "float", nullable: false),
                     TotalRate = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    Status = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    DateCreate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    TotalProduct = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -178,6 +185,8 @@ namespace Website_Ecommerce.API.Data.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     RecipientName = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    Reference = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     RecipientPhone = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CreateDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
@@ -218,7 +227,10 @@ namespace Website_Ecommerce.API.Data.Migrations
                     Description = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ShopId = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    Status = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    TotalRate = table.Column<int>(type: "int", nullable: false),
+                    AverageRate = table.Column<float>(type: "float", nullable: false),
+                    Saled = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -243,7 +255,9 @@ namespace Website_Ecommerce.API.Data.Migrations
                     MinPrice = table.Column<double>(type: "double", nullable: false),
                     Amount = table.Column<int>(type: "int", nullable: false),
                     CreateAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    Expired = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                    Expired = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Description = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
                 {
@@ -294,7 +308,8 @@ namespace Website_Ecommerce.API.Data.Migrations
                     UserId = table.Column<int>(type: "int", nullable: false),
                     Content = table.Column<string>(type: "varchar(1024)", maxLength: 1024, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    State = table.Column<int>(type: "int", nullable: false)
+                    State = table.Column<int>(type: "int", nullable: false),
+                    Rate = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

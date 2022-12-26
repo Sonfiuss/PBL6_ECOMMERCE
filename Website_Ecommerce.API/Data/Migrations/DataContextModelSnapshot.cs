@@ -7,7 +7,7 @@ using Website_Ecommerce.API.Data;
 
 #nullable disable
 
-namespace Website_Ecommerce.API.Data.Migrations
+namespace Website_Ecommerce.API.Migrations
 {
     [DbContext(typeof(DataContext))]
     partial class DataContextModelSnapshot : ModelSnapshot

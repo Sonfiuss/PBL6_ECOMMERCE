@@ -8,11 +8,11 @@ using Website_Ecommerce.API.Data;
 
 #nullable disable
 
-namespace Website_Ecommerce.API.Data.Migrations
+namespace Website_Ecommerce.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221222021245_UpdateDB")]
-    partial class UpdateDB
+    [Migration("20221226164943_UpdateProduct")]
+    partial class UpdateProduct
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -125,6 +125,9 @@ namespace Website_Ecommerce.API.Data.Migrations
 
                     b.Property<string>("RecipientPhone")
                         .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Reference")
                         .HasColumnType("longtext");
 
                     b.Property<int>("State")
