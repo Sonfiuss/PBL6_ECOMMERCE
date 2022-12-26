@@ -2,6 +2,7 @@ import 'package:ecommerce/ui/feature/cart/bloc/cart_module.dart';
 import 'package:ecommerce/ui/feature/home/bloc/home_module.dart';
 import 'package:ecommerce/ui/feature/page_map/bloc/map_module.dart';
 import 'package:ecommerce/ui/feature/pay/bloc/pay_module.dart';
+import 'package:ecommerce/ui/feature/sign_in/bloc/sign_in_module.dart';
 
 import '../ui/feature/detail/bloc/detail_module.dart';
 import '../ui/feature/page_discount/bloc/discount_module.dart';
@@ -53,8 +54,8 @@ class DependencyManager {
     //Home
     await HomeModule.inject();
 
-    // //routines
-    // await RoutinesModule.inject();
+    //SignIn
+    await SignInModule.inject();
 
     // //setting
     // await SettingModule.inject();

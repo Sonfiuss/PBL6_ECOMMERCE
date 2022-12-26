@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart' hide Headers;
+import 'package:ecommerce/data/model/auth/auth_login.dart';
 import 'package:ecommerce/data/model/order/order.dart';
+import 'package:ecommerce/data/model/sign_in/user.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../../utilities/constants/api_constants.dart';
@@ -24,5 +26,9 @@ abstract class ApiClient {
   Future<Order> postOrder(
     @Body() Order order,
     @Header('Authorization') String token,
+  );
+  @POST('/api/Auth/login')
+  Future<AuthLogin> postLognIn(
+    @Body() User user,
   );
 }

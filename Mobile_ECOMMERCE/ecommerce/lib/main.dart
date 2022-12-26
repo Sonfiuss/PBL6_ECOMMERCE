@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       // theme: getAppTheme(Brightness.light),
       // darkTheme: getAppTheme(Brightness.dark),
-      home: Home(),
+      home: SignIn(),
     );
   }
 }

@@ -14,6 +14,7 @@ class InputAddress extends StatelessWidget {
     return BlocBuilder<MapPresenter, MapState>(
       bloc: mapPresenter,
       builder: (context, state) => TextFieldInput(
+        onChanged:((value) => {}) ,
         hintText: '',
         isPass: false,
         textEditingController: mapPresenter.textEditingController,
