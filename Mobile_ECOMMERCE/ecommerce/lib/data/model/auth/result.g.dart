@@ -7,7 +7,7 @@ part of 'result.dart';
 // **************************************************************************
 
 Result _$ResultFromJson(Map<String, dynamic> json) => Result(
-      token: json['token'] as String,
+      token: json['token'] as String?,
     );
 
 Map<String, dynamic> _$ResultToJson(Result instance) => <String, dynamic>{

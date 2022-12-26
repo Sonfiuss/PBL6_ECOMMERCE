@@ -1,3 +1,4 @@
+import 'package:ecommerce/ui/bloc/ui_module.dart';
 import 'package:ecommerce/ui/feature/cart/bloc/cart_module.dart';
 import 'package:ecommerce/ui/feature/home/bloc/home_module.dart';
 import 'package:ecommerce/ui/feature/page_map/bloc/map_module.dart';
@@ -57,8 +58,8 @@ class DependencyManager {
     //SignIn
     await SignInModule.inject();
 
-    // //setting
-    // await SettingModule.inject();
+    // Ui
+    await UiModule.inject();
 
     // //add device
     // await ConfigWifiModule.inject();

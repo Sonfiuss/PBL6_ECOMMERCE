@@ -13,7 +13,7 @@ class Result {
   Map<String, dynamic> toJson() => _$ResultToJson(this);
 
   @JsonKey(name: 'token')
-  final String token;
+  final String? token;
 
   
 }

@@ -1,3 +1,4 @@
+import 'package:ecommerce/data/model/pagesale/sale.dart';
 import 'package:ecommerce/ui/feature/detail/detail.dart';
 import 'package:ecommerce/ui/feature/home/bloc/home_state.dart';
 import 'package:ecommerce/ui/feature/home/components/search.dart';
@@ -102,11 +103,15 @@ class Body extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   height: 180,
                   child: PageView.builder(
-                    itemCount: 6,
+                    itemCount: sale.length,
                     itemBuilder: (context, index) => Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 5),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        color: Colors.blue,
+                      ),
+                      child: Image.asset(
+                        sale[index].image,
+                        fit: BoxFit.fill,
                       ),
                     ),
                   ),
@@ -124,8 +129,9 @@ class Body extends StatelessWidget {
                         height: 6,
                         margin: const EdgeInsets.only(left: 2),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(3),
-                            color: Colors.blue),
+                          borderRadius: BorderRadius.circular(3),
+                          color: AppColors.blue,
+                        ),
                       ),
                     ),
                   ],

@@ -18,7 +18,7 @@ class SignInState with _$SignInState {
     required String password,
     required User user,
     required AuthLogin authLogin,
-    required String token,
+    required String? token,
   }) = _SignInState;
 
   const SignInState._();
@@ -36,6 +36,6 @@ class SignInState with _$SignInState {
           password: 'string',
           username: 'string',
         ),
-        token:''
+        token:null,
       );
 }

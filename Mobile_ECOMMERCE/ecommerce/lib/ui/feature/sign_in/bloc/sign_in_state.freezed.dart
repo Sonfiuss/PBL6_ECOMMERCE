@@ -21,7 +21,7 @@ mixin _$SignInState {
   String get password => throw _privateConstructorUsedError;
   User get user => throw _privateConstructorUsedError;
   AuthLogin get authLogin => throw _privateConstructorUsedError;
-  String get token => throw _privateConstructorUsedError;
+  String? get token => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SignInStateCopyWith<SignInState> get copyWith =>
@@ -40,7 +40,7 @@ abstract class $SignInStateCopyWith<$Res> {
       String password,
       User user,
       AuthLogin authLogin,
-      String token});
+      String? token});
 }
 
 /// @nodoc
@@ -61,7 +61,7 @@ class _$SignInStateCopyWithImpl<$Res, $Val extends SignInState>
     Object? password = null,
     Object? user = null,
     Object? authLogin = null,
-    Object? token = null,
+    Object? token = freezed,
   }) {
     return _then(_value.copyWith(
       check: null == check
@@ -84,10 +84,10 @@ class _$SignInStateCopyWithImpl<$Res, $Val extends SignInState>
           ? _value.authLogin
           : authLogin // ignore: cast_nullable_to_non_nullable
               as AuthLogin,
-      token: null == token
+      token: freezed == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -106,7 +106,7 @@ abstract class _$$_SignInStateCopyWith<$Res>
       String password,
       User user,
       AuthLogin authLogin,
-      String token});
+      String? token});
 }
 
 /// @nodoc
@@ -125,7 +125,7 @@ class __$$_SignInStateCopyWithImpl<$Res>
     Object? password = null,
     Object? user = null,
     Object? authLogin = null,
-    Object? token = null,
+    Object? token = freezed,
   }) {
     return _then(_$_SignInState(
       check: null == check
@@ -148,10 +148,10 @@ class __$$_SignInStateCopyWithImpl<$Res>
           ? _value.authLogin
           : authLogin // ignore: cast_nullable_to_non_nullable
               as AuthLogin,
-      token: null == token
+      token: freezed == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -179,7 +179,7 @@ class _$_SignInState extends _SignInState {
   @override
   final AuthLogin authLogin;
   @override
-  final String token;
+  final String? token;
 
   @override
   String toString() {
@@ -219,7 +219,7 @@ abstract class _SignInState extends SignInState {
       required final String password,
       required final User user,
       required final AuthLogin authLogin,
-      required final String token}) = _$_SignInState;
+      required final String? token}) = _$_SignInState;
   _SignInState._() : super._();
 
   @override
@@ -233,7 +233,7 @@ abstract class _SignInState extends SignInState {
   @override
   AuthLogin get authLogin;
   @override
-  String get token;
+  String? get token;
   @override
   @JsonKey(ignore: true)
   _$$_SignInStateCopyWith<_$_SignInState> get copyWith =>

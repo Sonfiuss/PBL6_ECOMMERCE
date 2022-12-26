@@ -23,5 +23,5 @@ class AuthLogin {
   final String message;
 
   @JsonKey(name: 'result')
-  final Result result;
+  final Result? result;
 }

@@ -23,7 +23,7 @@ abstract class ApiClient {
   );
 
   @POST(ApiConstants.postOrder)
-  Future<Order> postOrder(
+  Future<void> postOrder(
     @Body() Order order,
     @Header('Authorization') String token,
   );

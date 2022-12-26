@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:ecommerce/data/model/cart.dart';
 import 'package:ecommerce/data/model/order/item_order_dtos.dart';
 import 'package:ecommerce/data/model/order/order.dart';
+import 'package:ecommerce/ui/bloc/ui_presenter.dart';
 import 'package:ecommerce/ui/feature/cart/bloc/cart_state.dart';
 import 'package:ecommerce/ui/feature/pay/components/list_order.dart';
 
@@ -11,16 +12,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../data/model/source data/api_client.dart';
 import '../../../../utilities/helpers/validator_helper/validator_helper.dart';
 
+import '../../../bloc/ui_state.dart';
 import 'pay_state.dart';
 
 class PayPresenter extends Cubit<PayState> {
   PayPresenter(
-    this.cartState, {
+{required this.cartState, required this.uiState, 
     @visibleForTesting PayState? state,
   }) : super(
           state ?? PayState.initial(),
         );
   final CartState cartState;
+  final UiState   uiState;
   ApiClient apiClient = ApiClient(Dio());
   void init(List<CartModel> cart) {
     // cartPay.add(cartState.cart[cartState.isCart.indexOf()]);
@@ -105,6 +108,6 @@ class PayPresenter extends Cubit<PayState> {
       
     );
     await apiClient.postOrder(order,
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6InNob3AiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6WzJdLCJuYmYiOjE2NzE5NTc5MTEsImV4cCI6MTY3MjA0NDMxMSwiaXNzIjoiYjUyZWQyOGJmMDRmNDAwZjhhMTM2NmE5NDcwNTJiNTMiLCJhdWQiOiJQQkw2In0.XX6gF6De6L5QkxaYMm81cJO1vq0LIcH3z26PRJBa2gA');
+        'Bearer ${uiState.token}');
   }
 }

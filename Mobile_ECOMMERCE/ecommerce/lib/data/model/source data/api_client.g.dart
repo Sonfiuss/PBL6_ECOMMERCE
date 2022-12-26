@@ -67,7 +67,7 @@ class _ApiClient implements ApiClient {
   }
 
   @override
-  Future<Order> postOrder(
+  Future<void> postOrder(
     order,
     token,
   ) async {
@@ -77,21 +77,19 @@ class _ApiClient implements ApiClient {
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(order.toJson());
-    final _result =
-        await _dio.fetch<Map<String, dynamic>>(_setStreamType<Order>(Options(
+    await _dio.fetch<void>(_setStreamType<void>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              '/api/Order/add-order',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Order.fromJson(_result.data!);
-    return value;
+        .compose(
+          _dio.options,
+          '/api/Order/add-order',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    return null;
   }
 
   @override
