@@ -435,6 +435,22 @@ namespace Website_Ecommerce.API.Controllers
             thisProductDetail.Amount = thisProductDetail.Amount - orderDetail.Amount;
             thisProductDetail.Booked = thisProductDetail.Booked - orderDetail.Amount;
             thisProductDetail.Saled = thisProductDetail.Saled + orderDetail.Amount;
+            var saveProduct = await _productRepository.UnitOfWork.SaveAsync(cancellationToken);
+            var thisVoucherProduct = await _shopRepository.voucherProducts.Where(x => x.Id == orderDetail.VoucherProductId).FirstOrDefaultAsync();
+            if(thisVoucherProduct != null){
+                thisVoucherProduct.Amount = thisVoucherProduct.Amount -1;
+                thisVoucherProduct.Sale = thisVoucherProduct.Sale +1;
+                thisVoucherProduct.Booked = thisVoucherProduct.Booked -1;
+                var saveVoucherProduct = _shopRepository.UnitOfWork.SaveAsync();
+            }
+            var order = _orderRepository.Orders.Where(x => x.Id == orderID).FirstOrDefault();
+            var thisVoucherOrder = _voucherOrderRepository.VoucherOrders.Where(x => x.Id == order.VoucherId).FirstOrDefault();
+            if(thisVoucherOrder != null){
+                thisVoucherOrder.Amount = thisVoucherOrder.Amount -1;
+                thisVoucherOrder.Sale = thisVoucherOrder.Sale +1;
+                thisVoucherOrder.Booked = thisVoucherOrder.Booked -1;
+                var saveVoucherOrder = _voucherOrderRepository.UnitOfWork.SaveAsync();
+            }
             // var thisvoucherOrder = _voucherOrderRepository.VoucherOrders.Where(x => x.Id == orderDetail.)
             if (state == (int)StateOrderEnum.CONFIRMED)
             {
@@ -470,6 +486,18 @@ namespace Website_Ecommerce.API.Controllers
             });
 
         }
+        #endregion
+        #region "API Product Manager"
+        [HttpGet("Get-all-product-of-shop-manager")]
+        public async Task<IActionResult> GetAllProductOfShopManager(){
+            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
+
+            var user = _userRepository.Users.FirstOrDefault(x => x.Id == userId);
+            var shop = _shopRepository.Shops.FirstOrDefault(x => x.UserId == userId);
+            
+            var products =  _productRepository.Products.Where(p => p.ShopId == shop.Id).ToList();
+            
+       }
         #endregion
     }
 }

@@ -78,7 +78,7 @@ namespace Website_Ecommerce.API.Repositories
             return result;
         }
 
-        public async Task<double> AvgRating(int id)
+        public  Task<double> AvgRating(int id)
         {
             throw new NotImplementedException();
         }
