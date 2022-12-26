@@ -6,6 +6,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ShopService } from 'src/app/_services/shop.service';
 import { VoucherService } from 'src/app/_services/voucher.service';
 
+
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
@@ -17,6 +18,7 @@ export class OrderComponent implements OnInit {
 
   @Input() vouchers:any
   @Input() orderVouchers:any
+  @Input() orders: Array<any>;
   order : any;
   dataString : any;
   sumPrice : number = 0;
@@ -25,6 +27,10 @@ export class OrderComponent implements OnInit {
   target : any;
   orderVoucherValue :number =0;
   orderVoucherId :number =0;
+  arrShopId: Array<number> = [];
+  latestOrder : any;
+  lastetOrderId :any;
+  linkPayment : string;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -33,6 +39,7 @@ export class OrderComponent implements OnInit {
     private shopService :ShopService,
     private voucherService: VoucherService,
     private cartService: CartService,
+
   ) { }
 
   ngOnInit(): void {
@@ -48,7 +55,7 @@ export class OrderComponent implements OnInit {
       this.order = JSON.parse(this.dataString.data);
       console.log(this.order);
     });
-    this.loadVoucherShop()
+
     this.loadVoucherOrder()
     this.order.map((obj:any) => {
       obj.voucherProductId =0,
@@ -56,6 +63,13 @@ export class OrderComponent implements OnInit {
       obj.voucherProductId =0;
       return obj;
     })
+    this.loadIdShop()
+  }
+  loadIdShop(){
+    for (var i = 0; i<this.order.length; i++){
+      this.arrShopId.push(this.order[i].idShop)
+    }
+    this.arrShopId = this.arrShopId.filter((value,index) => this.arrShopId.indexOf(value) === index)
   }
 
   createOrder(){
@@ -84,25 +98,27 @@ export class OrderComponent implements OnInit {
       "paymentMethodId": 0,
       "totalPrice": this.sumPrice,
       "itemOrderDtos": this.orderSend
-
     }
     this.orderService.addOrder(submitData)
     .subscribe(
       (res:any) => {
         //return home
-        this.router.navigate(['/cart'])
+        // this.router.navigate(['/cart'])
         alert("them dc roi")
+        this.loadAllOrder()
+
       },
       (err) => {
         alert("k them dc")
       })
-      this.deleteItem()
+      // this.deleteItem()
   }
 
-  openModalShopVoucher(content: any,target :any) {
+  openModalShopVoucher(content: any,target :any,idShop:any) {
     this.target=target
     this.order[this.target].voucherProductId = 0
 		this.modalService.open(content, { centered: true });
+    this.loadVoucherShop(idShop)
     this.order[this.target].totalPrice = this.order[this.target].price *this.order[this.target].amount
 	}
 
@@ -113,8 +129,8 @@ export class OrderComponent implements OnInit {
 
 	}
 
-  loadVoucherShop(){
-    this.shopService.getAllVoucherShop()
+  loadVoucherShop(id:any){
+    this.voucherService.getVoucherShopById(id)
     .subscribe(
       (res) => this.handleGetVoucherSuccess(res),
       (err) => this.handleGetVoucherError(err)
@@ -177,6 +193,47 @@ export class OrderComponent implements OnInit {
       }
     )
     }
+  }
 
+  loadAllOrder(){
+    this.orderService.getAllUserOrder()
+    .subscribe(
+      (res) => this.handleGetAllOrderVoucherSuccess(res),
+      (err) => this.handleGetAllOrderVoucherError(err)
+    )
+  }
+  handleGetAllOrderVoucherError(err: any){
+    console.log(err)
+  }
+  handleGetAllOrderVoucherSuccess(res: any){
+    this.orders = res.result.data
+    this.latestOrder = this.orders.pop()
+    this.lastetOrderId = this.latestOrder.id
+    console.log(this.latestOrder.id);
+    this.loadVNPayLink()
+  }
+  getLinkPayment(){
+    // const submitData = {
+    //   "orderId": this.latestOrder,
+    //   "vnp_Returnurl" : "https://localhost:7220/api/Cart/return-url"
+    // }
+  }
+  loadVNPayLink(){
+    this.cartService.getVNPayLink(this.lastetOrderId)
+    .subscribe(
+      (res) => this.handleGetVNPayLinkSuccess(res),
+      (err) => this.handleGetVNPayLinkError(err)
+    )
+  }
+  handleGetVNPayLinkError(err: any){
+    console.log(err)
+  }
+  handleGetVNPayLinkSuccess(res: any){
+    this.linkPayment = res.result.data
+    console.log((this.linkPayment));
+    // this.router.navigate(["https://youtube.com"])
+  }
+  openModalPayment(content :any){
+    this.modalService.open(content, { centered: true , size: 'sm'});
   }
 }

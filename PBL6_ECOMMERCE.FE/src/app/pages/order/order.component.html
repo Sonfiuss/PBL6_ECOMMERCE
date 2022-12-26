@@ -1,15 +1,19 @@
-<app-header></app-header>
+<!-- <app-header></app-header> -->
 <div class="order">
   <div class="content">
       <div class="address">
-        <i class="fa fa-map-marker" aria-hidden="true"><h4 class="address-title">Địa chỉ nhận hàng</h4></i>
+        <div class="col-lg-4 address-title">
+          <i class="fa fa-map-marker" aria-hidden="true"><span>Địa chỉ nhận hàng</span></i>
         <br>
         <p class="username">Nguyễn Văn Thịnh</p>
-        <p class="home-address">{{address}}</p>
+        </div>
+        <div class="col-lg-8 home-address">
+          <p >{{address}}</p>
+        </div>
       </div>
       <div class="order-detail">
         <div class="row">
-          <div class="col-lg-11" >
+          <div class="col-lg-12" >
               <div class="order-page-inner">
                   <div class="table-responsive" >
                       <table class="table table-bordered" cellspacing="0" cellpadding="0">
@@ -28,7 +32,6 @@
                                 <div class="pd-image">
                                   <a href="#"><img src="https://cf.shopee.vn/file/e817ddfe4e070eadc0e1808d4aa84d6f" alt="Image"></a>
                                   <p>{{pd.nameProduct}}</p>
-                                    <!-- <span>Product Name</span> -->
                                 </div>
                             </td>
                             <td><del style="color: gray;">{{pd.initialPrice| currency: "VND"}}</del>{{pd.price| currency: "VND"}}</td>
@@ -39,7 +42,7 @@
                                 </div>
                             </td>
                             <td>{{pd.totalPrice| currency : "VND"}}</td>
-                            <td  ><p (click)="openModalShopVoucher(contentShopVoucher,i)">Chọn</p></td>
+                            <td  ><p (click)="openModalShopVoucher(contentShopVoucher,i,arrShopId[i])" style="padding-top: 15px;">Chọn</p></td>
                             </tr>
                           </tbody>
                       </table>
@@ -54,24 +57,26 @@
       <div class="payment">
         <div class="payment-method">
           <h4 class="payment-title">
-            Phương thức thanh toán
+            <p>Phương thức thanh toán</p>
           </h4>
-          <p>Thay đổi</p>
-          <p>Thanh toán khi nhận hàng</p>
+          <div class=" method-selected">
+            <button>Ví VN Pay</button>
+            <button>Thẻ Tín Dụng/Ghi nợ</button>
+            <button>Thanh toán khi nhận hàng</button>
+          </div>
         </div>
         <div class="order_btn">
           <p class="sum_price">Tổng thanh toán: {{sumPrice|currency : "VND"}}</p>
           <div class="btn_wrapped">
-            <button (click)="createOrder()" >Đặt hàng</button>
+            <button (click)="createOrder()" (click)="openModalPayment(contentPayment)">Đặt hàng</button>
           </div>
         </div>
       </div>
       </div>
   </div>
 </div>
-
-<app-footer></app-footer>
-
+<!-- <a >231231312331312</a>
+<app-footer></app-footer> -->
 
 <!-- order-voucher -->
 <ng-template #contentShopVoucher let-modal>
@@ -142,5 +147,20 @@
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+	</div>
+</ng-template>
+
+<ng-template #contentPayment let-modal style="height: 100px;">
+	<div class="modal-header">
+		<!-- <h4 class="modal-title">Voucher MANBUYA</h4> -->
+    <img src="https://2178994764-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/assets%2F-M3-IU1k8a0MMGt6Gmx-%2F-M_A-izB5HIWzlsGsLNH%2F-M_A02h28079MMLy2nbo%2FLogo-VNPAYQR-update.png?alt=media&token=01ee2488-e973-43d5-8ab2-7a137e031e02" alt="" style="width: 100px;">
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')" hidden=true></button>
+	</div>
+	<div class="modal-body" style="height: 100px;">
+		<!-- <p>One fine body&hellip;</p> -->
+
+	</div>
+	<div class="modal-footer">
+    <a [href]="linkPayment"class="button">Thanh toán</a>
 	</div>
 </ng-template>

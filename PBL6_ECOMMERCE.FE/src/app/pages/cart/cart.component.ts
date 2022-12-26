@@ -28,8 +28,9 @@ export class CartComponent implements OnInit {
     // private transfereService :TransfereService
   ) { }
 
-	openModalShopVoucher(content: any) {
+	openModalShopVoucher(content: any,idShop:any) {
 		this.modalService.open(content, { centered: true });
+    this.loadVoucherShop(idShop)
 	}
   openModalOrderVoucher(content: any) {
 		this.modalService.open(content, { centered: true });
@@ -45,8 +46,8 @@ export class CartComponent implements OnInit {
   showingVoucher = false
   ngOnInit(): void {
     this.loadCart();
-    this.loadVoucherShop()
-    this.loadVoucherOrder()
+
+    // this.loadVoucherOrder()
     console.log(this.orderVouchers);
 
   }
@@ -78,7 +79,6 @@ export class CartComponent implements OnInit {
     for(var i = 0; i<this.arrShopId.length; i++){
       this.listPdShop.push(this.cart.filter((x:any) => {return this.arrShopId[i] === x.idShop}))
     }
-    console.log(this.arrShopId);
     this.checkMatrix()
   }
 
@@ -116,8 +116,6 @@ export class CartComponent implements OnInit {
           this.cart = this.cart.filter((item:any) => item !==pd)
           this.listPdShop[i] = this.listPdShop[i].filter((item:any)=> item !== pd )
           this.sumPrice -= pd.price * pd.amount;
-          console.log(this.listPdShop[i]);
-          console.log(this.cart);
         },
         (err) => {
           alert("Delete fail. Detail: " + JSON.stringify(err))
@@ -150,8 +148,8 @@ export class CartComponent implements OnInit {
   }
 
 
-  loadVoucherShop(){
-    this.shopService.getAllVoucherShop()
+  loadVoucherShop(id:any){
+    this.voucherService.getVoucherShopById(id)
     .subscribe(
       (res) => this.handleGetVoucherSuccess(res),
       (err) => this.handleGetVoucherError(err)
@@ -162,8 +160,10 @@ export class CartComponent implements OnInit {
   }
   handleGetVoucherSuccess(res: any){
     this.vouchers = res.result.data
+    console.log(this.arrShopId);
     console.log(res)
   }
+
   loadVoucherOrder(){
     this.voucherService.getVoucherAvaiable()
     .subscribe(

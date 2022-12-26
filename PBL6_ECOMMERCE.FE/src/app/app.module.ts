@@ -30,6 +30,12 @@ import { OrderComponent } from './pages/order/order.component';
 import { MyorderComponent } from './pages/myaccount/myorder/myorder.component';
 import { ShopViewComponent } from './pages/shop-view/shop-view.component';
 import { AdminComponent } from './pages/admin/admin.component';
+import { SearchComponent } from './pages/search/search.component';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { OrderModule } from 'ngx-order-pipe';
+import { MatTabsModule } from '@angular/material/tabs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatIconModule} from '@angular/material/icon';
 
 
 @NgModule({
@@ -61,14 +67,20 @@ import { AdminComponent } from './pages/admin/admin.component';
     OrderComponent,
     MyorderComponent,
     ShopViewComponent,
-    AdminComponent
+    AdminComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule,
+    OrderModule,
+    MatTabsModule,
+    BrowserAnimationsModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
