@@ -156,9 +156,9 @@ ul.breadcrumb li a:hover {
   text-decoration: underline;
 }
 .breadcrumb{
-  margin-left: 20px;
+  margin-left: 35px;
   border-radius: 10px;
-
+  margin-right: 50%;
 }
 .container-fluid{
   background-color: #1F4C74;

@@ -6,6 +6,8 @@ import { MyShopHeaderComponent } from './my-shop-header/my-shop-header.component
 import { AddProductComponent } from './add-product/add-product.component';
 import { CkeditorComponent } from './ckeditor/ckeditor.component';
 import { ViewListProductComponent } from './view-list-product/view-list-product.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
+import { ManageOrderComponent } from './manage-order/manage-order.component';
 
 
 
@@ -14,12 +16,15 @@ import { ViewListProductComponent } from './view-list-product/view-list-product.
     MyShopHeaderComponent,
     AddProductComponent,
     CkeditorComponent,
-    ViewListProductComponent
+    ViewListProductComponent,
+    ProductDetailComponent,
+    ManageOrderComponent
     
   ],
   imports: [
     CommonModule,
     MyShopRoutingModule,
+    
   ]
 })
 export class MyShopModule { }

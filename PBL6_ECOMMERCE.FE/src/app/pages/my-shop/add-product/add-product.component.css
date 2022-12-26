@@ -163,6 +163,12 @@ p::cue-region(){
   cursor: pointer;
   width: 50%;
 }
+.drag-area img, .drag-area-mini img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
 .description-expand i{ 
   font-size: 30px;
 }
@@ -177,12 +183,7 @@ p::cue-region(){
   flex-direction: row;
 }
 
-.drag-area img, .drag-area-mini img{
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  border-radius: 5px;
-}
+
 .mandatory-size{
   margin-bottom: 24px;
   display: flex;

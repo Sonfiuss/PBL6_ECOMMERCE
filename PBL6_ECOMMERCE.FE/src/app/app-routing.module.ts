@@ -21,6 +21,7 @@ import { ShopViewComponent } from './pages/shop-view/shop-view.component';
 import { MyShopHeaderComponent } from './pages/my-shop/my-shop-header/my-shop-header.component';
 import { AddProductComponent } from './pages/my-shop/add-product/add-product.component';
 import { ViewListProductComponent } from './pages/my-shop/view-list-product/view-list-product.component';
+import { ManageOrderComponent } from './pages/my-shop/manage-order/manage-order.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,10 @@ const routes: Routes = [
       {
         path: 'products',
         component: ViewListProductComponent
+      },
+      {
+        path: "manageorder",
+        component: ManageOrderComponent
       }
     ]
     
