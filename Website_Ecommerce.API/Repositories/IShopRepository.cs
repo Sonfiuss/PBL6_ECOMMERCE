@@ -1,4 +1,5 @@
 using Website_Ecommerce.API.Data.Entities;
+using Website_Ecommerce.API.ModelQueries;
 
 namespace Website_Ecommerce.API.Repositories
 {
@@ -40,6 +41,13 @@ namespace Website_Ecommerce.API.Repositories
         /// <param name="id"></param>
         /// <returns></returns>
         Task<double> AvgRating(int id);
+
+        /// <summary>
+        /// Get info shop by id 
+        /// </summary>
+        /// <param name="shopId"></param>
+        /// <returns></returns>
+        Task<InfoShop> GetInfoShopBy(int shopId);
 
     }
 }
