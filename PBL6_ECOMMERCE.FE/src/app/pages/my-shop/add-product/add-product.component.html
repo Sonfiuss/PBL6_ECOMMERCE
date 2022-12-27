@@ -2,6 +2,7 @@
 <div class = "header">
     <H5>Thông tin sản phẩm</H5>
 </div>
+<div class = "line"></div>
 <div class = "addproduct">
     <div class = "view-add-product">
         <div class = "base-info-product">
@@ -10,7 +11,7 @@
                 <input type="textbox" placeholder = "  Nhập vào">
             </div>
             <br>
-            <div>
+            <div class = "select-category">
                 <label class="mandatory" style = "width: 30%">*Loại hàng:</label>
                 <select class="mandatory" style="width: 50%; height:100">
                     <option value="">Vest</option>
@@ -56,8 +57,7 @@
                     <i (click)="expand=!expand" class="bi bi-aspect-ratio"></i>
                 </div>
             </div>
-            
-            <br>
+        
             <div class = "ckeditor">
                 <iframe style = "width: 100%" src="/ckeditor"></iframe>
             </div>
@@ -74,18 +74,6 @@
                     <span>OR</span>
                     <button>Browse</button>
                 <input type="file" hidden>
-            </div>
-            <div class = "two-drag-area">
-                <div class = "drag-area-mini mb-2">
-                    <div class = "icon"> <i class="bi bi-image"></i></div>
-                        <header>Drag or Drop to Upload File</header>
-                    <input type="file" hidden >
-                </div>
-                <div class = "drag-area-mini">
-                    <div class = "icon"> <i class="bi bi-image"></i></div>
-                        <header>Drag or Drop to Upload File</header>
-                    <input type="file" hidden >
-                </div>
             </div>
         </div>
         <br>
@@ -126,11 +114,6 @@
                         <br>
                         <input  type="number"  placeholder="  VND">
                     </div>
-                <!-- <div class = "price-title">
-                    <span class ="mandatory-icon">*</span>
-                    <span> Giá bán</span>
-                    <input  type="number"  placeholder="  VND">
-                </div> -->
             </div>
             <br> 
             <div class = "button-confirm-change">
@@ -145,3 +128,154 @@
     </div>
 
 </div>
+
+
+	<!-- <div class="container">
+		<div class="add_product">
+			<div class="product name cat">
+				<div class="name-product">
+					<p>Tên sản phẩm</p>
+					<input type="text" placeholder="Nhập vào" class="inp_name">
+				</div>
+				<div class="cat-product">
+					<p>Loại hàng</p>
+					<select name="cat-product" class="sel_cat"></select>
+				</div>
+			</div>
+			<div class="product size color">
+				<div class="size-product">
+					<p>Size</p>
+					<input type="text" placeholder="Nhập vào" class="inp_size">
+				</div>
+				<div class="color-product">
+					<p>Color</p>
+					<input type="text" placeholder="Nhập vào" class="inp_color">
+				</div>
+			</div>
+			<div class="bottom">
+				<div class="product num default sell">
+					<div class="num-product">
+						<p>Số lượng</p>
+						<input type="number" name="" class="inp_num">
+					</div>
+					<div class="default-price">
+						<p>Giá gốc</p>
+						<input type="text" placeholder="Nhập vào" class="inp_default">
+					</div>
+					<div class="sell-price">
+						<p>Giá bán</p>
+						<input type="text" placeholder="Nhập vào" class="inp_sell">
+					</div>
+					<div class="description">
+						<p>Mô tả</p>
+						<textarea name="" id="txtArea" cols="37" rows="5"></textarea>
+					</div>
+				</div>
+				<div class="upload-image">
+					<p>Hình ảnh</p>
+					<div class="wrapper">
+						<div class="image">
+							<img src="" alt="">
+						</div>
+						<div class="content">
+							<div class="icon">
+								<i class="fas fa-cloud-upload-alt"></i>
+							</div>
+						</div>
+						<div id="cancel-btn">
+							<i class="fas fa-times"></i>
+						</div>
+					</div>
+					<button onclick="defaultBtnActive()" id="custom-btn">Chọn</button>
+					<input id="default-btn" type="file" hidden>
+				</div>
+			</div>
+			<div class="button">
+				<button class="add">Thêm</button>
+				<button class="save">Lưu</button>
+			</div>
+		</div>
+		<div class="table">
+			<table>
+				<thead>
+					<tr>
+						<th>Column 1</th>
+						<th>Column 2</th>
+						<th>Column 3</th>
+						<th>Column 4</th>
+						<th>Column 5</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Cell 1</td>
+						<td>Cell 2</td>
+						<td>Cell 3</td>
+						<td>Cell 4</td>
+						<td>Cell 5</td>
+					</tr>
+					<tr>
+						<td>Cell 1</td>
+						<td>Cell 2</td>
+						<td>Cell 3</td>
+						<td>Cell 4</td>
+						<td>Cell 5</td>
+					</tr>
+					<tr>
+						<td>Cell 1</td>
+						<td>Cell 2</td>
+						<td>Cell 3</td>
+						<td>Cell 4</td>
+						<td>Cell 5</td>
+					</tr>
+					<tr>
+						<td>Cell 1</td>
+						<td>Cell 2</td>
+						<td>Cell 3</td>
+						<td>Cell 4</td>
+						<td>Cell 5</td>
+					</tr>
+					<tr>
+						<td>Cell 1</td>
+						<td>Cell 2</td>
+						<td>Cell 3</td>
+						<td>Cell 4</td>
+						<td>Cell 5</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+<script>
+	const wrapper = document.querySelector(".wrapper");
+	const fileName = document.querySelector(".file-name");
+	const defaultBtn = document.querySelector("#default-btn");
+	const customBtn = document.querySelector("#custom-btn");
+	const cancelBtn = document.querySelector("#cancel-btn i");
+	const img = document.querySelector("img");
+	let regExp = /[0-9a-zA-Z\^\&\'\@\{\}\[\]\,\$\=\!\-\#\(\)\.\%\+\~\_ ]+$/;
+	function defaultBtnActive() {
+		defaultBtn.click();
+	}
+	defaultBtn.addEventListener("change", function () {
+		const file = this.files[0];
+		if (file) {
+			const reader = new FileReader();
+			reader.onload = function () {
+				const result = reader.result;
+				img.src = result;
+				wrapper.classList.add("active");
+			}
+			cancelBtn.addEventListener("click", function () {
+				img.src = "";
+				wrapper.classList.remove("active");
+			})
+			reader.readAsDataURL(file);
+		}
+		if (this.value) {
+			let valueStore = this.value.match(regExp);
+			fileName.textContent = valueStore;
+		}
+	});
+</script> -->

@@ -28,7 +28,7 @@ export class ManageOrderComponent implements OnInit {
   @Input() orderdetails: any;
   listOrderDetails : any;
   closeResult: string;
-  mode = false;
+  mode: any;
   constructor(
     private modalService: NgbModal,
     private shopOrderDetailService: ShoporderdetailService ) { }

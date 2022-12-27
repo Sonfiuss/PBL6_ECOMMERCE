@@ -22,6 +22,7 @@ import { MyShopHeaderComponent } from './pages/my-shop/my-shop-header/my-shop-he
 import { AddProductComponent } from './pages/my-shop/add-product/add-product.component';
 import { ViewListProductComponent } from './pages/my-shop/view-list-product/view-list-product.component';
 import { ManageOrderComponent } from './pages/my-shop/manage-order/manage-order.component';
+import { RevenueComponent } from './pages/my-shop/revenue/revenue.component';
 
 const routes: Routes = [
   {
@@ -39,6 +40,9 @@ const routes: Routes = [
       {
         path: "manageorder",
         component: ManageOrderComponent
+      },{
+        path: "revenue",
+        component: RevenueComponent
       }
     ]
     
