@@ -8,6 +8,7 @@ const UPDATE_PRODUCT_URL = API + '/api/Product/update-product'
 const DELETE_PRODUCT_BY_ID_URL = (id:any) => API + '/api/Product/delete-product/' + id;
 const GET_PRODUCT_BY_ID = (id:any) => API + '/api/Product/get-product-by/' + id;
 const STATISTIC_PRODUCT = API + '/api/Statistic/statistic-product'
+const ADD_PRODUCT = API + '/api/Product/add-product'
 
 @Injectable({
   providedIn: 'root'
@@ -41,5 +42,8 @@ export class ProductService {
 
   }
 
+  addProduct(data:any){
+    return this.httpClient.put(ADD_PRODUCT, JSON.stringify(data), this.bussiness.getRequestOptions())
+  }
 
 }

@@ -27,6 +27,12 @@ import { OrderComponent } from './pages/order/order.component';
 import { MyorderComponent } from './pages/myaccount/myorder/myorder.component';
 import { ShopViewComponent } from './pages/shop-view/shop-view.component';
 import { AdminComponent } from './pages/admin/admin.component';
+import { SearchComponent } from './pages/search/search.component';
+import {NgxPaginationModule} from 'ngx-pagination';
+import { OrderModule } from 'ngx-order-pipe';
+import { MatTabsModule } from '@angular/material/tabs';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatIconModule} from '@angular/material/icon';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MyShopModule } from './pages/my-shop/my-shop.module';
 // import {MatTabsModule} from '@angular/material/tabs';
@@ -62,7 +68,8 @@ import { MyShopModule } from './pages/my-shop/my-shop.module';
     OrderComponent,
     MyorderComponent,
     ShopViewComponent,
-    AdminComponent
+    AdminComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
@@ -70,6 +77,11 @@ import { MyShopModule } from './pages/my-shop/my-shop.module';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxPaginationModule,
+    OrderModule,
+    MatTabsModule,
+    BrowserAnimationsModule,
+    MatIconModule,
     MyShopModule,
     NgbModule,
     BrowserModule,

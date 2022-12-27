@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from 'src/app/_services/account.service';
 import { User } from 'src/app/_models/app-user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +15,11 @@ export class HeaderComponent implements OnInit {
   active  = false;
   token  :any ;
   myarr :any;
-  constructor(public accountService: AccountService) {}
+  accountOpen = false;
+  constructor(
+    public accountService: AccountService,
+    private router :Router
+    ) {}
 
 
   ngOnInit(): void {
@@ -37,5 +42,7 @@ export class HeaderComponent implements OnInit {
     window.location.reload();
 
   }
-
+  search(){
+    this.router.navigate(['/search']);
+  }
 }

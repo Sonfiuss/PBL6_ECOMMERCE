@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 const API =  'https://localhost:7220';
 const ADD_ORDER = API + '/api/Order/add-order';
 const GET_ORDER_BY_ID = (id:any) => API + '/api/Order/View-order?orderId=' + id;
-const GET_ALL_ORDER_USER = API + '/api/Order/view-order-of-user?state=1';
+const GET_ALL_ORDER_USER = API + '/api/Order/view-order-of-user';
 @Injectable({
   providedIn: 'root'
 })
