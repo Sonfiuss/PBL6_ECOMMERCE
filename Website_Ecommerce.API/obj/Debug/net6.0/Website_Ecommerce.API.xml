@@ -433,6 +433,13 @@
             <param name="cancellationToken"></param>
             <returns></returns>
         </member>
+        <member name="M:Website_Ecommerce.API.Controllers.UserController.GetInfoUserById(System.Int32)">
+            <summary>
+            Get info user by id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:Website_Ecommerce.API.Controllers.VoucherController.Add(Website_Ecommerce.API.ModelDtos.VoucherOrderDto,System.Threading.CancellationToken)">
             <summary>
             Add voucher by admin
@@ -618,6 +625,13 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:Website_Ecommerce.API.Repositories.IUserRepository.GetInfotUserById(System.Int32)">
+            <summary>
+            Get info user by id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:Website_Ecommerce.API.Repositories.IVoucherOrderRepository.GetAllVoucherByDate(System.DateTime,System.DateTime)">
             <summary>
             Get all voucher by date
@@ -713,6 +727,13 @@
             Search Product
             </summary>
             <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Website_Ecommerce.API.Repositories.UserRepository.GetInfotUserById(System.Int32)">
+            <summary>
+            Get info user by id
+            </summary>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:Website_Ecommerce.API.Repositories.VoucherProductRepository.GetListVoucherProductById(System.Int32)">
