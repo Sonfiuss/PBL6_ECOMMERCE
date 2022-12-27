@@ -61,7 +61,7 @@ namespace Website_Ecommerce.API.Controllers
                 Description = request.Description,
                 Status = request.Status,
                 TotalRate = 0,
-                Saled = 0,
+                
                 AverageRate = 0,
             };
             _productRepository.Add(product);

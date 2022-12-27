@@ -24,8 +24,8 @@ namespace Website_Ecommerce.API.Data.Entities
         public int TotalRate { get; set; }
         [Required]
         public float AverageRate { get; set; }
-        [Required]
-        public int Saled { get; set; }
+        // [Required]
+        // public int Saled { get; set; }
 
         public ICollection<ProductDetail> ProductDetails { get; set; }
 

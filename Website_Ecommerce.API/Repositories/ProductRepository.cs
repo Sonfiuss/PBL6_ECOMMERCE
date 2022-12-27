@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data;
 using Website_Ecommerce.API.Data.Entities;
-using Website_Ecommerce.API.ModelDtos;
 using Website_Ecommerce.API.ModelQueries;
 
 namespace Website_Ecommerce.API.Repositories
@@ -134,7 +133,7 @@ namespace Website_Ecommerce.API.Repositories
                                             productdetailId = pd.Id,
                                             price = pd.Price,
                                             initialPrice = pd.InitialPrice,
-                                            saled = p.Saled
+
                                         });
 
 
@@ -146,7 +145,7 @@ namespace Website_Ecommerce.API.Repositories
                                             InitialPrice = ppd.initialPrice,
                                             Price = ppd.price,
                                             ImageURL = img.UrlImage,
-                                            Saled = ppd.saled
+                                            // Saled = ppd.saled
                                         }).ToListAsync();
             var result2 = (from p in result
                            group p by new { p.Id } //or group by new {p.ID, p.Name, p.Whatever}
@@ -181,7 +180,7 @@ namespace Website_Ecommerce.API.Repositories
                     Price = productProductDetail.productDetail.Price,
                     InitialPrice = productProductDetail.productDetail.InitialPrice,
                     ImageURL = productimage.UrlImage,
-                    Saled = productProductDetail.product.Saled
+                    // Saled = productProductDetail.product.Saled
                 })
                 .ToListAsync();
 
@@ -280,7 +279,7 @@ namespace Website_Ecommerce.API.Repositories
                     Price = productProductDetail.productDetail.Price,
                     InitialPrice = productProductDetail.productDetail.InitialPrice,
                     ImageURL = productimage.UrlImage,
-                    Saled = productProductDetail.product.Saled
+                    // Saled = productProductDetail.product.Saled
                 })
                 .ToListAsync();
 

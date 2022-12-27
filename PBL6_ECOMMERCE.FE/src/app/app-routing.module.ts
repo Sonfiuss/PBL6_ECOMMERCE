@@ -4,9 +4,6 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CartComponent } from './pages/cart/cart.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
-import { AddProductComponent } from './pages/myshop/add-product/add-product.component';
-import { MyshopComponent } from './pages/myshop/myshop.component';
-import { CkeditorComponent} from './pages/myshop/ckeditor/ckeditor.component';
 import { DefaultComponent } from './layouts/default/default.component';
 import { AddCategoryComponent } from './pages/categories/add-category/add-category.component';
 import { EditCategoryComponent } from './pages/categories/edit-category/edit-category.component';
@@ -21,9 +18,27 @@ import { MyorderComponent } from './pages/myaccount/myorder/myorder.component';
 import { DetailComponent } from './pages/detail/detail.component';
 import { ProductDetailComponent } from './pages/home/products/product-detail/product-detail.component';
 import { ShopViewComponent } from './pages/shop-view/shop-view.component';
+import { MyShopHeaderComponent } from './pages/my-shop/my-shop-header/my-shop-header.component';
+import { AddProductComponent } from './pages/my-shop/add-product/add-product.component';
+import { ViewListProductComponent } from './pages/my-shop/view-list-product/view-list-product.component';
 
 const routes: Routes = [
   {
+    path: 'myshop', 
+    component: MyShopHeaderComponent,
+    children: [
+      {
+        path: 'addproduct',
+        component: AddProductComponent
+      },
+      {
+        path: 'products',
+        component: ViewListProductComponent
+      }
+    ]
+    
+  },
+  {  
     path: '',
     component: DefaultComponent,
     children: [
@@ -36,20 +51,8 @@ const routes: Routes = [
         component: CartComponent
       },
       {
-        path: 'my-shop',
-        component: MyshopComponent
-      },
-      {
         path: 'login',
         component: LoginComponent
-      },
-      {
-        path: 'add-product',
-        component: AddProductComponent
-      },
-      {
-        path: 'ckeditor',
-        component: CkeditorComponent
       },
       {
         path: 'add-category',

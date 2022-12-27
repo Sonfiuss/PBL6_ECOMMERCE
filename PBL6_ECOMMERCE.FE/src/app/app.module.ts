@@ -13,9 +13,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { CartComponent } from './pages/cart/cart.component';
 import { LoginComponent } from './pages/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MyshopComponent } from './pages/myshop/myshop.component';
-import { AddProductComponent } from './pages/myshop/add-product/add-product.component';
-import { CkeditorComponent } from './pages/myshop/ckeditor/ckeditor.component';
 import { CategoryComponent } from './pages/home/category/category.component';
 import { AddCategoryComponent } from './pages/categories/add-category/add-category.component';
 import { EditCategoryComponent } from './pages/categories/edit-category/edit-category.component';
@@ -30,6 +27,13 @@ import { OrderComponent } from './pages/order/order.component';
 import { MyorderComponent } from './pages/myaccount/myorder/myorder.component';
 import { ShopViewComponent } from './pages/shop-view/shop-view.component';
 import { AdminComponent } from './pages/admin/admin.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MyShopModule } from './pages/my-shop/my-shop.module';
+// import {MatTabsModule} from '@angular/material/tabs';
+
+// import { MatTableModule } from '@angular/material/table';
+// import { MatButtonModule } from '@angular/material/button';
+// import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -44,9 +48,6 @@ import { AdminComponent } from './pages/admin/admin.component';
     FooterComponent,
     CartComponent,
     LoginComponent,
-    MyshopComponent,
-    AddProductComponent,
-    CkeditorComponent,
     CategoryComponent,
     AddCategoryComponent,
     EditCategoryComponent,
@@ -68,7 +69,13 @@ import { AdminComponent } from './pages/admin/admin.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MyShopModule,
+    NgbModule,
+    BrowserModule,
+    // MatTableModule,
+    // MatButtonModule,
+    // MatPaginatorModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -11,5 +11,7 @@ namespace Website_Ecommerce.API.ModelQueries
         public double Price { get; set; }
         public int Amount { get; set; }
         public int State { get; set; }
+
+        public string UrlImage {get; set;}
     }
 }
