@@ -1,10 +1,5 @@
 import 'package:ecommerce/data/model/home/data.dart';
-import 'package:ecommerce/data/model/product.dart';
-import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../../../../data/model/cart.dart';
-
 part 'home_state.freezed.dart';
 
 enum DetailStatus { init, inProgress, success }

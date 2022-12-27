@@ -1,5 +1,3 @@
-import 'package:ecommerce/ui/feature/detail/bloc/detail_presenter.dart';
-
 import '../../../../injection/injector.dart';
 import 'ui_presenter.dart';
 

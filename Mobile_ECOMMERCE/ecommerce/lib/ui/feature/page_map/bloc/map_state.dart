@@ -1,10 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:location/location.dart';
-
-import '../../../../data/model/cart.dart';
-
 part 'map_state.freezed.dart';
-
 enum MapStatus { init, inProgress, success }
 
 @freezed

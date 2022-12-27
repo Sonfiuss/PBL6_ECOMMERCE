@@ -2,8 +2,6 @@ import 'package:ecommerce/ui/base/base_page.dart';
 import 'package:ecommerce/ui/resources/app_texts.dart';
 import 'package:ecommerce/ui/widget/button_common.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 import '../../resources/app_colors.dart';
 

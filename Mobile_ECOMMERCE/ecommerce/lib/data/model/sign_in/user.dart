@@ -1,4 +1,5 @@
-import 'package:ecommerce/data/model/order/item_order_dtos.dart';
+
+// ignore: depend_on_referenced_packages
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user.g.dart';

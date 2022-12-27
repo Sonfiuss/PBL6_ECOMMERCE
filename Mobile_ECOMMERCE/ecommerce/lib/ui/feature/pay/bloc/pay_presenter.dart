@@ -2,10 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:ecommerce/data/model/cart.dart';
 import 'package:ecommerce/data/model/order/item_order_dtos.dart';
 import 'package:ecommerce/data/model/order/order.dart';
-import 'package:ecommerce/ui/bloc/ui_presenter.dart';
+
 import 'package:ecommerce/ui/feature/cart/bloc/cart_presenter.dart';
-import 'package:ecommerce/ui/feature/cart/bloc/cart_state.dart';
-import 'package:ecommerce/ui/feature/pay/components/list_order.dart';
 
 import 'package:flutter/material.dart';
 

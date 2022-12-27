@@ -1,7 +1,4 @@
-import 'package:ecommerce/data/model/cart.dart';
-
 import 'package:freezed_annotation/freezed_annotation.dart';
-
 part 'ui_state.freezed.dart';
 
 

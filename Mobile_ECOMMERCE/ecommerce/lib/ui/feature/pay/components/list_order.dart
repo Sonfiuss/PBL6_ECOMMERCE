@@ -1,4 +1,4 @@
-import 'package:ecommerce/data/model/product.dart';
+
 import 'package:ecommerce/ui/feature/pay/bloc/pay_presenter.dart';
 import 'package:ecommerce/ui/resources/app_colors.dart';
 import 'package:flutter/material.dart';

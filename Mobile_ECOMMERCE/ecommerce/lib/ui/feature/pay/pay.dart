@@ -60,10 +60,11 @@ class _PayState extends State<Pay> {
       const Duration(seconds: 1),
     );
     await payPresenter.postOrder();
+    // ignore: use_build_context_synchronously
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PaySuccess(
+        builder: (context) => const PaySuccess(
           text: AppTexts.paySuccess,
         ),
       ),
@@ -147,10 +148,11 @@ class _PayState extends State<Pay> {
               case 1:
                 {
                   await payPresenter.postOrder();
+                  // ignore: use_build_context_synchronously
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => PaySuccess(
+                      builder: (context) => const PaySuccess(
                         text: 'Đặt Hàng thành công',
                       ),
                     ),

@@ -1,11 +1,7 @@
 import 'package:ecommerce/data/model/auth/auth_login.dart';
 import 'package:ecommerce/data/model/auth/result.dart';
-
 import 'package:ecommerce/data/model/sign_in/user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../../../../data/model/cart.dart';
-
 part 'sign_in_state.freezed.dart';
 
 enum Status { init, inProgress, success }

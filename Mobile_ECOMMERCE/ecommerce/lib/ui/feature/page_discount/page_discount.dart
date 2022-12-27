@@ -174,7 +174,7 @@ class MyCustomTriangleClipper extends CustomClipper<Path> {
   }
 
   @override
-  bool shouldReclip(old) {
-    return old != this;
+  bool shouldReclip(oldClipper) {
+    return oldClipper != this;
   }
 }

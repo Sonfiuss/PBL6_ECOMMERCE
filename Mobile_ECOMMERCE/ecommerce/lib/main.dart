@@ -7,19 +7,14 @@
 // import 'package:ecommerce/ui/feature/pay/pay.dart';
 // import 'package:ecommerce/ui/feature/primary/primary.dart';
 // import 'package:ecommerce/ui/feature/sign_in/sign_in.dart';
-import 'package:ecommerce/ui/feature/cart/cart.dart';
-import 'package:ecommerce/ui/feature/home/home.dart';
-import 'package:ecommerce/ui/feature/pay_success/pay_success.dart';
-import 'package:ecommerce/ui/feature/primary/primary.dart';
-import 'package:ecommerce/ui/feature/profile/profile.dart';
+
 import 'package:ecommerce/ui/feature/sign_in/sign_in.dart';
 import 'package:ecommerce/utilities/helpers/app_helper/app_flavor_helper.dart';
 import 'package:flutter/material.dart';
 
 import 'injection/dependencies.dart';
 // import 'ui/feature/cart/cart.dart';
-import 'ui/feature/detail/detail.dart';
-import 'ui/resources/app_theme.dart';
+
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

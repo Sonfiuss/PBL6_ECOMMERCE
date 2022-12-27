@@ -4,8 +4,8 @@ import 'package:ecommerce/utilities/helpers/validator_helper/validator_helper.da
 import 'package:flutter/material.dart';
 
 import '../../../widget/start.dart';
-import 'commentsCustomer.dart';
-import 'confirmSize.dart';
+import 'comments_customer.dart';
+import 'confirm_size.dart';
 import 'describe.dart';
 import 'information_store.dart';
 

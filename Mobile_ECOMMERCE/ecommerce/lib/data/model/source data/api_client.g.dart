@@ -11,6 +11,7 @@ part of 'api_client.dart';
 class _ApiClient implements ApiClient {
   _ApiClient(
     this._dio, {
+    // ignore: unused_element
     this.baseUrl,
   }) {
     baseUrl ??= 'http://103.197.184.184:8080';
@@ -89,6 +90,7 @@ class _ApiClient implements ApiClient {
           data: _data,
         )
         .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    // ignore: avoid_returning_null_for_void
     return null;
   }
 

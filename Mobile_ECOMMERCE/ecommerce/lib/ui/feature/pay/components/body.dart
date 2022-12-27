@@ -1,5 +1,4 @@
-import 'package:ecommerce/data/model/cart.dart';
-import 'package:ecommerce/data/model/product.dart';
+
 import 'package:ecommerce/ui/feature/pay/bloc/pay_presenter.dart';
 import 'package:ecommerce/ui/feature/pay/bloc/pay_state.dart';
 import 'package:ecommerce/ui/feature/pay/components/position.dart';

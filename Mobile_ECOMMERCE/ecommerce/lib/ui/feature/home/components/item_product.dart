@@ -1,9 +1,6 @@
 import 'package:ecommerce/data/model/home/data.dart';
-import 'package:ecommerce/data/model/home/home_get_product.dart';
 import 'package:ecommerce/utilities/helpers/validator_helper/validator_helper.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../data/model/product.dart';
 import '../../../resources/app_colors.dart';
 
 class ItemProduct extends StatelessWidget {

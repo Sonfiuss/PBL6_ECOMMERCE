@@ -1,4 +1,4 @@
-import 'package:ecommerce/data/model/home/home_get_product.dart';
+
 import 'package:ecommerce/data/model/product.dart';
 import 'package:ecommerce/ui/feature/cart/cart.dart';
 import 'package:ecommerce/ui/feature/detail/bloc/detail_presenter.dart';
@@ -10,7 +10,7 @@ import '../../../injection/injector.dart';
 import '../../base/base_page.dart';
 import '../../widget/icon_top.dart';
 import 'components/body.dart';
-import 'components/bottomAppBarDetail.dart';
+import 'components/bottom_app_bar_detail.dart';
 
 class Detail extends BasePage {
   const Detail({
