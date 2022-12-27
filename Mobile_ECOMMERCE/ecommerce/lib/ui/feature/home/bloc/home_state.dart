@@ -1,4 +1,4 @@
-import 'package:ecommerce/data/model/home%20/data.dart';
+import 'package:ecommerce/data/model/home/data.dart';
 import 'package:ecommerce/data/model/product.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

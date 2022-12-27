@@ -4,6 +4,7 @@ import 'package:ecommerce/ui/feature/pay/bloc/pay_state.dart';
 import 'package:ecommerce/ui/feature/pay_success/pay_success.dart';
 
 import 'package:ecommerce/ui/resources/app_colors.dart';
+import 'package:ecommerce/ui/resources/app_texts.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,7 +48,7 @@ class _PayState extends State<Pay> {
     } else {}
   }
 
-  void _handlePaymentSuccess(PaymentResponse response) async{
+  void _handlePaymentSuccess(PaymentResponse response) async {
     setState(() {
       _momoPaymentResult = response;
       _setState();
@@ -58,11 +59,13 @@ class _PayState extends State<Pay> {
     Future.delayed(
       const Duration(seconds: 1),
     );
-   await payPresenter.postOrder();
+    await payPresenter.postOrder();
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const PaySuccess(),
+        builder: (context) => PaySuccess(
+          text: AppTexts.paySuccess,
+        ),
       ),
     );
   }
@@ -139,7 +142,6 @@ class _PayState extends State<Pay> {
                   } catch (e) {
                     debugPrint(e.toString());
                   }
-                  
                 }
                 break;
               case 1:
@@ -148,14 +150,17 @@ class _PayState extends State<Pay> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const PaySuccess(),
+                      builder: (context) => PaySuccess(
+                        text: 'Đặt Hàng thành công',
+                      ),
                     ),
                   );
                 }
                 break;
-                
-             default : null;
-             break;
+
+              default:
+                null;
+                break;
             }
           },
         ),

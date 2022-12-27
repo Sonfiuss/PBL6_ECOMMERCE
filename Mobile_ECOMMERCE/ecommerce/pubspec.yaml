@@ -58,6 +58,8 @@ dependencies:
   device_info_plus: ^8.0.0
   package_info_plus: ^3.0.2
 
+ 
+
   # Local storage
   shared_preferences: ^2.0.6
 

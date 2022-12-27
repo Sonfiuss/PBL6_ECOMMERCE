@@ -3,6 +3,7 @@ import 'package:ecommerce/data/model/cart.dart';
 import 'package:ecommerce/data/model/order/item_order_dtos.dart';
 import 'package:ecommerce/data/model/order/order.dart';
 import 'package:ecommerce/ui/bloc/ui_presenter.dart';
+import 'package:ecommerce/ui/feature/cart/bloc/cart_presenter.dart';
 import 'package:ecommerce/ui/feature/cart/bloc/cart_state.dart';
 import 'package:ecommerce/ui/feature/pay/components/list_order.dart';
 
@@ -17,12 +18,12 @@ import 'pay_state.dart';
 
 class PayPresenter extends Cubit<PayState> {
   PayPresenter(
-{required this.cartState, required this.uiState, 
+{required this.cartPresenter, required this.uiState, 
     @visibleForTesting PayState? state,
   }) : super(
           state ?? PayState.initial(),
         );
-  final CartState cartState;
+  final CartPresenter cartPresenter;
   final UiState   uiState;
   ApiClient apiClient = ApiClient(Dio());
   void init(List<CartModel> cart) {
@@ -110,5 +111,6 @@ class PayPresenter extends Cubit<PayState> {
     );
     await apiClient.postOrder(order,
         'Bearer ${uiState.token}');
+        cartPresenter.removeCart(state.cart);
   }
 }

@@ -5,7 +5,7 @@ import 'package:ecommerce/data/model/sign_in/user.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../../utilities/constants/api_constants.dart';
-import '../home /home_get_product.dart';
+import '../home/home_get_product.dart';
 
 part 'api_client.g.dart';
 

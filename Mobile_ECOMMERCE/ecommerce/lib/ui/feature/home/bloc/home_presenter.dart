@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:ecommerce/data/model/home%20/data.dart';
+import 'package:ecommerce/data/model/home/data.dart';
 import 'package:ecommerce/data/model/source%20data/api_client.dart';
 import 'package:flutter/material.dart';
 

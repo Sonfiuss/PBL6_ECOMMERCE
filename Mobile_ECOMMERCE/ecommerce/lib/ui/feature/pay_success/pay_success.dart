@@ -8,7 +8,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import '../../resources/app_colors.dart';
 
 class PaySuccess extends BasePage {
-  const PaySuccess({Key? key}) : super(key: key);
+  const PaySuccess({required this.text, Key? key}) : super(key: key);
+
+  final String text;
 
   @override
   State<PaySuccess> createState() => _PaySuccessState();
@@ -47,17 +49,17 @@ class _PaySuccessState extends State<PaySuccess> {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(
+                children:  [
+                  const Icon(
                     Icons.task_alt_outlined,
                     color: AppColors.white,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 8,
                   ),
                   Text(
-                    AppTexts.paySuccess,
-                    style: TextStyle(
+                    widget.text,
+                    style: const TextStyle(
                       fontSize: 23,
                       color: AppColors.white,
                     ),

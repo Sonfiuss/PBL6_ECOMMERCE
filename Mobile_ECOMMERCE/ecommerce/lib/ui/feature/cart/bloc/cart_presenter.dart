@@ -185,4 +185,13 @@ class CartPresenter extends Cubit<CartState> {
     sum = (allPrice() * (100 - discount)) / 100;
     emit(state.copyWith(allPrice: ValidatorHelper().setupPrice(sum.toInt())));
   }
+
+  void removeCart(List<CartModel> cartModel) {
+    var cartNew = <CartModel>[];
+    cartNew.addAll(state.cart);
+    for (int i = 0; i < cartModel.length; i++) {
+      cartNew.remove(cartModel[i]);
+    }
+    emit(state.copyWith(cart: cartNew));
+  }
 }

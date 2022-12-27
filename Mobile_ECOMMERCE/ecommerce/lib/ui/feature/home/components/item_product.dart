@@ -1,5 +1,5 @@
-import 'package:ecommerce/data/model/home%20/data.dart';
-import 'package:ecommerce/data/model/home%20/home_get_product.dart';
+import 'package:ecommerce/data/model/home/data.dart';
+import 'package:ecommerce/data/model/home/home_get_product.dart';
 import 'package:ecommerce/utilities/helpers/validator_helper/validator_helper.dart';
 import 'package:flutter/material.dart';
 

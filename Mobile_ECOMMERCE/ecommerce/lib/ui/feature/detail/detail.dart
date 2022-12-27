@@ -1,11 +1,11 @@
-import 'package:ecommerce/data/model/home%20/home_get_product.dart';
+import 'package:ecommerce/data/model/home/home_get_product.dart';
 import 'package:ecommerce/data/model/product.dart';
 import 'package:ecommerce/ui/feature/cart/cart.dart';
 import 'package:ecommerce/ui/feature/detail/bloc/detail_presenter.dart';
 import 'package:ecommerce/ui/feature/detail/bloc/detail_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../data/model/home /data.dart';
+import '../../../data/model/home/data.dart';
 import '../../../injection/injector.dart';
 import '../../base/base_page.dart';
 import '../../widget/icon_top.dart';

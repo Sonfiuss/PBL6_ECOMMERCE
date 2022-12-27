@@ -9,7 +9,7 @@ class PayModule {
   static Future<void> inject() async {
     injector.registerLazySingleton<PayPresenter>(
       () => PayPresenter(
-        cartState: injector.get<CartPresenter>().state,
+        cartPresenter: injector.get<CartPresenter>(),
         uiState: injector.get<UiPresenter>().state,
       ),
     );

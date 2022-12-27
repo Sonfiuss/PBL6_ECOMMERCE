@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../data/model/cart.dart';
-import '../../../../data/model/home /data.dart';
+import '../../../../data/model/home/data.dart';
 import 'detail_state.dart';
 
 class DetailPresenter extends Cubit<DetailState> {
