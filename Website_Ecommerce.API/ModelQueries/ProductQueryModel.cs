@@ -37,6 +37,7 @@ namespace Website_Ecommerce.API.ModelQueries
         public string Name { get; set; }
         public int TotalRate { get; set; }
         public float AverageRate { get; set; }
+        public string Description { get; set; }
         public List<ProductDetailQueryModel> ProductDetails { get; set; }
     }
 }

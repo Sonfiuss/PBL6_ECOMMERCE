@@ -206,7 +206,8 @@ namespace Website_Ecommerce.API.Repositories
                             Id = x.Id,
                             Name = x.Name,
                             TotalRate = x.TotalRate,
-                            AverageRate = x.AverageRate
+                            AverageRate = x.AverageRate,
+                            Description = x.Description
                         })
                         .FirstOrDefaultAsync();
 
@@ -293,7 +294,7 @@ namespace Website_Ecommerce.API.Repositories
         //                     productdetail => productdetail.ProductId,
         //                     (product, productdetail) => new{
 
-                                
+
         //                     });
         // }
 
