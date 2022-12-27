@@ -553,6 +553,21 @@ namespace Website_Ecommerce.API.Controllers
                 }
             });
         }
+
+        [HttpGet("get-product-id-last")]
+        public async Task<IActionResult> GetIdProductlasest(int id)
+        {
+            int i = _productRepository.Products.Where(p => p.ShopId == id).OrderByDescending(p => p.Id).FirstOrDefault().Id;
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = false,
+                Message = ErrorCode.ExcuteDB,
+                Result = new ResponseDefault()
+                {
+                    Data = i
+                }
+            });
+        }
         #endregion
 
 
