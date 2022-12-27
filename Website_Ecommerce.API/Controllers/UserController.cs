@@ -126,14 +126,14 @@ namespace Website_Ecommerce.API.Controllers
         }
 
         /// <summary>
-        /// Get info user by id
+        /// Get info current user
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("info-user")]
-        public async Task<IActionResult> GetInfoUserById(int id)
+        [HttpGet("info-current-user")]
+        public async Task<IActionResult> GetInfoCurrentUser()
         {
-            var user = await _userRepository.GetInfotUserById(id);
+            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
+            var user = await _userRepository.GetInfotUserById(userId);
             if (user is null)
             {
                 return BadRequest(new Response<ResponseDefault>()
