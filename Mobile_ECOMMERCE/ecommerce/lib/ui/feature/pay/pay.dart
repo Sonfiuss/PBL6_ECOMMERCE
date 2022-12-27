@@ -47,7 +47,7 @@ class _PayState extends State<Pay> {
     } else {}
   }
 
-  void _handlePaymentSuccess(PaymentResponse response) {
+  void _handlePaymentSuccess(PaymentResponse response) async{
     setState(() {
       _momoPaymentResult = response;
       _setState();
@@ -58,7 +58,7 @@ class _PayState extends State<Pay> {
     Future.delayed(
       const Duration(seconds: 1),
     );
-     payPresenter.postOrder();
+   await payPresenter.postOrder();
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -115,30 +115,47 @@ class _PayState extends State<Pay> {
         ),
         bottomNavigationBar: BottomAppBarPay(
           payPresenter: payPresenter,
-          onTap: () {
-            if (state.current == 2) {
-              final options = MomoPaymentInfo(
-                  merchantName: 'Test',
-                  appScheme: 'MOMOZ7NU20220930',
-                  merchantCode: 'MOMOZ7NU20220930',
-                  partnerCode: 'MOMOZ7NU20220930',
-                  amount: state.pricePay,
-                  orderId: '12321312',
-                  orderLabel: 'Thanh Toán Tiền',
-                  merchantNameLabel: 'HLGD',
-                  fee: 10,
-                  description: 'Thanh Toán Tiền',
-                  username: "Bao",
-                  partner: 'merchant',
-                  extra: '{"key1":"value1","key2":"value2"}',
-                  isTestMode: true);
-              try {
-                _momoPay.open(options);
-              } catch (e) {
-                debugPrint(e.toString());
-              }
-            } else {
-              null;
+          onTap: () async {
+            switch (state.current) {
+              case 2:
+                {
+                  final options = MomoPaymentInfo(
+                      merchantName: 'Test',
+                      appScheme: 'MOMOZ7NU20220930',
+                      merchantCode: 'MOMOZ7NU20220930',
+                      partnerCode: 'MOMOZ7NU20220930',
+                      amount: state.pricePay,
+                      orderId: '12321312',
+                      orderLabel: 'Thanh Toán Tiền',
+                      merchantNameLabel: 'HLGD',
+                      fee: 10,
+                      description: 'Thanh Toán Tiền',
+                      username: "Bao",
+                      partner: 'merchant',
+                      extra: '{"key1":"value1","key2":"value2"}',
+                      isTestMode: true);
+                  try {
+                    _momoPay.open(options);
+                  } catch (e) {
+                    debugPrint(e.toString());
+                  }
+                  
+                }
+                break;
+              case 1:
+                {
+                  await payPresenter.postOrder();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PaySuccess(),
+                    ),
+                  );
+                }
+                break;
+                
+             default : null;
+             break;
             }
           },
         ),

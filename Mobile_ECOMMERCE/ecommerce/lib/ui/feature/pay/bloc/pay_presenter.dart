@@ -84,19 +84,20 @@ class PayPresenter extends Cubit<PayState> {
   }
 
   Future<void> postOrder() async {
+    int sum= _sumPrice();
     final order = Order(
       message: 'aa',
       address: state.address,
       recipientName: 'Ngo Bao',
       recipientPhone: '0912101998',
       paymentMethodId: 0,
-      totalPrice: _sumPrice(),
+      totalPrice: sum,
       itemOrderDtos: [
         ItemOrderDtos(
             productDetailId: 4,
             amount: state.cart.first.itemProduct.first.amount,
             price: state.cart.first.itemProduct.first.price,
-            note: 'giao trong tuaanf',
+            note: 'giao trong tuan',
             orderId: 0,
             voucherProductId: 0)
       ],
