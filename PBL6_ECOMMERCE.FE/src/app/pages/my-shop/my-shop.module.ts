@@ -8,6 +8,7 @@ import { CkeditorComponent } from './ckeditor/ckeditor.component';
 import { ViewListProductComponent } from './view-list-product/view-list-product.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ManageOrderComponent } from './manage-order/manage-order.component';
+import { RevenueComponent } from './revenue/revenue.component';
 
 
 
@@ -18,7 +19,8 @@ import { ManageOrderComponent } from './manage-order/manage-order.component';
     CkeditorComponent,
     ViewListProductComponent,
     ProductDetailComponent,
-    ManageOrderComponent
+    ManageOrderComponent,
+    RevenueComponent
     
   ],
   imports: [
