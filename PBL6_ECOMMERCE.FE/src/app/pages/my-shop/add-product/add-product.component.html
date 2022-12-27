@@ -6,20 +6,37 @@
     <div class = "view-add-product">
         <div class = "base-info-product">
             <div class = "mandatory">
-                <label class="mandatory" style = "width: 70%">*Tên sản phẩm:</label>
-                <input type="textbox" placeholder = "  Nhập vào">
+                <label class="mandatory" style = "width: 70%" >*Tên sản phẩm:</label>
+                <input type="textbox" placeholder = "  Nhập vào"   (change)="typeNamePd($event)">
             </div>
             <br>
             <div>
                 <label class="mandatory" style = "width: 30%">*Loại hàng:</label>
-                <select class="mandatory" style="width: 50%; height:100">
-                    <option value="">Vest</option>
-                    <option value="">Cravat</option>
+                <select class="mandatory" style="width: 50%; height:100" (change)="categorySelected($event)" >
+                    <option value={{category.name}} *ngFor="let category of categories">{{category.name}}</option>
                 </select>
             </div>
         </div>
         <br>
-        <div class = "list-product-detail">
+        <div [ngClass]="{
+            'expand': expand,
+            'show-ckediter': true }">
+            <div class = "description-expand">
+                <div class  = "title-description">
+                    <span class = mandatory-icon>*</span>
+                    <span width = "20%">Mô tả</span>
+                </div>
+                <div>
+                    <i (click)="expand=!expand" class="bi bi-aspect-ratio"></i>
+                </div>
+            </div>
+            <br>
+            <div class = "ckeditor">
+                <iframe style = "width: 100%" src="/ckeditor"></iframe>
+            </div>
+        </div>
+        <br>
+        <div class = "list-product-detail"  >
             <table>
                 <tr>
                     <td>STT</td>
@@ -30,40 +47,21 @@
                     <td>Giá bán</td>
                     <td>Hình ảnh</td>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>5000</td>
-                    <td>Nâu be</td>
-                    <td>500</td>
-                    <td>300000</td>
-                    <td>249000</td>
-                    <td src = "https://www.facebook.com/DNCT43/photos/a.724595638257442/1137301103653558/?__cft__[0]=AZUSClfKnEHeK9Ppc8nxJtXoL8UBAyH-uTOPzaEZ83jzZFwAk6V_JjRsxxBphr_n418b0Xw0uWOTbV7COxbQ0kh3pUfccnYbcxUnpLM_Ty45_CWkntxcJMCBTjyuTo32jD7Zqy-VIfQRZXlkegSxo53Noj-ssejS9TxdqC1bUZHrngFWuXAGvljyvHGL6pYdOtdde9Uvx2BtYY3jEl9vWb8X&__tn__=EH-R"></td>
+                <tr *ngFor="let pdDetail of listPdDetail; let i = index">
+                    <td>{{i}}</td>
+                    <td>{{pdDetail.size}}</td>
+                    <td>{{pdDetail.color}}</td>
+                    <td>{{pdDetail.amount}}</td>
+                    <td>{{pdDetail.initialPrice}}</td>
+                    <td>{{pdDetail.price}}</td>
+                    <td ><img src = "https://www.facebook.com/DNCT43/photos/a.724595638257442/1137301103653558/?__cft__[0]=AZUSClfKnEHeK9Ppc8nxJtXoL8UBAyH-uTOPzaEZ83jzZFwAk6V_JjRsxxBphr_n418b0Xw0uWOTbV7COxbQ0kh3pUfccnYbcxUnpLM_Ty45_CWkntxcJMCBTjyuTo32jD7Zqy-VIfQRZXlkegSxo53Noj-ssejS9TxdqC1bUZHrngFWuXAGvljyvHGL6pYdOtdde9Uvx2BtYY3jEl9vWb8X&__tn__=EH-R" alt=""></td>
                 </tr>
             </table>
         </div>
         <br>
-        <div [ngClass]="{
-            'expand': expand,
-            'show-ckediter': true
-        }">
 
-            <div class = "description-expand">
-                <div class  = "title-description">
-                    <span class = mandatory-icon>*</span>
-                    <span width = "20%">Mô tả</span>
-                </div>
-                <div>
-                    <i (click)="expand=!expand" class="bi bi-aspect-ratio"></i>
-                </div>
-            </div>
-            
-            <br>
-            <div class = "ckeditor">
-                <iframe style = "width: 100%" src="/ckeditor"></iframe>
-            </div>
-        </div>
-        
-    </div> 
+
+    </div>
     <div class = "view-add-product-detail">
         <h5>Hình ảnh</h5>
         <br>
@@ -91,26 +89,26 @@
         <br>
         <div class = "product-detail">
             <h5>Chi tiết sản phẩm</h5>
-        </div> 
+        </div>
         <div  class="mandatory-input">
             <div class = "edit-label-edit-title">
                 <span class="mandatory-icon">*</span>
                 <span >Size</span>
-            </div>   
-            <input type="text" placeholder="  Nhập vào" size="large" resize="none" rows="2" minrows="2" maxlength="Infinity" restrictiontype="input" max="Infinity" min="-Infinity" class="shopee-input__input">
+            </div>
+            <input type="text" placeholder="  Nhập vào" size="large" resize="none" rows="2" minrows="2" maxlength="Infinity" restrictiontype="input" max="Infinity" min="-Infinity" class="shopee-input__input" (change)="sizeInput($event)">
         </div>
         <div class="mandatory-input">
             <div class = "edit-label-edit-title">
                 <span class="mandatory-icon">*</span>
                 <span >Color</span>
             </div>
-            <input type="text" placeholder="  Nhập vào" >
+            <input type="text" placeholder="  Nhập vào" (change)="colorInput($event)">
             <div class = "edit-label-edit-title">
                 <span class="mandatory-icon">*</span>
                 <span >Số lượng</span>
             </div>
-            <input type="number" placeholder="  Nhập số lượng" >
-        </div> 
+            <input type="number" placeholder="  Nhập số lượng" (change)="amountInput($event)">
+        </div>
         <br>
         <div class = "price-and-button">
             <div class = "mandatory-input-price">
@@ -118,13 +116,13 @@
                         <span class ="mandatory-icon">*</span>
                         <span> Giá gốc</span>
                         <br>
-                        <input type="number" placeholder="  VND">
+                        <input type="number" placeholder="  VND" (change)="initialPriceInput($event)">
                     </div>
                     <div class = "price-input">
                         <span class ="mandatory-icon">*</span>
                         <span> Giá bán</span>
                         <br>
-                        <input  type="number"  placeholder="  VND">
+                        <input  type="number"  placeholder="  VND" (change)="priceInput($event)">
                     </div>
                 <!-- <div class = "price-title">
                     <span class ="mandatory-icon">*</span>
@@ -132,13 +130,13 @@
                     <input  type="number"  placeholder="  VND">
                 </div> -->
             </div>
-            <br> 
+            <br>
             <div class = "button-confirm-change">
-                <div class = "button-add-productdetail"> 
-                    <button>Thêm sản phẩm</button>
+                <div class = "button-add-productdetail">
+                    <button (click)="addPdDetail()">Thêm sản phẩm</button>
                 </div>
                 <div class = "button-save-product">
-                    <button>Lưu sản phẩm</button>
+                    <button (click)="addProduct()">Lưu sản phẩm</button>
                 </div>
             </div>
         </div>

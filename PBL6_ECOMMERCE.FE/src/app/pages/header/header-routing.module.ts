@@ -9,7 +9,7 @@ import { HeaderComponent } from './header.component';
 import { ProductDetailComponent } from '../home/products/product-detail/product-detail.component';
 import { CartComponent } from '../cart/cart.component';
 import { OrderComponent } from '../order/order.component';
-
+import { MyaccountComponent } from '../myaccount/myaccount.component';
 
 
 const headerRoutes: Routes = [
@@ -32,6 +32,10 @@ const headerRoutes: Routes = [
         {
           path: 'order',
           component: OrderComponent,
+        },
+        {
+          path :'myaccount',
+          component : MyaccountComponent
         },
         // {
         //   path: 'login',

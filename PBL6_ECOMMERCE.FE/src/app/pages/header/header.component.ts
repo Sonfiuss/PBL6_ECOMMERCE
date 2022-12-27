@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit {
   active  = false;
   token  :any ;
   myarr :any;
+  accountOpen = false;
   constructor(public accountService: AccountService) {}
 
 

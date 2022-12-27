@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CartComponent } from './pages/cart/cart.component';
@@ -20,6 +20,14 @@ import { ProductDetailComponent } from './pages/home/products/product-detail/pro
 import { ShopViewComponent } from './pages/shop-view/shop-view.component';
 import { SearchComponent } from './pages/search/search.component';
 import { HeaderComponent } from './pages/header/header.component';
+// import { MyShopHeaderComponent } from './pages/my-shop/my-shop-header/my-shop-header.component';
+// import { AddProductComponent } from './pages/my-shop/add-product/add-product.component';
+// import { ViewListProductComponent } from './pages/my-shop/view-list-product/view-list-product.component';
+// import { ManageOrderComponent } from './pages/my-shop/manage-order/manage-order.component';
+import { MyShopHeaderComponent } from './pages/my-shop/my-shop-header/my-shop-header.component';
+import { AddProductComponent } from './pages/my-shop/add-product/add-product.component';
+import { ViewListProductComponent } from './pages/my-shop/view-list-product/view-list-product.component';
+import { ManageOrderComponent } from './pages/my-shop/manage-order/manage-order.component';
 
 const routes: Routes = [
   // {
@@ -120,7 +128,105 @@ const routes: Routes = [
   {
     path:'signup',
     component : SignupComponent
+  },
+  {
+    path: 'info',
+    component: InfoComponent
+  },
+  {
+    path: 'changepassword',
+    component: ChangepasswordComponent
+  },
+  {
+    path: 'myaddress',
+    component: MyaddressComponent
+  },
+  {
+    path: 'myshop',
+    component: MyShopHeaderComponent,
+    children: [
+      {
+        path: 'addproduct',
+        component: AddProductComponent
+      },
+      {
+        path: 'products',
+        component: ViewListProductComponent
+      },
+      {
+        path: "manageorder",
+        component: ManageOrderComponent
+      }
+    ]
   }
+
+  // {
+  //   path: '',
+  //   component: DefaultComponent,
+  //   children: [
+  //     {
+  //       path: '',
+  //       component: HomeComponent
+  //     },
+  //     {
+  //       path: 'cart',
+  //       component: CartComponent
+  //     },
+  //     {
+  //       path: 'login',
+  //       component: LoginComponent
+  //     },
+  //     {
+  //       path: 'add-category',
+  //       component: AddCategoryComponent,
+  //       canActivate: [AuthGuard]
+  //     },
+  //     {
+  //       path: 'edit-category/:id',
+  //       component: EditCategoryComponent
+  //     },
+  //     {
+  //       path: 'myaccount',
+  //       component: MyaccountComponent
+  //     },
+  //     {
+  //       path: 'info',
+  //       component: InfoComponent
+  //     },
+  //     {
+  //       path: 'changepassword',
+  //       component: ChangepasswordComponent
+  //     },
+  //     {
+  //       path: 'myaddress',
+  //       component: MyaddressComponent
+  //     },
+  //     {
+  //       path: 'signup',
+  //       component: SignupComponent
+  //     },
+  //     {
+  //       path: 'order',
+  //       component: OrderComponent
+  //     },
+  //     {
+  //       path: 'myorder',
+  //       component: MyorderComponent
+  //     },
+  //     {
+  //       path: 'detail',
+  //       component: DetailComponent
+  //     },
+  //     {
+  //       path: 'product-detail/:id',
+  //       component: ProductDetailComponent
+  //     },
+  //     {
+  //       path: 'shop-view',
+  //       component: ShopViewComponent
+  //     },
+  //   ]
+  // }
 ];
 
 @NgModule({

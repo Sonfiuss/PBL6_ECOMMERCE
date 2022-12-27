@@ -61,7 +61,6 @@ export class CartComponent implements OnInit {
 
   handleGetCartError(err: any){
     console.log(err);
-    console.log("thinhnguyen1233456");
   }
   handleGetCartSuccess(res: any){
     this.cart = res.result.data
