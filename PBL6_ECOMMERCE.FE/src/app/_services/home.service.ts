@@ -10,6 +10,7 @@ const SEARCH_PROUCT = (key:any) => API +   '/api/Home/search-product-by/'  + key
 const GET_PRODUCT_BY_SHOP_ID = API +  '/api/Home/get-list-product-of-shop-by/2';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -28,13 +29,12 @@ export class HomeService {
     return this.httpClient.get(GET_ALL_PRODUCTDETAIL(id), this.bussiness.getRequestOptions())
   }
   getImgProductDetail(id:any){
-    console.log("set id" + id);
     return this.httpClient.get(GET_IMG_PRODUCTDETAIL(id), this.bussiness.getRequestOptions())
   }
   getPdByShopId(){
     return this.httpClient.get(GET_PRODUCT_BY_SHOP_ID, this.bussiness.getRequestOptions())
   }
-  search(){
-
+  search(key:any){
+    return this.httpClient.get(SEARCH_PROUCT(key), this.bussiness.getRequestOptions())
   }
 }

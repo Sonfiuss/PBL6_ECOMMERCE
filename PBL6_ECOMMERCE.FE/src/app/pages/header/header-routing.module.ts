@@ -10,6 +10,7 @@ import { ProductDetailComponent } from '../home/products/product-detail/product-
 import { CartComponent } from '../cart/cart.component';
 import { OrderComponent } from '../order/order.component';
 import { MyaccountComponent } from '../myaccount/myaccount.component';
+import { SearchComponent } from '../search/search.component';
 
 
 const headerRoutes: Routes = [
@@ -36,6 +37,10 @@ const headerRoutes: Routes = [
         {
           path :'myaccount',
           component : MyaccountComponent
+        },
+        {
+          path :'search',
+          component : SearchComponent
         },
         // {
         //   path: 'login',

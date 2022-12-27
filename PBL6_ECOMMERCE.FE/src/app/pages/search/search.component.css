@@ -83,17 +83,17 @@
 
  select {
    width: 30%;
-   padding-top: 0.5%;
-   padding-bottom: 0.5%;
+   /* padding-top: 0.5%;
+   padding-bottom: 0.5%; */
    padding-left: 1%;
-   background-color: rgb(30, 69, 105);
+   /* background-color: rgb(30, 69, 105); */
    -webkit-appearance: none;
    -moz-appearance: none;
    text-indent: 1px;
    text-overflow: '';
    border:none;
  }
- select option{
+ select> option{
    padding-top: 1%;
    padding-bottom: 1%;
    padding-left: 1%;
@@ -104,17 +104,23 @@
  }
 
  select {
-   width: 30%;
+  margin-left: 20px;
+   width: 25%;
    line-height: 3;
    overflow: hidden;
    border-radius: .25em;
    font-family: monospace;
    font-size: 15px;
-   border: none;
+   border: solid;
+   border-width: 1px;
    outline: none;
-   color: white;
+   color: black
  }
-
+option{
+  padding-top: 1%;
+  padding-bottom: 1%;
+  padding-left: 1%;
+}
  .sort > label{
    margin-left: 60%;
    font-family: monospace  ;

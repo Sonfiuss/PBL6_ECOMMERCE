@@ -39,7 +39,7 @@ export class SearchComponent implements OnInit {
     }
   }
   loadAllProduct(){
-    this.homeService.getAllProduct()
+    this.homeService.search(1)
     .subscribe(
       (res) => this.handleGetProductSuccess(res),
       (err) => this.handleGetProductError(err)
