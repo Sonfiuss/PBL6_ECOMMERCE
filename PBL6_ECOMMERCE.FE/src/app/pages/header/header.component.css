@@ -67,9 +67,9 @@ ul.account-nonactived > li > a {
   height: 120px;
 }
 .navbar-custom{
-  height: 100px;
+  height: 120px;
   background-color: rgb(30, 69, 105);
-  text :white;
+  font-display :white;
 }
 #category{
   width: 150px;

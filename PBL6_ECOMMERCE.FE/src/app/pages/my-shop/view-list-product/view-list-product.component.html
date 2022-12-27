@@ -1,3 +1,7 @@
+<div>
+  <h5>Tất cả sản phẩm</h5>
+</div>
+<div class = "line"></div>
 <div class = "mode-view">
     <div class = "mode-button">
         <button class = "view-all">Tất cả</button>
@@ -14,17 +18,17 @@
     <table class="data">
         <tr>
           <th>STT</th>
+          <th>Mã sản phẩm</th>
           <th>Tên sản phẩm</th>
           <th>Loại hàng</th>
           <th>Tình trạng</th>
-          <th>Giá gốc</th>
-          <th>Giá bán</th>
-          <th>Đã bán </th>
+          <th>Đã bán</th>
           <th>Tồn kho</th>
           <th>Thay đổi</th>
         </tr>
         <tr (click)="show_detail(longContent)">
           <td>1</td>
+          <td>10</td>
           <td>Áo dài tay nam</td>
           <td>Áo sơ mi</td>
           <td>Còn hàng</td>
@@ -37,6 +41,7 @@
         </tr>
         <tr (click)="show_detail(longContent)">
             <td>2</td>
+            <td>11</td>
             <td>Áo dài tay nam ấm dành cho mùa đông</td>
             <td>Áo khoác</td>
             <td>Còn hàng</td>
@@ -58,7 +63,7 @@
 
   <div class="modal-body">
     <div class = "edit-product">
-      <app-add-product></app-add-product>
+      <app-product-detail></app-product-detail>
     </div>
   </div>
 </ng-template>

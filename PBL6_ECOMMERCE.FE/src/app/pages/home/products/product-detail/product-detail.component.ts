@@ -15,6 +15,7 @@ import { CartService } from 'src/app/_services/cart.service';
 export class ProductDetailComponent implements OnInit {
 
   @Input() pdId : any;
+  @Input() pdInfo : any;
   listPd : any;
   sizePd: Array<string> = [];
   colorPd: Array<string> = [];
@@ -29,6 +30,13 @@ export class ProductDetailComponent implements OnInit {
   selectedPd : any;
   oldSelectedColor = '';
   idPdSelected : number;
+  productData:any;
+  listImg : Array<string> = [];
+  price = 0;
+  initialPrice =0 ;
+  overview= 'Sơ mi là một trong những loại phục trang có tính ứng dụng cao, bạn có thể sử dụng trong những bữa tiệc yêu cầu sự lịch lãm, hoặc những chuyến dạo chơi thoải mái bên bạn bè, hoặc ngay cả dịp hẹn hò cùng người yêu. Cùng Gavin tìm hiểu những tiêu chí khi chọn mua áo sơ mi sau đây.';
+  qty=1;
+  sum_price =this.price * this.qty;
   constructor(
     private  productService : ProductService,
     private activatedRoute : ActivatedRoute,
@@ -59,7 +67,10 @@ export class ProductDetailComponent implements OnInit {
 
     if (!this.checkColor){
       this.selectedPd= this.listPdDetail.filter((x:any) => x.size == targetSize)
-      this.loadImg(this.selectedPd[0].id)
+      let objPdDetail = this.listPd.filter((x:any) => x.id === this.selectedPd[0].id)
+      let objPdDetailImg  = objPdDetail[0].productImages
+      this.ImagePath =  objPdDetailImg[0].urlImage
+      // this.loadImg(this.selectedPd[0].id)
       this.idPdSelected = this.selectedPd[0].id;
       this.price = this.selectedPd[0].price
       this.initialPrice = this.selectedPd[0].initialPrice
@@ -72,7 +83,12 @@ export class ProductDetailComponent implements OnInit {
         arrCheckOldColor = this.selectedPd.filter((x:any) => x.color == this.oldSelectedColor)
         if (arrCheckOldColor.length != 0){
           var newSelectedPd = this.selectedPd.filter((x:any) => x.color == this.oldSelectedColor)
-          this.loadImg(newSelectedPd[0].id)
+          // let objPdDetail = this.listPd.filter((x:any) => x.id === newSelectedPd[0].id)
+          // this.ImagePath = this.listPd[newSelectedPd[0].id].productImages[0].urlImage
+          let objPdDetail = this.listPd.filter((x:any) => x.id === newSelectedPd[0].id)
+          let objPdDetailImg  = objPdDetail[0].productImages
+          this.ImagePath =  objPdDetailImg[0].urlImage
+          // this.loadImg(newSelectedPd[0].id)
           this.idPdSelected = this.selectedPd[0].id;
           this.price = this.selectedPd[0].price
           this.initialPrice = this.selectedPd[0].initialPrice
@@ -83,12 +99,14 @@ export class ProductDetailComponent implements OnInit {
     }
   }
   onColorItemChange(e:any){
-
     var targetColor = e.target.id
     this.oldSelectedColor = targetColor
-    console.log(targetColor);
     this.selectedPd= this.listPdDetail.filter((x:any) => x.color == targetColor)
-    this.loadImg(this.selectedPd[0].id)
+    let objPdDetail = this.listPd.filter((x:any) => x.id === this.selectedPd[0].id)
+    let objPdDetailImg  = objPdDetail[0].productImages
+    this.ImagePath =  objPdDetailImg[0].urlImage
+    // this.ImagePath = objPdDetail.productImages[0].urlImage
+    // this.loadImg(this.selectedPd[0].id)
     this.idPdSelected = this.selectedPd[0].id;
     this.price = this.selectedPd[0].price
     this.initialPrice = this.selectedPd[0].initialPrice
@@ -107,7 +125,8 @@ export class ProductDetailComponent implements OnInit {
     console.log(err)
   }
   handleGetAllProductDetailSuccess(res: any){
-    this.listPd = res.result.data
+    this.pdInfo = res.result.data
+    this.listPd = res.result.data.productDetails
     console.log(res)
     this.loadProperty()
   }
@@ -137,13 +156,16 @@ export class ProductDetailComponent implements OnInit {
     else{
       this.checkColor = false
     }
-    console.log(this.listPd);
+    for (let i= 0 ; i < this.listPd.length ; i++){
+      this.listImg.push(this.listPd[i].productImages[0].urlImage)
+    }
+    let firstImg = this.listImg[0];
+    this.ImagePath = firstImg
+    console.log(this.listImg);
 
     this.price = this.listPd[0].price
     this.initialPrice = this.listPd[0].initialPrice
     this.sum_price =this.price * this.qty;
-    console.log(this.idPdSelected != null);
-
   }
   makeForm(){
     this.form = this.fb.group({
@@ -172,6 +194,8 @@ export class ProductDetailComponent implements OnInit {
   }
 
   add2Cart(){
+    console.log(this.qty);
+
     const submitData = {
       "productDetailId": this.idPdSelected,
       "amount": this.qty
@@ -185,17 +209,10 @@ export class ProductDetailComponent implements OnInit {
       (err) => {
         alert("k them dc")
       })
-      console.log(submitData)
-      console.log("add work")
   }
 
 
-  productData:any;
-  price = 0;
-  initialPrice =0 ;
-  overview= 'Sơ mi là một trong những loại phục trang có tính ứng dụng cao, bạn có thể sử dụng trong những bữa tiệc yêu cầu sự lịch lãm, hoặc những chuyến dạo chơi thoải mái bên bạn bè, hoặc ngay cả dịp hẹn hò cùng người yêu. Cùng Gavin tìm hiểu những tiêu chí khi chọn mua áo sơ mi sau đây.';
-  qty=1;
-  sum_price =this.price * this.qty;
+
   currentDate = new Date();
 
   src = [
@@ -204,12 +221,13 @@ export class ProductDetailComponent implements OnInit {
     {img_id: 3,url:"https://lzd-img-global.slatic.net/g/p/0f2d9ede901e0bcd123715e4f7daad29.jpg_720x720q80.jpg_.webp"},
     {img_id: 4,url:"https://triscy.com/wp-content/uploads/2020/02/1f510db48e651cef5d72860c7b9d43b9.jpg"}
   ]
-  ImagePath = 'https://cf.shopee.vn/file/d4fbe0e60caeb997e1bd24126ccec5cf';
+  ImagePath = 'tihinh'
 
-  Imagehover(n:any) {
-    var filter_array = this.src.filter(x => x.img_id == n);
-    filter_array.forEach(element => {this.ImagePath = element.url
-    });
+  Imagehover(url:any) {
+    // var filter_array = this.src.filter(x => x.img_id == n);
+    // filter_array.forEach(element => {this.ImagePath = element.url
+    // });
+    this.ImagePath = url
   }
 
   QtyDecrease(n:any){

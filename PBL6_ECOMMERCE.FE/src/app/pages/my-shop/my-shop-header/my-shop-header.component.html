@@ -79,9 +79,9 @@
           <!-- <ul *ngIf="accountOpen" class="account-dropdown" aria-labelledby="navbarDropdownMenuLink"> -->
             
             <ul *ngIf="accountOpen" class="account-dropdown" class = "account-dropdown" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">My profile</a></li>
+            <li><a class="dropdown-item" href="/myaccount">My profile</a></li>
             <li><a class="dropdown-item" href="#">Settings</a></li>
-            <li><a class="dropdown-item" href="#">Logout</a></li>
+            <li><a class="dropdown-item" href="/login">Logout</a></li>
           </ul>
         </li>
       </ul>
@@ -111,7 +111,7 @@
                 <li class="nav-item">		
                     <a class="nav-link" data-bs-toggle="collapse" data-bs-target="#menu_item2" href="#"> <i class="bi bi-card-checklist"></i> Quản lý đơn hàng <i class="bi small bi-caret-down-fill"></i> </a>
                     <ul id="menu_item2" class="submenu collapse" data-bs-parent="#nav_accordion">
-                        <li><a class="nav-link" href="#">Tất cả đơn hàng</a></li>
+                        <li><a class="nav-link" routerLink="/myshop/manageorder">Tất cả đơn hàng</a></li>
                         <li><a class="nav-link" href="#">Đơn mới</a></li>
                         <li><a class="nav-link" href="#">Đơn hủy</a></li>
                     </ul>
@@ -132,7 +132,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-wallet"></i>  Doanh thu </a>
+                    <a class="nav-link" routerLink="/myshop/revenue"><i class="bi bi-wallet"></i>  Doanh thu </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="bi bi-patch-question"></i> Trợ giúp </a>
@@ -142,10 +142,8 @@
             </aside>
             <div class="main-of-nav">
               <ul class="breadcrumb">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Pictures</a></li>
-                <li><a href="#">Summer 15</a></li>
-                <li>Italy</li>
+                <li><a href="#">Cửa hàng</a></li>
+                <li><a href="#">Thêm sản phẩm</a></li>
               </ul>
               <div>
                 <router-outlet></router-outlet>

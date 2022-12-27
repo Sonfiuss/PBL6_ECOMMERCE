@@ -1,6 +1,11 @@
+.cart{
+  background-color: rgb(248, 243, 243);
+}
+
 .cart-page{
-  margin-top: 3%;
+  padding-top: 3%;
   margin-left: 6%;
+  padding-bottom: 5%;
 }
 .breadcrumbs{
   margin-top: 3%;
@@ -10,6 +15,7 @@
   padding-top: 1%;
   padding-left: 0.5%;
   background-color: rgb(30, 69, 105);
+  border-radius: 1%;
 }
 .breadcrumbs > a, .breadcrumbs p{
   display: inline-block;
@@ -28,6 +34,16 @@
   position: relative;
 }
 
+.thead-title{
+  padding-top: 15px;
+  padding-left: 2%;
+  border: solid;
+  border-radius: 1%;
+  border-width: 1px;
+  background-color: white;
+  border-color: rgb(248, 243, 243);
+}
+
 #td-image{
   width: 300px;
 
@@ -35,12 +51,28 @@
 .align-middle{
   position: relative;
   width: 200px;
-}
+  background-color: white;
 
+}
+.table-bordered>:not(caption)>*{
+  border-width: 0px;
+}
+thead{
+  border-color:rgb(248, 243, 243);
+}
+tr{
+  /* border-color: red; */
+}
+td{
+  border-color: white;
+  border : 0
+
+}
 th{
   text-align: center;
   background-color: rgb(30, 69, 105);
-  color: white;
+  border-color: C
+  /* color: white; */
 }
 
 .pd-image{
@@ -88,7 +120,7 @@ th{
 
 .qty >button{
   width: 30px;
-  height: 31px;
+  height: 30px;
   background: rgb(30, 69, 105);
   border-width: thin;
   border: none;
@@ -108,10 +140,10 @@ th{
 
 .voucher_content{
   padding-left: 2%;
-  /* margin-right: 2%; */
   border: solid;
   border-width: 1px;
-  border-color: gray;
+  background-color: white;
+  border-color: rgb(248, 243, 243);
 }
 .voucher_content>i ,.voucher_content>p{
   padding-top: 10px;
@@ -154,7 +186,8 @@ th{
   margin-right: 8%;
   border: solid;
   border-width: 1px;
-  border-color: gray;
+  border-color: rgb(248, 243, 243);
+  background-color: white;
 }
 
 .order{
@@ -173,7 +206,9 @@ th{
   margin-right: 8%;
   border: solid;
   border-width: 1px;
-  border-color: gray;
+  border-color: rgb(248, 243, 243);
+  background-color: white;
+  border-radius: 1%;
 }
 
 .order_btn>i,.order_btn>p{

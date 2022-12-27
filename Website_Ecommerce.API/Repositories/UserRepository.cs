@@ -1,5 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data;
 using Website_Ecommerce.API.Data.Entities;
+using Website_Ecommerce.API.ModelQueries;
 
 namespace Website_Ecommerce.API.Repositories
 {
@@ -65,7 +67,27 @@ namespace Website_Ecommerce.API.Repositories
             _dataContext.Entry(role).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
         }
 
-
-
+        /// <summary>
+        /// Get info user by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<InfoUser> GetInfotUserById(int id)
+        {
+            var data = await _dataContext.Users
+                        .Where(x => x.Id == id)
+                        .Select(x => new InfoUser
+                        {
+                            Email = x.Email,
+                            DateOfBirth = x.DateOfBirth,
+                            Gender = x.Gender,
+                            FirstName = x.FirstName,
+                            LastName = x.LastName,
+                            Phone = x.Phone,
+                            UrlAvatar = x.UrlAvatar
+                        })
+                        .FirstOrDefaultAsync();
+            return data;
+        }
     }
 }

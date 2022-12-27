@@ -1,11 +1,14 @@
-
+.shop-view{
+  background-color: rgb(248, 243, 243);
+}
 
 
 .shop-overview{
-  margin-top: 50px;
-  margin-right: 70px;
-  margin-bottom: 50px;
-  margin-left: 70px;
+  padding-top: 50px;
+  padding-right: 70px;
+  padding-bottom: 50px;
+  padding-left: 70px;
+  background-color: white
 }
 
 .avatar-shop{
@@ -41,3 +44,15 @@
   margin-top: 10px;
 }
 
+.shop-product{
+  padding: 30px 70px 30px 70px;
+}
+.list-title>p{
+  text-transform: uppercase;
+
+  font-weight:5px ;
+}
+.pd-wrapper
+{
+  height: 100%;
+}

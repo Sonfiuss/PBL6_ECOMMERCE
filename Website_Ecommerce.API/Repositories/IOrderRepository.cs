@@ -1,4 +1,5 @@
 using Website_Ecommerce.API.Data.Entities;
+using Website_Ecommerce.API.ModelQueries;
 
 namespace Website_Ecommerce.API.Repositories
 {
@@ -23,7 +24,7 @@ namespace Website_Ecommerce.API.Repositories
         /// <summary>
         /// <param name = "id"></param>
         /// </summary>
-        Task<IEnumerable<OrderDetail>> GetOrderDetail(int id);
+        Task<List<OrderDetailShowbyShop>> GetOrderDetail(int id);
 
     }
 }

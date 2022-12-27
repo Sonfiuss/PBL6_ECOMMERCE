@@ -7,6 +7,17 @@
     align-items: center;
     justify-content: space-between;
 }
+h5{
+    margin-left: 30px;
+}
+.line{
+    margin-left: 40px;
+    margin-top: 20px;
+    background: linear-gradient(45deg, #190686,#08e2f1, #ebe7d3);
+    height: 3px;
+    border-radius: 3px;
+    margin-bottom:20px
+  }
 .mode-button{
     display: flex;
     flex-direction: row;

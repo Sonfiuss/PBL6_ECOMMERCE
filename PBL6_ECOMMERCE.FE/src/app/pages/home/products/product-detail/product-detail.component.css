@@ -28,10 +28,12 @@
     border-width: 10px;
 }
 
+
 #img-hover>img:hover {
     border-style: solid;
     border-color: gray;
     border-width: 2px;
+
 }
 
 .product-details-pic {
@@ -222,3 +224,11 @@ hr.border-bottom {
 .pd-wrapper:hover {
     box-shadow: 10px 10px 5px lightblue;
 }
+.mat-mdc-tab-group.mat-mdc-tab-group-stretch-tabs>.mat-mdc-tab-header .mat-mdc-tab{
+  width: 200px;
+}
+
+/* .tab-css{
+  width:700px;
+  color: red
+} */

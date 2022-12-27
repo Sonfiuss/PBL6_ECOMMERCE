@@ -285,6 +285,17 @@ namespace Website_Ecommerce.API.Repositories
 
             return data;
         }
+        // public async Task<List<ShopViewProductDto>> ShopManagerProduct(int id){
+        //     var productDetails = _dataContext.ProductDetails.Sum(s => s.Saled);
+        //     var products =  _dataContext.Products.Where(p => p.ShopId == id)
+        //                     .Join(productDetails,
+        //                     product => product.Id,
+        //                     productdetail => productdetail.ProductId,
+        //                     (product, productdetail) => new{
+
+                                
+        //                     });
+        // }
 
     }
 }

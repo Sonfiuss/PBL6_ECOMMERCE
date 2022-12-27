@@ -653,11 +653,11 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:Website_Ecommerce.API.Repositories.OrderRepository.GetOrderDetail(System.Int32)">
+        <member name="M:Website_Ecommerce.API.Repositories.OrderRepository.Delete(Website_Ecommerce.API.Data.Entities.Order)">
             <summary>
             Get order detail
             </summary>
-            <param name="id"></param>
+            <param name="order"></param>
             <returns></returns>
         </member>
         <member name="M:Website_Ecommerce.API.Repositories.ProductRepository.AvgRating(System.Int32)">

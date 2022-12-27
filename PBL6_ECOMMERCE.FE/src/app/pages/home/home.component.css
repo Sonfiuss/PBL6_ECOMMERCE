@@ -52,11 +52,12 @@
   border-radius: 10px;
   cursor: pointer;
   transition: 1s;
-
+  margin-top: 130px;
 }
 
 .manual-btn:not(:last-child){
   margin-right: 40px;
+
 }
 
 .manual-btn:hover{
@@ -86,7 +87,7 @@
   display: flex;
   width: 800px;
   justify-content: center;
-  margin-top: 440px;
+  margin-top: 570px;
   margin-left: 20%;
 }
 

@@ -2,7 +2,8 @@
     <div class="account-status">
         <ul class="account-isactived" *ngIf="(active == true) || (accountService.currentUser$ | async);else other_content" active="false">
             <li><a routerLink="myshop">Cửa hàng của tôi</a></li>
-            <li><a routerLink="login">Tài khoản :{{ (accountService.currentUser$ | async)?.username }}{{username}}</a></li>
+            <!-- <li><a routerLink="login">Tài khoản :{{ (accountService.currentUser$ | async)?.username }}{{username}}</a></li> -->
+            <li><a routerLink="/myaccount">Tài khoản của tôi</a></li>
             <li><a routerLink="" (click)="logout()">Đăng xuất</a></li>
         </ul>
         <ng-template #other_content>
@@ -39,10 +40,10 @@
         <div class="collapse navbar-collapse" id="navbarInput">
             <ul class="navbar-input">
                 <li id="nav-input" class="nav-item">
-                    <input type="text" placeholder=" Search">
+                    <input type="text" placeholder="Nhập sản phẩm ">
                 </li>
                 <li id="nav-icon-search" class="nav-item">
-                    <button><a class="search-link" routerLink="Search"><i class="bi bi-search"></i></a></button>
+                    <button (click)="search()"><a class="search-link" ><i class="bi bi-search"></i></a></button>
                 </li>
             </ul>
         </div>
@@ -55,3 +56,5 @@
         </div>
     </div>
 </nav>
+<router-outlet></router-outlet>
+<app-footer></app-footer>

@@ -125,5 +125,38 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
+        /// <summary>
+        /// Get info user by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("info-user")]
+        public async Task<IActionResult> GetInfoUserById(int id)
+        {
+            var user = await _userRepository.GetInfotUserById(id);
+            if (user is null)
+            {
+                return BadRequest(new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.NotFound,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "NotFound"
+                    }
+                });
+            }
+
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = "Get success info user"
+                }
+            });
+        }
+
     }
 }

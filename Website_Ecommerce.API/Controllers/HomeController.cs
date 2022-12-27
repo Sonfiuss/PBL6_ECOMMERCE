@@ -47,7 +47,7 @@ namespace Website_Ecommerce.API.Controllers
         /// <param name="files"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> UpFile(List<IFormFile> files)
+        public async Task<ActionResult> UpFile([FromForm] List<IFormFile> files)
         {
             const bool AllowLimitFileSize = true;
 

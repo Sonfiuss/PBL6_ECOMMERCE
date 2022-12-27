@@ -27,6 +27,7 @@ const routes: Routes = [
         path: 'products',
         component: ViewListProductComponent
       },
+      
     ]
   }
 ];
