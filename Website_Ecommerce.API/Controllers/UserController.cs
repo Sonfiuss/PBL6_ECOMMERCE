@@ -153,7 +153,7 @@ namespace Website_Ecommerce.API.Controllers
                 Message = ErrorCode.Success,
                 Result = new ResponseDefault()
                 {
-                    Data = "Get success info user"
+                    Data = user
                 }
             });
         }

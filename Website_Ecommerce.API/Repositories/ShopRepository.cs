@@ -84,7 +84,6 @@ namespace Website_Ecommerce.API.Repositories
             throw new NotImplementedException();
         }
 
-
         /// <summary>
         /// Get info shop by id 
         /// </summary>
@@ -108,5 +107,6 @@ namespace Website_Ecommerce.API.Repositories
                         .FirstOrDefaultAsync();
             return data;
         }
+
     }
 }

@@ -520,17 +520,16 @@ namespace Website_Ecommerce.API.Controllers
         //     var products =  _productRepository.Products.Where(p => p.ShopId == shop.Id).ToList();
 
         //    }
-        #endregion
-
         /// <summary>
         /// Get info shop current
         /// </summary>
         /// <returns></returns>
+        [HttpGet("get-info-current-shop")]
         public async Task<IActionResult> GetInfoCurrentShop()
         {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
-            var shop = await _shopRepository.Shops.FirstOrDefaultAsync(x => x.Id == userId);
-            InfoShop infoShop = await _shopRepository.GetInfoShopBy(shop.Id);
+            var shop = await _shopRepository.Shops.FirstOrDefaultAsync(x => x.UserId == userId);
+            var infoShop = await _shopRepository.GetInfoShopBy(shop.Id);
             if (infoShop is null)
             {
                 return BadRequest(new Response<ResponseDefault>()
@@ -550,9 +549,12 @@ namespace Website_Ecommerce.API.Controllers
                 Message = ErrorCode.Success,
                 Result = new ResponseDefault()
                 {
-                    Data = "Get success info user"
+                    Data = infoShop
                 }
             });
         }
+        #endregion
+
+
     }
 }
