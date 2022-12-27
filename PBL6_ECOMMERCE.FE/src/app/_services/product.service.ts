@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BusinessService } from './business.service';
 
-const API =  'https://localhost:7220'
+const API =  'http://103.197.184.184:8080'
 const ADD_PRODUCT_URL = API + '/api/Product/add-product';
 const UPDATE_PRODUCT_URL = API + '/api/Product/update-product'
 const DELETE_PRODUCT_BY_ID_URL = (id:any) => API + '/api/Product/delete-product/' + id;
@@ -38,15 +38,14 @@ export class ProductService {
     return this.httpClient.delete(DELETE_PRODUCT_BY_ID_URL(id), this.bussiness.getRequestOptions())
   }
   statisticProduct(){
-    console.log("ji")
     return this.httpClient.get(STATISTIC_PRODUCT, this.bussiness.getRequestOptions())
 
   }
 
   addProduct(data:any){
-    return this.httpClient.put(ADD_PRODUCT, JSON.stringify(data), this.bussiness.getRequestOptions())
+    return this.httpClient.post(ADD_PRODUCT, JSON.stringify(data), this.bussiness.getRequestOptions())
   }
   addProducDetail(data:any){
-    return this.httpClient.put(ADD_PRODUCT_DETAIL, JSON.stringify(data), this.bussiness.getRequestOptions())
+    return this.httpClient.post(ADD_PRODUCT_DETAIL, JSON.stringify(data), this.bussiness.getRequestOptions())
   }
 }

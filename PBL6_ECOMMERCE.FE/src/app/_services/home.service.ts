@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BusinessService } from './business.service';
 
-const API =  'https://localhost:7220';
+const API =  'http://103.197.184.184:8080';
 const GET_ALL_PRODUCT = API +  '/api/Home/get-list-product';
 const GET_ALL_PRODUCTDETAIL = (id:any) => API +   '/api/Home/get-product-detail-by/'  + id;
 const GET_IMG_PRODUCTDETAIL = (id:any) => API +   '/api/Home/get-image-by-product-detail-id/'  + id;

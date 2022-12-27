@@ -12,6 +12,7 @@ import { OrderComponent } from '../order/order.component';
 import { MyaccountComponent } from '../myaccount/myaccount.component';
 import { SearchComponent } from '../search/search.component';
 import { AuthGuard } from 'src/app/_guards/auth.guard';
+import { ShopViewComponent } from '../shop-view/shop-view.component';
 
 
 const headerRoutes: Routes = [
@@ -35,15 +36,25 @@ const headerRoutes: Routes = [
         {
           path: 'order',
           component: OrderComponent,
+          canActivate: [
+            AuthGuard
+            ]
         },
         {
           path :'myaccount',
-          component : MyaccountComponent
+          component : MyaccountComponent,
+          canActivate: [
+            AuthGuard
+            ]
         },
         {
           path :'search',
-          component : SearchComponent
+          component : SearchComponent,
         },
+        {
+          path :'shop-view',
+          component : ShopViewComponent,
+        }
         // {
         //   path: 'login',
         //   component: LoginComponent,

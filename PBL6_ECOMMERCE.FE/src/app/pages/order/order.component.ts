@@ -31,6 +31,7 @@ export class OrderComponent implements OnInit {
   latestOrder : any;
   lastetOrderId :any;
   linkPayment : string;
+  paymentMethod = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -95,7 +96,7 @@ export class OrderComponent implements OnInit {
       "recipientPhone": "0965243513",
       "userId": 0,
       "voucherId": this.orderVoucherId,
-      "paymentMethodId": 0,
+      "paymentMethodId": this.paymentMethod,
       "totalPrice": this.sumPrice,
       "itemOrderDtos": this.orderSend
     }
@@ -104,14 +105,14 @@ export class OrderComponent implements OnInit {
       (res:any) => {
         //return home
         // this.router.navigate(['/cart'])
-        alert("them dc roi")
+        console.log(res)
         this.loadAllOrder()
 
       },
       (err) => {
-        alert("k them dc")
+        console.log(err)
       })
-      // this.deleteItem()
+      this.deleteItem()
   }
 
   openModalShopVoucher(content: any,target :any,idShop:any) {
@@ -234,6 +235,14 @@ export class OrderComponent implements OnInit {
     // this.router.navigate(["https://youtube.com"])
   }
   openModalPayment(content :any){
-    this.modalService.open(content, { centered: true , size: 'sm'});
+    if(this.paymentMethod ==3){
+      this.modalService.open(content, { centered: true , size: 'sm'});
+    }
+  }
+  vnPay(){
+    this.paymentMethod =3
+  }
+  payWhenCome(){
+    this.paymentMethod =1
   }
 }

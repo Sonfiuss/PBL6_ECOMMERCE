@@ -9,7 +9,7 @@ import { ViewListProductComponent } from './view-list-product/view-list-product.
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ManageOrderComponent } from './manage-order/manage-order.component';
 import { RevenueComponent } from './revenue/revenue.component';
-
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 @NgModule({
@@ -21,12 +21,12 @@ import { RevenueComponent } from './revenue/revenue.component';
     ProductDetailComponent,
     ManageOrderComponent,
     RevenueComponent
-    
+
   ],
   imports: [
     CommonModule,
     MyShopRoutingModule,
-    
+    NgxPaginationModule
   ]
 })
 export class MyShopModule { }

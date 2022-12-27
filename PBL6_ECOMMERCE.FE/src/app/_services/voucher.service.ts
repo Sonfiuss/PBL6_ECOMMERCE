@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BusinessService } from './business.service';
 
-const API =  'https://localhost:7220'
+const API =  'http://103.197.184.184:8080'
 const GET_VOUCHER_AVAIABLE = API + '/api/Voucher/get-voucher-availability' ;
 const GET_VOUCHER_SHOP_BY_ID = (id:any) => API + '/api/Voucher/get-voucher-product-by/' + id;
 

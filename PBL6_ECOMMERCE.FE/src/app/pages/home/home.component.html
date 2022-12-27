@@ -22,7 +22,7 @@
                     <img src="https://theme.hstatic.net/200000053174/1000840984/14/home_slider_image_3.jpg?v=7126" alt="">
                 </div>
                 <div class="slide">
-                    <img src="https://lzd-img-global.slatic.net/g/icms/images/ims-web/bac25143-96bc-448c-a7be-23ec16e86708.jpg_1200x1200q90.jpg_.webp" alt="">
+                    <img src="https://theme.hstatic.net/200000053174/1000840984/14/home_slider_image_1.jpg?v=7126" alt="">
                 </div>
                 <!--slide images end-->
                 <!--automatic navigation start-->
@@ -62,7 +62,7 @@
     <div class="title-product"><p>Đề xuất cho bạn</p></div>
     <div class="row">
       <div class="col-lg-3 mt-3 pb-5" *ngFor="let product of productData; let i=index">
-        <div class="pd-wrapper" *ngIf="i<8">
+        <div class="pd-wrapper" >
           <app-product [product]="product">
           </app-product>
         </div>
@@ -78,7 +78,7 @@
         </div>
     </div> -->
 
-    <div class="container mt-4 mb-4">
+    <!-- <div class="container mt-4 mb-4">
         <div class="row">
             <div class="col-lg-6 mt-3 " *ngFor="let banner of banners; let i=index">
                 <div class="banner">
@@ -86,9 +86,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 <br>
-<!-- <app-brand></app-brand> -->
-<!-- <br> -->
+<app-brand></app-brand>
+<br>
 <!-- <app-footer></app-footer> -->

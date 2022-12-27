@@ -43,7 +43,7 @@
                     </div>
                     <div class="product__details__price mt-4 pb-4"><b>{{ price | currency: "VND" }}<del style="color: gray;font-size: 15px;">{{ initialPrice| currency: "VND" }}</del></b></div>
                     <div class="pd-overview  mt-4 pb-4">
-                        <p>{{overview}}</p>
+                        <p>{{pdInfo.description}}</p>
                     </div>
                     <div class="pd-size  mt-4 pb-4" *ngIf="checkSize == true">
                       <div class="size-title" style="display: inline-block;">
@@ -52,16 +52,16 @@
                       <div class="list-size" *ngFor="let size of sizePd" style="display: inline-block;">
                         <!-- <p [ngClass]="{'btn-change' : (selectedSize === size)}" (click)="submit(size)">{{size}}</p> -->
                         <input type="radio" class="form-control btn-check"  name="size"  value={{size}} id={{size}} formControlName="size" autocomplete="off" (click)="onSizeItemChange($event)" checked>
-                        <label class="btn btn-outline-danger" for={{size}}>{{size}}</label>
+                        <label class="btn btn-outline-danger" for={{size}} style="overflow: clip">{{size}}</label>
                       </div>
                     </div>
-                    <div class="pd-color  mt-4 pb-4" *ngIf="checkColor == true">
+                    <div class=" pd-color  mt-4 pb-4" *ngIf="checkColor == true">
                       <div class="color-title" style="display: inline-block;" >
                         Màu sắc :
                       </div>
                       <div class="list-color" *ngFor="let color of arrColorHave" style="display: inline-block;">
                         <input type="radio" class="form-control btn-check"  name="color" value={{color}} id={{color}} autocomplete="off" formControlName="color" (click)="onColorItemChange($event)" >
-                        <label class="btn btn-outline-danger" for={{color}}>{{color}}</label>
+                        <label class="btn btn-outline-danger" for={{color}}  style="overflow: clip">{{color}}</label>
                       </div>
                     </div>
                     <div class="product__details__quantity mt-4 pb-4">
@@ -83,7 +83,7 @@
                 </div>
               </form>
             </div>
-            <div class="col-lg-12 mt-4 tab-css">
+            <!-- <div class="col-lg-12 mt-4 tab-css">
                 <div class="product__details__tab">
                     <mat-tab-group>
                         <mat-tab  label="Chi tiết sản phẩm">
@@ -143,7 +143,7 @@
                         </mat-tab>
                     </mat-tab-group>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

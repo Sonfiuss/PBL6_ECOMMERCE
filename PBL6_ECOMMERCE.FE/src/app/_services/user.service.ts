@@ -3,19 +3,21 @@ import { Injectable } from '@angular/core';
 import { BusinessService } from './business.service';
 
 const API =  'http://103.197.184.184:8080'
-const GET_COMMENT_PRODUCT_ID = (id:any) => API + '/api/Comment/list-comment-by/1?productId=' + id;
+const GET_INFO_USER = API + '/api/User/info-current-user';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class CommentService {
+
+export class UserService {
 
   constructor(
     private httpClient: HttpClient,
     private bussiness: BusinessService
-  ) { }
+    ) { }
 
-  getCommentOfProduct(id : any){
-    return this.httpClient.get(GET_COMMENT_PRODUCT_ID(id), this.bussiness.getRequestOptions())
+  getInfoUser(){
+    return this.httpClient.get(GET_INFO_USER, this.bussiness.getRequestOptions())
   }
 }

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { User } from '../_models/app-user';
 
 const TOKEN_KEY = 'token'
-const API =  'https://localhost:7220';
+const API =  'http://103.197.184.184:8080';
 const LOGIN_URL = API + '/api/Auth/login';
 const REGISTER_URL = API + '/api/Auth/register';
 

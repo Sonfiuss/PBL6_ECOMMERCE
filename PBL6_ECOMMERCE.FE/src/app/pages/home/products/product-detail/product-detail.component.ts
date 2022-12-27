@@ -144,18 +144,27 @@ export class ProductDetailComponent implements OnInit {
     }
     this.listPdDetail = this.listPd;
     this.arrProperty = Object.getOwnPropertyNames(this.listPd[0])
-    if(this.arrProperty.find(x => x === "size") !== null){
+    console.log();
+    console.log(this.arrProperty.find(x => x === "size") !== null);
+
+    if(this.listPd[0].size !== null){
       this.checkSize = true;
     }
     else{
       this.checkSize = false;
     }
-    if(this.arrProperty.find(x => x=== 'color') !== null){
+    console.log(this.listPd[0].color);
+
+    if(this.listPd[0].color !== null){
       this.checkColor =true
     }
     else{
       this.checkColor = false
     }
+    if(this.checkSize == false){
+      this.arrColorHave = this.colorPd
+    }
+
     for (let i= 0 ; i < this.listPd.length ; i++){
       this.listImg.push(this.listPd[i].productImages[0].urlImage)
     }
@@ -204,10 +213,10 @@ export class ProductDetailComponent implements OnInit {
     .subscribe(
       (res:any) => {
         //return home
-        alert("them dc roi")
+        console.log(res)
       },
       (err) => {
-        alert("k them dc")
+        console.log(err)
       })
   }
 
@@ -221,7 +230,7 @@ export class ProductDetailComponent implements OnInit {
     {img_id: 3,url:"https://lzd-img-global.slatic.net/g/p/0f2d9ede901e0bcd123715e4f7daad29.jpg_720x720q80.jpg_.webp"},
     {img_id: 4,url:"https://triscy.com/wp-content/uploads/2020/02/1f510db48e651cef5d72860c7b9d43b9.jpg"}
   ]
-  ImagePath = 'tihinh'
+  ImagePath = 'nothing'
 
   Imagehover(url:any) {
     // var filter_array = this.src.filter(x => x.img_id == n);

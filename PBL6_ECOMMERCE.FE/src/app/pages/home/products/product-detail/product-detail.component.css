@@ -72,6 +72,7 @@
 .size-title,.color-title{
   margin-right: 30px;
   width: 80px;
+  height: 50px;
 }
 .btn-default{
   border: solid;
@@ -107,7 +108,8 @@
   text-align: center;
   width: 90px;
   border-radius: 4%;
-  color: black
+  color: black;
+  height:33px
 }
 .btn-outline-danger:hover{
   border-color: gray ;

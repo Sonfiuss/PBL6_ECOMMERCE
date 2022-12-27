@@ -6,7 +6,7 @@
     <div class = "mode-button">
         <button class = "view-all" (click) = "viewall()" >Tất cả</button>
         <button class = "view-stocking" (click) = "viewstock()">Đơn mới</button>
-        <button class = "view-out-of-stock">Đã bán</button>
+        <button class = "view-out-of-stock" (click) = "viewoutofstock()" >Đã bán</button>
     </div>
     <div class = "search">
         <i class="bi bi-search"></i>
@@ -14,7 +14,7 @@
     </div>
 </div>
 <div class = "list-product-of-shop">
-    <div> 
+    <div>
     <table class="data">
         <tr>
           <th>STT</th>
@@ -30,8 +30,10 @@
           <th>Giá</th>
           <th>Trạng thái</th>
         </tr>
-        <tr  *ngFor = "let OrderDetail of orderdetails; let i = index">
-          <td>{{i}}</td>
+        <tr  *ngFor = "let OrderDetail of orderdetailsData  | paginate: {
+          itemsPerPage: pageSize,
+          currentPage: page};let i = index ">
+          <td>{{i+1}}</td>
           <td>{{OrderDetail.orderId}}</td>
           <td>{{OrderDetail.name}}</td>
           <td>{{OrderDetail.size}}</td>
@@ -41,7 +43,7 @@
           <td>{{OrderDetail.discountShop}}</td>
           <td>{{OrderDetail.note}}</td>
           <td>{{OrderDetail.confirmAt}}</td>
-          <td>{{OrderDetail.price}}</td>  
+          <td>{{OrderDetail.price}}</td>
           <td>{{(OrderDetail.sate)}}</td>
           <td class = "mode">
             <button (click) = "mode = i"
@@ -52,10 +54,31 @@
                 <li><button>Confirm</button></li>
                 <li><button>Send</button></li>
             </ul>
-          </td>  
-              
+          </td>
           </tr>
-        
+          <tr>
+            <td></td>
+            <td></td>
+            <td>
+              <div id="pagination" class="col-md-12">
+                <pagination-controls
+                  previousLabel=""
+                  nextLabel=""
+                  (pageChange)="handlePageChange($event)"
+                ></pagination-controls>
+              </div>
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
       </table>
 
     </div>

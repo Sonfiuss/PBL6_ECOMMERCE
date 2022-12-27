@@ -60,15 +60,14 @@
             <p>Phương thức thanh toán</p>
           </h4>
           <div class=" method-selected">
-            <button>Ví VN Pay</button>
-            <button>Thẻ Tín Dụng/Ghi nợ</button>
-            <button>Thanh toán khi nhận hàng</button>
+            <button (click)="vnPay()">Ví VN Pay</button>
+            <button (click)="payWhenCome()">Thanh toán khi nhận hàng</button>
           </div>
         </div>
         <div class="order_btn">
           <p class="sum_price">Tổng thanh toán: {{sumPrice|currency : "VND"}}</p>
           <div class="btn_wrapped">
-            <button (click)="createOrder()" (click)="openModalPayment(contentPayment)">Đặt hàng</button>
+            <button (click)="createOrder()" (click)="openModalPayment(contentPayment)" [disabled]=" (this.paymentMethod == 0) ? 'disabled': null">Đặt hàng</button>
           </div>
         </div>
       </div>
@@ -90,7 +89,7 @@
       <div class="row voucher-border">
         <div class="col-md-3">
           <div class="img-shop">
-            <img src="https://img3.thuthuatphanmem.vn/uploads/2019/06/17/hot-girl-trung-quoc-xinh-dep_103854033.jpg" alt="">
+            <img src="https://static.vecteezy.com/system/resources/previews/010/979/400/original/discount-voucher-3d-illustration-png.png" alt="">
           </div>
         </div>
         <div class="col-md-6 list-voucher" >
@@ -126,7 +125,7 @@
       <div class="row voucher-border">
         <div class="col-md-3">
           <div class="img-shop">
-            <img src="https://img3.thuthuatphanmem.vn/uploads/2019/06/17/hot-girl-trung-quoc-xinh-dep_103854033.jpg" alt="">
+            <img src="https://static.vecteezy.com/system/resources/previews/010/979/400/original/discount-voucher-3d-illustration-png.png" alt="">
           </div>
         </div>
         <div class="col-md-6 list-voucher" >
@@ -158,7 +157,7 @@
 	</div>
 	<div class="modal-body" style="height: 100px;">
 		<!-- <p>One fine body&hellip;</p> -->
-
+      <img src="https://www.freepnglogos.com/uploads/coins-png/pile-coins-png-clip-art-14.png" alt="" style="width: 50px"><span>Tổng thanh toán {{sumPrice|currency : "VND"}}</span>
 	</div>
 	<div class="modal-footer">
     <a [href]="linkPayment"class="button">Thanh toán</a>

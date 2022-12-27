@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
   token  :any ;
   myarr :any;
   accountOpen = false;
+  dataSearch : string ='';
   constructor(
     public accountService: AccountService,
     private router :Router
@@ -43,6 +44,9 @@ export class HeaderComponent implements OnInit {
 
   }
   search(){
-    this.router.navigate(['/search']);
+    let data = this.dataSearch
+    this.router.navigate(['/search'] ,{ queryParams: { data },  skipLocationChange: true });
+    console.log(this.dataSearch);
+
   }
 }

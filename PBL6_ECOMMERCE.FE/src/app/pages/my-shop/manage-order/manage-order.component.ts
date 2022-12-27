@@ -26,9 +26,12 @@ import { ShoporderdetailService } from 'src/app/_services/shoporderdetail.servic
 })
 export class ManageOrderComponent implements OnInit {
   @Input() orderdetails: any;
+  orderdetailsData :any;
   listOrderDetails : any;
   closeResult: string;
   mode: any;
+  pageSize =10;
+  page = 1 ;
   constructor(
     private modalService: NgbModal,
     private shopOrderDetailService: ShoporderdetailService ) { }
@@ -37,7 +40,10 @@ export class ManageOrderComponent implements OnInit {
     this.loadOrderDetails();
   }
   modeOpen(id : any){
-    
+
+  }
+  handlePageChange(event : any) {
+    this.page = event;
   }
   show_detail(content:any, id: any){
     console.log(id);
@@ -51,19 +57,22 @@ export class ManageOrderComponent implements OnInit {
   }
   handleGetOrderDetailsError(err: any){
     console.log(err);
-    console.log("thinhnguyen1233456");
   }
   handleGetOrderDetailsSuccess(res: any){
-    
-    this.orderdetails = res.result.data.filter((x:any) => x.sate == 1)
-    
+    this.orderdetails = res.result.data
+    let dataOrder = this.orderdetails
+    this.orderdetailsData = dataOrder
     console.log(res)
   }
-  viewall(){
 
+  viewall(){
+    this.orderdetailsData = this.orderdetails
   }
   viewstock(){
-
+    this.orderdetailsData = this.orderdetails.filter((x:any) => x.sate == 1)
+  }
+  viewoutofstock(){
+    this.orderdetailsData = this.orderdetails.filter((x:any) => x.sate == 2)
   }
 }
 

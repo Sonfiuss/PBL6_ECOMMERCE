@@ -4,7 +4,7 @@ import { BusinessService } from './business.service';
 
 
 
-const API =  'https://localhost:7220'
+const API =  'http://103.197.184.184:8080'
 const LIST_VOUCHER = API + '/api/Shop/get-voucher-of-shop';
 const ADD_CATEGORY_URL = API + '/api/Category/add-category';
 const UPDATE_CATEGORY_URL = API + '/api/Category/update-category'
