@@ -13,7 +13,7 @@
             <div>
                 <label class="mandatory" style = "width: 30%">*Loại hàng:</label>
                 <select class="mandatory" style="width: 50%; height:100" (change)="categorySelected($event)" >
-                    <option value={{category.name}} *ngFor="let category of categories">{{category.name}}</option>
+                    <option value={{category.id}} *ngFor="let category of categories">{{category.name}}</option>
                 </select>
             </div>
         </div>
@@ -136,7 +136,7 @@
                     <button (click)="addPdDetail()">Thêm sản phẩm</button>
                 </div>
                 <div class = "button-save-product">
-                    <button (click)="addProduct()">Lưu sản phẩm</button>
+                    <button >Lưu sản phẩm</button>
                 </div>
             </div>
         </div>

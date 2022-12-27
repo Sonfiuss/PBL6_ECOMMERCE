@@ -52,7 +52,7 @@ export class AddProductComponent implements OnInit {
       "description": "string",
       "status": true,
       "categories": [
-       0
+       this.categoryPd
       ]
     }
     this.productService.addProduct(submitData)

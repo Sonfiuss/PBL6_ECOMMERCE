@@ -35,6 +35,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatIconModule} from '@angular/material/icon';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MyShopModule } from './pages/my-shop/my-shop.module';
+import {MaterialExampleModule} from '../material.module';
+
+import {MatNativeDateModule} from '@angular/material/core';
+
+
 // import {MatTabsModule} from '@angular/material/tabs';
 
 // import { MatTableModule } from '@angular/material/table';
@@ -85,6 +90,8 @@ import { MyShopModule } from './pages/my-shop/my-shop.module';
     MyShopModule,
     NgbModule,
     BrowserModule,
+    MaterialExampleModule,
+    MatNativeDateModule
     // MatTableModule,
     // MatButtonModule,
     // MatPaginatorModule,

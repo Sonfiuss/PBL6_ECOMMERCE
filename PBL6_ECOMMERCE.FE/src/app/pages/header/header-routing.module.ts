@@ -11,6 +11,7 @@ import { CartComponent } from '../cart/cart.component';
 import { OrderComponent } from '../order/order.component';
 import { MyaccountComponent } from '../myaccount/myaccount.component';
 import { SearchComponent } from '../search/search.component';
+import { AuthGuard } from 'src/app/_guards/auth.guard';
 
 
 const headerRoutes: Routes = [
@@ -29,6 +30,7 @@ const headerRoutes: Routes = [
         {
           path: 'cart',
           component: CartComponent,
+          canActivate: [AuthGuard]
         },
         {
           path: 'order',
