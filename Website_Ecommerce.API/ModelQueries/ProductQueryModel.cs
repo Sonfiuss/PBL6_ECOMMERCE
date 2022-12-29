@@ -40,4 +40,13 @@ namespace Website_Ecommerce.API.ModelQueries
         public string Description { get; set; }
         public List<ProductDetailQueryModel> ProductDetails { get; set; }
     }
+     public class ProductFullQueryModel{
+        public int Id { get; set; }
+        public string Name{get; set; }
+        public string Material{get; set; }
+        public string Origin {get; set; }
+        public string Description {get; set; }
+        public int ShopId{get; set; }
+        public List<ProductDetailQueryModel> productdetails{get; set; }
+    }
 }

@@ -113,6 +113,106 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
+        [HttpPost("Add-product-full")]
+        public async Task<IActionResult> AddProductFull([FromBody] ProductFullQueryModel request, CancellationToken cancellationToken){
+            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
+            var shop = _shopRepository.Shops.FirstOrDefault(x => x.UserId == userId);
+            Product product = new Product(){
+                Id = 0,
+                Status = false,
+                TotalRate = 0,
+                AverageRate = 0,
+                Saled = 0
+            };
+            product.Name = request.Name;
+            product.Material = request.Material;
+            product.Description = request.Description;
+            product.Origin = request.Origin;
+            product.ShopId = shop.Id;
+
+            _productRepository.Add(product);
+            var result = await _productRepository.UnitOfWork.SaveAsync(cancellationToken);
+            if (result == 0){
+                return BadRequest(new Response<ResponseDefault>()
+                    {
+                        State = false,
+                        Message = ErrorCode.ExcuteDB,
+                        Result = new ResponseDefault()
+                        {
+                            Data = "Add product category fail"
+                        }
+                    });
+            }
+            Product thisProduct = _productRepository.Products.Where(x => x.ShopId == shop.Id).OrderByDescending(p => p.Id).FirstOrDefault();
+            foreach(var i in request.productdetails){
+                ProductDetail productDetail = new ProductDetail(){
+                    Id = 0,
+                    Size = i.Size,
+                    Color = i.Color,
+                    InitialPrice  = i.InitialPrice,
+                    Price = i.Price,
+                    Amount = i.Amount,
+                    Saled = 0,
+                    Booked = 0,
+                    ProductId = thisProduct.Id
+                    
+                };
+                _productRepository.Add(productDetail);
+                try{
+                    await _productRepository.UnitOfWork.SaveAsync(cancellationToken);
+                }catch{
+                    _productRepository.Delete(thisProduct);
+                    await _productRepository.UnitOfWork.SaveAsync(cancellationToken);
+                    return BadRequest(new Response<ResponseDefault>()
+                        {
+                            State = false,
+                            Message = ErrorCode.ExcuteDB,
+                            Result = new ResponseDefault()
+                            {
+                                Data = "Add product detail fail"
+                            }
+                        }
+                    );
+                }
+                var thisProductDetail = _productRepository.ProductDetails.Where(p => p.Id == productDetail.Id).OrderByDescending(p => p.Id).FirstOrDefault();
+                foreach(var j in i.ProductImages){
+                  ProductImage productimage = new ProductImage(){
+                    Id = 0,
+                    ProductDetailId = thisProductDetail.Id,
+                    UrlImage = j.UrlImage
+                  };
+                    _productRepository.Add(productimage);
+                    try{
+                        await _productRepository.UnitOfWork.SaveAsync(cancellationToken);
+                    }catch{
+                        _productRepository.Delete(productimage);
+                        _productRepository.Delete(thisProductDetail);
+                        await _productRepository.UnitOfWork.SaveAsync(cancellationToken);
+                        return BadRequest(new Response<ResponseDefault>()
+                            {
+                                State = false,
+                                Message = ErrorCode.ExcuteDB,
+                                Result = new ResponseDefault()
+                                {
+                                    Data = "Add product detail fail"
+                                }
+                            }
+                        );
+                    }
+                }
+            }
+            
+
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = "Add Product success"
+                }
+            });
+        }
         /// <summary>
         /// Update product
         /// </summary>
