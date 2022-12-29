@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BusinessService } from './business.service';
 
-const API =  'http://103.197.184.184:8080'
+const API =  'https://localhost:7220'
 const ADD_PRODUCT_URL = API + '/api/Product/add-product';
 const UPDATE_PRODUCT_URL = API + '/api/Product/update-product'
 const DELETE_PRODUCT_BY_ID_URL = (id:any) => API + '/api/Product/delete-product/' + id;
@@ -10,6 +10,8 @@ const GET_PRODUCT_BY_ID = (id:any) => API + '/api/Product/get-product-by/' + id;
 const STATISTIC_PRODUCT = API + '/api/Statistic/statistic-product'
 const ADD_PRODUCT = API + '/api/Product/add-product'
 const ADD_PRODUCT_DETAIL = API + '/api/Product/add-product-detail'
+const ADD_IMG_PD = API + '/api/Product/add-product-image'
+
 
 @Injectable({
   providedIn: 'root'
@@ -47,5 +49,9 @@ export class ProductService {
   }
   addProducDetail(data:any){
     return this.httpClient.post(ADD_PRODUCT_DETAIL, JSON.stringify(data), this.bussiness.getRequestOptions())
+  }
+  addImgPd(data:any){
+    return this.httpClient.post(ADD_PRODUCT_DETAIL, JSON.stringify(data), this.bussiness.getRequestOptions())
+
   }
 }

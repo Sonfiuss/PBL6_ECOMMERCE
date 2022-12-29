@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data;
 using Website_Ecommerce.API.Data.Entities;
-using Website_Ecommerce.API.ModelDtos;
 using Website_Ecommerce.API.ModelQueries;
 
 namespace Website_Ecommerce.API.Repositories
@@ -207,7 +206,8 @@ namespace Website_Ecommerce.API.Repositories
                             Id = x.Id,
                             Name = x.Name,
                             TotalRate = x.TotalRate,
-                            AverageRate = x.AverageRate
+                            AverageRate = x.AverageRate,
+                            Description = x.Description
                         })
                         .FirstOrDefaultAsync();
 
@@ -294,7 +294,7 @@ namespace Website_Ecommerce.API.Repositories
         //                     productdetail => productdetail.ProductId,
         //                     (product, productdetail) => new{
 
-                                
+
         //                     });
         // }
 

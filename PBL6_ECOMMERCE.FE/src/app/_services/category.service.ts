@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BusinessService } from './business.service';
 
-const API =  'http://103.197.184.184:8080'
+const API =  'https://localhost:7220'
 const LIST_CATEGORY = API + '/api/Category/list-category';
 const ADD_CATEGORY_URL = API + '/api/Category/add-category';
 const UPDATE_CATEGORY_URL = API + '/api/Category/update-category'

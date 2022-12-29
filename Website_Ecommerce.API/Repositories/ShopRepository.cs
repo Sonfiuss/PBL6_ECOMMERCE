@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data;
 using Website_Ecommerce.API.Data.Entities;
+using Website_Ecommerce.API.ModelQueries;
 
 namespace Website_Ecommerce.API.Repositories
 {
@@ -78,9 +79,34 @@ namespace Website_Ecommerce.API.Repositories
             return result;
         }
 
-        public  Task<double> AvgRating(int id)
+        public Task<double> AvgRating(int id)
         {
             throw new NotImplementedException();
         }
+
+        /// <summary>
+        /// Get info shop by id 
+        /// </summary>
+        /// <param name="shopId"></param>
+        /// <returns></returns>
+        public async Task<InfoShop> GetInfoShopBy(int shopId)
+        {
+            var data = await _dataContext.Shops
+                        .Where(x => x.Id == shopId)
+                        .Select(x => new InfoShop
+                        {
+                            Address = x.Address,
+                            Email = x.Email,
+                            AverageRate = x.AverageRate,
+                            Name = x.Name,
+                            Phone = x.Phone,
+                            TotalProduct = x.TotalProduct,
+                            TotalRate = x.TotalRate,
+                            UrlAvatar = x.UrlAvatar
+                        })
+                        .FirstOrDefaultAsync();
+            return data;
+        }
+
     }
 }

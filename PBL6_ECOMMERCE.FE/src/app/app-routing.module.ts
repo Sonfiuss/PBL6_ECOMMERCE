@@ -157,7 +157,8 @@ const routes: Routes = [
       {
         path: "manageorder",
         component: ManageOrderComponent
-      },{
+      },
+      {
         path: "revenue",
         component: RevenueComponent
       }

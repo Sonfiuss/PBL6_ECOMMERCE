@@ -104,7 +104,7 @@ export class OrderComponent implements OnInit {
     .subscribe(
       (res:any) => {
         //return home
-        // this.router.navigate(['/cart'])
+        this.router.navigate(['/cart'])
         console.log(res)
         this.loadAllOrder()
 
@@ -187,7 +187,7 @@ export class OrderComponent implements OnInit {
       this.cartService.deleteItem(this.order[i].id)
     .subscribe(
       (res:any) => {
-
+        console.log(res)
       },
       (err) => {
         alert("Delete fail. Detail: " + JSON.stringify(err))
@@ -216,7 +216,7 @@ export class OrderComponent implements OnInit {
   getLinkPayment(){
     // const submitData = {
     //   "orderId": this.latestOrder,
-    //   "vnp_Returnurl" : "https://localhost:7220/api/Cart/return-url"
+    //   "vnp_Returnurl" : "https://localhost:7220api/Cart/return-url"
     // }
   }
   loadVNPayLink(){

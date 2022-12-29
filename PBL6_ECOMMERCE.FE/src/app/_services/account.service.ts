@@ -14,7 +14,7 @@ import { RegisterUser } from 'src/app/_models/app-user';
 export class AccountService {
 
   headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-  baseUrl: string = 'http://103.197.184.184:8080/api/Auth/';
+  baseUrl: string = 'https://localhost:7220api/Auth/';
   private currentUser = new BehaviorSubject<UserToken | null>(null);
   currentUser$ = this.currentUser.asObservable();
 

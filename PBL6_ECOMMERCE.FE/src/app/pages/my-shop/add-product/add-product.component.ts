@@ -19,7 +19,7 @@ export class AddProductComponent implements OnInit {
   categoryPd : string
   listPdDetail :Array<any> =[]
   description : string
-
+  avtUrl :any;
   sizePd : any
   colorPd : any
   amountPd: number
@@ -74,8 +74,18 @@ export class AddProductComponent implements OnInit {
         "price": parseInt(this.listPdDetail[i].price),
         "initialPrice": parseInt(this.listPdDetail[i].initialPrice),
       }
+      const submitImg = {
+        "id": 0,
+        "productDetailId": 36,
+        "urlImage": this.listPdDetail[i].urlImg
+      }
       console.log(submitDataDetail);
 
+      this.productService.addImgPd(submitImg)
+    .subscribe(
+      (res) => this.handleAddPdDetailSuccess(res),
+      (err) => this.handleAddPdDetailError(err)
+    )
       this.productService.addProducDetail(submitDataDetail)
     .subscribe(
       (res) => this.handleAddPdDetailSuccess(res),
@@ -95,7 +105,7 @@ export class AddProductComponent implements OnInit {
     console.log(err);
   }
   handleAddPdDetailSuccess(res: any){
-    alert("them san pham thanh cong")
+    console.log(res)
   }
 
   typeNamePd(e:any){
@@ -130,6 +140,7 @@ export class AddProductComponent implements OnInit {
       price :number;
       initialPrice :number;
       productId: number;
+      urlImg : string;
     }
     if( this.colorPd === undefined)
     {
@@ -146,10 +157,22 @@ export class AddProductComponent implements OnInit {
     pdDetail.amount = this.amountPd
     pdDetail.initialPrice = this.initialPricePd
     pdDetail.price = this.pricePd
+    pdDetail.urlImg = this.avtUrl
     pdDetail.productId = 29
     this.listPdDetail.push(pdDetail)
     console.log(this.listPdDetail);
 
+  }
+  onSelectFile(e:any){
+    if(e.target.files){
+      var reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload=(event:any)=>{
+        this.avtUrl=event.target.result;
+        console.log(event.target.result);
+
+      }
+    }
   }
 
 }

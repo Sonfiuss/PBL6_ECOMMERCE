@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Website_Ecommerce.API.Data.Entities;
 using Website_Ecommerce.API.Enum;
 using Website_Ecommerce.API.ModelDtos;
+using Website_Ecommerce.API.ModelQueries;
 using Website_Ecommerce.API.Repositories;
 using Website_Ecommerce.API.Response;
 
@@ -352,13 +353,15 @@ namespace Website_Ecommerce.API.Controllers
         #endregion
         #region "API Order of Shop"
         [HttpGet("get-all-order-detail-of-shop")]
-        public async Task<IActionResult> GetListOrderDetailOfShop(){
+        public async Task<IActionResult> GetListOrderDetailOfShop()
+        {
             int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
             var shop = _shopRepository.Shops.FirstOrDefault(x => x.UserId == userId);
             var shopId = shop.Id;
             var listOrderDetailOfShop = await _orderRepository.GetOrderDetail(shopId);
 
-            return Ok(new Response<ResponseDefault>(){
+            return Ok(new Response<ResponseDefault>()
+            {
                 State = true,
                 Message = ErrorCode.BadRequest,
                 Result = new ResponseDefault()
@@ -433,7 +436,7 @@ namespace Website_Ecommerce.API.Controllers
         {
             var orderDetail = await _orderRepository.OrderDetails
                                 .FirstOrDefaultAsync(r => r.OrderId == orderID && r.ProductDetailId == productDetailId);
-            
+
             if (orderDetail == null)
             {
                 return BadRequest(new Response<ResponseDefault>()
@@ -454,18 +457,20 @@ namespace Website_Ecommerce.API.Controllers
             thisProductDetail.Saled = thisProductDetail.Saled + orderDetail.Amount;
             var saveProduct = await _productRepository.UnitOfWork.SaveAsync(cancellationToken);
             var thisVoucherProduct = await _shopRepository.voucherProducts.Where(x => x.Id == orderDetail.VoucherProductId).FirstOrDefaultAsync();
-            if(thisVoucherProduct != null){
-                thisVoucherProduct.Amount = thisVoucherProduct.Amount -1;
-                thisVoucherProduct.Sale = thisVoucherProduct.Sale +1;
-                thisVoucherProduct.Booked = thisVoucherProduct.Booked -1;
+            if (thisVoucherProduct != null)
+            {
+                thisVoucherProduct.Amount = thisVoucherProduct.Amount - 1;
+                thisVoucherProduct.Sale = thisVoucherProduct.Sale + 1;
+                thisVoucherProduct.Booked = thisVoucherProduct.Booked - 1;
                 var saveVoucherProduct = _shopRepository.UnitOfWork.SaveAsync();
             }
             var order = _orderRepository.Orders.Where(x => x.Id == orderID).FirstOrDefault();
             var thisVoucherOrder = _voucherOrderRepository.VoucherOrders.Where(x => x.Id == order.VoucherId).FirstOrDefault();
-            if(thisVoucherOrder != null){
-                thisVoucherOrder.Amount = thisVoucherOrder.Amount -1;
-                thisVoucherOrder.Sale = thisVoucherOrder.Sale +1;
-                thisVoucherOrder.Booked = thisVoucherOrder.Booked -1;
+            if (thisVoucherOrder != null)
+            {
+                thisVoucherOrder.Amount = thisVoucherOrder.Amount - 1;
+                thisVoucherOrder.Sale = thisVoucherOrder.Sale + 1;
+                thisVoucherOrder.Booked = thisVoucherOrder.Booked - 1;
                 var saveVoucherOrder = _voucherOrderRepository.UnitOfWork.SaveAsync();
             }
             // var thisvoucherOrder = _voucherOrderRepository.VoucherOrders.Where(x => x.Id == orderDetail.)
@@ -511,10 +516,60 @@ namespace Website_Ecommerce.API.Controllers
 
         //     var user = _userRepository.Users.FirstOrDefault(x => x.Id == userId);
         //     var shop = _shopRepository.Shops.FirstOrDefault(x => x.UserId == userId);
-            
+
         //     var products =  _productRepository.Products.Where(p => p.ShopId == shop.Id).ToList();
-            
+
         //    }
+        /// <summary>
+        /// Get info shop current
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("get-info-current-shop")]
+        public async Task<IActionResult> GetInfoCurrentShop()
+        {
+            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
+            var shop = await _shopRepository.Shops.FirstOrDefaultAsync(x => x.UserId == userId);
+            var infoShop = await _shopRepository.GetInfoShopBy(shop.Id);
+            if (infoShop is null)
+            {
+                return BadRequest(new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.NotFound,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "NotFound"
+                    }
+                });
+            }
+
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = infoShop
+                }
+            });
+        }
+
+        [HttpGet("get-product-id-last")]
+        public async Task<IActionResult> GetIdProductlasest(int id)
+        {
+            int i = _productRepository.Products.Where(p => p.ShopId == id).OrderByDescending(p => p.Id).FirstOrDefault().Id;
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = false,
+                Message = ErrorCode.ExcuteDB,
+                Result = new ResponseDefault()
+                {
+                    Data = i
+                }
+            });
+        }
         #endregion
+
+
     }
 }

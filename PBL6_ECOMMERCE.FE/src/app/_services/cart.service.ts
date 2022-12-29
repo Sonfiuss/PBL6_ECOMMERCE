@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BusinessService } from './business.service';
 import { HttpClient } from '@angular/common/http';
 
-const API =  'http://103.197.184.184:8080'
+const API =  'https://localhost:7220'
 const GET_ALL_ITEM_BY_USER_ID =  API + '/api/Cart/get-all-items-of-user';
 const ADD_ITEM_TO_CART = API + '/api/Cart/Add-item-to-cart' ;
 const UPDATE_ITEM_IN_CART = API + 'api/Cart/update-item-in-cart' ;

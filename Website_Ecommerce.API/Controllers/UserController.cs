@@ -125,5 +125,38 @@ namespace Website_Ecommerce.API.Controllers
             });
         }
 
+        /// <summary>
+        /// Get info current user
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("info-current-user")]
+        public async Task<IActionResult> GetInfoCurrentUser()
+        {
+            int userId = int.Parse(_httpContext.HttpContext.User.Identity.Name.ToString());
+            var user = await _userRepository.GetInfotUserById(userId);
+            if (user is null)
+            {
+                return BadRequest(new Response<ResponseDefault>()
+                {
+                    State = false,
+                    Message = ErrorCode.NotFound,
+                    Result = new ResponseDefault()
+                    {
+                        Data = "NotFound"
+                    }
+                });
+            }
+
+            return Ok(new Response<ResponseDefault>()
+            {
+                State = true,
+                Message = ErrorCode.Success,
+                Result = new ResponseDefault()
+                {
+                    Data = user
+                }
+            });
+        }
+
     }
 }

@@ -71,7 +71,8 @@
                 <div class = "icon"> <i class="bi bi-image"></i></div>
                     <header>Drag or Drop to Upload File</header>
                     <span>OR</span>
-                    <button>Browse</button>
+                    <!-- <button>Browse</button> -->
+                    <input type="file" (change)="onSelectFile($event)">
                 <input type="file" hidden>
             </div>
         </div>

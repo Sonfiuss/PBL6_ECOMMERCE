@@ -1,4 +1,5 @@
 using Website_Ecommerce.API.Data.Entities;
+using Website_Ecommerce.API.ModelQueries;
 
 namespace Website_Ecommerce.API.Repositories
 {
@@ -19,7 +20,12 @@ namespace Website_Ecommerce.API.Repositories
         void Update(Role role);
         void Delete(Role role);
 
-        
+        /// <summary>
+        /// Get info user by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<InfoUser> GetInfotUserById(int id);
 
     }
 }
